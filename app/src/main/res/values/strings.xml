@@ -1,0 +1,116 @@
+<resources>
+    <string name="app_name">管云风控</string>
+    <string name="tab1">1</string>
+    <string name="tab2">2</string>
+    <string name="tab3">3</string>
+    <string name="tab4">4</string>
+    <string name="mine">我的</string>
+
+    <string name="loading">加载中…</string>
+    <string name="error_view_no_data">暂无内容</string>
+    <string name="error_view_loading">加载中…</string>
+    <string name="error_view_loading_friend">数据初始化中…</string>
+    <string name="error_view_loading_local_friend">获取附近的程序员中…</string>
+    <string name="error_view_load_error_click_to_refresh">内容加载失败\r\n点击重新加载</string>
+    <string name="error_view_network_error_click_to_refresh">没有可用的网络</string>
+    <string name="footer_type_net_error">网络错误</string>
+
+    <string name="tip_network_error">没有可用的网络</string>
+    <!--新版登录专用-->
+    <string name="login_btn">登录</string>
+    <string name="login_input_username_hint">手机号或邮箱</string>
+    <string name="login_input_username_hint_error">请输入正确的手机号或邮箱&#8230;</string>
+    <string name="login_password_hint">请输入您的登录密码</string>
+    <string name="login_hold_hint">记住密码</string>
+    <string name="login_forget_hint">忘记密码？</string>
+    <string name="login_registerfirst_tip">没有帐号？立即注册</string>
+    <string name="login_register_hint">注册</string>
+    <string name="login_other_hint">其他方式登录</string>
+    <string name="register_input_username_hint">手机号</string>
+    <string name="register_username_hint">用户名</string>
+    <string name="register_sms_auth_code">短信验证码</string>
+    <string name="register_sms_hint">获取验证码</string>
+    <string name="register_sms_wait_hint">别激动,休息一下呗&#8230;</string>
+    <string name="register_done_hint">完成</string>
+    <string name="register_man_hint">男士</string>
+    <string name="register_female_hint">女士</string>
+    <string name="retrieve_pwd_step_hint">下一步</string>
+    <string name="retrieve_pwd_email_label_one">邮箱用户找回密码，请</string>
+    <string name="retrieve_pwd_email_label"><a>点击这里</a></string>
+    <string name="reset_pwd_hint">请输入至少六位新密码</string>
+    <string name="register_username_error">用户名太长&#8230;</string>
+    <string name="hint_password">密码</string>
+    <string name="register_pwd_hint">请输入至少六位数密码</string>
+    <string name="hint_username_ok">请输入您的手机号码</string>
+    <string name="user_hint_login">点击头像登录</string>
+    <string name="reset_pwd_label">重置密码</string>
+    <string name="retrieve_pwd_label">找回密码</string>
+    <string name="reset_pwd_submit">确认</string>
+    <string name="request_error_hint">网络请求失败,请重试&#8230;</string>
+    <string name="login_success_hint">登录成功</string>
+    <string name="send_sms_code_success_hint">已成功发送验证码</string>
+    <string name="reset_success_hint">密码重置成功</string>
+    <string name="register_success_hint">注册成功</string>
+    <string name="share_hint">抱歉,您未安装该应用,不能分享&#8230;</string>
+    <string name="login_hint">抱歉,您未安装该应用,不能登录&#8230;</string>
+    <string name="login_wechat_hint">正在启动微信中&#8230;</string>
+    <string name="login_tencent_hint">正在启动QQ中&#8230;</string>
+    <string name="login_weibo_hint">正在启动微博中&#8230;</string>
+    <string name="message_pwd_error">密码错误</string>
+    <string name="usernull">用户名未填写！！！</string>
+
+
+    <string name="tv_my_score">积分 0</string>
+    <string name="zero">0</string>
+
+
+
+
+    <string name="tip_double_click_exit">再次点击退出app</string>
+    <string name="progress_submit">正在提交…</string>
+
+
+    <array name="g_default_loading_fg">
+        <item>#00bcd4</item>
+        <item>#9c27b0</item>
+        <item>#5677fc</item>
+        <item>#ff9800</item>
+        <item>#e91e63</item>
+    </array>
+
+    <string name="copy_success">复制成功</string>
+
+
+    <!--设置-->
+    <string name="message">第一条目</string>
+    <string name="actionbar_title_setting">设置</string>
+    <string name="actionbar_title_about_gcs">关于管云风控</string>
+
+    <!--设置中心-->
+    <string name="loading_img">加载图片</string>
+    <string name="clean_cache">清理缓存</string>
+    <string name="double_click_exit">双击退出</string>
+    <string name="update">检查更新</string>
+    <string name="loading_more">自动加载\"更多\"</string>
+    <string name="about" translatable="false">关于我们</string>
+    <string name="feedback">意见反馈</string>
+    <string name="setting_cancel">注销</string>
+    <string name="logout_success_hint">注销成功</string>
+    <string name="grade">去评分</string>
+
+    <string name="osc_site">官网</string>
+    <string name="know_more">了解更多</string>
+    <string name="git_app">Git客户端</string>
+
+    <string name="share_to">分享</string>
+    <string name="copyright">© 2017 OSChina.net All rights reserved.</string>
+
+
+    <string name="state_network_error">网络错误</string>
+    <string name="state_loading">正在加载…</string>
+    <string name="state_not_more">没有更多数据</string>
+    <string name="state_load_error">加载失败</string>
+    <string name="state_refreshing">正在刷新</string>
+    <string name="state_loading_error">数据加载中&#8230;</string>
+    <string name="state_submit">正在提交中&#8230;</string>
+</resources>

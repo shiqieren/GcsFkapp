@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/lay_linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/gray"
+            android:layout_marginTop="20dip"/>
+
+        <LinearLayout
+            android:id="@+id/rl_clean_cache"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:padding="@dimen/space_12"
+            android:gravity="center_vertical"
+            android:background="@drawable/ic_material"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_marginRight="@dimen/space_4"
+                android:layout_gravity="center_vertical"
+                android:clickable="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/clean_cache"
+                android:textColor="@color/main_black"
+                android:textSize="@dimen/text_size_16"/>
+
+            <TextView
+                android:id="@+id/tv_cache_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/main_black"
+                android:textSize="@dimen/text_size_14"
+                tools:ignore="RelativeOverlap"
+                tools:text="13M"/>
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/gray"
+                android:layout_marginLeft="@dimen/lay_14"/>
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/rl_double_click_exit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:padding="@dimen/space_12"
+            android:gravity="center_vertical"
+            android:background="@drawable/ic_material"
+            android:orientation="horizontal">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/space_4"
+                android:gravity="center_vertical"
+                android:clickable="false"
+                android:layout_weight="1"
+                android:text="@string/double_click_exit"
+                android:textColor="@color/main_black"
+                android:textSize="@dimen/text_size_16"/>
+
+            <com.gcs.fengkong.ui.widget.togglebutton.ToggleButton
+                android:id="@+id/tb_double_click_exit"
+                android:layout_width="45dp"
+                android:layout_height="20dp"/>
+        </LinearLayout>
+
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/gray"
+                android:layout_marginLeft="@dimen/lay_14"/>
+        </FrameLayout>
+
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/gray"
+                android:layout_marginLeft="@dimen/lay_14"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/rl_about"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:padding="@dimen/space_12"
+            android:gravity="center_vertical"
+            android:orientation = "horizontal"
+            android:background="@drawable/ic_material">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/space_4"
+                android:gravity="center_vertical"
+                android:clickable="false"
+                android:text="@string/about"
+                android:textColor="@color/main_black"
+                android:textSize="@dimen/text_size_16"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/gray"
+                android:layout_marginLeft="@dimen/lay_14"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/rl_check_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:padding="@dimen/space_12"
+            android:gravity="center_vertical"
+            android:orientation = "horizontal"
+            android:background="@drawable/ic_material">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/space_4"
+                android:gravity="center_vertical"
+                android:clickable="false"
+                android:text="@string/update"
+                android:textColor="@color/main_black"
+                android:textSize="@dimen/text_size_16"/>
+        </FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/gray"/>
+
+        <View
+            android:id="@+id/setting_line_top"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/gray"
+            android:layout_marginTop="20dp"/>
+
+        <FrameLayout
+            android:id="@+id/rl_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:padding="@dimen/space_12"
+            android:gravity="center_vertical"
+            android:orientation = "horizontal"
+            android:background="@drawable/ic_material">
+
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/space_4"
+            android:gravity="center_vertical"
+            android:clickable="false"
+            android:text="@string/setting_cancel"
+            android:textColor="@color/main_black"
+            android:textSize="@dimen/text_size_16"/>
+        </FrameLayout>
+
+        <View
+            android:id="@+id/setting_line_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/gray"/>
+    </LinearLayout>
+</LinearLayout>

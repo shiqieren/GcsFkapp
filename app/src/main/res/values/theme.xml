@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--自定义风格样式-->
+<resources>
+
+    <!--基础样式-->
+    <style name="Base.App.Theme.Light" parent="@style/Theme.AppCompat.Light">
+
+    </style>
+    <style name="Base.App.Theme" parent="Base.App.Theme.Light">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <!--启动界面主题-->
+    <style name="App.Theme.Launch" parent="Base.App.Theme">
+        <item name="android:windowBackground">@mipmap/bg_login</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+
+    <style name="App.Theme.Dialog.Alert" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="android:textColorPrimary">@color/black_alpha_240</item>
+    </style>
+
+    <!--新账户中心-->
+    <style name="Account_Base.App.Theme.NoTitle" parent="Base.App.Theme.NoTitle">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <!--<item name="android:windowFullscreen">true</item> 去顶部状态栏-->
+    </style>
+
+</resources>

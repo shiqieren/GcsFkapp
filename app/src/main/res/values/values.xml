@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="Loading">
+        <attr format="dimension" name="gBackgroundLineSize"/>
+        <attr format="dimension" name="gForegroundLineSize"/>
+        <attr format="reference|color" name="gBackgroundColor"/>
+        <attr format="reference|color" name="gForegroundColor"/>
+        <attr format="boolean" name="gAutoRun"/>
+        <attr format="float" name="gProgressFloat"/>
+    </declare-styleable>
+    <!--布局分隔线颜色-->
+    <attr name="lineColor" format="reference"/>
+    <attr name="textColor" format="reference"/>
+    <attr name="infoTextColor" format="reference"/>
+    <attr name="layout_bg_normal" format="reference"/>
+    <attr name="layout_item_bg" format="reference"/>
+
+</resources>

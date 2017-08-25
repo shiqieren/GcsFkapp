@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/green_btn_color_normal"
+    android:fitsSystemWindows="false"
+    android:orientation="vertical">
+
+
+        <LinearLayout
+            android:id="@+id/rl_show_my_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal|top"
+            android:orientation="vertical"
+            android:paddingBottom="8dp">
+
+            <FrameLayout
+                android:id="@+id/user_info_head_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_logo_setting"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_gravity="center_vertical|right"
+                    android:layout_marginLeft="4dp"
+                    android:background="@drawable/ic_title_bar_icon_bg"
+                    android:contentDescription="@null"
+                    android:padding="12dp"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/btn_my_setting" />
+
+
+            </FrameLayout>
+        </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/about_line"
+            style="@style/h_line"
+            android:layout_height="1px"
+            android:background="#FF6FDB94" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/rl_message"
+                        style="@style/option_item_rl">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:contentDescription="@null"
+                            android:src="@mipmap/ic_my_message" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/message"/>
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="10dp"
+                            android:layout_weight="1" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="20dp"
+                            android:contentDescription="@null"
+                            android:src="@mipmap/ic_arrow_right" />
+                    </LinearLayout>
+
+                    <View
+                        style="@style/h_line"
+                        android:layout_height="1px"
+                        android:background="@color/list_divider_color" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</LinearLayout>
+
+

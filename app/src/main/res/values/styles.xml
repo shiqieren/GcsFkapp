@@ -1,0 +1,58 @@
+<resources>
+
+    <!-- 日间模式 -->
+    <style name="App.Theme.Light" parent="Base.App.Theme.Light" />
+    <style name="Base.App.Theme.NoTitle" parent="App.Theme.Light">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="App.Theme.Main" parent="Base.App.Theme.NoTitle" />
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="Theme.Dialog.NoTitle.Translucent" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowFrame">@null</item><!-- 边框 -->
+        <item name="android:windowIsFloating">true</item><!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsTranslucent">true</item><!-- 半透明 -->
+        <item name="windowNoTitle">true</item><!-- 无标题 -->
+        <item name="android:windowBackground">@android:color/transparent</item><!-- 背景透明 -->
+        <item name="android:backgroundDimEnabled">true</item><!-- 模糊 -->
+        <item name="windowActionBar">false</item>
+    </style>
+
+    <!-- 操作项样式 start -->
+    <style name="option_item_rl">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/ic_material</item>
+        <item name="android:clickable">true</item>
+        <item name="android:padding">@dimen/space_12</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="option_item_text_parent">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">@dimen/space_4</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/main_black</item>
+        <item name="android:clickable">false</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textSize">@dimen/text_size_16</item>
+    </style>
+    <style name="option_item_text" parent="@style/option_item_text_parent">
+        <item name="android:drawablePadding">@dimen/space_8</item>
+        <item name="android:textColor">?attr/textColor</item>
+    </style>
+    <style name="option_item_toggleButton">
+        <item name="android:layout_width">45dp</item>
+        <item name="android:layout_height">20dp</item>
+    </style>
+
+</resources>
