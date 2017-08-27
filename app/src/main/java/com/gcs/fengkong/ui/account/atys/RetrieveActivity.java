@@ -49,6 +49,11 @@ public class RetrieveActivity extends AccountBaseActivity implements View.OnClic
     private Button mBtRetrieveSubmit;
     private TextView mTvRetrieveLabel;
     private boolean mMachPhoneNum;
+
+    private LinearLayout mLlResetPwd;
+    private EditText mEtResetPwd;
+    private ImageView mIvResetPwdDel;
+
     private CountDownTimer mTimer;
 
     private int mRequestType;
@@ -280,6 +285,42 @@ public class RetrieveActivity extends AccountBaseActivity implements View.OnClic
                 mLlRetrieveCode.setBackgroundResource(R.drawable.bg_login_input_ok);
             }
         });
+
+        mEtResetPwd.setOnFocusChangeListener(this);
+        mEtResetPwd.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @SuppressWarnings("deprecation")
+            @Override
+            public void afterTextChanged(Editable s) {
+                int length = s.length();
+                if (length >= 6) {
+                    mIvResetPwdDel.setVisibility(View.VISIBLE);
+                    mLlResetPwd.setBackgroundResource(R.drawable.bg_login_input_ok);
+                    mBtRetrieveSubmit.setBackgroundResource(R.drawable.bg_login_submit);
+                    mBtRetrieveSubmit.setTextColor(getResources().getColor(R.color.white));
+                } else {
+                    if (length <= 0) {
+                        mIvResetPwdDel.setVisibility(View.GONE);
+                        mLlResetPwd.setBackgroundResource(R.drawable.bg_login_input_ok);
+                    } else {
+                        mIvResetPwdDel.setVisibility(View.VISIBLE);
+                        mLlResetPwd.setBackgroundResource(R.drawable.bg_login_input_error);
+                    }
+                    mBtRetrieveSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
+                    mBtRetrieveSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));
+                }
+
+            }
+        });
     }
 
 
@@ -295,6 +336,10 @@ public class RetrieveActivity extends AccountBaseActivity implements View.OnClic
         mTvRetrieveSmsCall= (TextView) findViewById(R.id.retrieve_sms_call);
         mBtRetrieveSubmit= (Button) findViewById(R.id.bt_retrieve_submit);
         mTvRetrieveLabel= (TextView) findViewById(R.id.tv_retrieve_label);
+
+        mLlResetPwd= (LinearLayout) findViewById(R.id.ll_reset_pwd);
+        mEtResetPwd= (EditText) findViewById(R.id.et_reset_pwd);
+        mIvResetPwdDel= (ImageView) findViewById(R.id.iv_reset_pwd_del);
     }
 
     private void setListener(){
@@ -309,6 +354,7 @@ public class RetrieveActivity extends AccountBaseActivity implements View.OnClic
         mTvRetrieveSmsCall.setOnClickListener(this);
         mBtRetrieveSubmit.setOnClickListener(this);
         mTvRetrieveLabel.setOnClickListener(this);
+        mIvResetPwdDel.setOnClickListener(this);
     }
 
     @Override
@@ -341,15 +387,19 @@ public class RetrieveActivity extends AccountBaseActivity implements View.OnClic
             case R.id.iv_retrieve_tel_del:
                 mEtRetrieveTel.setText(null);
                 break;
+            case R.id.iv_reset_pwd_del:
+                mEtResetPwd.setText(null);
+                break;
             case R.id.retrieve_sms_call:
                 //获取验证码
                 requestSmsCode();
 
                 break;
             case R.id.bt_retrieve_submit:
-                ResetPwdActivity.show(RetrieveActivity.this);
+                Toast.makeText(RetrieveActivity.this,"修改密码",Toast.LENGTH_SHORT).show();
                 //根据验证码获取phoneToken
                //111 requestRetrievePwd();
+                //requestResetPwd();
                 break;
             case R.id.tv_retrieve_label:
 
@@ -372,10 +422,11 @@ public class RetrieveActivity extends AccountBaseActivity implements View.OnClic
     }
 
     private void requestRetrievePwd() {
-
+        String tempPwd = mEtResetPwd.getText().toString().trim();
         String smsCode = mEtRetrieveCodeInput.getText().toString().trim();
-        if (!mMachPhoneNum || TextUtils.isEmpty(smsCode)) {
+        if (!mMachPhoneNum || TextUtils.isEmpty(smsCode)||TextUtils.isEmpty(tempPwd) || tempPwd.length() < 6) {
             // showToastForKeyBord(R.string.hint_username_ok);
+            showToastForKeyBord(R.string.reset_pwd_hint);
             return;
         }
 
@@ -442,6 +493,11 @@ public class RetrieveActivity extends AccountBaseActivity implements View.OnClic
                     mLlRetrieveTel.setActivated(false);
                 }
                 break;
+            case R.id.et_reset_pwd:
+                if (hasFocus) {
+                    mLlResetPwd.setActivated(true);
+                }
+                break;
             default:
                 break;
         }
@@ -449,7 +505,7 @@ public class RetrieveActivity extends AccountBaseActivity implements View.OnClic
 
     @Override
     public void onGlobalLayout() {
-
+        final LinearLayout kayResetPwd = this.mLlResetPwd;
         final LinearLayout layRetrieveTel = this.mLlRetrieveTel;
         Rect KeypadRect = new Rect();
 
@@ -505,6 +561,47 @@ public class RetrieveActivity extends AccountBaseActivity implements View.OnClic
                 valueAnimator.cancel();
             }
             valueAnimator.start();
+        }else  if (keypadHeight > 0 && kayResetPwd.getTag() == null) {
+            final LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) kayResetPwd.getLayoutParams();
+            final int topMargin = layoutParams.topMargin;
+            this.mTopMargin = topMargin;
+            kayResetPwd.setTag(true);
+            ValueAnimator valueAnimator = ValueAnimator.ofFloat(1, 0);
+            valueAnimator.setDuration(400).setInterpolator(new DecelerateInterpolator());
+            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    float animatedValue = (float) animation.getAnimatedValue();
+                    layoutParams.topMargin = (int) (topMargin * animatedValue);
+                    kayResetPwd.requestLayout();
+                }
+            });
+
+            if (valueAnimator.isRunning()) {
+                valueAnimator.cancel();
+            }
+            valueAnimator.start();
+
+
+        } else if (keypadHeight == 0 && kayResetPwd.getTag() != null) {
+            final int topMargin = mTopMargin;
+            final LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) kayResetPwd.getLayoutParams();
+            kayResetPwd.setTag(null);
+            ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1);
+            valueAnimator.setDuration(400).setInterpolator(new DecelerateInterpolator());
+            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    float animatedValue = (float) animation.getAnimatedValue();
+                    layoutParams.topMargin = (int) (topMargin * animatedValue);
+                    kayResetPwd.requestLayout();
+                }
+            });
+            if (valueAnimator.isRunning()) {
+                valueAnimator.cancel();
+            }
+            valueAnimator.start();
+
         }
     }
 }
