@@ -21,10 +21,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.account.UserConstants;
+import com.gcs.fengkong.ui.atys.MainActivity;
 import com.gcs.fengkong.utils.TDevice;
 
 
@@ -346,7 +348,11 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                 break;
             case R.id.bt_login_submit:
                 //用户登录
-                loginRequest();
+                Toast.makeText(LoginActivity.this,"登录",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                finish();
+              //  loginRequest();
                 break;
             case R.id.iv_login_hold_pwd:
                 //记住密码

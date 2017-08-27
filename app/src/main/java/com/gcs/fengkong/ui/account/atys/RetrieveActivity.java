@@ -220,8 +220,8 @@ public class RetrieveActivity extends AccountBaseActivity implements View.OnClic
                 //对提交控件的状态判定
                 if (mMachPhoneNum) {
                     String smsCode = mEtRetrieveCodeInput.getText().toString().trim();
-
-                    if (!TextUtils.isEmpty(smsCode)) {
+                    String resetpwd = mEtResetPwd.getText().toString().trim();
+                    if (!TextUtils.isEmpty(smsCode)&&!TextUtils.isEmpty(resetpwd)) {
                         mBtRetrieveSubmit.setBackgroundResource(R.drawable.bg_login_submit);
                         mBtRetrieveSubmit.setTextColor(getResources().getColor(R.color.white));
                     } else {
@@ -275,7 +275,9 @@ public class RetrieveActivity extends AccountBaseActivity implements View.OnClic
             @Override
             public void afterTextChanged(Editable s) {
                 int length = s.length();
-                if (length > 0 && mMachPhoneNum) {
+                String resetpwd = mEtResetPwd.getText().toString().trim();
+
+                if (length > 0 && mMachPhoneNum && !TextUtils.isEmpty(resetpwd)) {
                     mBtRetrieveSubmit.setBackgroundResource(R.drawable.bg_login_submit);
                     mBtRetrieveSubmit.setTextColor(getResources().getColor(R.color.white));
                 } else {
@@ -302,7 +304,9 @@ public class RetrieveActivity extends AccountBaseActivity implements View.OnClic
             @Override
             public void afterTextChanged(Editable s) {
                 int length = s.length();
-                if (length >= 6) {
+                String smsCode = mEtRetrieveCodeInput.getText().toString().trim();
+                String resetpwd = mEtResetPwd.getText().toString().trim();
+                if (length >= 6 && mMachPhoneNum && mMachPhoneNum && !TextUtils.isEmpty(smsCode) && mMachPhoneNum && !TextUtils.isEmpty(resetpwd)) {
                     mIvResetPwdDel.setVisibility(View.VISIBLE);
                     mLlResetPwd.setBackgroundResource(R.drawable.bg_login_input_ok);
                     mBtRetrieveSubmit.setBackgroundResource(R.drawable.bg_login_submit);
