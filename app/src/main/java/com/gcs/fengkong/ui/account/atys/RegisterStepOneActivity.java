@@ -43,6 +43,7 @@ public class RegisterStepOneActivity extends AccountBaseActivity implements View
     private EditText mEtRegisterUsername;
     private ImageView mIvRegisterDel;
     private LinearLayout mLlRegisterSmsCode;
+    private LinearLayout mLlRegisterTwoPwd;
     private EditText mEtRegisterAuthCode;
     private TextView mTvRegisterSmsCall;
     private Button mBtRegisterSubmit;

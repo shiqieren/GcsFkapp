@@ -46,65 +46,6 @@ public class RegisterStepTwoActivity extends AccountBaseActivity implements View
 
     private PhoneToken mPhoneToken;
 
-    /*private TextHttpResponseHandler mHandler = new TextHttpResponseHandler() {
-
-
-        @Override
-        public void onStart() {
-            super.onStart();
-            showWaitDialog(R.string.progress_submit);
-        }
-
-        @Override
-        public void onFinish() {
-            super.onFinish();
-            hideWaitDialog();
-        }
-
-        @Override
-        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-            requestFailureHint(throwable);
-        }
-
-        @Override
-        public void onSuccess(int statusCode, Header[] headers, String responseString) {
-            Type type = new TypeToken<ResultBean<User>>() {
-            }.getType();
-            ResultBean<User> resultBean = AppOperator.createGson().fromJson(responseString, type);
-
-            if (resultBean.isSuccess()) {
-                User user = resultBean.getResult();
-                if (AccountHelper.login(user, headers)) {
-                    AppContext.showToast(getResources().getString(R.string.register_success_hint), Toast.LENGTH_SHORT);
-                    sendLocalReceiver();
-                    finish();
-                } else {
-                    showToastForKeyBord("注册异常");
-                }
-            } else {
-                int code = resultBean.getCode();
-                switch (code) {
-                    case 216:
-                        //phoneToken 已经失效
-                        finish();
-                        break;
-                    case 217:
-                        mLlRegisterTwoUsername.setBackgroundResource(R.drawable.bg_login_input_error);
-                        break;
-                    case 218:
-                        finish();
-                        break;
-                    case 219:
-                        mLlRegisterTwoPwd.setBackgroundResource(R.drawable.bg_login_input_error);
-                        break;
-                    default:
-                        break;
-                }
-                showToastForKeyBord(resultBean.getMessage());
-            }
-
-        }
-    };*/
     private int mTopMargin;
 
     /**
@@ -112,16 +53,6 @@ public class RegisterStepTwoActivity extends AccountBaseActivity implements View
      *
      * @param context context
      */
-    public static void show(Context context, PhoneToken phoneToken) {
-        Intent intent = new Intent(context, RegisterStepTwoActivity.class);
-        intent.putExtra(PHONE_TOKEN_KEY, phoneToken);
-        context.startActivity(intent);
-    }
-//测试注册界面2
-    public static void show(Context context) {
-        Intent intent = new Intent(context, RegisterStepTwoActivity.class);
-        context.startActivity(intent);
-    }
 
     @Override
     protected int getContentView() {
@@ -131,51 +62,8 @@ public class RegisterStepTwoActivity extends AccountBaseActivity implements View
     @Override
     protected void initWidget() {
         super.initWidget();
-        initViews();
-        setListener();
-        TextView tvLabel = (TextView) mLlRegisterBar.findViewById(R.id.tv_navigation_label);
-        tvLabel.setText(R.string.login_register_hint);
 
-        mEtRegisterUsername.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @SuppressWarnings("deprecation")
-            @Override
-            public void afterTextChanged(Editable s) {
-                int length = s.length();
-
-                String smsCode = mEtRegisterPwd.getText().toString().trim();
-
-                if (!TextUtils.isEmpty(smsCode)) {
-                    mBtRegisterSubmit.setBackgroundResource(R.drawable.bg_login_submit);
-                    mBtRegisterSubmit.setTextColor(getResources().getColor(R.color.white));
-                } else {
-                    mBtRegisterSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                    mBtRegisterSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));
-                }
-
-                if (length > 0) {
-                    mIvRegisterUsernameDel.setVisibility(View.VISIBLE);
-                } else {
-                    mIvRegisterUsernameDel.setVisibility(View.INVISIBLE);
-                }
-
-                if (length > 12) {
-                    showToastForKeyBord(R.string.register_username_error);
-                    mLlRegisterTwoUsername.setBackgroundResource(R.drawable.bg_login_input_error);
-                } else {
-                    mLlRegisterTwoUsername.setBackgroundResource(R.drawable.bg_login_input_ok);
-                }
-            }
-        });
         mEtRegisterUsername.setOnFocusChangeListener(this);
         mEtRegisterPwd.setOnFocusChangeListener(this);
         mEtRegisterPwd.addTextChangedListener(new TextWatcher() {
