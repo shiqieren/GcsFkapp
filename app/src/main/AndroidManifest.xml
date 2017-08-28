@@ -78,25 +78,9 @@
             android:theme="@style/Account_Base.App.Theme.NoTitle"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".ui.account.atys.RegisterStepTwoActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:label="注册中心二"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/Account_Base.App.Theme.NoTitle"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
             android:name=".ui.account.atys.RetrieveActivity"
             android:configChanges="keyboardHidden|orientation"
             android:label="密码找回"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/Account_Base.App.Theme.NoTitle"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".ui.account.atys.ResetPwdActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:label="密码重置"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/Account_Base.App.Theme.NoTitle"

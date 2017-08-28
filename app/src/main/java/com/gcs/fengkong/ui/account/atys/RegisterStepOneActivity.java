@@ -43,6 +43,8 @@ public class RegisterStepOneActivity extends AccountBaseActivity implements View
     private EditText mEtRegisterUsername;
     private ImageView mIvRegisterDel;
     private LinearLayout mLlRegisterSmsCode;
+    private EditText mEtRegisterPwd;
+    private LinearLayout mLlRegisterTwoPwd;
     private EditText mEtRegisterAuthCode;
     private TextView mTvRegisterSmsCall;
     private Button mBtRegisterSubmit;
@@ -218,8 +220,8 @@ public class RegisterStepOneActivity extends AccountBaseActivity implements View
 
                         if (mMachPhoneNum) {
                             String smsCode = mEtRegisterAuthCode.getText().toString().trim();
-
-                            if (!TextUtils.isEmpty(smsCode)) {
+                            String pwd = mEtRegisterPwd.getText().toString().trim();
+                            if (!TextUtils.isEmpty(smsCode)&&!TextUtils.isEmpty(pwd)) {
                                 mBtRegisterSubmit.setBackgroundResource(R.drawable.bg_login_submit);
                                 mBtRegisterSubmit.setTextColor(getResources().getColor(R.color.white));
                             } else {
@@ -277,7 +279,8 @@ public class RegisterStepOneActivity extends AccountBaseActivity implements View
             @Override
             public void afterTextChanged(Editable s) {
                 int length = s.length();
-                if (length > 0 && mMachPhoneNum) {
+                String pwd = mEtRegisterPwd.getText().toString().trim();
+                if (length > 0 && mMachPhoneNum&&!TextUtils.isEmpty(pwd)) {
                     mBtRegisterSubmit.setBackgroundResource(R.drawable.bg_login_submit);
                     mBtRegisterSubmit.setTextColor(getResources().getColor(R.color.white));
                 } else {
@@ -287,6 +290,40 @@ public class RegisterStepOneActivity extends AccountBaseActivity implements View
                 mLlRegisterSmsCode.setBackgroundResource(R.drawable.bg_login_input_ok);
             }
         });
+
+        mEtRegisterPwd.setOnFocusChangeListener(this);
+        mEtRegisterPwd.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @SuppressWarnings("deprecation")
+            @Override
+            public void afterTextChanged(Editable s) {
+                int length = s.length();
+                if (length < 6) {
+                    mLlRegisterTwoPwd.setBackgroundResource(R.drawable.bg_login_input_error);
+                } else {
+                    mLlRegisterTwoPwd.setBackgroundResource(R.drawable.bg_login_input_ok);
+                }
+                String username = mEtRegisterUsername.getText().toString().trim();
+                String authcode = mEtRegisterAuthCode.getText().toString().trim();
+                if (!TextUtils.isEmpty(username)&&!TextUtils.isEmpty(authcode)) {
+                    mBtRegisterSubmit.setBackgroundResource(R.drawable.bg_login_submit);
+                    mBtRegisterSubmit.setTextColor(getResources().getColor(R.color.white));
+                } else {
+                    mBtRegisterSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
+                    mBtRegisterSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));
+                }
+            }
+        });
+
     }
 
     private void initViews() {
@@ -294,6 +331,8 @@ public class RegisterStepOneActivity extends AccountBaseActivity implements View
         mIb_navigation_back = (ImageButton) findViewById(R.id.ib_navigation_back);
         mRegister_one_container= (LinearLayout) findViewById(R.id.lay_register_one_container);
         mIvLogo= (ImageView) findViewById(R.id.iv_login_logo);
+        mLlRegisterTwoPwd= (LinearLayout) findViewById(R.id.ll_register_two_pwd);
+        mEtRegisterPwd= (EditText) findViewById(R.id.et_register_pwd_input);
         mLlRegisterPhone= (LinearLayout) findViewById(R.id.ll_register_phone);
         mEtRegisterUsername= (EditText) findViewById(R.id.et_register_username);
         mIvRegisterDel= (ImageView) findViewById(R.id.iv_register_username_del);
@@ -353,7 +392,8 @@ public class RegisterStepOneActivity extends AccountBaseActivity implements View
             case R.id.bt_register_submit:
               //111  requestRegister();
            //111     RegisterStepTwoActivity.show(this,null);
-                RegisterStepTwoActivity.show(this);
+               Toast.makeText(RegisterStepOneActivity.this,"提交资料",Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.lay_register_one_container:
                 hideKeyBoard(getCurrentFocus().getWindowToken());
@@ -367,7 +407,8 @@ public class RegisterStepOneActivity extends AccountBaseActivity implements View
     private void requestRegister() {
 
         String smsCode = mEtRegisterAuthCode.getText().toString().trim();
-        if (!mMachPhoneNum || TextUtils.isEmpty(smsCode)) {
+        String pwd = mEtRegisterPwd.getText().toString().trim();
+        if (!mMachPhoneNum || TextUtils.isEmpty(smsCode)|| TextUtils.isEmpty(pwd)) {
             //showToastForKeyBord(R.string.hint_username_ok);
             return;
         }
@@ -433,6 +474,11 @@ public class RegisterStepOneActivity extends AccountBaseActivity implements View
                 if (hasFocus) {
                     mLlRegisterSmsCode.setActivated(true);
                     mLlRegisterPhone.setActivated(false);
+                }
+                break;
+            case R.id.et_register_pwd_input:
+                if (hasFocus) {
+                    mLlRegisterTwoPwd.setActivated(true);
                 }
                 break;
             default:

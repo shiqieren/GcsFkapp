@@ -17,7 +17,7 @@ public class SubtestFragment extends BaseFragment implements View.OnClickListene
   /*  @Override
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_mine, container,
+        View view = inflater.inflate(R.layout.start_page, container,
                 false);
         ButterKnife.bind(this, view);
         initView(view);
@@ -28,7 +28,7 @@ public class SubtestFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_mine;
+        return R.layout.start_page;
     }
 
     @Override
