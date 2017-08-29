@@ -12,6 +12,8 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
+
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.bean.SimpleBackPage;
 import com.gcs.fengkong.ui.frags.BaseFragment;
@@ -29,35 +31,42 @@ public class SimpleBackActivity extends BaseActivity {
     private static final String TAG = "FLAG_TAG";
     protected WeakReference<Fragment> mFragment;
     protected int mPageValue = -1;
-    protected LayoutInflater mInflater;
     protected Toolbar mToolBar;
+    protected TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getContentView() != 0) {
             setContentView(getContentView());
+            initWindow();
+            initWidget();
+            initData();
+        } else {
+            finish();
         }
-        mInflater = getLayoutInflater();
         init(savedInstanceState);
-        StatusBarCompat.setStatusBarColor(this, UIUtils.getColor(R.color.base_app_color));
+
     }
 
     @Override
     protected void initWindow() {
         super.initWindow();
+        StatusBarCompat.setStatusBarColor(this, UIUtils.getColor(R.color.base_app_color));
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
+        textView = (TextView) findViewById(R.id.toolbar_title);
         if (mToolBar != null) {
 
             setSupportActionBar(mToolBar);
             ActionBar actionBar = getSupportActionBar();
             if (actionBar != null) {
+                actionBar.setDisplayShowTitleEnabled(false);
                 actionBar.setHomeButtonEnabled(true);
-                actionBar.setDisplayHomeAsUpEnabled(false);
+                actionBar.setDisplayHomeAsUpEnabled(true);
             }
             mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    finish();;
+                    finish();
                 }
             });
 
@@ -156,7 +165,7 @@ public class SimpleBackActivity extends BaseActivity {
             title = getString(R.string.app_name);
         }
         if (mToolBar != null) {
-            mToolBar.setTitle(title);
+            textView.setText(title);
         }
     }
     @Override

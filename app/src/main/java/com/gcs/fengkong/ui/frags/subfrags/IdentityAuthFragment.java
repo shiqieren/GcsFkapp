@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.gcs.fengkong.R;
+import com.gcs.fengkong.ui.atys.SimpleBackActivity;
 import com.gcs.fengkong.ui.frags.BaseFragment;
 
 /**
@@ -21,6 +22,7 @@ public class IdentityAuthFragment extends BaseFragment{
     @Override
     protected void initView(View view) {
         super.initView(view);
+        ((SimpleBackActivity)getActivity()).setToolBarTitle(R.string.identity_string);
     }
 
     @Override

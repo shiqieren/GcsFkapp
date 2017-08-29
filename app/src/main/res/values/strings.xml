@@ -128,4 +128,5 @@
     <string name="hint_et_name">请输入您的姓名</string>
     <string name="hint_et_idnumber">请输入您的身份证号</string>
     <string name="idcard_num">身份证</string>
+    <string name="auth_taobao_tip">请登入淘宝账号进行授权</string>
 </resources>
