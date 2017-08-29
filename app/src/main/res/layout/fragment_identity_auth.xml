@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/lay_60"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/lay_28"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/lay_15"
+                android:src="@mipmap/identity_name" />
+
+            <TextView
+                android:layout_width="@dimen/lay_52"
+                android:layout_height="wrap_content"
+                android:text="@string/name"
+                android:textColor="@color/base_app_color"
+                android:textSize="@dimen/font_16" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:ems="15"
+                android:focusable="true"
+                android:hint="@string/hint_et_name"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:lines="1"
+                android:maxLines="1"
+                android:minLines="1"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/login_line_color"
+                android:textCursorDrawable="@null"
+                android:textSize="@dimen/font_16" />
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_marginLeft="@dimen/lay_15"
+            android:layout_marginRight="@dimen/lay_15"
+            android:alpha="0.6"
+            android:background="@color/darker_gray2" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/lay_60"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/lay_28"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/lay_15"
+                android:src="@mipmap/idcard_numbe" />
+
+            <TextView
+                android:layout_width="@dimen/lay_52"
+                android:layout_height="wrap_content"
+                android:text="@string/idcard_num"
+                android:textColor="@color/base_app_color"
+                android:textSize="@dimen/font_16" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:ems="15"
+                android:focusable="true"
+                android:hint="@string/hint_et_idnumber"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:lines="1"
+                android:maxLines="1"
+                android:minLines="1"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/login_line_color"
+                android:textCursorDrawable="@null"
+                android:textSize="@dimen/font_16" />
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_marginLeft="@dimen/lay_15"
+            android:layout_marginRight="@dimen/lay_15"
+            android:alpha="0.6"
+            android:background="@color/darker_gray2" />
+
+        <Button
+            android:id="@+id/bt_login_submit"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_login_submit"
+            android:elevation="0dp"
+            android:outlineProvider="none"
+            android:text="@string/login_btn"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_18"
+            tools:targetApi="lollipop"/>
+
+
+    </LinearLayout>
+</LinearLayout>

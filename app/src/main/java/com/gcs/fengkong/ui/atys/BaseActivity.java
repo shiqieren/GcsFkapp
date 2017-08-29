@@ -79,6 +79,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void initData() {
     }
 
+    protected void init(Bundle savedInstanceState) {
+    }
    //异步图片加载
    /* public synchronized RequestManager getImageLoader() {
         if (mImageLoader == null)

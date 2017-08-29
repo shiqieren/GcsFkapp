@@ -34,7 +34,6 @@ import android.widget.Toast;
 import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.account.AccountHelper;
-import com.gcs.fengkong.ui.atys.BaseActionBarActivity;
 import com.gcs.fengkong.ui.atys.SimpleBackActivity;
 import com.gcs.fengkong.ui.frags.BaseFragment;
 import com.gcs.fengkong.utils.TDevice;
@@ -281,7 +280,7 @@ public class BrowserFragment extends BaseFragment {
      */
     protected void onWebTitle(WebView view, String title) {
         if (aty != null && mWebView != null) { // 必须做判断，由于webview加载属于耗时操作，可能会本Activity已经关闭了才被调用
-            ((BaseActionBarActivity) aty).setActionBarTitle(mWebView.getTitle());
+            ((SimpleBackActivity) aty).setToolBarTitle(mWebView.getTitle());
         }
     }
 

@@ -116,4 +116,16 @@
     <string name="menu_base_info">基本信息</string>
     <string name="menu_shop_info">消费信息认证</string>
     <string name="menu_social_info">社交信息认证</string>
+    <string name="identity_string">身份信息</string>
+    <string name="bank_string">银行卡</string>
+    <string name="zhima_string">芝麻信用</string>
+    <string name="alipay_string">支付宝</string>
+    <string name="taobao_string">淘宝</string>
+    <string name="jd_string">京东</string>
+    <string name="operator_string">运营商</string>
+    <string name="contact_string">通讯录授权</string>
+    <string name="name">姓名</string>
+    <string name="hint_et_name">请输入您的姓名</string>
+    <string name="hint_et_idnumber">请输入您的身份证号</string>
+    <string name="idcard_num">身份证</string>
 </resources>

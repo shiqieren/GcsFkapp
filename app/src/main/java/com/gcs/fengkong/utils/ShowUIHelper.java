@@ -72,6 +72,76 @@ public class ShowUIHelper {
     }
 
     /**
+     * 显示身份信息输入
+     *
+     * @param context
+     */
+    public static void showIdentityAuth(Context context) {
+        showSimpleBack(context, SimpleBackPage.IDENTITY_AUTH);
+    }
+
+    /**
+     * 显示银行卡输入
+     *
+     * @param context
+     */
+    public static void showBankAuth(Context context) {
+        showSimpleBack(context, SimpleBackPage.BANK_AUTH);
+    }
+
+    /**
+     * 显示芝麻信用授权
+     *
+     * @param context
+     */
+    public static void showZhimaAuth(Context context) {
+        showSimpleBack(context, SimpleBackPage.ZHIMA_AUTH);
+    }
+
+    /**
+     * 显示支付宝授权
+     *
+     * @param context
+     */
+    public static void showAlipayAuth(Context context) {
+        showSimpleBack(context, SimpleBackPage.ALIPAY_AUTH);
+    }
+
+    /**
+     * 显示淘宝输入
+     *
+     * @param context
+     */
+    public static void showTaobaoAuth(Context context) {
+        showSimpleBack(context, SimpleBackPage.TAOBAO_AUTH);
+    }
+    /**
+     * 显示京东输入
+     *
+     * @param context
+     */
+    public static void showJdAuth(Context context) {
+        showSimpleBack(context, SimpleBackPage.JD_AUTH);
+    }
+    /**
+     * 显示运营商输入
+     *
+     * @param context
+     */
+    public static void showOperatorAuth(Context context) {
+        showSimpleBack(context, SimpleBackPage.OPERATOR_AUTH);
+    }
+    /**
+     * 显示联系人授权
+     *
+     * @param context
+     */
+    public static void showContactsAuth(Context context) {
+        showSimpleBack(context, SimpleBackPage.CONTACT_AUTH);
+    }
+
+
+    /**
      * 打开内置浏览器
      *
      * @param context

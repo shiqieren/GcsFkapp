@@ -300,8 +300,11 @@
     <dimen name="font_6">6sp</dimen>
     <dimen name="font_8">8sp</dimen>
     <dimen name="lay_12">12dp</dimen>
+
+    <dimen name="lay_15">15dp</dimen>
     <dimen name="lay_14">14dp</dimen>
     <dimen name="lay_16">16dp</dimen>
+
     <dimen name="lay_2">2dp</dimen>
     <dimen name="lay_20">20dp</dimen>
     <dimen name="lay_24">24dp</dimen>

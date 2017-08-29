@@ -3,7 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:titleTextColor="@color/black"
+        app:titleTextColor="@android:color/white"
+        app:navigationIcon = "@mipmap/btn_back_normal"
+        android:background="@color/base_app_color"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"/>
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"

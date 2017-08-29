@@ -145,6 +145,7 @@ public class SettingsFragment extends BaseFragment implements EasyPermissions.Pe
         mTvCacheSize.setText(cacheSize);
     }
 
+
     @Override
     public void onClick(View v) {
         final int id = v.getId();

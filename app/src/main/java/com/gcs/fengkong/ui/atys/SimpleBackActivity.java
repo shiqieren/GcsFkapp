@@ -5,29 +5,65 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.text.Editable;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-
-
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.bean.SimpleBackPage;
 import com.gcs.fengkong.ui.frags.BaseFragment;
-import com.gcs.fengkong.ui.interf.OnSendClickListener;
+import com.gcs.fengkong.ui.widget.statusbar.StatusBarCompat;
+import com.gcs.fengkong.utils.TDevice;
+import com.gcs.fengkong.utils.UIUtils;
 
 import java.lang.ref.WeakReference;
 
 /*可后退式的activity*/
-public class SimpleBackActivity extends BaseActionBarActivity implements
-        OnSendClickListener {
+public class SimpleBackActivity extends BaseActivity {
 
     public final static String BUNDLE_KEY_PAGE = "BUNDLE_KEY_PAGE";
     public final static String BUNDLE_KEY_ARGS = "BUNDLE_KEY_ARGS";
     private static final String TAG = "FLAG_TAG";
     protected WeakReference<Fragment> mFragment;
     protected int mPageValue = -1;
+    protected LayoutInflater mInflater;
+    protected Toolbar mToolBar;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getContentView() != 0) {
+            setContentView(getContentView());
+        }
+        mInflater = getLayoutInflater();
+        init(savedInstanceState);
+        StatusBarCompat.setStatusBarColor(this, UIUtils.getColor(R.color.base_app_color));
+    }
 
+    @Override
+    protected void initWindow() {
+        super.initWindow();
+        mToolBar = (Toolbar) findViewById(R.id.toolbar);
+        if (mToolBar != null) {
+
+            setSupportActionBar(mToolBar);
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setHomeButtonEnabled(true);
+                actionBar.setDisplayHomeAsUpEnabled(false);
+            }
+            mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();;
+                }
+            });
+
+        }
+
+    }
     @Override
     public void startActivity(Intent intent) {
         View view = getCurrentFocus();
@@ -39,15 +75,13 @@ public class SimpleBackActivity extends BaseActionBarActivity implements
         super.startActivity(intent);
     }
 
+
+
     @Override
-    protected int getLayoutId() {
+    protected int getContentView() {
         return R.layout.activity_simple_fragment;
     }
 
-    @Override
-    protected boolean hasBackButton() {
-        return true;
-    }
 
     @Override
     protected void init(Bundle savedInstanceState) {
@@ -68,7 +102,6 @@ public class SimpleBackActivity extends BaseActionBarActivity implements
             throw new IllegalArgumentException("can not find page by value:" + pageValue);
         }
 
-        setActionBarTitle(page.getTitle());
 
         try {
             Fragment fragment = (Fragment) page.getClz().newInstance();
@@ -113,31 +146,39 @@ public class SimpleBackActivity extends BaseActionBarActivity implements
         return super.onKeyDown(keyCode, event);
     }
 
+    public void setToolBarTitle(int resId) {
+        if (resId != 0) {
+            setToolBarTitle(getString(resId));
+        }
+    }
+    public void setToolBarTitle(String title) {
+        if (TextUtils.isEmpty(title)) {
+            title = getString(R.string.app_name);
+        }
+        if (mToolBar != null) {
+            mToolBar.setTitle(title);
+        }
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (this.isFinishing()) {
+            TDevice.hideSoftKeyboard(getCurrentFocus());
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
     @Override
     protected void onActivityResult(int arg0, int arg1, Intent arg2) {
         super.onActivityResult(arg0, arg1, arg2);
     }
 
-    @Override
-    public void onClick(View v) {
-    }
-
-    @Override
-    public void initView() {
-    }
 
 
-    @Override
-    public void initData() {
-    }
 
-    @Override
-    public void onClickSendButton(Editable str) {
 
-    }
-
-    @Override
-    public void onClickFlagButton() {
-
-    }
 }
