@@ -1,4 +1,4 @@
-package com.gcs.fengkong.ui.widget;
+package com.gcs.fengkong.ui.widget.statusbar;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

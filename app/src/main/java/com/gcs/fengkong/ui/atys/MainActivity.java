@@ -21,7 +21,7 @@ import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.bean.Tab;
 import com.gcs.fengkong.ui.bean.Version;
-import com.gcs.fengkong.ui.frags.SubtestFragment;
+import com.gcs.fengkong.ui.frags.StartPagerFragment;
 import com.gcs.fengkong.ui.frags.UserInfoFragment;
 import com.gcs.fengkong.ui.widget.FragmentTabHost;
 import com.gcs.fengkong.update.CheckUpdateManager;
@@ -48,7 +48,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     private FragmentTabHost mTabhost;
 
 
-    private List<Tab> mTabs = new ArrayList<>(5);
+    private List<Tab> mTabs = new ArrayList<>(1);
 
 
   /*  @Override
@@ -81,13 +81,11 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     private void initTab() {
 
 
-        Tab tab_mine1 = new Tab(UserInfoFragment.class,R.string.tab1,R.drawable.selector_icon_mine);
-        Tab tab_mine2 = new Tab(UserInfoFragment.class,R.string.tab2,R.drawable.selector_icon_mine);
-        Tab tab_mine3 = new Tab(UserInfoFragment.class,R.string.tab3,R.drawable.selector_icon_mine);
+        Tab tab_mine1 = new Tab(StartPagerFragment.class,R.string.tab1,R.drawable.selector_icon_mine);
+       // Tab tab_mine2 = new Tab( UserInfoFragment.class,R.string.tab2,R.drawable.selector_icon_mine);
 
         mTabs.add(tab_mine1);
-        mTabs.add(tab_mine2);
-        mTabs.add(tab_mine3);
+      //  mTabs.add(tab_mine2);
 
 
 

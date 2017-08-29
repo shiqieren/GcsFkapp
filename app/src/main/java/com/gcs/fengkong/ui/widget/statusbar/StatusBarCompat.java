@@ -1,4 +1,4 @@
-package com.gcs.fengkong.ui.widget;
+package com.gcs.fengkong.ui.widget.statusbar;
 
 import android.app.Activity;
 import android.os.Build;

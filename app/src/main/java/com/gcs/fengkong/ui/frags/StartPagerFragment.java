@@ -1,30 +1,33 @@
 package com.gcs.fengkong.ui.frags;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.TextView;
 
 import com.gcs.fengkong.R;
-import com.gcs.fengkong.ui.account.AccountHelper;
-import com.gcs.fengkong.ui.account.atys.LoginActivity;
+import com.gcs.fengkong.ui.widget.statusbar.StatusBarCompat;
+import com.gcs.fengkong.utils.UIUtils;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
  * Created by Ivan on 15/9/22.
  */
-public class SubtestFragment extends BaseFragment implements View.OnClickListener{
+public class StartPagerFragment extends BaseFragment implements View.OnClickListener{
 
-    private TextView login;
-  /*  @Override
-    public View onCreateView(LayoutInflater inflater,
-                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.start_page, container,
-                false);
-        ButterKnife.bind(this, view);
-        initView(view);
-        initData();
-        return view;
-    }*/
+    private boolean isHide = false;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle arguments = getArguments();
+    }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        StatusBarCompat.translucentStatusBar(getActivity(), isHide);
+    }
 
     @Override
     protected int getLayoutId() {
@@ -33,35 +36,20 @@ public class SubtestFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     public void initView(View view) {
-        login = view.findViewById(R.id.txt_username);
-        setListener();
+
     }
     @Override
     public void initData() {
-
     }
 
-    private void setListener(){
-        login.setOnClickListener(this);
-    }
+
 
     @Override
-    public void onClick(View v) {
-        final int id = v.getId();
-        switch (id) {
-            case R.id.txt_username:
-            //判断是否已经登录
-                if (!AccountHelper.isLogin()) {
-                    LoginActivity.show(getContext());
-                    return;
-                }
-            default:
-                break;
-
-
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            StatusBarCompat.translucentStatusBar(getActivity(), isHide);
+            isHide = !isHide;
         }
-
     }
-
-
 }

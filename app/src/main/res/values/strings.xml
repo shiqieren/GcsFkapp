@@ -112,4 +112,8 @@
     <string name="state_refreshing">正在刷新</string>
     <string name="state_loading_error">数据加载中&#8230;</string>
     <string name="state_submit">正在提交中&#8230;</string>
+    <!--首页-->
+    <string name="menu_base_info">基本信息</string>
+    <string name="menu_shop_info">消费信息认证</string>
+    <string name="menu_social_info">社交信息认证</string>
 </resources>

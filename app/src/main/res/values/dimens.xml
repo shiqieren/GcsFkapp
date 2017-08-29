@@ -53,7 +53,8 @@
     <dimen name="timeline_small_card_min_width">66.0dip</dimen>
     <dimen name="timeline_small_card_padding_right">5.0dip</dimen>
 
-    <!-- 意见反馈 -->
+    <!-- 我的信息 -->
+    <dimen name="myhead_h_bg">205.0dip</dimen>
 
     <!-- 时间选择dialog -->
     <dimen name="done_label_size">14sp</dimen>
