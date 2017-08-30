@@ -3,49 +3,42 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
-        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#00ffff"
+        android:padding="@dimen/lay_14"
+        android:layout_marginTop="@dimen/lay_12"
         android:gravity="center"
-        android:padding="10dp"
-        android:text="@string/read_auth_book"
-        android:textSize="18sp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/lay_15"
-        android:gravity="center"
-        android:clickable="true"
-        android:text="@string/read_auth_book"
-        android:autoLink="all"
+        android:textSize="@dimen/font_18"
+        android:text="@string/contact_auth_string"
+        android:textStyle="bold"
+        android:textColor="@color/defaultTextColor"
         />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/read_authbook_link"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/lay_8"
+        android:gravity="center"
+        android:clickable="true"
+        android:textSize="@dimen/font_14"
+        android:text="@string/read_auth_book"
+        android:textColor="@color/gray"
+        android:autoLink="all"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/gray"/>
 
+        <!--
         <Button
             android:id="@+id/btn_cancel"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#00ffff"
-            android:text="@string/read_auth_book" />
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:textColor="@color/base_app_color"
+            android:text="@string/confirm_btn" />-->
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="40dp"
-            android:background="#D1D1D1"/>
 
-        <Button
-            android:id="@+id/btn_comfirm"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#00ffff"
-            android:text="@string/read_auth_book" />
-    </LinearLayout>
 </LinearLayout>

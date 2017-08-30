@@ -146,5 +146,6 @@
     <string name="auth_message_tip">短信验证码</string>
     <string name="confirm_btn">确认</string>
     <string name="imme_auth_btn">立即授权</string>
-    <string name="read_auth_book">查看授权协议书</string>
+    <string name="read_auth_book"><u>查看授权协议书</u></string>
+    <string name="contact_auth_string">通讯录授权</string>
 </resources>
