@@ -193,7 +193,7 @@ public class RegisterStepOneActivity extends AccountBaseActivity implements View
         setListener();
         TextView label = (TextView) mLayBackBar.findViewById(R.id.tv_navigation_label);
         label.setText(R.string.login_register_hint);
-
+        mEtRegisterUsername.setOnFocusChangeListener(this);
         mEtRegisterUsername.addTextChangedListener(
                 new TextWatcher() {
                     @Override
@@ -262,7 +262,6 @@ public class RegisterStepOneActivity extends AccountBaseActivity implements View
                 }
 
         );
-        mEtRegisterUsername.setOnFocusChangeListener(this);
         mEtRegisterAuthCode.setOnFocusChangeListener(this);
         mEtRegisterAuthCode.addTextChangedListener(new TextWatcher() {
             @Override
@@ -280,7 +279,7 @@ public class RegisterStepOneActivity extends AccountBaseActivity implements View
             public void afterTextChanged(Editable s) {
                 int length = s.length();
                 String pwd = mEtRegisterPwd.getText().toString().trim();
-                if (length > 0 && mMachPhoneNum&&!TextUtils.isEmpty(pwd)) {
+                if (length > 0 && mMachPhoneNum && !TextUtils.isEmpty(pwd)) {
                     mBtRegisterSubmit.setBackgroundResource(R.drawable.bg_login_submit);
                     mBtRegisterSubmit.setTextColor(getResources().getColor(R.color.white));
                 } else {
@@ -383,6 +382,24 @@ public class RegisterStepOneActivity extends AccountBaseActivity implements View
             case R.id.ib_navigation_back:
                 finish();
                 break;
+            case R.id.et_register_username:
+                mEtRegisterAuthCode.clearFocus();
+                mEtRegisterPwd.clearFocus();
+                mEtRegisterUsername.setFocusableInTouchMode(true);
+                mEtRegisterUsername.requestFocus();
+                break;
+            case R.id.et_register_auth_code:
+                mEtRegisterUsername.clearFocus();
+                mEtRegisterPwd.clearFocus();
+                mEtRegisterAuthCode.setFocusableInTouchMode(true);
+                mEtRegisterAuthCode.requestFocus();
+                break;
+            case R.id.et_register_pwd_input:
+                mEtRegisterUsername.clearFocus();
+                mEtRegisterAuthCode.clearFocus();
+                mEtRegisterPwd.setFocusableInTouchMode(true);
+                mEtRegisterPwd.requestFocus();
+                break;
             case R.id.iv_register_username_del:
                 mEtRegisterUsername.setText(null);
                 break;
@@ -468,16 +485,20 @@ public class RegisterStepOneActivity extends AccountBaseActivity implements View
                 if (hasFocus) {
                     mLlRegisterPhone.setActivated(true);
                     mLlRegisterSmsCode.setActivated(false);
+                    mLlRegisterTwoPwd.setActivated(false);
                 }
                 break;
             case R.id.et_register_auth_code:
                 if (hasFocus) {
-                    mLlRegisterSmsCode.setActivated(true);
                     mLlRegisterPhone.setActivated(false);
+                    mLlRegisterSmsCode.setActivated(true);
+                    mLlRegisterTwoPwd.setActivated(false);
                 }
                 break;
             case R.id.et_register_pwd_input:
                 if (hasFocus) {
+                    mLlRegisterPhone.setActivated(false);
+                    mLlRegisterSmsCode.setActivated(false);
                     mLlRegisterTwoPwd.setActivated(true);
                 }
                 break;

@@ -347,12 +347,8 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                 RetrieveActivity.show(LoginActivity.this);
                 break;
             case R.id.bt_login_submit:
-                //用户登录
-                Toast.makeText(LoginActivity.this,"登录",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                finish();
-              //  loginRequest();
+
+               loginRequest();
                 break;
             case R.id.iv_login_hold_pwd:
                 //记住密码
@@ -387,9 +383,16 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
 
 
         if (!TextUtils.isEmpty(tempPwd) && !TextUtils.isEmpty(tempUsername)) {
+
+
             //登录成功,请求数据进入用户个人中心页面
 
             if (TDevice.hasInternet()) {
+                //用户登录
+                Toast.makeText(LoginActivity.this,"登录",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                finish();
               //111  requestLogin(tempUsername, tempPwd);
             } else {
                 showToastForKeyBord(R.string.footer_type_net_error);

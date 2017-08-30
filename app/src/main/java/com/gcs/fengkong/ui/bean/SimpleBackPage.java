@@ -26,7 +26,6 @@ public enum SimpleBackPage {
     TAOBAO_AUTH(5, R.string.taobao_string, TaobaoAuthFragment.class),
     JD_AUTH(6, R.string.jd_string, JdAuthFragment.class),
     OPERATOR_AUTH(7, R.string.operator_string, OperatorAuthFragment.class),
-    CONTACT_AUTH(8, R.string.contact_string, ContactsAuthFragment.class),
 
     SETTING(15, R.string.actionbar_title_setting, SettingsFragment.class),
 

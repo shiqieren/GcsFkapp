@@ -8,7 +8,6 @@ import android.support.v7.widget.AppCompatEditText;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.gcs.fengkong.R;
 
 
 /**
@@ -19,7 +18,8 @@ import com.gcs.fengkong.R;
 @SuppressWarnings("all")
 public final class DialogHelper {
     public static AlertDialog.Builder getDialog(Context context) {
-        return new AlertDialog.Builder(context, R.style.App_Theme_Dialog_Alert);
+        //return new AlertDialog.Builder(context, R.style.App_Theme_Dialog_Alert);
+        return new AlertDialog.Builder(context);
     }
 
     /**

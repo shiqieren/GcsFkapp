@@ -388,6 +388,23 @@ public class RetrieveActivity extends AccountBaseActivity implements View.OnClic
             case R.id.ib_navigation_back:
                 finish();
                 break;
+            case R.id.et_retrieve_tel:
+                mEtResetPwd.clearFocus();
+                mEtRetrieveCodeInput.clearFocus();
+                mEtRetrieveTel.setFocusableInTouchMode(true);
+                mEtRetrieveTel.requestFocus();
+                break;
+            case R.id.et_retrieve_code_input:
+                mEtResetPwd.clearFocus();
+                mEtRetrieveTel.clearFocus();
+                mEtRetrieveCodeInput.setFocusableInTouchMode(true);
+                mEtRetrieveCodeInput.requestFocus();
+                break;
+            case R.id.et_reset_pwd:
+                mEtRetrieveCodeInput.clearFocus();
+                mEtRetrieveTel.clearFocus();
+                mEtResetPwd.setFocusableInTouchMode(true);
+                mEtResetPwd.requestFocus();
             case R.id.iv_retrieve_tel_del:
                 mEtRetrieveTel.setText(null);
                 break;
@@ -489,16 +506,20 @@ public class RetrieveActivity extends AccountBaseActivity implements View.OnClic
                 if (hasFocus) {
                     mLlRetrieveTel.setActivated(true);
                     mLlRetrieveCode.setActivated(false);
+                    mLlResetPwd.setActivated(false);
                 }
                 break;
             case R.id.et_retrieve_code_input:
                 if (hasFocus) {
-                    mLlRetrieveCode.setActivated(true);
                     mLlRetrieveTel.setActivated(false);
+                    mLlRetrieveCode.setActivated(true);
+                    mLlResetPwd.setActivated(false);
                 }
                 break;
             case R.id.et_reset_pwd:
                 if (hasFocus) {
+                    mLlRetrieveTel.setActivated(false);
+                    mLlRetrieveCode.setActivated(false);
                     mLlResetPwd.setActivated(true);
                 }
                 break;

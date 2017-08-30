@@ -3,11 +3,13 @@
 
     <!-- 新版登录模块-->
     <color name="login_line_color">#dededf</color>
-    <color name="login_input_active">#2c81e2</color>
+   <color name="login_input_active">#2c81e2</color>
     <color name="login_other_color">#cacaca</color>
     <color name="account_input_bg_color">#33ffffff</color>
-    <color name="account_lock_bg">#ff43815c</color>
-    <color name="account_lock_font_color">#FF68997C</color>
+
+    <color name="account_lock_bg">#ff5CA9D9</color>
+    <color name="account_lock_font_color">#FFFFFFFF</color>
+
     <color name="account_input_color">#c9c9c9</color>
     <color name="account_pressed_true">#0f81c7</color>
     <color name="bg_press">#ebebeb</color>
@@ -28,5 +30,6 @@
     <color name="darker_gray3">#999999</color>
 
     <color name="base_app_color">#0f81c7</color>
-
+    <color name="hint_font_color">#78ccff</color>
+   <color name="login_border_colors">#52ffffff</color>
 </resources>

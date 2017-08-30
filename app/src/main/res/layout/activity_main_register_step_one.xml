@@ -5,14 +5,17 @@
               android:id="@+id/lay_register_one_container"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@mipmap/bg_login"
+              android:background="@color/base_app_color"
               android:fitsSystemWindows="true"
               android:orientation="vertical">
 
     <include
         android:id="@+id/ly_retrieve_bar"
         layout="@layout/activity_main_login_navigation_bar"/>
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dip"
+        android:background="@color/white_color_disable"></View>
     <ImageView
         android:id="@+id/iv_login_logo"
         android:layout_width="wrap_content"
@@ -39,7 +42,7 @@
             android:layout_height="24dp"
             android:layout_marginLeft="14dp"
             android:contentDescription="@null"
-            app:srcCompat="@mipmap/ic_singup_mobile"
+            app:srcCompat="@mipmap/login_phone_logo"
             tools:ignore="RtlHardcoded"/>
 
         <View
@@ -62,7 +65,7 @@
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
             android:textColor="@color/white"
-            android:textColorHint="@color/account_input_color"
+            android:textColorHint="@color/hint_font_color"
             android:textCursorDrawable="@null"
             android:textSize="@dimen/font_16"/>
 
@@ -96,7 +99,7 @@
             android:layout_marginLeft="14dp"
             android:layout_marginRight="14dp"
             android:contentDescription="@null"
-            app:srcCompat="@mipmap/ic_signup_sms"/>
+            app:srcCompat="@mipmap/auth_code_logo"/>
 
         <View
             android:layout_width="1px"
@@ -118,7 +121,7 @@
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
             android:textColor="@color/white"
-            android:textColorHint="@color/account_input_color"
+            android:textColorHint="@color/hint_font_color"
             android:textCursorDrawable="@null"
             android:textSize="@dimen/font_16"/>
 
@@ -127,7 +130,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="16dp"
-            android:alpha="0.4"
+            android:alpha="0.8"
             android:background="@drawable/bg_register_call_sms"
             android:gravity="center_vertical"
             android:paddingBottom="4dp"
@@ -180,7 +183,7 @@
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
             android:textColor="@color/white"
-            android:textColorHint="@color/login_line_color"
+            android:textColorHint="@color/hint_font_color"
             android:textCursorDrawable="@null"
             android:textSize="@dimen/font_16"/>
 
@@ -205,11 +208,13 @@
         android:layout_marginRight="24dp"
         android:layout_marginTop="32dp"
         android:background="@drawable/bg_login_submit_lock"
+        android:translationZ="0dp"
         android:elevation="0dp"
         android:outlineProvider="none"
+        tools:targetApi="lollipop"
         android:text="@string/login_register_hint"
-        android:textColor="@color/account_lock_font_color"
+        android:textColor="@color/white"
         android:textSize="@dimen/font_18"
-        android:translationZ="0dp"
-        tools:targetApi="lollipop"/>
+        />
+
 </LinearLayout>

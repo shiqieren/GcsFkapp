@@ -5,6 +5,9 @@
         <shape>
             <corners android:radius="26dp"/>
             <solid android:color="@color/login_input_active"/>
+            <stroke
+                android:width="0.5dp"
+                android:color="@color/login_border_colors"/>
         </shape>
     </item>
 
@@ -12,6 +15,9 @@
         <shape>
             <corners android:radius="26dp"/>
             <solid android:color="@color/account_pressed_true"/>
+            <stroke
+                android:width="0.5dp"
+                android:color="@color/login_border_colors"/>
         </shape>
     </item>
 

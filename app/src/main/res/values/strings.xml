@@ -64,7 +64,6 @@
 
 
 
-
     <string name="tip_double_click_exit">再次点击退出app</string>
     <string name="progress_submit">正在提交…</string>
 
@@ -129,4 +128,23 @@
     <string name="hint_et_idnumber">请输入您的身份证号</string>
     <string name="idcard_num">身份证</string>
     <string name="auth_taobao_tip">请登入淘宝账号进行授权</string>
+    <string name="check_text_taobao">同意《淘宝数据采集服务协议》</string>
+    <string name="operator_phone_string">手机号码</string>
+    <string name="operator_pass_string">服务密码</string>
+    <string name="zhima_tip_string">请填写资料进行授权</string>
+    <string name="auth_jd_tip_string">请登录京东帐号进行授权</string>
+    <string name="auth_username">账户</string>
+    <string name="username_hinttip_string">用户名/邮箱/手机号</string>
+    <string name="hint_input_passstring">请输入您的密码</string>
+    <string name="agreejd_tip_string">同意《京东授权协议》</string>
+    <string name="alipay_tip_string">请登录支付宝帐号进行授权</string>
+    <string name="agreealipay_tip_string">同意《支付宝数据采集服务协议》</string>
+    <string name="bt_beginauth_string">开始认证</string>
+    <string name="bankcard_user_logo">持卡人</string>
+    <string name="bankcard_number_tip">银行卡号</string>
+    <string name="re_mobile_tip">预留手机号</string>
+    <string name="auth_message_tip">短信验证码</string>
+    <string name="confirm_btn">确认</string>
+    <string name="imme_auth_btn">立即授权</string>
+    <string name="read_auth_book">查看授权协议书</string>
 </resources>

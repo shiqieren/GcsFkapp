@@ -131,14 +131,7 @@ public class ShowUIHelper {
     public static void showOperatorAuth(Context context) {
         showSimpleBack(context, SimpleBackPage.OPERATOR_AUTH);
     }
-    /**
-     * 显示联系人授权
-     *
-     * @param context
-     */
-    public static void showContactsAuth(Context context) {
-        showSimpleBack(context, SimpleBackPage.CONTACT_AUTH);
-    }
+
 
 
     /**

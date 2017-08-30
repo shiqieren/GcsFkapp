@@ -8,29 +8,12 @@
 
 
     <LinearLayout
+        android:id="@+id/traceroute_rootview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clickable="true"
         android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="50dip"/>
-            <ImageView
-                android:layout_width="60dip"
-                android:layout_height="60dip"
-                android:scaleType="fitXY"
-                android:src="@mipmap/taobao_ilogo"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="@string/auth_taobao_tip"
-                android:layout_marginTop="15dip"/>
-        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/lay_60"
@@ -41,12 +24,12 @@
                 android:layout_width="@dimen/lay_28"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/lay_15"
-                android:src="@mipmap/identity_name" />
+                android:src="@mipmap/gcs_phone_logo" />
 
             <TextView
-                android:layout_width="@dimen/lay_52"
+                android:layout_width="@dimen/lay_68"
                 android:layout_height="wrap_content"
-                android:text="@string/name"
+                android:text="@string/operator_phone_string"
                 android:textColor="@color/base_app_color"
                 android:textSize="@dimen/font_16" />
 
@@ -90,12 +73,12 @@
                 android:layout_width="@dimen/lay_28"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/lay_15"
-                android:src="@mipmap/idcard_numbe" />
+                android:src="@mipmap/gcs_password_logo" />
 
             <TextView
-                android:layout_width="@dimen/lay_52"
+                android:layout_width="@dimen/lay_68"
                 android:layout_height="wrap_content"
-                android:text="@string/idcard_num"
+                android:text="@string/operator_pass_string"
                 android:textColor="@color/base_app_color"
                 android:textSize="@dimen/font_16" />
 
@@ -129,9 +112,40 @@
             android:layout_marginRight="@dimen/lay_15"
             android:alpha="0.6"
             android:background="@color/darker_gray2" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/lay_15"
+            android:paddingRight="@dimen/lay_15">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10.5dip"
+                android:autoLink="all"
+                android:text="@string/login_forget_hint"
+                android:textColor="@color/defaultTextColor"
+                android:textSize="@dimen/font_14"
+                android:paddingBottom="@dimen/lay_15"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/lay_60"
+            android:gravity="left"
+            android:paddingLeft="@dimen/lay_15"
+            android:paddingRight="@dimen/lay_15"
+            android:orientation="horizontal">
 
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:layout_marginTop="10dip"
+                android:textSize="@dimen/font_14"
+                android:textColor="@color/defaultTextColor"
+                android:text="同意《运营商授权协议》"/>
 
-
+        </LinearLayout>
         <Button
             android:id="@+id/bt_login_submit"
             android:layout_width="match_parent"
@@ -142,11 +156,51 @@
             android:background="@drawable/bg_login_submit"
             android:elevation="0dp"
             android:outlineProvider="none"
-            android:text="@string/login_btn"
+            android:text="@string/confirm_btn"
             android:textColor="@color/white"
             android:textSize="@dimen/font_18"
             tools:targetApi="lollipop"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/lay_15">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="@dimen/lay_15"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_14"
+                    android:textColor="@color/main_gray"
+                    android:gravity="center"
+                    android:text="*"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_14"
+                    android:textColor="@color/main_gray"
+                    android:text="温馨提示："/>
+            </LinearLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                android:layout_marginLeft="@dimen/lay_15"
+                android:textSize="@dimen/font_14"
+                android:textColor="@color/main_gray"
+                android:text="我们不会保存您的账户密码"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                android:layout_marginLeft="@dimen/lay_15"
+                android:textSize="@dimen/font_14"
+                android:textColor="@color/main_gray"
+                android:text="请填写本人真实有效信息以便通过认证。"/>
+        </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>

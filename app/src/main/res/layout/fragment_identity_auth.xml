@@ -8,8 +8,10 @@
 
 
     <LinearLayout
+        android:id="@+id/traceroute_rootview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clickable="true"
         android:orientation="vertical">
 
         <LinearLayout
@@ -121,7 +123,7 @@
             android:background="@drawable/bg_login_submit"
             android:elevation="0dp"
             android:outlineProvider="none"
-            android:text="@string/login_btn"
+            android:text="@string/bt_beginauth_string"
             android:textColor="@color/white"
             android:textSize="@dimen/font_18"
             tools:targetApi="lollipop"/>

@@ -23,7 +23,7 @@
                 android:layout_width="60dip"
                 android:layout_height="60dip"
                 android:scaleType="fitXY"
-                android:src="@mipmap/taobao_ilogo"/>
+                android:src="@mipmap/gcs_taobao_logo"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

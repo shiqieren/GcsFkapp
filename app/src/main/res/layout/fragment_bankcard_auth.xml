@@ -22,12 +22,12 @@
                 android:layout_width="@dimen/lay_28"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/lay_15"
-                android:src="@mipmap/identity_name" />
+                android:src="@mipmap/bankcard_user_logo" />
 
             <TextView
-                android:layout_width="@dimen/lay_52"
+                android:layout_width="@dimen/lay_84"
                 android:layout_height="wrap_content"
-                android:text="@string/name"
+                android:text="@string/bankcard_user_logo"
                 android:textColor="@color/base_app_color"
                 android:textSize="@dimen/font_16" />
 
@@ -40,7 +40,6 @@
                 android:background="@null"
                 android:ems="15"
                 android:focusable="true"
-                android:hint="@string/hint_et_name"
                 android:imeOptions="actionDone"
                 android:inputType="text"
                 android:lines="1"
@@ -71,12 +70,12 @@
                 android:layout_width="@dimen/lay_28"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/lay_15"
-                android:src="@mipmap/idcard_numbe" />
+                android:src="@mipmap/sub_bankcard_logo" />
 
             <TextView
-                android:layout_width="@dimen/lay_52"
+                android:layout_width="@dimen/lay_84"
                 android:layout_height="wrap_content"
-                android:text="@string/idcard_num"
+                android:text="@string/bankcard_number_tip"
                 android:textColor="@color/base_app_color"
                 android:textSize="@dimen/font_16" />
 
@@ -89,7 +88,6 @@
                 android:background="@null"
                 android:ems="15"
                 android:focusable="true"
-                android:hint="@string/hint_et_idnumber"
                 android:imeOptions="actionDone"
                 android:inputType="text"
                 android:lines="1"
@@ -120,12 +118,12 @@
                 android:layout_width="@dimen/lay_28"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/lay_15"
-                android:src="@mipmap/identity_name" />
+                android:src="@mipmap/remobile_logo" />
 
             <TextView
-                android:layout_width="@dimen/lay_52"
+                android:layout_width="@dimen/lay_84"
                 android:layout_height="wrap_content"
-                android:text="@string/name"
+                android:text="@string/re_mobile_tip"
                 android:textColor="@color/base_app_color"
                 android:textSize="@dimen/font_16" />
 
@@ -138,7 +136,6 @@
                 android:background="@null"
                 android:ems="15"
                 android:focusable="true"
-                android:hint="@string/hint_et_name"
                 android:imeOptions="actionDone"
                 android:inputType="text"
                 android:lines="1"
@@ -169,12 +166,12 @@
                 android:layout_width="@dimen/lay_28"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/lay_15"
-                android:src="@mipmap/idcard_numbe" />
+                android:src="@mipmap/auth_message_logo" />
 
             <TextView
-                android:layout_width="@dimen/lay_52"
+                android:layout_width="@dimen/lay_84"
                 android:layout_height="wrap_content"
-                android:text="@string/idcard_num"
+                android:text="@string/auth_message_tip"
                 android:textColor="@color/base_app_color"
                 android:textSize="@dimen/font_16" />
 

@@ -10,13 +10,16 @@
         android:id="@+id/lay_login_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@mipmap/bg_login"
+        android:background="@color/base_app_color"
         android:orientation="vertical"
         android:paddingBottom="16dp">
         <include
             android:id="@+id/ly_retrieve_bar"
             layout="@layout/activity_main_login_navigation_bar" />
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dip"
+            android:background="@color/white_color_disable"></View>
         <ImageView
             android:id="@+id/iv_login_logo"
             android:layout_width="wrap_content"
@@ -45,7 +48,7 @@
                 android:layout_marginLeft="14dp"
                 android:layout_marginRight="14dp"
                 android:contentDescription="@null"
-                app:srcCompat="@mipmap/ic_launcher_round" />
+                app:srcCompat="@mipmap/login_phone_logo" />
 
             <View
                 android:layout_width="1px"
@@ -71,7 +74,7 @@
                 android:paddingLeft="4dp"
                 android:paddingRight="4dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/login_line_color"
+                android:textColorHint="@color/hint_font_color"
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/font_16" />
 
@@ -127,7 +130,7 @@
                 android:paddingLeft="4dp"
                 android:paddingRight="4dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/login_line_color"
+                android:textColorHint="@color/hint_font_color"
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/font_16" />
 
@@ -184,7 +187,7 @@
                 android:paddingLeft="4dp"
                 android:paddingTop="4dp"
                 android:text="@string/login_forget_hint"
-                android:textColor="@color/login_input_active"
+                android:textColor="@color/hint_font_color"
                 android:textSize="16sp"
                 tools:ignore="RtlSymmetry" />
         </LinearLayout>
@@ -201,13 +204,14 @@
             android:layout_marginLeft="24dp"
             android:layout_marginRight="24dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/bg_login_submit"
+            android:background="@drawable/bg_login_submit_lock"
             android:elevation="0dp"
             android:outlineProvider="none"
+            tools:targetApi="lollipop"
             android:text="@string/login_btn"
             android:textColor="@color/white"
             android:textSize="@dimen/font_18"
-            tools:targetApi="lollipop" />
+             />
 
        <!-- <Button
             android:id="@+id/bt_login_register"
@@ -233,7 +237,7 @@
             android:paddingLeft="4dp"
             android:paddingTop="4dp"
             android:text="@string/login_registerfirst_tip"
-            android:textColor="@color/login_input_active"
+            android:textColor="@color/white"
             android:textSize="16sp"
             tools:ignore="RtlSymmetry" />
         <Space
