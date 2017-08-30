@@ -1,6 +1,7 @@
 package com.gcs.fengkong.ui.frags;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.adapter.BaseRecyclerAdapter;
+import com.gcs.fengkong.ui.atys.PhoneAdressActivity;
 import com.gcs.fengkong.ui.widget.statusbar.StatusBarCompat;
 import com.gcs.fengkong.utils.DialogHelper;
 import com.gcs.fengkong.utils.ShowUIHelper;
@@ -140,7 +142,8 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
         final AlertDialog dlgShowBack = DialogHelper.getDialog(getContext()).setView(dialogview).setPositiveButton("确认", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
+                Intent intent = new Intent(getActivity(), PhoneAdressActivity.class);
+                startActivity(intent);
             }
         }).create();
         tv_link.setOnClickListener(new View.OnClickListener() {
