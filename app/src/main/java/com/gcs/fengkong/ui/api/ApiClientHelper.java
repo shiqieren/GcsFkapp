@@ -6,13 +6,17 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.content.SharedPreferencesCompat;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 
-
 import com.gcs.fengkong.Setting;
+import com.gcs.fengkong.utils.MACgetUtil;
+import com.gcs.fengkong.utils.UIUtils;
 
 import java.util.UUID;
+
+import static android.content.Context.TELEPHONY_SERVICE;
 
 class ApiClientHelper {
 
@@ -24,21 +28,36 @@ class ApiClientHelper {
      * @return
      */
     static String getUserAgent(Application appContext) {
+        //全局手机管理器
+        TelephonyManager tm = (TelephonyManager) UIUtils.getContext().getSystemService(TELEPHONY_SERVICE);
+        //// 获取智能设备唯一编号
+        String deviceid  = tm.getDeviceId();
+        // 获得SIM卡的序号
+        String imei = tm.getSimSerialNumber();
+        //国际移动用户识别码-用户Id
+        String imsi = tm.getSubscriberId();
+        //MAC
+        String mac = MACgetUtil.getAdresseMAC(UIUtils.getContext());
+        //本机号码
+        String phone = tm.getLine1Number();
         // WebSettings.getDefaultUserAgent(appContext)
-
+        //版本号
         int vCode = getPackageInfo(appContext).versionCode;
+        //发布
         String version = Build.VERSION.RELEASE; // "1.0" or "3.4b5"
         String osVer = version.length() > 0 ? version : "1.0";
 
         String model = Build.MODEL;
+        Log.i("客户端唯一标识Build.MODEL>>>","getBuild.MODEL:" + model);
         String id = Build.ID; // "MASTER" or "M4-rc20"
+        Log.i("客户端唯一标识Build.ID>>>","getBuild.ID:" + id);
         if (id.length() > 0) {
             model += " Build/" + id;
         }
 
-        String format = "OSChina.NET/1.0 (oscapp; %s; Android %s; %s; %s)";
+        String format = "GCSfk.NET/1.0 (gcsapp; %s; Android %s; %s; %s)";
         String ua = String.format(format, vCode, osVer, model, getAppId(appContext));
-        Log.i("GETUSERAGENT:","getUserAgent:" + ua);
+        Log.i("客户端唯一标识>>>","getUserAgent:" + ua);
         return ua;
     }
 
@@ -94,4 +113,8 @@ class ApiClientHelper {
             info = new PackageInfo();
         return info;
     }
+
+
+
+
 }

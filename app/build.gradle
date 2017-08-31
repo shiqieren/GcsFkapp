@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.0"
@@ -20,7 +19,6 @@ android {
         }
     }
 }
-
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {

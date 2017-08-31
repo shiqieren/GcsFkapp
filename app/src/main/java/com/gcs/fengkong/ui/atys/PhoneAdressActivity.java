@@ -24,6 +24,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gcs.fengkong.R;
+import com.gcs.fengkong.ui.bean.ContactBean;
+import com.google.gson.Gson;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -34,19 +36,14 @@ public class PhoneAdressActivity extends ListActivity {
 
 	/** 获取库Phone表字�?**/
 	private static final String[] PHONES_PROJECTION = new String[] {
-			Phone.DISPLAY_NAME, Phone.NUMBER, Photo.PHOTO_ID, Phone.CONTACT_ID };
+			Phone.DISPLAY_NAME,  Phone.CONTACT_ID};
 
 	/** 联系人显示名�?**/
 	private static final int PHONES_DISPLAY_NAME = 0;
 
-	/** 电话号码 **/
-	private static final int PHONES_NUMBER = 1;
-
-	/** 头像ID **/
-	private static final int PHONES_PHOTO_ID = 2;
 
 	/** 联系人的ID **/
-	private static final int PHONES_CONTACT_ID = 3;
+	private static final int PHONES_CONTACT_ID = 1;
 
 	/** 联系人名�?**/
 	private ArrayList<String> mContactsName = new ArrayList<String>();
@@ -54,8 +51,13 @@ public class PhoneAdressActivity extends ListActivity {
 	/** 联系人头�?**/
 	private ArrayList<String> mContactsNumber = new ArrayList<String>();
 
-	/** 联系人头�?**/
-	private ArrayList<Bitmap> mContactsImg = new ArrayList<Bitmap>();
+	/** 联系人头公司**/
+	private ArrayList<String> mContactsCompany = new ArrayList<String>();
+
+	/** 联系人头邮件**/
+	private ArrayList<String> mContactsEmail = new ArrayList<String>();
+	/** 所有联系人**/
+	private ArrayList<ContactBean> mAllContact = new ArrayList<ContactBean>();
 
 	ListView mListView = null;
 	private MyListAdapter mAdapter;
@@ -68,7 +70,9 @@ public class PhoneAdressActivity extends ListActivity {
 		mContext = this;
 		mListView = this.getListView();
 		/** 得到手机通讯录联系人信息 **/
-		getPhoneContacts();
+		mAllContact = getPhoneContacts();
+		Log.e("获取的电话号码>>",new Gson().toJson(mAllContact));
+
 
 		mAdapter = new MyListAdapter(this);
 		setListAdapter(mAdapter);
@@ -78,63 +82,99 @@ public class PhoneAdressActivity extends ListActivity {
 	}
 
 	// 获取手机联系�?
-	private void getPhoneContacts() {
+	private ArrayList<ContactBean> getPhoneContacts() {
+
+
 		// rely=(RelativeLayout) findViewById(R.id.relationId);
 		ContentResolver resolver = mContext.getContentResolver();
 
-		// 获取手机联系�?
+		// 获取手机联系人信息
 		Cursor phoneCursor = resolver.query(Phone.CONTENT_URI,
 				PHONES_PROJECTION, null, null, null);
 
-		// 不为�?
+		// 不为空
 		if (phoneCursor != null) {
+
 			while (phoneCursor.moveToNext()) {
-
+				ContactBean mGetContact = new ContactBean();
 				// 得到手机号码
-				String phoneNumber = phoneCursor.getString(PHONES_NUMBER);
+				//String phoneNumber = phoneCursor.getString(PHONES_NUMBER);
 				// 当手机号码为空的或�?为空字段 跳过当前循环
-				if (TextUtils.isEmpty(phoneNumber))
-					continue;
-
+				/*if (TextUtils.isEmpty(phoneNumber))
+					continue;*/
 				// 得到联系人名�?
 				String contactName = phoneCursor.getString(PHONES_DISPLAY_NAME);
-
-				// 得到联系人ID
+				if (TextUtils.isEmpty(contactName))
+					continue;
+				// 得到联系人ID-用于关联查询
 				Long contactid = phoneCursor.getLong(PHONES_CONTACT_ID);
 
-				// 得到联系人头像ID
-				Long imgid = phoneCursor.getLong(PHONES_PHOTO_ID);
+				//查询电话类型的数据操作
+				Cursor phones = resolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+						null,
+						ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ contactid,
+						null, null);
+				StringBuilder phonesb = new StringBuilder();
+				while(phones.moveToNext())
+				{
+					String phoneNumber = phones.getString(phones.getColumnIndex(
+							ContactsContract.CommonDataKinds.Phone.NUMBER));
+					//添加Phone的信息
+					phonesb.append(phoneNumber).append(";");
 
-				// 得到联系人头像Bitamp
-				Bitmap bitmap = null;
-
-				// photoid 大于0 表示联系人有头像 如果没有给此人设置头像则给他�?��默认�?
-				if (imgid > 0) {
-					Uri uri = ContentUris.withAppendedId(
-							ContactsContract.Contacts.CONTENT_URI, contactid);
-					InputStream input = ContactsContract.Contacts
-							.openContactPhotoInputStream(resolver, uri);
-					bitmap = BitmapFactory.decodeStream(input);
-				} else {
-					// 设置默认
-					bitmap = BitmapFactory.decodeResource(getResources(),
-							R.mipmap.ic_launcher);
 				}
+				phones.close();
+				mContactsNumber.add(String.valueOf(phonesb));
+				mGetContact.setPhone(String.valueOf(phonesb));
+
+				// 得到联系人公司
+				String orgWhere = ContactsContract.Data.CONTACT_ID + " = ? AND " + ContactsContract.Data.MIMETYPE + " = ?";
+                //查询参数
+				String[] orgWhereParams = new String[]{String.valueOf(contactid),
+						ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE};
+				Cursor companys = resolver.query(ContactsContract.Data.CONTENT_URI,
+						null, orgWhere, orgWhereParams, null);
+                StringBuilder companysb = new StringBuilder();
+                while (companys.moveToNext())
+				{
+
+					String company = companys.getString(companys.getColumnIndex(ContactsContract.CommonDataKinds.Organization.DATA));
+                    companysb.append(company).append(";");
+                    //添加Email的信息
+				}
+				companys.close();
+                mContactsCompany.add(String.valueOf(companysb));
+				mGetContact.setCompany(String.valueOf(companysb));
+				// 得到联系人邮件
+				Cursor emails = resolver.query(ContactsContract.CommonDataKinds.Email.CONTENT_URI,null,ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + contactid, null, null);
+                StringBuilder emailsb = new StringBuilder();
+                while (emails.moveToNext())
+				{
+					String emailAddress = emails.getString(emails.getColumnIndex(
+							ContactsContract.CommonDataKinds.Email.DATA));
+					//添加Email的信息
+                    emailsb.append(emailAddress).append(";");
+				}
+				emails.close();
+                mContactsEmail.add(String.valueOf(emailsb));
+				mGetContact.setMail(String.valueOf(emailsb));
 
 				mContactsName.add(contactName);
+				mGetContact.setName(contactName);
 				Log.i("info", "contactName---" + contactName);
 				// Log.i("info","mContactsName111"+mContactsName);
-				mContactsNumber.add(phoneNumber);
-				mContactsImg.add(bitmap);
+
+				mAllContact.add(mGetContact);
 			}
 
 			phoneCursor.close();
 
 		}
+		return mAllContact;
 	}
 
 	/** 得到手机SIM卡联系人人信�?**/
-	private void getSIMContacts() {
+/*	private void getSIMContacts() {
 		ContentResolver resolver = mContext.getContentResolver();
 		// 获取Sims卡联系人
 		Uri uri = Uri.parse("content://icc/adn");
@@ -160,7 +200,7 @@ public class PhoneAdressActivity extends ListActivity {
 
 			phoneCursor.close();
 		}
-	}
+	}*/
 
 	// 添加适配�?
 	class MyListAdapter extends BaseAdapter {
@@ -187,15 +227,19 @@ public class PhoneAdressActivity extends ListActivity {
 		}
 
 		public View getView(int position, View convertView, ViewGroup parent) {
-			ImageView iamge = null;
+
 			TextView name = null;
-			TextView moble = null;
+			TextView company = null;
+			TextView email = null;
+			TextView mobile = null;
 			if (convertView == null || position < mContactsNumber.size()) {
 				convertView = LayoutInflater.from(mContext).inflate(
 						R.layout.lianxiren, null);
-				iamge = (ImageView) convertView.findViewById(R.id.image);
+
 				name = (TextView) convertView.findViewById(R.id.name);
-				moble = (TextView) convertView.findViewById(R.id.moble);
+				company = (TextView) convertView.findViewById(R.id.company);
+				email = (TextView) convertView.findViewById(R.id.email);
+				mobile = (TextView) convertView.findViewById(R.id.mobile);
 			}
 			// 绘制联系人名�?
 			if (mContactsName.get(position) != null) {
@@ -204,11 +248,12 @@ public class PhoneAdressActivity extends ListActivity {
 			Log.i("info",
 					position + "mContactsName------"
 							+ mContactsName.get(position));
+			company.setText(mContactsCompany.get(position));
+			email.setText(mContactsEmail.get(position));
 			// 绘制联系人号�?
-			moble.setText(mContactsNumber.get(position));
+			mobile.setText(mContactsNumber.get(position));
 			// Log.i("info","mContactsNumber------"+mContactsNumber.get(position));
-			// 绘制联系人头�?
-			iamge.setImageBitmap(mContactsImg.get(position));
+
 			return convertView;
 		}
 

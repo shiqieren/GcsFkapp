@@ -17,8 +17,8 @@ import android.widget.RemoteViews;
 
 
 import com.gcs.fengkong.AppConfig;
-import com.gcs.fengkong.MainActivity;
 import com.gcs.fengkong.R;
+import com.gcs.fengkong.ui.atys.MainActivity;
 import com.gcs.fengkong.utils.StreamUtil;
 
 import java.io.File;

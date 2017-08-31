@@ -22,6 +22,9 @@ public final class Setting {
     //客户端唯一标识
     public static final String KEY_APP_UNIQUE_ID = "appUniqueID";
 
+    private static final String KEY_LOCATION_INFO = "locationInfo";
+    private static final String KEY_LOCATION_PERMISSION = "locationPermission";
+    private static final String KEY_LOCATION_APP_CODE = "locationAppCode";
 
     public static SharedPreferences getSettingPreferences(Context context) {
         return context.getSharedPreferences(Setting.class.getName(), Context.MODE_PRIVATE);
@@ -72,6 +75,39 @@ public final class Setting {
         SharedPreferencesCompat.EditorCompat.getInstance().apply(editor);
     }
 
+
+    public static void updateLocationInfo(Context context, boolean hasLocation) {
+        SharedPreferences sp = getSettingPreferences(context);
+        SharedPreferences.Editor editor = sp.edit().putBoolean(KEY_LOCATION_INFO, hasLocation);
+        SharedPreferencesCompat.EditorCompat.getInstance().apply(editor);
+    }
+
+    public static boolean hasLocation(Context context) {
+        SharedPreferences sp = getSettingPreferences(context);
+        return sp.getBoolean(KEY_LOCATION_INFO, false);
+    }
+
+    public static void updateLocationPermission(Context context, boolean hasPermission) {
+        SharedPreferences sp = getSettingPreferences(context);
+        SharedPreferences.Editor editor = sp.edit().putBoolean(KEY_LOCATION_PERMISSION, hasPermission);
+        SharedPreferencesCompat.EditorCompat.getInstance().apply(editor);
+    }
+
+    public static boolean hasLocationPermission(Context context) {
+        SharedPreferences sp = getSettingPreferences(context);
+        return sp.getBoolean(KEY_LOCATION_PERMISSION, false);
+    }
+
+    public static void updateLocationAppCode(Context context, int appCode) {
+        SharedPreferences sp = getSettingPreferences(context);
+        SharedPreferences.Editor editor = sp.edit().putInt(KEY_LOCATION_APP_CODE, appCode);
+        SharedPreferencesCompat.EditorCompat.getInstance().apply(editor);
+    }
+
+    public static int hasLocationAppCode(Context context) {
+        SharedPreferences sp = getSettingPreferences(context);
+        return sp.getInt(KEY_LOCATION_APP_CODE, 0);
+    }
 
 
 }

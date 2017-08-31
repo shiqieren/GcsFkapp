@@ -89,6 +89,8 @@ public class MyApi {
                         return true;
                     }
                 })*/
+
+       /* c.setUserAgent(ApiClientHelper.getUserAgent(AppContext.getInstance()));*/
                 .build();
 
         OkHttpUtils.initClient(okHttpClient);

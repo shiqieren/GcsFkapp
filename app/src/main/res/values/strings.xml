@@ -16,6 +16,9 @@
     <string name="footer_type_net_error">网络错误</string>
 
     <string name="tip_network_error">没有可用的网络</string>
+
+    <string name="need_lbs_permission_hint">需要定位权限</string>
+    <string name="upload_lbs_info_hint">上传位置信息失败</string>
     <!--新版登录专用-->
     <string name="login_btn">登录</string>
     <string name="login_input_username_hint">手机号或邮箱</string>

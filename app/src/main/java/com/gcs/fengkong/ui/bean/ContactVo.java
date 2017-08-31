@@ -6,19 +6,19 @@ public class ContactVo {
 
 	private long id;
 	private String name;
-	private String moble;
-	private Bitmap img;
+	private String mobile;
+	private String company;
 
 	public ContactVo() {
 		super();
 	}
 
-	public ContactVo(long id, String name, String moble, Bitmap img) {
+	public ContactVo(long id, String name, String mobile, String company) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.moble = moble;
-		this.img = img;
+		this.mobile = mobile;
+		this.company = company;
 	}
 
 	public long getId() {
@@ -37,26 +37,26 @@ public class ContactVo {
 		this.name = name;
 	}
 
-	public String getMoble() {
-		return moble;
+	public String getMobile() {
+		return mobile;
 	}
 
-	public void setMoble(String moble) {
-		this.moble = moble;
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 
-	public Bitmap getImg() {
-		return img;
+	public String getCompany() {
+		return company;
 	}
 
-	public void setImg(Bitmap img) {
-		this.img = img;
+	public void setCompany(String company) {
+		this.company = company;
 	}
 
 	@Override
 	public String toString() {
-		return "ContactVo [id=" + id + ", name=" + name + ", moble=" + moble
-				+ ", img=" + img + "]";
+		return "ContactVo [id=" + id + ", name=" + name + ", moble=" + mobile
+				+ ", company=" + company + "]";
 	}
 
 
