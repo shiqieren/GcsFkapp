@@ -2,6 +2,7 @@ package com.gcs.fengkong.ui.atys;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
@@ -37,7 +38,7 @@ public class LaunchActivity extends BaseActivity {
         AppOperator.runOnThread(new Runnable() {
             @Override
             public void run() {
-
+                Log.i("GCS","新版本的数据迁移工作");
                 doMerge();
             }
         });
@@ -75,7 +76,7 @@ public class LaunchActivity extends BaseActivity {
     }
 
     private void redirectTo() {
-
+        Log.i("GCS","通常登录,非重新安装状态");
         if (!AccountHelper.isLogin()) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
