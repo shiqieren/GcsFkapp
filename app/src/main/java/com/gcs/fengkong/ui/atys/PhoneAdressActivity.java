@@ -41,7 +41,6 @@ public class PhoneAdressActivity extends ListActivity {
 	/** 联系人显示名�?**/
 	private static final int PHONES_DISPLAY_NAME = 0;
 
-
 	/** 联系人的ID **/
 	private static final int PHONES_CONTACT_ID = 1;
 
@@ -71,13 +70,10 @@ public class PhoneAdressActivity extends ListActivity {
 		mListView = this.getListView();
 		/** 得到手机通讯录联系人信息 **/
 		mAllContact = getPhoneContacts();
-		Log.e("获取的电话号码>>",new Gson().toJson(mAllContact));
-
+		Log.w("GCS",new Gson().toJson(mAllContact));
 
 		mAdapter = new MyListAdapter(this);
 		setListAdapter(mAdapter);
-
-		
 
 	}
 

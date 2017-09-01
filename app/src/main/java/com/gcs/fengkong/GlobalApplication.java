@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 
+import com.baidu.mapapi.SDKInitializer;
 import com.gcs.fengkong.cache.DataCleanManager;
 import com.gcs.fengkong.ui.api.MyApi;
 import com.gcs.fengkong.ui.widget.SimplexToast;
@@ -136,6 +137,8 @@ public class GlobalApplication extends Application {
         // 初始化网络请求
       //  OkHttpClient.init(this);
         //初始化其他相关，框架，sdk，数据库,百度地图....
+        //初始化百度地图
+        SDKInitializer.initialize(this);
         MyApi.init(this);
     }
 

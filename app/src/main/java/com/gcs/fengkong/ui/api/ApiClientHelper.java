@@ -18,7 +18,7 @@ import java.util.UUID;
 
 import static android.content.Context.TELEPHONY_SERVICE;
 
-class ApiClientHelper {
+public class ApiClientHelper {
 
     /**
      * 获得请求的服务端数据的userAgent
@@ -27,19 +27,24 @@ class ApiClientHelper {
      * @param appContext
      * @return
      */
-    static String getUserAgent(Application appContext) {
+    public static String getUserAgent(Application appContext) {
         //全局手机管理器
         TelephonyManager tm = (TelephonyManager) UIUtils.getContext().getSystemService(TELEPHONY_SERVICE);
         //// 获取智能设备唯一编号
         String deviceid  = tm.getDeviceId();
+        Log.i("GCS","deviceid:"+deviceid);
         // 获得SIM卡的序号
         String imei = tm.getSimSerialNumber();
+        Log.i("GCS","imei:"+imei);
         //国际移动用户识别码-用户Id
         String imsi = tm.getSubscriberId();
+        Log.i("GCS","imsi:"+imsi);
         //MAC
         String mac = MACgetUtil.getAdresseMAC(UIUtils.getContext());
+        Log.i("GCS","mac:"+mac);
         //本机号码
         String phone = tm.getLine1Number();
+        Log.i("GCS","phone:"+phone);
         // WebSettings.getDefaultUserAgent(appContext)
         //版本号
         int vCode = getPackageInfo(appContext).versionCode;
