@@ -1,10 +1,12 @@
 package com.gcs.fengkong.ui.api;
 
 import android.app.Application;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.Setting;
+import com.gcs.fengkong.ui.account.AccountHelper;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -18,6 +20,9 @@ public class MyApi {
 
 
     public static final int CATALOG_ALL = 0;
+
+    public static final String REGISTER_INTENT = "1";
+    public static final String RESET_PWD_INTENT = "2";
 
     public static final String CATALOG_NEWS_DETAIL = "news";
    /*
@@ -80,6 +85,7 @@ public class MyApi {
                 .readTimeout(10000L, TimeUnit.MILLISECONDS)
                 //其他配置固定设置值
                 //.cookieJar(cookieJar)
+               // AccountHelper.getCookie();
                 // 校验安全
                 /*.hostnameVerifier(new HostnameVerifier()
                 {
@@ -109,7 +115,9 @@ public class MyApi {
         return url;
     }
 
-
+    /*
+    * 检查更新
+    * */
     public static void checkUpdate(StringCallback callback) {
 
         Map<String, String> params = new HashMap<>();
@@ -123,8 +131,65 @@ public class MyApi {
     }
 
 
+    /**
+     * login account
+     *
+     * @param username username
+     * @param pwd      pwd
+     */
+    public static void login(String username, String pwd, StringCallback callback) {
+        Map<String, String> params = new HashMap<>();
+        params.put("appId", "1");
+        params.put("catalog", "1");
+        params.put("all", "false");
+        params.put("account", username);
+        params.put("password", pwd);
+        OkHttpUtils.get().url(getAbsoluteApiUrl("action/apiv2/account_login")).params(params).build().execute(callback);
+
+    }
+
+    public static void sendSmsCode(String phone, String intent,StringCallback callback) {
+        Map<String, String> params = new HashMap<>();
+        params.put("appId", "1");
+        params.put("token", "1");
+        params.put("phone", phone);
+        params.put("intent", intent);
+
+        OkHttpUtils.post().url(getAbsoluteApiUrl("action/apiv2/account_login")).params(params).build().execute(callback);
+    }
+
+    /**
+     * validate and get phone token
+     *
+     * @param phoneNumber phoneNumber
+     * @param smsCode     smsCode
+     * @param pwd      pwd
+     */
+    public static void register(String phoneNumber, String smsCode, String pwd,StringCallback callback) {
+        Map<String, String> params = new HashMap<>();
+        params.put("appId", "1");
+        params.put("phone", phoneNumber);
+        params.put("code", smsCode);
+        params.put("password", pwd);
+        OkHttpUtils.post().url(getAbsoluteApiUrl("action/apiv2/account_login")).params(params).build().execute(callback);
+
+    }
 
 
-
+    /**
+     * reset pwd
+     *
+     * @param phoneNumber phoneNumber
+     * @param smsCode     smsCode
+     * @param pwd      pwd
+     */
+    public static void resetPwd(String phoneNumber, String smsCode, String pwd,StringCallback callback) {
+        Map<String, String> params = new HashMap<>();
+        params.put("appId", "1");
+        params.put("phone", phoneNumber);
+        params.put("code", smsCode);
+        params.put("password", pwd);
+        OkHttpUtils.post().url(getAbsoluteApiUrl("action/apiv2/account_login")).params(params).build().execute(callback);
+    }
 
 }

@@ -2,13 +2,16 @@ package com.gcs.fengkong.ui.account;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
+import android.content.Intent;
 import android.os.SystemClock;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
 
+import com.gcs.fengkong.AppConfig;
 import com.gcs.fengkong.ui.account.bean.User;
+import com.gcs.fengkong.ui.api.MyApi;
 import com.gcs.fengkong.utils.SharedPreferencesHelper;
 
 import okhttp3.internal.http2.Header;
@@ -79,8 +82,8 @@ public final class AccountHelper {
         SharedPreferencesHelper.remove(instances.application, User.class);
     }
 
-    public static boolean login(final User user, Header[] headers) {
-        // 更新Cookie
+    public static boolean login(final User user) {
+        // 更新Cookie  获取原有cookie
        // String cookie = ApiHttpClient.getCookie(headers);
         String cookie = "测试登录cookie，lyw";
         if (TextUtils.isEmpty(cookie) || cookie.length() < 6) {
@@ -88,7 +91,7 @@ public final class AccountHelper {
         }
 
         Log.d(TAG, "login:" + user + " cookie：" + cookie);
-
+        //该用户的cookie
         user.setCookie(cookie);
 
         int count = 10;
@@ -99,9 +102,9 @@ public final class AccountHelper {
         }
 
         if (saveOk) {
-            //ApiHttpClient.setCookieHeader(getCookie());
-            // 登陆成功,重新启动消息服务
-           // NoticeManager.init(instances.application);
+            //设置用户的cookie
+           // MyApi.setCookieHeader(getCookie());
+
         }
         return saveOk;
     }
@@ -123,6 +126,7 @@ public final class AccountHelper {
                 User user = SharedPreferencesHelper.load(instances.application, User.class);
                 // 判断当前用户信息是否清理成功
                 if (user == null || user.getId() <= 0) {
+                    //做一些退出后的工作，清除数据+发送切换和退出的广播让需要的接收器处理
                     clearAndPostBroadcast(instances.application);
                     runnable.run();
                 } else {
@@ -139,13 +143,15 @@ public final class AccountHelper {
      * @param application Application
      */
     private static void clearAndPostBroadcast(Application application) {
-        // 清理网络相关
+        Log.i("GCS","退出登录后清除和发广播处理");
+        // 清理网络相关,cookie,client
+        //MyApi.destroyAndRestore(application);
 
         // 清理对应缓存路径数据
        // CacheManager.deleteObject(application, 相应的缓存路径);
 
         // Logou  退出的广播
-        //Intent intent = new Intent(Constants.INTENT_ACTION_LOGOUT);
+        //Intent intent = new Intent(AppConfig.INTENT_ACTION_LOGOUT);
         //application.sendBroadcast(intent);
 
     }

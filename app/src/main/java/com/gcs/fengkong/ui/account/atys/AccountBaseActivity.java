@@ -35,7 +35,8 @@ import java.security.NoSuchAlgorithmException;
 public class AccountBaseActivity extends BaseActivity {
 
     private ProgressDialog mDialog;
-    public static final String ACTION_ACCOUNT_FINISH_ALL = "app.oschina.net.action.finish.all";
+    //关闭activity的广播标志
+    public static final String ACTION_ACCOUNT_FINISH_ALL = "app.gcsfk.net.action.finish.all";
     protected LocalBroadcastManager mManager;
     private BroadcastReceiver mReceiver;
     protected InputMethodManager mInputMethodManager;
@@ -162,6 +163,7 @@ public class AccountBaseActivity extends BaseActivity {
     }
 
     /**
+     * 动态注册广播接收器
      * register localReceiver
      */
     private void registerLocalReceiver() {
@@ -252,7 +254,7 @@ public class AccountBaseActivity extends BaseActivity {
 
     /**
      * request network error
-     *
+     *异常吐司
      * @param throwable throwable
      */
     protected void requestFailureHint(Throwable throwable) {
@@ -263,6 +265,7 @@ public class AccountBaseActivity extends BaseActivity {
     }
 
     /**
+     * 加密
      * sha-1 to hex
      *
      * @param tempPwd tempPwd

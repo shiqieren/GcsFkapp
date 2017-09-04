@@ -23,11 +23,24 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gcs.fengkong.AppConfig;
 import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
-import com.gcs.fengkong.ui.account.UserConstants;
+import com.gcs.fengkong.ui.account.AccountHelper;
+import com.gcs.fengkong.ui.account.bean.User;
+import com.gcs.fengkong.ui.api.MyApi;
 import com.gcs.fengkong.ui.atys.MainActivity;
+import com.gcs.fengkong.ui.bean.base.ResultBean;
+import com.gcs.fengkong.utils.AppOperator;
 import com.gcs.fengkong.utils.TDevice;
+import com.gcs.fengkong.utils.VibratorUtil;
+import com.google.gson.reflect.TypeToken;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import java.lang.reflect.Type;
+
+import okhttp3.Call;
+import okhttp3.Request;
 
 
 /**
@@ -55,47 +68,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
     private TextView mTvLoginRegister;
 
 
-
-    /*private TextHttpResponseHandler mHandler = new TextHttpResponseHandler() {
-
-        @Override
-        public void onStart() {
-            super.onStart();
-            showFocusWaitDialog();
-        }
-
-        @Override
-        public void onFinish() {
-            super.onFinish();
-            hideWaitDialog();
-        }
-
-        @Override
-        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-            requestFailureHint(throwable);
-        }
-
-        @SuppressWarnings("ConstantConditions")
-        @Override
-        public void onSuccess(int statusCode, Header[] headers, String responseString) {
-
-            Type type = new TypeToken<ResultBean<User>>() {
-            }.getType();
-
-            GsonBuilder gsonBuilder = new GsonBuilder();
-            ResultBean<User> resultBean = gsonBuilder.create().fromJson(responseString, type);
-            if (resultBean.isSuccess()) {
-                User user = resultBean.getResult();
-                if (AccountHelper.login(user, headers)) {
-                    logSucceed();
-                } else {
-                    showToastForKeyBord("登录异常");
-                }
-            } else {
-                showToastForKeyBord(resultBean.getMessage());
-            }
-        }
-    };*/
+    //第三方接入的handler登录接收器callback
 
     private void logSucceed() {
         View view;
@@ -104,8 +77,9 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
         }
         GlobalApplication.showToast(R.string.login_success_hint);
         setResult(RESULT_OK);
+        //发送关闭登录界面的广播
         sendLocalReceiver();
-        //后台异步同步数据
+        //后台异步同步数据-同步认证状态信息
       //  ContactsCacheManager.sync();
         holdAccount();
     }
@@ -119,7 +93,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
     private void holdAccount() {
         String username = mEtLoginUsername.getText().toString().trim();
         if (!TextUtils.isEmpty(username)) {
-            SharedPreferences sp = getSharedPreferences(UserConstants.HOLD_ACCOUNT, Context.MODE_PRIVATE);
+            SharedPreferences sp = getSharedPreferences(AppConfig.HOLD_ACCOUNT, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
             editor.putString(HOLD_USERNAME_KEY, username);
             SharedPreferencesCompat.EditorCompat.getInstance().apply(editor);
@@ -249,6 +223,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+
             }
 
             @SuppressWarnings("deprecation")
@@ -261,16 +236,16 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                 } else {
                     mIvLoginPwdDel.setVisibility(View.INVISIBLE);
                 }
-
                 String username = mEtLoginUsername.getText().toString().trim();
                 if (TextUtils.isEmpty(username)) {
                     showToastForKeyBord(R.string.usernull);
                 }
                 String pwd = mEtLoginPwd.getText().toString().trim();
                 if (!TextUtils.isEmpty(pwd)) {
+
                     mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.white));
-                } else {
+                }else {
                     mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));
                 }
@@ -285,7 +260,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
         super.initData();//必须要,用来注册本地广播
 
         //初始化控件状态数据
-        SharedPreferences sp = getSharedPreferences(UserConstants.HOLD_ACCOUNT, Context.MODE_PRIVATE);
+        SharedPreferences sp = getSharedPreferences(AppConfig.HOLD_ACCOUNT, Context.MODE_PRIVATE);
         String holdUsername = sp.getString(HOLD_USERNAME_KEY, null);
         //String holdPwd = sp.getString(HOLD_PWD_KEY, null);
         //int holdStatus = sp.getInt(HOLD_PWD_STATUS_KEY, 0);//0第一次默认/1用户设置保存/2用户设置未保存
@@ -344,16 +319,15 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                 break;
             case R.id.tv_login_forget_pwd:
                 //忘记密码
-                RetrieveActivity.show(LoginActivity.this);
+                ResetPwdActivity.show(LoginActivity.this);
                 break;
             case R.id.bt_login_submit:
-
                loginRequest();
                 break;
             case R.id.iv_login_hold_pwd:
                 //记住密码
             case R.id.tv_login_register:
-                RegisterStepOneActivity.show(LoginActivity.this);
+                RegisterActivity.show(LoginActivity.this);
                 break;
             case R.id.iv_login_username_del:
                 mEtLoginUsername.setText(null);
@@ -382,8 +356,8 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
         String tempPwd = mEtLoginPwd.getText().toString().trim();
 
 
-        if (!TextUtils.isEmpty(tempPwd) && !TextUtils.isEmpty(tempUsername)) {
 
+        if (!TextUtils.isEmpty(tempPwd) && !TextUtils.isEmpty(tempUsername)) {
 
             //登录成功,请求数据进入用户个人中心页面
 
@@ -393,43 +367,65 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 finish();
-              //111  requestLogin(tempUsername, tempPwd);
+                requestLogin(tempUsername, tempPwd);
             } else {
                 showToastForKeyBord(R.string.footer_type_net_error);
             }
 
         } else {
-            showToastForKeyBord(R.string.login_input_username_hint_error);
+            //手机震动
+            VibratorUtil.Vibrate(this, 100);
+            if (TextUtils.isEmpty(tempUsername)){
+                mEtLoginPwd.setFocusableInTouchMode(false);
+                mEtLoginPwd.clearFocus();
+                mEtLoginUsername.requestFocus();
+                mEtLoginUsername.setFocusableInTouchMode(true);
+                mLlLoginUsername.setBackgroundResource(R.drawable.bg_login_input_error);
+                showToastForKeyBord(R.string.login_input_username_hint_error);
+            }else if (TextUtils.isEmpty(tempPwd)){
+                mEtLoginUsername.setFocusableInTouchMode(false);
+                mEtLoginUsername.clearFocus();
+                mEtLoginPwd.requestFocus();
+                mEtLoginPwd.setFocusableInTouchMode(true);
+                mLlLoginPwd.setBackgroundResource(R.drawable.bg_login_input_error);
+                showToastForKeyBord(R.string.login_password_hint);
+            }
+
         }
 
     }
 
-    /*private void requestLogin(String tempUsername, String tempPwd) {
-        OSChinaApi.login(tempUsername, getSha1(tempPwd), new TextHttpResponseHandler() {
-
+    private void requestLogin(String tempUsername, String tempPwd) {
+        MyApi.login(tempUsername, getSha1(tempPwd), new StringCallback() {
             @Override
-            public void onStart() {
-                super.onStart();
+            public void onBefore(Request request, int id) {
+                super.onBefore(request, id);
                 showFocusWaitDialog();
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                requestFailureHint(throwable);
+            public void onAfter(int id) {
+                super.onAfter(id);
+                hideWaitDialog();
             }
 
-            @SuppressWarnings("ConstantConditions")
             @Override
-            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+            public void onError(Call call, Exception e, int id) {
+                hideWaitDialog();
+                requestFailureHint(e);
+            }
+
+            @Override
+            public void onResponse(String response, int id) {
 
                 try {
                     Type type = new TypeToken<ResultBean<User>>() {
                     }.getType();
 
-                    ResultBean<User> resultBean = AppOperator.createGson().fromJson(responseString, type);
+                    ResultBean<User> resultBean = AppOperator.createGson().fromJson(response, type);
                     if (resultBean.isSuccess()) {
                         User user = resultBean.getResult();
-                        if (AccountHelper.login(user, headers)) {
+                        if (AccountHelper.login(user)) {
                             logSucceed();
                         } else {
                             showToastForKeyBord("登录异常");
@@ -456,23 +452,10 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    onFailure(statusCode, headers, responseString, e);
                 }
             }
-
-            @Override
-            public void onFinish() {
-                super.onFinish();
-                hideWaitDialog();
-            }
-
-            @Override
-            public void onCancel() {
-                super.onCancel();
-                hideWaitDialog();
-            }
         });
-    }*/
+    }
 
 
 

@@ -21,11 +21,21 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gcs.fengkong.AppConfig;
 import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.account.RichTextParser;
-import com.gcs.fengkong.ui.account.UserConstants;
+import com.gcs.fengkong.ui.api.MyApi;
+import com.gcs.fengkong.ui.bean.base.ResultBean;
+import com.gcs.fengkong.utils.AppOperator;
 import com.gcs.fengkong.utils.TDevice;
+import com.google.gson.reflect.TypeToken;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import java.lang.reflect.Type;
+
+import okhttp3.Call;
+import okhttp3.Request;
 
 
 /**
@@ -34,7 +44,7 @@ import com.gcs.fengkong.utils.TDevice;
  * desc:
  */
 
-public class RetrieveActivity extends AccountBaseActivity implements View.OnClickListener, View.OnFocusChangeListener,
+public class ResetPwdActivity extends AccountBaseActivity implements View.OnClickListener, View.OnFocusChangeListener,
         ViewTreeObserver.OnGlobalLayoutListener {
 
     private LinearLayout mLlRetrieveBar;
@@ -143,7 +153,7 @@ public class RetrieveActivity extends AccountBaseActivity implements View.OnClic
                                             mTimer.onFinish();
                                             mTimer.cancel();
                                         }
-                                        ResetPwdActivity.show(RetrieveActivity.this, phoneToken);
+                                        ResetPwdActivity.show(ResetPwdActivity.this, phoneToken);
                                     }
                                 } else {
                                     showToastForKeyBord(phoneTokenResultBean.getMessage());
@@ -176,7 +186,7 @@ public class RetrieveActivity extends AccountBaseActivity implements View.OnClic
      * @param context context
      */
     public static void show(Context context) {
-        Intent intent = new Intent(context, RetrieveActivity.class);
+        Intent intent = new Intent(context, ResetPwdActivity.class);
         context.startActivity(intent);
     }
 
@@ -417,7 +427,7 @@ public class RetrieveActivity extends AccountBaseActivity implements View.OnClic
 
                 break;
             case R.id.bt_retrieve_submit:
-                Toast.makeText(RetrieveActivity.this,"修改密码",Toast.LENGTH_SHORT).show();
+                Toast.makeText(ResetPwdActivity.this,"修改密码",Toast.LENGTH_SHORT).show();
                 //根据验证码获取phoneToken
                //111 requestRetrievePwd();
                 //requestResetPwd();
@@ -429,7 +439,7 @@ public class RetrieveActivity extends AccountBaseActivity implements View.OnClic
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_VIEW);
                 // intent.setAction(Intent.CATEGORY_BROWSABLE);
-                Uri content_url = Uri.parse(UserConstants.RETRIEVE_PWD_URL);
+                Uri content_url = Uri.parse(AppConfig.RETRIEVE_PWD_URL);
                 intent.setData(content_url);
                 startActivity(intent);
                 break;
@@ -458,6 +468,57 @@ public class RetrieveActivity extends AccountBaseActivity implements View.OnClic
         mRequestType = 2;
         String phoneNumber = mEtRetrieveTel.getText().toString().trim();
        //111 OSChinaApi.validateRegisterInfo(phoneNumber, smsCode, mHandler);
+        MyApi.resetPwd(phoneNumber, smsCode, getSha1(tempPwd), new StringCallback() {
+            @Override
+            public void onBefore(Request request, int id) {
+                super.onBefore(request, id);
+                showWaitDialog(R.string.progress_submit);
+            }
+
+            @Override
+            public void onAfter(int id) {
+                super.onAfter(id);
+                hideWaitDialog();
+            }
+
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                if (mRequestType == 1) {
+                    if (mTimer != null) {
+                        mTimer.onFinish();
+                        mTimer.cancel();
+                    }
+                }
+                requestFailureHint(e);
+            }
+
+            @Override
+            public void onResponse(String response, int id) {
+                Type type = new TypeToken<ResultBean>() {
+                }.getType();
+                ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
+                int code = resultBean.getCode();
+
+                switch (code) {
+                    case 1:
+                        GlobalApplication.showToast(getResources().getString(R.string.reset_success_hint), Toast.LENGTH_SHORT);
+                        LoginActivity.show(ResetPwdActivity.this);
+                        finish();
+                        break;
+                    case 216:
+                        showToastForKeyBord(resultBean.getMessage());
+                        finish();
+                        break;
+                    case 219:
+                        mLlResetPwd.setBackgroundResource(R.drawable.bg_login_input_error);
+                        showToastForKeyBord(resultBean.getMessage());
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
     }
 
     private void requestSmsCode() {
@@ -493,6 +554,63 @@ public class RetrieveActivity extends AccountBaseActivity implements View.OnClic
             }.start();
             String phoneNumber = mEtRetrieveTel.getText().toString().trim();
          //1111   OSChinaApi.sendSmsCode(phoneNumber, OSChinaApi.RESET_PWD_INTENT, mHandler);
+            MyApi.sendSmsCode(phoneNumber, MyApi.RESET_PWD_INTENT, new StringCallback() {
+                @Override
+                public void onBefore(Request request, int id) {
+                    super.onBefore(request, id);
+                    showWaitDialog(R.string.progress_submit);
+                }
+
+                @Override
+                public void onAfter(int id) {
+                    super.onAfter(id);
+                    hideWaitDialog();
+                }
+
+
+                @Override
+                public void onError(Call call, Exception e, int id) {
+                    if (mRequestType == 1) {
+                        if (mTimer != null) {
+                            mTimer.onFinish();
+                            mTimer.cancel();
+                        }
+                    }
+                    requestFailureHint(e);
+                }
+
+                @Override
+                public void onResponse(String response, int id) {
+                    Type type = new TypeToken<ResultBean>() {
+                    }.getType();
+                    ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
+                    int code = resultBean.getCode();
+                    switch (code) {
+                        case 1:
+                            //发送验证码成功,请求进入下一步
+                            //mRequestType = 2;
+                            mEtRetrieveCodeInput.setText(null);
+                            GlobalApplication.showToast(R.string.send_sms_code_success_hint, Toast.LENGTH_SHORT);
+                            break;
+                        case 218:
+                            //手机号已被注册,提示重新输入
+                            mLlRetrieveTel.setBackgroundResource(R.drawable.bg_login_input_error);
+                            showToastForKeyBord(resultBean.getMessage());
+                            break;
+                        case 0:
+                            //异常错误，发送验证码失败,回收timer,需重新请求发送验证码
+                            if (mTimer != null) {
+                                mTimer.onFinish();
+                                mTimer.cancel();
+                            }
+                            showToastForKeyBord(resultBean.getMessage());
+                            break;
+                        default:
+                            break;
+                    }
+
+                }
+            });
         } else {
             GlobalApplication.showToast(getResources().getString(R.string.register_sms_wait_hint), Toast.LENGTH_SHORT);
         }
@@ -586,47 +704,6 @@ public class RetrieveActivity extends AccountBaseActivity implements View.OnClic
                 valueAnimator.cancel();
             }
             valueAnimator.start();
-        }else  if (keypadHeight > 0 && kayResetPwd.getTag() == null) {
-            final LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) kayResetPwd.getLayoutParams();
-            final int topMargin = layoutParams.topMargin;
-            this.mTopMargin = topMargin;
-            kayResetPwd.setTag(true);
-            ValueAnimator valueAnimator = ValueAnimator.ofFloat(1, 0);
-            valueAnimator.setDuration(400).setInterpolator(new DecelerateInterpolator());
-            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    float animatedValue = (float) animation.getAnimatedValue();
-                    layoutParams.topMargin = (int) (topMargin * animatedValue);
-                    kayResetPwd.requestLayout();
-                }
-            });
-
-            if (valueAnimator.isRunning()) {
-                valueAnimator.cancel();
-            }
-            valueAnimator.start();
-
-
-        } else if (keypadHeight == 0 && kayResetPwd.getTag() != null) {
-            final int topMargin = mTopMargin;
-            final LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) kayResetPwd.getLayoutParams();
-            kayResetPwd.setTag(null);
-            ValueAnimator valueAnimator = ValueAnimator.ofFloat(0, 1);
-            valueAnimator.setDuration(400).setInterpolator(new DecelerateInterpolator());
-            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    float animatedValue = (float) animation.getAnimatedValue();
-                    layoutParams.topMargin = (int) (topMargin * animatedValue);
-                    kayResetPwd.requestLayout();
-                }
-            });
-            if (valueAnimator.isRunning()) {
-                valueAnimator.cancel();
-            }
-            valueAnimator.start();
-
         }
     }
 }

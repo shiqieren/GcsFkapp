@@ -179,14 +179,6 @@ public abstract class RichTextParser {
         return sb.toString().trim();
     }
 
-
-
-
-
-
-
-
-
     public static boolean checkIsZH(String input) {
         char[] charArray = input.toLowerCase().toCharArray();
         for (char c : charArray) {

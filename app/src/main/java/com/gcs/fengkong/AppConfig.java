@@ -32,6 +32,12 @@ public class AppConfig {
     //是否设置双击退出
     public static final String KEY_DOUBLE_CLICK_EXIT = "KEY_DOUBLE_CLICK_EXIT";
 
+    //登录相关——用户切换和退出
+    public static final String INTENT_ACTION_USER_CHANGE = "net.gcsfk.action.USER_CHANGE";
+    public static final String INTENT_ACTION_LOGOUT = "net.gcsfk.action.LOGOUT";
+    public static final String HOLD_ACCOUNT = "hold_account";
+    public static final String RETRIEVE_PWD_URL = "https://www.oschina.net/home/reset-pwd";
+
     // 默认存放图片的路径
     public final static String DEFAULT_SAVE_IMAGE_PATH = Environment
             .getExternalStorageDirectory()

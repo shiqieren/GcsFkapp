@@ -54,7 +54,16 @@
                 android:textColorHint="@color/black_alpha_80"
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/font_16" />
-
+            <ImageView
+                android:id="@+id/iv_identity_name_del"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:visibility="gone"
+                app:srcCompat="@mipmap/ic_clear" />
         </LinearLayout>
         <View
             android:layout_width="match_parent"
@@ -103,7 +112,16 @@
                 android:textColorHint="@color/black_alpha_80"
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/font_16" />
-
+            <ImageView
+                android:id="@+id/iv_identity_number_del"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:visibility="gone"
+                app:srcCompat="@mipmap/ic_clear" />
         </LinearLayout>
         <View
             android:layout_width="match_parent"
