@@ -164,6 +164,12 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
             public void afterTextChanged(Editable s) {
                 int length = s.length();
                 String input = s.toString();
+                if (length > 0) {
+                    // mLlIdentityNumber.setBackgroundResource(R.drawable.bg_login_input_ok);
+                    mIvBankcardPhoneDel.setVisibility(View.VISIBLE);
+                } else {
+                    mIvBankcardPhoneDel.setVisibility(View.INVISIBLE);
+                }
                 mMachPhoneNum = RichTextParser.machPhoneNum(input);
 
                 if (mMachPhoneNum) {
