@@ -144,7 +144,6 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-
             }
 
             @SuppressWarnings("deprecation")
