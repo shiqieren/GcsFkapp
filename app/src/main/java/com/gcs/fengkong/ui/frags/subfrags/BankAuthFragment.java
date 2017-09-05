@@ -1,21 +1,27 @@
 package com.gcs.fengkong.ui.frags.subfrags;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.CountDownTimer;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.account.RichTextParser;
 import com.gcs.fengkong.ui.atys.SimpleBackActivity;
 import com.gcs.fengkong.ui.frags.BaseFragment;
+import com.gcs.fengkong.utils.RegexUtils;
 
 /**
  * Created by Administrator on 0029 8-29.
@@ -38,7 +44,7 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
     private Button mBtBankcardSubmit;
 
     private boolean mMachPhoneNum;
-
+    private boolean mBankcardNum;
     private CountDownTimer mTimer;
     @Override
     protected int getLayoutId() {
@@ -48,7 +54,7 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
     protected void initView(View view) {
         super.initView(view);
         ((SimpleBackActivity)getActivity()).setToolBarTitle(R.string.bank_string);
-
+        view.findViewById(R.id.traceroute_rootview).setOnClickListener(this);
         mLlBankcardName  = view.findViewById(R.id.ll_bankcard_name);
         mLlBankcardNumber  = view.findViewById(R.id.ll_bankcard_number);
         mLlBankcardPhone  = view.findViewById(R.id.ll_bankcard_phone);
@@ -69,6 +75,19 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
 
         setListener();
         mEtBankcardName.setOnFocusChangeListener(this);
+        InputFilter filter = new InputFilter() {
+            public CharSequence filter(CharSequence source, int start, int end,
+                                       Spanned dest, int dstart, int dend) {
+                for (int i = start; i < end; i++) {
+                    if (!RichTextParser.isChinese(source.charAt(i))) {
+                        Toast.makeText(getActivity(),"请输入中文字符",Toast.LENGTH_SHORT).show();
+                        return "";
+                    }
+                }
+                return null;
+            }
+        };
+        mEtBankcardName.setFilters(new InputFilter[]{filter});
         mEtBankcardName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -108,6 +127,8 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
         });
 
         mEtBankcardNumber.setOnFocusChangeListener(this);
+
+
         mEtBankcardNumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -123,6 +144,9 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
             @SuppressWarnings("deprecation")
             @Override
             public void afterTextChanged(Editable s) {
+               /* String bankcardnum = s.toString();
+                mBankcardNum = RegexUtils.isBankCard(bankcardnum);
+
                 int length = s.length();
                 if (length > 0) {
                     // mLlIdentityNumber.setBackgroundResource(R.drawable.bg_login_input_ok);
@@ -131,18 +155,47 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
                     mIvBankcardNumberDel.setVisibility(View.INVISIBLE);
                 }
 
-                String pwd = mEtBankcardNumber.getText().toString().trim();
-                String identitynumber = mEtBankcardNumber.getText().toString().trim();
+                String name = mEtBankcardName.getText().toString().trim();
+
                 String phone = mEtBankcardPhone.getText().toString().trim();
-                if (!TextUtils.isEmpty(pwd)&&!TextUtils.isEmpty(identitynumber)&&!TextUtils.isEmpty(phone)) {
-                    mBtBankcardSubmit.setEnabled(true);
-                   /* mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit);
-                    mBtLoginSubmit.setTextColor(getResources().getColor(R.color.white));*/
+                if (!TextUtils.isEmpty(name)&&!TextUtils.isEmpty(bankcardnum)&&!TextUtils.isEmpty(phone)) {
+
+                   *//* mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit);
+                    mBtLoginSubmit.setTextColor(getResources().getColor(R.color.white));*//*
                 }else {
-                    mBtBankcardSubmit.setEnabled(false);
-                   /* mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                    mBtLoginSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));*/
+                 *//*   mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
+                    mBtLoginSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));*//*
+                }*/
+                int length = s.length();
+                String input = s.toString();
+                if (length > 0) {
+                    // mLlIdentityNumber.setBackgroundResource(R.drawable.bg_login_input_ok);
+                    mIvBankcardNumberDel.setVisibility(View.VISIBLE);
+                } else {
+                    mIvBankcardNumberDel.setVisibility(View.INVISIBLE);
                 }
+                mBankcardNum = RegexUtils.isBankCard(input);
+
+                if (mBankcardNum) {
+                    mLlBankcardNumber.setBackgroundResource(0);
+                    String name = mEtBankcardName.getText().toString().trim();
+                    String phone = mEtBankcardPhone.getText().toString().trim();
+                    if (!TextUtils.isEmpty(name)&&!TextUtils.isEmpty(phone)) {
+                        mBtBankcardSubmit.setEnabled(true);
+                      //  mBtBankcardSubmit.setBackgroundResource(R.drawable.bg_login_submit);
+                      //  mBtBankcardSubmit.setTextColor(getResources().getColor(R.color.white));
+                    } else {
+                        mBtBankcardSubmit.setEnabled(false);
+                      //  mBtBankcardSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
+                      //  mBtBankcardSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));
+                    }
+                } else {
+                    mLlBankcardNumber.setBackgroundResource(R.drawable.bg_login_input_error);
+                    mBtBankcardSubmit.setEnabled(false);
+                  //  mBtBankcardSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
+                  //  mBtBankcardSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));
+                }
+
             }
         });
 
@@ -195,7 +248,7 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
                     mTvBankcardSmsCall.setAlpha(0.4f);
                 } else if (length == 11) {
                     if (mMachPhoneNum) {
-                        mLlBankcardPhone.setBackgroundResource(R.drawable.bg_login_input_ok);
+                        mLlBankcardPhone.setBackgroundResource(0);
                         if (mTvBankcardSmsCall.getTag() == null) {
                             mTvBankcardSmsCall.setAlpha(1.0f);
                         } else {
@@ -211,7 +264,7 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
                     mLlBankcardPhone.setBackgroundResource(R.drawable.bg_login_input_error);
                 } else if (length <= 0) {
                     mTvBankcardSmsCall.setAlpha(0.4f);
-                    mLlBankcardPhone.setBackgroundResource(R.drawable.bg_login_input_ok);
+                    mLlBankcardPhone.setBackgroundResource(0);
                 }
             }
         });
@@ -235,20 +288,27 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
+            case R.id.traceroute_rootview:
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                break;
             case R.id.et_bankcard_name:
                 mEtBankcardNumber.clearFocus();
+                mEtBankcardPhone.clearFocus();
                 mEtBankcardName.setFocusableInTouchMode(true);
                 mEtBankcardName.requestFocus();
                 break;
             case R.id.et_bankcard_number:
                 mEtBankcardName.clearFocus();
+                mEtBankcardPhone.clearFocus();
                 mEtBankcardNumber.setFocusableInTouchMode(true);
                 mEtBankcardNumber.requestFocus();
                 break;
             case R.id.et_bankcard_phone:
                 mEtBankcardName.clearFocus();
-                mEtBankcardNumber.setFocusableInTouchMode(true);
-                mEtBankcardNumber.requestFocus();
+                mEtBankcardNumber.clearFocus();
+                mEtBankcardPhone.setFocusableInTouchMode(true);
+                mEtBankcardPhone.requestFocus();
                 break;
             case R.id.tv_bankcard_sms_call:
                 requestSmsCode();
@@ -275,6 +335,7 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
     }
 
     private void AuthBankcardRequest() {
+
     }
 
     @Override
@@ -294,12 +355,16 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
                     mLlBankcardName.setActivated(false);
                     mLlBankcardPhone.setActivated(false);
                 }
+                break;
             case  R.id.et_bankcard_phone:
                 if (hasFocus) {
                     mLlBankcardNumber.setActivated(false);
                     mLlBankcardName.setActivated(false);
                     mLlBankcardPhone.setActivated(true);
                 }
+                break;
+            default:
+                break;
         }
 
     }

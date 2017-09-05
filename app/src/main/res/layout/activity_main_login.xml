@@ -67,7 +67,7 @@
                 android:focusable="true"
                 android:hint="@string/hint_username_ok"
                 android:imeOptions="actionDone"
-                android:inputType="text"
+                android:inputType="phone|number"
                 android:lines="1"
                 android:maxLines="1"
                 android:minLines="1"

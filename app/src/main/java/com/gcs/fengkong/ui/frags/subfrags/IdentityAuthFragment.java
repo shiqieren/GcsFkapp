@@ -1,23 +1,35 @@
 package com.gcs.fengkong.ui.frags.subfrags;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.InputType;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.NumberKeyListener;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.gcs.fengkong.R;
+import com.gcs.fengkong.ui.account.RichTextParser;
 import com.gcs.fengkong.ui.account.atys.LoginActivity;
 import com.gcs.fengkong.ui.account.atys.RegisterActivity;
 import com.gcs.fengkong.ui.account.atys.ResetPwdActivity;
 import com.gcs.fengkong.ui.atys.SimpleBackActivity;
 import com.gcs.fengkong.ui.frags.BaseFragment;
+import com.gcs.fengkong.utils.IDCard;
+import com.gcs.fengkong.utils.RegexUtils;
+
+import java.text.ParseException;
 
 /**
  * Created by Administrator on 0029 8-29.
@@ -32,6 +44,9 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
     private EditText mEtIdentityName;
     private EditText mEtIdentityNumber;
     private Button mBtIdentitySubmit;
+
+    private Boolean mIsZHname = false;
+    private Boolean mIsIDcardnumber = false;
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_identity_auth;
@@ -42,6 +57,7 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
     protected void initView(View view) {
         super.initView(view);
         ((SimpleBackActivity)getActivity()).setToolBarTitle(R.string.identity_string);
+        view.findViewById(R.id.traceroute_rootview).setOnClickListener(this);
         mLlIdentityName = view.findViewById(R.id.ll_identity_name);
         mLlIdentityNumber = view.findViewById(R.id.ll_identity_number);
         mIvIdentityNameDel = (ImageView) view.findViewById(R.id.iv_identity_name_del);
@@ -51,6 +67,20 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
         mBtIdentitySubmit = view.findViewById(R.id.bt_identity_submit);
         setListener();
         mEtIdentityName.setOnFocusChangeListener(this);
+
+        InputFilter filter = new InputFilter() {
+            public CharSequence filter(CharSequence source, int start, int end,
+                                       Spanned dest, int dstart, int dend) {
+                for (int i = start; i < end; i++) {
+                    if (!RichTextParser.isChinese(source.charAt(i))) {
+                        Toast.makeText(getActivity(),"请输入中文字符",Toast.LENGTH_SHORT).show();
+                        return "";
+                    }
+                }
+                return null;
+            }
+        };
+        mEtIdentityName.setFilters(new InputFilter[]{filter});
         mEtIdentityName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -66,6 +96,10 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
             @Override
             public void afterTextChanged(Editable s) {
                 String username = s.toString().trim();
+                mIsZHname = RichTextParser.checkIsZH(username);
+                if(mIsZHname){
+
+                }
                 if (username.length() > 0) {
                  //   mLlIdentityName.setBackgroundResource(R.drawable.bg_login_input_ok);
                     mIvIdentityNameDel.setVisibility(View.VISIBLE);
@@ -74,14 +108,12 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
                     mIvIdentityNameDel.setVisibility(View.INVISIBLE);
                 }
 
-                String identitynumber = mEtIdentityNumber.getText().toString().trim();
+                String identitynumber = mEtIdentityName.getText().toString().trim();
                 String pwd = mEtIdentityNumber.getText().toString().trim();
                 if (!TextUtils.isEmpty(identitynumber)&&!TextUtils.isEmpty(pwd)) {
-                    mBtIdentitySubmit.setEnabled(true);
                    /* mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.white));*/
                 } else {
-                    mBtIdentitySubmit.setEnabled(false);
                   /*  mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));*/
                 }
@@ -90,6 +122,19 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
         });
 
         mEtIdentityNumber.setOnFocusChangeListener(this);
+
+        mEtIdentityNumber.setKeyListener(new NumberKeyListener() {
+            @Override
+            public int getInputType() {
+                return InputType.TYPE_CLASS_TEXT;
+            }
+
+            @Override
+            protected char[] getAcceptedChars() {
+                char[] numberChars = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'X','Y','Z' };
+                return numberChars;
+            }
+        });
         mEtIdentityNumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -105,25 +150,42 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
             @SuppressWarnings("deprecation")
             @Override
             public void afterTextChanged(Editable s) {
+
                 int length = s.length();
+                String input = s.toString();
                 if (length > 0) {
-                   // mLlIdentityNumber.setBackgroundResource(R.drawable.bg_login_input_ok);
+                    // mLlIdentityNumber.setBackgroundResource(R.drawable.bg_login_input_ok);
                     mIvIdentityNumberDel.setVisibility(View.VISIBLE);
                 } else {
                     mIvIdentityNumberDel.setVisibility(View.INVISIBLE);
                 }
-
-                String pwd = mEtIdentityNumber.getText().toString().trim();
-                String identitynumber = mEtIdentityNumber.getText().toString().trim();
-                if (!TextUtils.isEmpty(pwd)&&!TextUtils.isEmpty(identitynumber)) {
-                    mBtIdentitySubmit.setEnabled(true);
-                   /* mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit);
-                    mBtLoginSubmit.setTextColor(getResources().getColor(R.color.white));*/
-                }else {
-                    mBtIdentitySubmit.setEnabled(false);
-                   /* mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                    mBtLoginSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));*/
+                try {
+                    mIsIDcardnumber = IDCard.IDCardValidate(input);
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
+
+                if (mIsIDcardnumber) {
+                    mLlIdentityNumber.setBackgroundResource(0);
+                    String name = mEtIdentityName.getText().toString().trim();
+                    if (!TextUtils.isEmpty(name)) {
+                        mLlIdentityName.setBackgroundResource(0);
+                        //mBtBankcardSubmit.setEnabled(true);
+                        //  mBtBankcardSubmit.setBackgroundResource(R.drawable.bg_login_submit);
+                        //  mBtBankcardSubmit.setTextColor(getResources().getColor(R.color.white));
+                    } else {
+                        mLlIdentityName.setBackgroundResource(R.drawable.bg_login_input_error);
+                       // mBtBankcardSubmit.setEnabled(false);
+                        //  mBtBankcardSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
+                        //  mBtBankcardSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));
+                    }
+                } else {
+                    mLlIdentityNumber.setBackgroundResource(R.drawable.bg_login_input_error);
+                  //  mBtBankcardSubmit.setEnabled(false);
+                    //  mBtBankcardSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
+                    //  mBtBankcardSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));
+                }
+
             }
         });
     }
@@ -142,6 +204,10 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
     public void onClick(View v) {
         int id = v.getId();
         switch (id) {
+            case R.id.traceroute_rootview:
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                break;
             case R.id.et_identity_name:
                 mEtIdentityNumber.clearFocus();
                 mEtIdentityName.setFocusableInTouchMode(true);
@@ -154,7 +220,7 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
                 break;
 
             case R.id.bt_identity_submit:
-                AuthIdentityRequest();
+                    AuthIdentityRequest();
                 break;
 
             case R.id.iv_identity_name_del:
@@ -169,6 +235,16 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
     }
 
     private void AuthIdentityRequest() {
+        if(!TextUtils.isEmpty(mEtIdentityName.getText().toString().trim())){
+            if (mIsIDcardnumber){
+                AuthIdentityRequest();
+            }else {
+                Toast.makeText(getActivity(),"身份证格式有误",Toast.LENGTH_SHORT).show();
+            }
+        }else {
+            Toast.makeText(getActivity(),"姓名不能为空",Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
