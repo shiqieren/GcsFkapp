@@ -38,6 +38,9 @@ public class AppConfig {
     public static final String HOLD_ACCOUNT = "hold_account";
     public static final String RETRIEVE_PWD_URL = "https://www.oschina.net/home/reset-pwd";
 
+    //短信倒计时
+    public static final  int SMSCODE_TIME_OUT = 80;
+
     // 默认存放图片的路径
     public final static String DEFAULT_SAVE_IMAGE_PATH = Environment
             .getExternalStorageDirectory()

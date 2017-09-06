@@ -18,18 +18,18 @@ public class ResultBean<T> {
     public static final int RESULT_NOT_PERMISSION = 203;
     public static final int RESULT_TOKEN_ERROR = 204;
 
-    private T result;
+    private T obj;
     private int code;
-    private String message;
-    private String time;
+    private String msg;
+    ///private String time;
    // private NoticeBean notice;
 
     public T getResult() {
-        return result;
+        return obj;
     }
 
     public void setResult(T result) {
-        this.result = result;
+        this.obj = result;
     }
 
     public int getCode() {
@@ -41,20 +41,20 @@ public class ResultBean<T> {
     }
 
     public String getMessage() {
-        return message;
+        return msg;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void getMessage(String message) {
+        this.msg = message;
     }
 
-    public String getTime() {
+    /*public String getTime() {
         return time;
     }
 
     public void setTime(String time) {
         this.time = time;
-    }
+    }*/
 
     public boolean isOk() {
         return code == RESULT_SUCCESS;
@@ -63,7 +63,7 @@ public class ResultBean<T> {
     public boolean isSuccess() {
         // 每次回来后通知消息到达
        // NoticeManager.publish(this, this.notice);
-        return code == RESULT_SUCCESS && result != null;
+        return code == RESULT_SUCCESS && obj != null;
     }
 /*
     public NoticeBean getNotice() {
@@ -77,8 +77,7 @@ public class ResultBean<T> {
     @Override
     public String toString() {
         return "code:" + code
-                + " + message:" + message
-                + " + time:" + time
-                + " + result:" + (result != null ? result.toString() : null);
+                + " + message:" + msg
+                + " + result:" + (obj != null ? obj.toString() : null);
     }
 }

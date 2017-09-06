@@ -3,6 +3,7 @@ package com.gcs.fengkong.ui.api;
 import android.app.Application;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.Setting;
@@ -119,13 +120,13 @@ public class MyApi {
     * 检查更新
     * */
     public static void checkUpdate(StringCallback callback) {
-
-        Map<String, String> params = new HashMap<>();
+        Log.i("GCS","app检查更新");
+        /*Map<String, String> params = new HashMap<>();
         params.put("appId", "1");
         params.put("catalog", "1");
         params.put("all", "false");
         OkHttpUtils.get().url(getAbsoluteApiUrl("action/apiv2/product_version")).params(params).build().execute(callback);
-
+        */
         // Set AppToken  加密后的用户登录状态......addHeader("AppToken", Verifier.getPrivateToken(application));加密后
         //客户端唯一标识UserAgent uuid
     }
@@ -139,23 +140,24 @@ public class MyApi {
      */
     public static void login(String username, String pwd, StringCallback callback) {
         Map<String, String> params = new HashMap<>();
-        params.put("appId", "1");
-        params.put("catalog", "1");
-        params.put("all", "false");
-        params.put("account", username);
+       // params.put("appId", "1");
+       // params.put("catalog", "1");
+       // params.put("all", "false");
+        params.put("name", username);
         params.put("password", pwd);
-        OkHttpUtils.get().url(getAbsoluteApiUrl("action/apiv2/account_login")).params(params).build().execute(callback);
-
+        OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/login.do")).params(params).build().execute(callback);
+        Log.i("GCS","登录url:"+getAbsoluteApiUrl("wind-phone/phone/login.do"));
     }
 
-    public static void sendSmsCode(String phone, String intent,StringCallback callback) {
+    public static void sendSmsCode(String phone,StringCallback callback) {
         Map<String, String> params = new HashMap<>();
-        params.put("appId", "1");
-        params.put("token", "1");
-        params.put("phone", phone);
-        params.put("intent", intent);
+      //  params.put("appId", "1");
+      //  params.put("token", "1");
+        params.put("name", phone);
+      //  params.put("intent", intent);
 
-        OkHttpUtils.post().url(getAbsoluteApiUrl("action/apiv2/account_login")).params(params).build().execute(callback);
+        OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/registerSendMsg.do")).params(params).build().execute(callback);
+        Log.i("GCS","请求发送短信验证码url:"+getAbsoluteApiUrl("wind-phone/phone/registerSendMsg.do"));
     }
 
     /**
@@ -167,12 +169,16 @@ public class MyApi {
      */
     public static void register(String phoneNumber, String smsCode, String pwd,StringCallback callback) {
         Map<String, String> params = new HashMap<>();
-        params.put("appId", "1");
-        params.put("phone", phoneNumber);
-        params.put("code", smsCode);
-        params.put("password", pwd);
-        OkHttpUtils.post().url(getAbsoluteApiUrl("action/apiv2/account_login")).params(params).build().execute(callback);
+       // params.put("appId", "1");
+       /// params.put("phone", phoneNumber);
+        params.put("name",phoneNumber);
+        params.put("password",pwd);
+        params.put("code",smsCode);
+        OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/register.do")).params(params).build().execute(callback);
+        Log.i("GCS","注册账户url:"+getAbsoluteApiUrl("wind-phone/phone/register.do"));
+        Log.i("GCS","短信验证码："+smsCode);
 
+      //  OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/register.do?"+"name="+phoneNumber+"&password="+pwd+"&code="+smsCode)).build().execute(callback);
     }
 
 

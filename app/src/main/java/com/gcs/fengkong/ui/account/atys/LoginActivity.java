@@ -11,6 +11,7 @@ import android.support.v4.content.SharedPreferencesCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -362,11 +363,6 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
             //登录成功,请求数据进入用户个人中心页面
 
             if (TDevice.hasInternet()) {
-                //用户登录
-                Toast.makeText(LoginActivity.this,"登录",Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                finish();
                 requestLogin(tempUsername, tempPwd);
             } else {
                 showToastForKeyBord(R.string.footer_type_net_error);
@@ -396,7 +392,8 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
     }
 
     private void requestLogin(String tempUsername, String tempPwd) {
-        MyApi.login(tempUsername, getSha1(tempPwd), new StringCallback() {
+        Log.i("GCS","加密前用户名："+tempUsername+",加密前密码："+tempPwd);
+        MyApi.login(getAES(tempUsername), getAES(tempPwd), new StringCallback() {
             @Override
             public void onBefore(Request request, int id) {
                 super.onBefore(request, id);
@@ -417,21 +414,24 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
 
             @Override
             public void onResponse(String response, int id) {
-
+                Log.i("GCS","登录返回response："+response);
                 try {
-                    Type type = new TypeToken<ResultBean<User>>() {
+                    Type type = new TypeToken<ResultBean>() {
                     }.getType();
-
-                    ResultBean<User> resultBean = AppOperator.createGson().fromJson(response, type);
-                    if (resultBean.isSuccess()) {
-                        User user = resultBean.getResult();
+                    ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
+                    int code = resultBean.getCode();
+                    if (code == 200) {
+                        //User user = resultBean.getResult();
+                        //模拟用户返回
+                        String phoneNumber = mEtLoginUsername.getText().toString().trim();
+                        User user =new User(phoneNumber);
                         if (AccountHelper.login(user)) {
                             logSucceed();
                         } else {
                             showToastForKeyBord("登录异常");
                         }
                     } else {
-                        int code = resultBean.getCode();
+
                         String message = resultBean.getMessage();
                         if (code == 211) {
                             mEtLoginPwd.setFocusableInTouchMode(false);
@@ -439,7 +439,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                             mEtLoginUsername.requestFocus();
                             mEtLoginUsername.setFocusableInTouchMode(true);
                             mLlLoginUsername.setBackgroundResource(R.drawable.bg_login_input_error);
-                        } else if (code == 212) {
+                        } else if (code == 500) {
                             mEtLoginUsername.setFocusableInTouchMode(false);
                             mEtLoginUsername.clearFocus();
                             mEtLoginPwd.requestFocus();

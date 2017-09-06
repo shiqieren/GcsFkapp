@@ -42,6 +42,7 @@ import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.update.CheckUpdateManager;
 import com.gcs.fengkong.update.DownloadService;
 import com.gcs.fengkong.utils.DialogHelper;
+import com.gcs.fengkong.utils.ShowUIHelper;
 import com.gcs.fengkong.utils.TDevice;
 import com.gcs.fengkong.utils.UIUtils;
 
@@ -91,6 +92,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     @Override
     protected void initWindow() {
         super.initWindow();
+
         initTab();
 
     }
@@ -98,7 +100,16 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     @Override
     protected void initWidget() {
         super.initWidget();
-
+        Log.i("GCS","进入,Mainactivity首页如果未登录则跳转到登录页面");
+        if (!AccountHelper.isLogin()) {
+            DialogHelper.getConfirmDialog(this, "您尚未登录，是否先进行登录操作", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    ShowUIHelper.showLoginActivity(MainActivity.this);
+                }
+            }).show();
+            return;
+        }
     }
 
     private void initTab() {

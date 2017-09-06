@@ -38,7 +38,7 @@ public class LaunchActivity extends BaseActivity {
         AppOperator.runOnThread(new Runnable() {
             @Override
             public void run() {
-                Log.i("GCS","新版本的数据迁移工作");
+                Log.i("GCS","线程池开启线程，异步检查新版本的数据迁移工作");
                 doMerge();
             }
         });
@@ -62,8 +62,6 @@ public class LaunchActivity extends BaseActivity {
             }
         }
 
-
-
         // Delay...
         try {
             Thread.sleep(800);
@@ -76,17 +74,17 @@ public class LaunchActivity extends BaseActivity {
     }
 
     private void redirectTo() {
-        Log.i("GCS","通常登录,非重新安装状态");
-        if (!AccountHelper.isLogin()) {
+        Log.i("GCS","通常登录,非重新安装状态，先进入mainactivity再判断是否登录");
+        /*if (!AccountHelper.isLogin()) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
             return;
         }else {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
 
+        }*/
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

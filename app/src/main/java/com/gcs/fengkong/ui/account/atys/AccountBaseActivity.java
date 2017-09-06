@@ -10,6 +10,7 @@ import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 
 import com.gcs.fengkong.R;
+import com.gcs.fengkong.ui.api.myencrypt.AES;
 import com.gcs.fengkong.ui.atys.BaseActivity;
 import com.gcs.fengkong.utils.DialogHelper;
 
@@ -294,4 +296,29 @@ public class AccountBaseActivity extends BaseActivity {
 
         return tempPwd;
     }
+
+    /**
+     * 加密
+     * AES
+     *
+     * @param tempPwd tempPwd
+     * @return sha-1 pwd
+     */
+    @NonNull
+    protected String getAES(String tempPwd) {
+        AES mAes = new AES();
+        byte[] mBytes = null;
+        try {
+
+            mBytes = tempPwd.getBytes("UTF8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String enString = mAes.encrypt(mBytes);
+        Log.i("GCS","加密后："+enString);
+        return enString;
+    }
+
+
+
 }

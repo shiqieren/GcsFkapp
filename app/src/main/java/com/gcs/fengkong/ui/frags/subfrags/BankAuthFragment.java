@@ -8,6 +8,7 @@ import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -17,11 +18,24 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gcs.fengkong.AppConfig;
+import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.account.RichTextParser;
+import com.gcs.fengkong.ui.api.MyApi;
 import com.gcs.fengkong.ui.atys.SimpleBackActivity;
+import com.gcs.fengkong.ui.bean.base.ResultBean;
 import com.gcs.fengkong.ui.frags.BaseFragment;
+import com.gcs.fengkong.utils.AppOperator;
 import com.gcs.fengkong.utils.RegexUtils;
+import com.gcs.fengkong.utils.TDevice;
+import com.google.gson.reflect.TypeToken;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import java.lang.reflect.Type;
+
+import okhttp3.Call;
+import okhttp3.Request;
 
 /**
  * Created by Administrator on 0029 8-29.
@@ -311,7 +325,7 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
                 mEtBankcardPhone.requestFocus();
                 break;
             case R.id.tv_bankcard_sms_call:
-                requestSmsCode();
+               // requestSmsCode();
                 break;
             case R.id.bt_bankcard_submit:
                 AuthBankcardRequest();
@@ -331,8 +345,73 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
         }
     }
 
-    private void requestSmsCode() {
-    }
+   /* private void requestSmsCode() {
+
+        if (!mMachPhoneNum) {
+            //showToastForKeyBord(R.string.hint_username_ok);
+            return;
+        }
+        if (!TDevice.hasInternet()) {
+            GlobalApplication.showToast(R.string.tip_network_error);
+            return;
+        }
+
+        if (mTvRegisterSmsCall.getTag() == null) {
+            mRequestType = 1;
+            mTvRegisterSmsCall.setAlpha(0.6f);
+            mTvRegisterSmsCall.setTag(true);
+            mTimer = new CountDownTimer(AppConfig.SMSCODE_TIME_OUT * 1000, 1000) {
+
+                @SuppressLint("DefaultLocale")
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    mTvRegisterSmsCall.setText(String.format("%s%s%d%s",
+                            getResources().getString(R.string.register_sms_hint), "(", millisUntilFinished / 1000, ")"));
+                }
+
+                @Override
+                public void onFinish() {
+                    mTvRegisterSmsCall.setTag(null);
+                    mTvRegisterSmsCall.setText(getResources().getString(R.string.register_sms_hint));
+                    mTvRegisterSmsCall.setAlpha(1.0f);
+                }
+            }.start();
+            //加密
+            String phoneNumber = mEtRegisterUsername.getText().toString().trim();
+
+            Log.i("GCS","加密前的手机:"+phoneNumber);
+            //1111  OSChinaApi.sendSmsCode(phoneNumber, OSChinaApi.REGISTER_INTENT, mHandler);发送短信的api
+            MyApi.sendSmsCode(getAES(phoneNumber), MyApi.REGISTER_INTENT, new StringCallback() {
+                @Override
+                public void onBefore(Request request, int id) {
+                    super.onBefore(request, id);
+                }
+
+                @Override
+                public void onAfter(int id) {
+                    super.onAfter(id);
+                }
+
+
+                @Override
+                public void onError(Call call, Exception e, int id) {
+                        if (mTimer != null) {
+                            mTimer.onFinish();
+                            mTimer.cancel();
+                        }
+
+                    requestFailureHint(e);
+                }
+
+                @Override
+                public void onResponse(String response, int id) {
+
+                }
+            });
+        } else {
+            GlobalApplication.showToast(getResources().getString(R.string.register_sms_wait_hint), Toast.LENGTH_SHORT);
+        }
+    }*/
 
     private void AuthBankcardRequest() {
 

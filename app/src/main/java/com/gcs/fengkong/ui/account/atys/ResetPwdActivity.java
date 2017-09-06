@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.gcs.fengkong.AppConfig;
 import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
+import com.gcs.fengkong.Setting;
 import com.gcs.fengkong.ui.account.RichTextParser;
 import com.gcs.fengkong.ui.api.MyApi;
 import com.gcs.fengkong.ui.bean.base.ResultBean;
@@ -536,7 +537,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
             mRequestType = 1;
             mTvRetrieveSmsCall.setAlpha(0.6f);
             mTvRetrieveSmsCall.setTag(true);
-            mTimer = new CountDownTimer(60 * 1000, 1000) {
+            mTimer = new CountDownTimer(AppConfig.SMSCODE_TIME_OUT * 1000, 1000) {
 
                 @SuppressLint("DefaultLocale")
                 @Override
@@ -554,7 +555,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
             }.start();
             String phoneNumber = mEtRetrieveTel.getText().toString().trim();
          //1111   OSChinaApi.sendSmsCode(phoneNumber, OSChinaApi.RESET_PWD_INTENT, mHandler);
-            MyApi.sendSmsCode(phoneNumber, MyApi.RESET_PWD_INTENT, new StringCallback() {
+            MyApi.sendSmsCode(phoneNumber, new StringCallback() {
                 @Override
                 public void onBefore(Request request, int id) {
                     super.onBefore(request, id);
