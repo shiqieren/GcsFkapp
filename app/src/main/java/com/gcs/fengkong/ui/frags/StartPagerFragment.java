@@ -14,7 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
+import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.adapter.BaseRecyclerAdapter;
 import com.gcs.fengkong.ui.atys.PhoneAdressActivity;
 import com.gcs.fengkong.ui.widget.statusbar.StatusBarCompat;
@@ -96,27 +98,59 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
         int id = v.getId();
         switch (id) {
             case R.id.cv_identity:
+                if (!AccountHelper.isLogin()) {
+                    ShowUIHelper.showLoginActivity(getActivity());
+                    return;
+                }
                 ShowUIHelper.showIdentityAuth(getActivity());
                 break;
             case R.id.cv_bankcard:
+                if (!AccountHelper.isLogin()) {
+                    ShowUIHelper.showLoginActivity(getActivity());
+                    return;
+                }
                 ShowUIHelper.showBankAuth(getActivity());
                 break;
             case R.id.cv_zhima:
+                if (!AccountHelper.isLogin()) {
+                    ShowUIHelper.showLoginActivity(getActivity());
+                    return;
+                }
                 ShowUIHelper.showZhimaAuth(getActivity());
                 break;
             case R.id.cv_alipay:
+                if (!AccountHelper.isLogin()) {
+                    ShowUIHelper.showLoginActivity(getActivity());
+                    return;
+                }
                 ShowUIHelper.showAlipayAuth(getActivity());
                 break;
             case R.id.cv_taobao:
+                if (!AccountHelper.isLogin()) {
+                    ShowUIHelper.showLoginActivity(getActivity());
+                    return;
+                }
                 ShowUIHelper.showTaobaoAuth(getActivity());
                 break;
             case R.id.cv_jd:
+                if (!AccountHelper.isLogin()) {
+                    ShowUIHelper.showLoginActivity(getActivity());
+                    return;
+                }
                 ShowUIHelper.showJdAuth(getActivity());
                 break;
             case R.id.cv_operator:
+                if (!AccountHelper.isLogin()) {
+                    ShowUIHelper.showLoginActivity(getActivity());
+                    return;
+                }
                 ShowUIHelper.showOperatorAuth(getActivity());
                 break;
             case R.id.cv_contact:
+                if (!AccountHelper.isLogin()) {
+                    ShowUIHelper.showLoginActivity(getActivity());
+                    return;
+                }
                 showAuthbookconfirm();
 
 

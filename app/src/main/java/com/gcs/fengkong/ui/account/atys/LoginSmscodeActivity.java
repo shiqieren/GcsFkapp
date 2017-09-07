@@ -1,11 +1,13 @@
 package com.gcs.fengkong.ui.account.atys;
 
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.SharedPreferencesCompat;
 import android.text.Editable;
@@ -28,9 +30,9 @@ import com.gcs.fengkong.AppConfig;
 import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.account.AccountHelper;
+import com.gcs.fengkong.ui.account.RichTextParser;
 import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.ui.api.MyApi;
-import com.gcs.fengkong.ui.atys.MainActivity;
 import com.gcs.fengkong.ui.bean.base.ResultBean;
 import com.gcs.fengkong.utils.AppOperator;
 import com.gcs.fengkong.utils.TDevice;
@@ -49,7 +51,7 @@ import okhttp3.Request;
  * desc:
  */
 
-public class LoginActivity extends AccountBaseActivity implements View.OnClickListener, View.OnFocusChangeListener, ViewTreeObserver.OnGlobalLayoutListener {
+public class LoginSmscodeActivity extends AccountBaseActivity implements View.OnClickListener, View.OnFocusChangeListener, ViewTreeObserver.OnGlobalLayoutListener {
     public static final String HOLD_USERNAME_KEY = "holdUsernameKey";
 
     private LinearLayout mLayBackBar;
@@ -61,14 +63,16 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
     private ImageView mIvLoginUsernameDel;
     private LinearLayout mLlLoginPwd;
     private EditText mEtLoginPwd;
-    private ImageView mIvLoginPwdDel;
     private  ImageView mIvHoldPwd;
     private TextView mTvLoginForgetPwd;
-    private TextView mTvLoginSmsCodePwd;
     private Button mBtLoginSubmit;
+    private TextView mTvRegisterSmsCall;
+
     private TextView mTvLoginRegister;
 
-
+    private boolean mMachPhoneNum;
+    private CountDownTimer mTimer;
+    private String Jsessionid;
     //第三方接入的handler登录接收器callback
 
     private void logSucceed() {
@@ -108,7 +112,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
      * @param context context
      */
     public static void show(Context context) {
-        Intent intent = new Intent(context, LoginActivity.class);
+        Intent intent = new Intent(context, LoginSmscodeActivity.class);
         context.startActivity(intent);
     }
 
@@ -118,7 +122,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
      * @param context context
      */
     public static void show(Activity context, int requestCode) {
-        Intent intent = new Intent(context, LoginActivity.class);
+        Intent intent = new Intent(context, LoginSmscodeActivity.class);
         context.startActivityForResult(intent, requestCode);
     }
 
@@ -128,13 +132,13 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
      * @param fragment fragment
      */
     public static void show(Fragment fragment, int requestCode) {
-        Intent intent = new Intent(fragment.getActivity(), LoginActivity.class);
+        Intent intent = new Intent(fragment.getActivity(), LoginSmscodeActivity.class);
         fragment.startActivityForResult(intent, requestCode);
     }
 
     @Override
     protected int getContentView() {
-        return R.layout.activity_main_login;
+        return R.layout.activity_smscode_login;
     }
 
 
@@ -157,14 +161,12 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
 
         mEtLoginPwd = (EditText) findViewById(R.id.et_login_pwd);
 
-        mIvLoginPwdDel = (ImageView) findViewById(R.id.iv_login_pwd_del);
 
         mIvHoldPwd = (ImageView) findViewById(R.id.iv_login_hold_pwd);
 
         mTvLoginForgetPwd = (TextView) findViewById(R.id.tv_login_forget_pwd);
 
-        mTvLoginSmsCodePwd = (TextView) findViewById(R.id.tv_login_smscode);
-
+        mTvRegisterSmsCall= (TextView) findViewById(R.id.tv_register_sms_call);
 
         mBtLoginSubmit = (Button) findViewById(R.id.bt_login_submit);
 
@@ -197,8 +199,47 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
             @SuppressWarnings("deprecation")
             @Override
             public void afterTextChanged(Editable s) {
-                String username = s.toString().trim();
-                if (username.length() > 0) {
+                int length = s.length();
+                String input = s.toString().trim();
+                mMachPhoneNum = RichTextParser.machPhoneNum(input);
+                if (mMachPhoneNum) {
+                    String smsCode = mEtLoginPwd.getText().toString().trim();
+                    if (!TextUtils.isEmpty(smsCode)) {
+                        mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit);
+                        mBtLoginSubmit.setTextColor(getResources().getColor(R.color.white));
+                    } else {
+                        mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
+                        mBtLoginSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));
+                    }
+                } else {
+                    mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
+                    mBtLoginSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));
+                }
+
+                if (length > 0 && length < 11) {
+                    mLlLoginUsername.setBackgroundResource(R.drawable.bg_login_input_error);
+                    mTvRegisterSmsCall.setAlpha(0.4f);
+                } else if (length == 11) {
+                    if (mMachPhoneNum) {
+                        mLlLoginUsername.setBackgroundResource(R.drawable.bg_login_input_ok);
+                        if (mTvRegisterSmsCall.getTag() == null) {
+                            mTvRegisterSmsCall.setAlpha(1.0f);
+                        } else {
+                            mTvRegisterSmsCall.setAlpha(0.4f);
+                        }
+                    } else {
+                        mLlLoginUsername.setBackgroundResource(R.drawable.bg_login_input_error);
+                        showToastForKeyBord(R.string.hint_username_ok);
+                        mTvRegisterSmsCall.setAlpha(0.4f);
+                    }
+                } else if (length > 11) {
+                    mTvRegisterSmsCall.setAlpha(0.4f);
+                    mLlLoginUsername.setBackgroundResource(R.drawable.bg_login_input_error);
+                } else if (length <= 0) {
+                    mTvRegisterSmsCall.setAlpha(0.4f);
+                    mLlLoginUsername.setBackgroundResource(R.drawable.bg_login_input_ok);
+                }
+               /* if (input.length() > 0) {
                     mLlLoginUsername.setBackgroundResource(R.drawable.bg_login_input_ok);
                     mIvLoginUsernameDel.setVisibility(View.VISIBLE);
                 } else {
@@ -213,7 +254,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                 } else {
                     mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));
-                }
+                }*/
 
             }
         });
@@ -235,6 +276,16 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
             @Override
             public void afterTextChanged(Editable s) {
                 int length = s.length();
+                String pwd = mEtLoginPwd.getText().toString().trim();
+                if (length > 0 && mMachPhoneNum && !TextUtils.isEmpty(pwd)) {
+                    mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit);
+                    mBtLoginSubmit.setTextColor(getResources().getColor(R.color.white));
+                } else {
+                    mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
+                    mBtLoginSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));
+                }
+                mLlLoginPwd.setBackgroundResource(R.drawable.bg_login_input_ok);
+                /*int length = s.length();
                 if (length > 0) {
                     mLlLoginPwd.setBackgroundResource(R.drawable.bg_login_input_ok);
                     mIvLoginPwdDel.setVisibility(View.VISIBLE);
@@ -253,7 +304,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                 }else {
                     mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));
-                }
+                }*/
             }
         });
 
@@ -296,14 +347,12 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
         mIvLoginUsernameDel.setOnClickListener(this);
         mLlLoginPwd.setOnClickListener(this);
         mEtLoginPwd.setOnClickListener(this);
-        mIvLoginPwdDel.setOnClickListener(this);
         mIvHoldPwd.setOnClickListener(this);
         mTvLoginForgetPwd.setOnClickListener(this);
-        mTvLoginSmsCodePwd.setOnClickListener(this);
         mBtLoginSubmit.setOnClickListener(this);
+        mTvRegisterSmsCall.setOnClickListener(this);
         mTvLoginRegister.setOnClickListener(this);
         mLayLoginContains.setOnClickListener(this);
-
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -326,26 +375,21 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                 break;
             case R.id.tv_login_forget_pwd:
                 //忘记密码
-                ResetPwdActivity.show(LoginActivity.this);
-                break;
-            case R.id.tv_login_smscode:
-                //验证码登录
-                LoginSmscodeActivity.show(LoginActivity.this);
+                LoginActivity.show(LoginSmscodeActivity.this);
                 finish();
                 break;
+            case R.id.tv_register_sms_call:
+                requestSmsCode();
             case R.id.bt_login_submit:
                loginRequest();
                 break;
             case R.id.iv_login_hold_pwd:
                 //记住密码
             case R.id.tv_login_register:
-                RegisterActivity.show(LoginActivity.this);
+                RegisterActivity.show(LoginSmscodeActivity.this);
                 break;
             case R.id.iv_login_username_del:
                 mEtLoginUsername.setText(null);
-                break;
-            case R.id.iv_login_pwd_del:
-                mEtLoginPwd.setText(null);
                 break;
             case R.id.lay_login_container:
                 hideKeyBoard(getCurrentFocus().getWindowToken());
@@ -357,7 +401,108 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
     }
 
 
+    private void requestSmsCode() {
 
+        if (!mMachPhoneNum) {
+            //showToastForKeyBord(R.string.hint_username_ok);
+            return;
+        }
+        if (!TDevice.hasInternet()) {
+            showToastForKeyBord(R.string.tip_network_error);
+            return;
+        }
+
+        if (mTvRegisterSmsCall.getTag() == null) {
+            mTvRegisterSmsCall.setAlpha(0.6f);
+            mTvRegisterSmsCall.setTag(true);
+            mTimer = new CountDownTimer(AppConfig.SMSCODE_TIME_OUT * 1000, 1000) {
+
+                @SuppressLint("DefaultLocale")
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    mTvRegisterSmsCall.setText(String.format("%s%s%d%s",
+                            getResources().getString(R.string.register_sms_hint), "(", millisUntilFinished / 1000, ")"));
+                }
+
+                @Override
+                public void onFinish() {
+                    mTvRegisterSmsCall.setTag(null);
+                    mTvRegisterSmsCall.setText(getResources().getString(R.string.register_sms_hint));
+                    mTvRegisterSmsCall.setAlpha(1.0f);
+                }
+            }.start();
+            //加密
+            String phoneNumber = mEtLoginUsername.getText().toString().trim();
+
+            Log.i("GCS","加密前的手机:"+phoneNumber);
+            //1111  OSChinaApi.sendRegisterSmsCode(phoneNumber, OSChinaApi.REGISTER_INTENT, mHandler);发送短信的api
+            MyApi.sendSmsCode(getAES(phoneNumber), new StringCallback() {
+                @Override
+                public void onBefore(Request request, int id) {
+                    super.onBefore(request, id);
+                }
+
+                @Override
+                public void onAfter(int id) {
+                    super.onAfter(id);
+                }
+
+
+                @Override
+                public void onError(Call call, Exception e, int id) {
+                        if (mTimer != null) {
+                            mTimer.onFinish();
+                            mTimer.cancel();
+                        }
+
+                    requestFailureHint(e);
+                }
+
+                @Override
+                public void onResponse(String response, int id) {
+                    Log.i("GCS","发送短信验证码返回response："+response);
+                    Type type = new TypeToken<ResultBean>() {
+                    }.getType();
+                    ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
+                    if(resultBean.getResult()!= null){
+                        Jsessionid = resultBean.getResult().toString();
+                    }
+
+                    int code = resultBean.getCode();
+                    switch (code) {
+                        case 200:
+                            //发送验证码成功,请求进入下一步
+                            //意味着我们可以进行第二次请求了,获取phoneToken
+                            //mRequestType = 2;
+                            showToastForKeyBord(R.string.send_sms_code_success_hint);
+                            mEtLoginPwd .setText(null);
+                            break;
+                        case 400:
+                            //手机号已被注册,提示重新输入
+                            if (mTimer != null) {
+                                mTimer.onFinish();
+                                mTimer.cancel();
+                            }
+                            showToastForKeyBord(resultBean.getMessage());
+                            break;
+                        case 500:
+                            //异常错误，发送验证码失败,回收timer,需重新请求发送验证码
+                            if (mTimer != null) {
+                                mTimer.onFinish();
+                                mTimer.cancel();
+                            }
+                            showToastForKeyBord(resultBean.getMessage());
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            });
+
+        } else {
+            GlobalApplication.showToast(getResources().getString(R.string.register_sms_wait_hint), Toast.LENGTH_SHORT);
+        }
+    }
 
 
 
@@ -404,7 +549,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
 
     private void requestLogin(String tempUsername, String tempPwd) {
         Log.i("GCS","加密前用户名："+tempUsername+",加密前密码："+tempPwd);
-        MyApi.login(getAES(tempUsername), getAES(tempPwd), new StringCallback() {
+        MyApi.loginbysms(getAES(tempUsername), tempPwd,Jsessionid, new StringCallback() {
             @Override
             public void onBefore(Request request, int id) {
                 super.onBefore(request, id);
@@ -430,21 +575,13 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                     Type type = new TypeToken<ResultBean>() {}.getType();
                     ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
                     int code = resultBean.getCode();
-
                     if (code == 200) {
-
                         //User user = resultBean.getResult();
                         //模拟用户返回
                         String phoneNumber = mEtLoginUsername.getText().toString().trim();
                         Log.i("GCS","手动创建用户id=1，名称为手机");
                         User user =new User(1,phoneNumber);
                         String netcookie = "gcs test login add cookie"+System.currentTimeMillis();
-                        if(resultBean.getResult()!= null){
-                            String token = resultBean.getResult().toString();
-                            Log.i("GCS","给user设置一个token");
-                            user.setToken(token);
-                        }
-
                         if (AccountHelper.login(user,netcookie)) {
                             logSucceed();
                         } else {

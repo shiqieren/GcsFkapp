@@ -81,6 +81,14 @@
             android:theme="@style/Account_Base.App.Theme.NoTitle"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
+            android:name=".ui.account.atys.LoginSmscodeActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:label="登录中心"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/Account_Base.App.Theme.NoTitle"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
             android:name=".ui.account.atys.RegisterActivity"
             android:configChanges="keyboardHidden|orientation"
             android:label="注册中心一"

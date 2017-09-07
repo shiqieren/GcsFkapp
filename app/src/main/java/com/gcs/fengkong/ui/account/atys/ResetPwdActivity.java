@@ -10,6 +10,7 @@ import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.DecelerateInterpolator;
@@ -24,11 +25,13 @@ import android.widget.Toast;
 import com.gcs.fengkong.AppConfig;
 import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
-import com.gcs.fengkong.Setting;
+import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.account.RichTextParser;
+import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.ui.api.MyApi;
 import com.gcs.fengkong.ui.bean.base.ResultBean;
 import com.gcs.fengkong.utils.AppOperator;
+import com.gcs.fengkong.utils.ShowUIHelper;
 import com.gcs.fengkong.utils.TDevice;
 import com.google.gson.reflect.TypeToken;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -68,117 +71,8 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
     private CountDownTimer mTimer;
 
     private int mRequestType;
-   /* private TextHttpResponseHandler mHandler = new TextHttpResponseHandler() {
+    private String Jsessionid;
 
-        @Override
-        public void onStart() {
-            super.onStart();
-            showWaitDialog(R.string.progress_submit);
-        }
-
-        @Override
-        public void onFinish() {
-            super.onFinish();
-            hideWaitDialog();
-        }
-
-        @Override
-        public void onCancel() {
-            super.onCancel();
-            hideWaitDialog();
-        }
-
-        @Override
-        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-            //请求失败,比如服务器连接超时,回收timer,需重新请求发送验证码
-            if (mRequestType == 1) {
-                if (mTimer != null) {
-                    mTimer.onFinish();
-                    mTimer.cancel();
-                }
-            }
-            requestFailureHint(throwable);
-        }
-
-        @Override
-        public void onSuccess(int statusCode, Header[] headers, String responseString) {
-
-            try {
-                switch (mRequestType) {
-                    //第一步请求发送验证码
-                    case 1:
-                        Type type = new TypeToken<ResultBean>() {
-                        }.getType();
-                        ResultBean resultBean = AppOperator.createGson().fromJson(responseString, type);
-                        int code = resultBean.getCode();
-                        switch (code) {
-                            case 1:
-                                //发送验证码成功,请求进入下一步
-                                //mRequestType = 2;
-                                mEtRetrieveCodeInput.setText(null);
-                                AppContext.showToast(R.string.send_sms_code_success_hint, Toast.LENGTH_SHORT);
-                                break;
-                            case 218:
-                                //手机号已被注册,提示重新输入
-                                mLlRetrieveTel.setBackgroundResource(R.drawable.bg_login_input_error);
-                                showToastForKeyBord(resultBean.getMessage());
-                                break;
-                            case 0:
-                                //异常错误，发送验证码失败,回收timer,需重新请求发送验证码
-                                if (mTimer != null) {
-                                    mTimer.onFinish();
-                                    mTimer.cancel();
-                                }
-                                showToastForKeyBord(resultBean.getMessage());
-                                break;
-                            default:
-                                break;
-                        }
-
-                        break;
-                    //第二步请求进行重置密码
-                    case 2:
-
-                        Type phoneType = new TypeToken<ResultBean<PhoneToken>>() {
-                        }.getType();
-
-                        ResultBean<PhoneToken> phoneTokenResultBean = AppOperator.createGson().fromJson(responseString, phoneType);
-
-                        int smsCode = phoneTokenResultBean.getCode();
-                        switch (smsCode) {
-                            case 1:
-                                if (phoneTokenResultBean.isSuccess()) {
-                                    PhoneToken phoneToken = phoneTokenResultBean.getResult();
-                                    if (phoneToken != null) {
-                                        if (mTimer != null) {
-                                            mTimer.onFinish();
-                                            mTimer.cancel();
-                                        }
-                                        ResetPwdActivity.show(ResetPwdActivity.this, phoneToken);
-                                    }
-                                } else {
-                                    showToastForKeyBord(phoneTokenResultBean.getMessage());
-                                }
-                                break;
-                            case 215:
-                                mLlRetrieveCode.setBackgroundResource(R.drawable.bg_login_input_error);
-                                showToastForKeyBord(phoneTokenResultBean.getMessage());
-                                break;
-                            default:
-                                break;
-                        }
-                        break;
-                    default:
-                        break;
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                onFailure(statusCode, headers, responseString, e);
-            }
-
-        }
-    };*/
     private int mTopMargin;
 
     /**
@@ -428,10 +322,8 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
 
                 break;
             case R.id.bt_retrieve_submit:
-                Toast.makeText(ResetPwdActivity.this,"修改密码",Toast.LENGTH_SHORT).show();
-                //根据验证码获取phoneToken
-               //111 requestRetrievePwd();
-                //requestResetPwd();
+
+               requestRetrievePwd();
                 break;
             case R.id.tv_retrieve_label:
 
@@ -469,7 +361,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
         mRequestType = 2;
         String phoneNumber = mEtRetrieveTel.getText().toString().trim();
        //111 OSChinaApi.validateRegisterInfo(phoneNumber, smsCode, mHandler);
-        MyApi.resetPwd(phoneNumber, smsCode, getSha1(tempPwd), new StringCallback() {
+        MyApi.resetPwd(getAES(phoneNumber), smsCode, getAES(tempPwd),Jsessionid, new StringCallback() {
             @Override
             public void onBefore(Request request, int id) {
                 super.onBefore(request, id);
@@ -496,23 +388,20 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
 
             @Override
             public void onResponse(String response, int id) {
+                Log.i("GCS","修改密码返回response："+response);
+
                 Type type = new TypeToken<ResultBean>() {
                 }.getType();
                 ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
+                //注册结果返回该用户User
                 int code = resultBean.getCode();
-
                 switch (code) {
-                    case 1:
-                        GlobalApplication.showToast(getResources().getString(R.string.reset_success_hint), Toast.LENGTH_SHORT);
+                    case 200://注册成功,进行用户信息填写
                         LoginActivity.show(ResetPwdActivity.this);
                         finish();
                         break;
-                    case 216:
-                        showToastForKeyBord(resultBean.getMessage());
-                        finish();
-                        break;
-                    case 219:
-                        mLlResetPwd.setBackgroundResource(R.drawable.bg_login_input_error);
+                    case 500://注册失败,手机验证码错误
+                        mLlRetrieveCode.setBackgroundResource(R.drawable.bg_login_input_error);
                         showToastForKeyBord(resultBean.getMessage());
                         break;
                     default:
@@ -554,8 +443,8 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
                 }
             }.start();
             String phoneNumber = mEtRetrieveTel.getText().toString().trim();
-         //1111   OSChinaApi.sendSmsCode(phoneNumber, OSChinaApi.RESET_PWD_INTENT, mHandler);
-            MyApi.sendSmsCode(phoneNumber, new StringCallback() {
+         //1111   OSChinaApi.sendRegisterSmsCode(phoneNumber, OSChinaApi.RESET_PWD_INTENT, mHandler);
+            MyApi.sendSmsCode(getAES(phoneNumber), new StringCallback() {
                 @Override
                 public void onBefore(Request request, int id) {
                     super.onBefore(request, id);
@@ -582,23 +471,32 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
 
                 @Override
                 public void onResponse(String response, int id) {
+                    Log.i("GCS","发送短信验证码返回response："+response);
                     Type type = new TypeToken<ResultBean>() {
                     }.getType();
                     ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
+                    if(resultBean.getResult()!= null){
+                        Jsessionid = resultBean.getResult().toString();
+                    }
+
                     int code = resultBean.getCode();
                     switch (code) {
-                        case 1:
+                        case 200:
                             //发送验证码成功,请求进入下一步
+                            //意味着我们可以进行第二次请求了,获取phoneToken
                             //mRequestType = 2;
+                            showToastForKeyBord(R.string.send_sms_code_success_hint);
                             mEtRetrieveCodeInput.setText(null);
-                            GlobalApplication.showToast(R.string.send_sms_code_success_hint, Toast.LENGTH_SHORT);
                             break;
-                        case 218:
+                        case 400:
                             //手机号已被注册,提示重新输入
-                            mLlRetrieveTel.setBackgroundResource(R.drawable.bg_login_input_error);
+                            if (mTimer != null) {
+                                mTimer.onFinish();
+                                mTimer.cancel();
+                            }
                             showToastForKeyBord(resultBean.getMessage());
                             break;
-                        case 0:
+                        case 500:
                             //异常错误，发送验证码失败,回收timer,需重新请求发送验证码
                             if (mTimer != null) {
                                 mTimer.onFinish();

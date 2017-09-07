@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.gcs.fengkong.cache.DataCleanManager;
+import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.api.MyApi;
 import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.utils.MethodsCompat;
@@ -133,7 +134,7 @@ public class GlobalApplication extends Application {
         // 初始化异常捕获类
         AppCrashHandler.getInstance().init(this);
         // 初始化账户基础信息
-       // AccountHelper.init(this);
+        AccountHelper.init(this);
         // 初始化网络请求
       //  OkHttpClient.init(this);
         //初始化其他相关，框架，sdk，数据库,百度地图....

@@ -380,8 +380,8 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
             String phoneNumber = mEtRegisterUsername.getText().toString().trim();
 
             Log.i("GCS","加密前的手机:"+phoneNumber);
-            //1111  OSChinaApi.sendSmsCode(phoneNumber, OSChinaApi.REGISTER_INTENT, mHandler);发送短信的api
-            MyApi.sendSmsCode(getAES(phoneNumber), MyApi.REGISTER_INTENT, new StringCallback() {
+            //1111  OSChinaApi.sendRegisterSmsCode(phoneNumber, OSChinaApi.REGISTER_INTENT, mHandler);发送短信的api
+            MyApi.sendRegisterSmsCode(getAES(phoneNumber), MyApi.REGISTER_INTENT, new StringCallback() {
                 @Override
                 public void onBefore(Request request, int id) {
                     super.onBefore(request, id);

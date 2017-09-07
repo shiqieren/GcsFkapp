@@ -7,6 +7,8 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.gcs.fengkong.GlobalApplication;
+import com.gcs.fengkong.R;
+import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.account.atys.LoginActivity;
 import com.gcs.fengkong.ui.atys.SimpleBackActivity;
 import com.gcs.fengkong.ui.bean.SimpleBackPage;
@@ -37,6 +39,7 @@ public class ShowUIHelper {
 
 
     public static void showSimpleBack(Context context, SimpleBackPage page) {
+
         Intent intent = new Intent(context, SimpleBackActivity.class);
         intent.putExtra(SimpleBackActivity.BUNDLE_KEY_PAGE, page.getValue());
         context.startActivity(intent);

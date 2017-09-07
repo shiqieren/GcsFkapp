@@ -82,10 +82,11 @@ public final class AccountHelper {
         SharedPreferencesHelper.remove(instances.application, User.class);
     }
 
-    public static boolean login(final User user) {
-        // 更新Cookie  获取原有cookie
+
+    public static boolean login(final User user,String netcookie) {
+        // 从请求头更新Cookie  获取原有cookie
        // String cookie = ApiHttpClient.getCookie(headers);
-        String cookie = "测试登录cookie，lyw";
+        String cookie = netcookie;
         if (TextUtils.isEmpty(cookie) || cookie.length() < 6) {
             return false;
         }
@@ -102,8 +103,9 @@ public final class AccountHelper {
         }
 
         if (saveOk) {
-            //设置用户的cookie
-           // MyApi.setCookieHeader(getCookie());
+            //设置用户的cookie,会话设置
+            Log.i("GCS","用户更新文件存储后，每次请求头都要添加该用户cookie，以保持会话匹配");
+           //在该登录用户每次请求添加sp中存储的cookie MyApi.setCookieHeader(getCookie());
 
         }
         return saveOk;
@@ -145,7 +147,7 @@ public final class AccountHelper {
     private static void clearAndPostBroadcast(Application application) {
         Log.i("GCS","退出登录后清除和发广播处理");
         // 清理网络相关,cookie,client
-        //MyApi.destroyAndRestore(application);
+        MyApi.destroyAndRestore(application);
 
         // 清理对应缓存路径数据
        // CacheManager.deleteObject(application, 相应的缓存路径);

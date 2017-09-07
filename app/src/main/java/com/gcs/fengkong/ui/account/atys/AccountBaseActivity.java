@@ -174,11 +174,12 @@ public class AccountBaseActivity extends BaseActivity {
         IntentFilter filter = new IntentFilter();
         filter.addAction(ACTION_ACCOUNT_FINISH_ALL);
         if (mReceiver == null)
-            mReceiver =     new BroadcastReceiver() {
+            mReceiver =  new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     String action = intent.getAction();
                     if (ACTION_ACCOUNT_FINISH_ALL.equals(action)) {
+                        Log.i("GCS","广播通信finish()窗口");
                         finish();
                     }
                 }

@@ -31,6 +31,7 @@ import com.gcs.fengkong.Setting;
 import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.ui.api.ApiClientHelper;
+import com.gcs.fengkong.ui.api.MyApi;
 import com.gcs.fengkong.ui.bean.Tab;
 import com.gcs.fengkong.ui.bean.Version;
 import com.gcs.fengkong.ui.frags.StartPagerFragment;
@@ -42,15 +43,18 @@ import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.update.CheckUpdateManager;
 import com.gcs.fengkong.update.DownloadService;
 import com.gcs.fengkong.utils.DialogHelper;
+import com.gcs.fengkong.utils.SharedPreferencesHelper;
 import com.gcs.fengkong.utils.ShowUIHelper;
 import com.gcs.fengkong.utils.TDevice;
 import com.gcs.fengkong.utils.UIUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.Call;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -72,7 +76,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     private LocationClient mLocationClient;
     private RadarSearchManager mRadarSearchManager;
     private RadarSearchAdapter mRadarSearchAdapter;
-    private List<Tab> mTabs = new ArrayList<>(1);
+    private List<Tab> mTabs = new ArrayList<>(2);
 
 
   /*  @Override
@@ -116,10 +120,10 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 
 
         Tab tab_mine1 = new Tab(StartPagerFragment.class,R.string.tab1,R.drawable.selector_icon_mine);
-       // Tab tab_mine2 = new Tab( UserInfoFragment.class,R.string.tab2,R.drawable.selector_icon_mine);
+        Tab tab_mine2 = new Tab( UserInfoFragment.class,R.string.tab2,R.drawable.selector_icon_mine);
 
         mTabs.add(tab_mine1);
-      //  mTabs.add(tab_mine2);
+        mTabs.add(tab_mine2);
 
 
 
@@ -167,6 +171,25 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         checkUpdate();
         checkLocation();
         ApiClientHelper.getUserAgent(GlobalApplication.getInstance());
+        String token ="";
+        if (AccountHelper.isLogin()) {
+            token = SharedPreferencesHelper.load(GlobalApplication.getInstance(), User.class).getToken().toString();
+            return;
+        }
+        if(token != null){
+            MyApi.sendUserAgent(token, new StringCallback() {
+                @Override
+                public void onError(Call call, Exception e, int id) {
+
+                }
+
+                @Override
+                public void onResponse(String response, int id) {
+                    Log.i("GCS","平台信息上传响应返回"+response.toString());
+                }
+            });
+        }
+
     }
     private void checkUpdate() {
         if (!GlobalApplication.get(AppConfig.KEY_CHECK_UPDATE, true)) {

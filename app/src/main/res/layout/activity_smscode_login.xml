@@ -108,7 +108,7 @@
                 android:layout_marginLeft="14dp"
                 android:layout_marginRight="14dp"
                 android:contentDescription="@null"
-                app:srcCompat="@mipmap/ic_login_password" />
+                app:srcCompat="@mipmap/auth_code_logo" />
 
             <View
                 android:layout_width="1px"
@@ -123,8 +123,8 @@
                 android:layout_marginRight="16dp"
                 android:layout_weight="1"
                 android:background="@null"
-                android:hint="@string/login_password_hint"
-                android:inputType="textPassword"
+                android:hint="@string/register_sms_auth_code"
+                android:inputType="phone|number"
                 android:maxLines="1"
                 android:minLines="1"
                 android:paddingLeft="4dp"
@@ -132,18 +132,24 @@
                 android:textColor="@color/white"
                 android:textColorHint="@color/hint_font_color"
                 android:textCursorDrawable="@null"
-                android:textSize="@dimen/font_16" />
+                android:textSize="@dimen/font_16"/>
 
-            <ImageView
-                android:id="@+id/iv_login_pwd_del"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="16dp"
+            <TextView
+                android:id="@+id/tv_register_sms_call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginRight="16dp"
-                android:contentDescription="@null"
-                android:scaleType="fitCenter"
-                android:visibility="gone"
-                app:srcCompat="@mipmap/ic_clear" />
+                android:alpha="0.8"
+                android:background="@drawable/bg_register_call_sms"
+                android:gravity="center_vertical"
+                android:paddingBottom="4dp"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:paddingTop="4dp"
+                android:text="@string/register_sms_hint"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                tools:ignore="RtlHardcoded"/>
 
         </LinearLayout>
 
@@ -155,18 +161,6 @@
             android:layout_marginTop="12dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
-            <TextView
-                android:id="@+id/tv_login_smscode"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:paddingBottom="4dp"
-                android:paddingLeft="4dp"
-                android:paddingTop="4dp"
-                android:text="@string/login_smscode_hint"
-                android:textColor="@color/hint_font_color"
-                android:textSize="16sp"
-                tools:ignore="RtlSymmetry" />
             <ImageView
                 android:id="@+id/iv_login_hold_pwd"
                 android:layout_width="32dp"
@@ -197,7 +191,7 @@
                 android:paddingBottom="4dp"
                 android:paddingLeft="4dp"
                 android:paddingTop="4dp"
-                android:text="@string/login_forget_hint"
+                android:text="@string/login_password_tip"
                 android:textColor="@color/hint_font_color"
                 android:textSize="16sp"
                 tools:ignore="RtlSymmetry" />

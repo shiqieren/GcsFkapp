@@ -3,19 +3,22 @@ package com.gcs.fengkong.ui.api;
 import android.app.Application;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.Setting;
-import com.gcs.fengkong.ui.account.AccountHelper;
+import com.gcs.fengkong.ui.account.bean.User;
+import com.gcs.fengkong.utils.SharedPreferencesHelper;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+import com.zhy.http.okhttp.cookie.store.CookieStore;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Cookie;
 import okhttp3.OkHttpClient;
+import okhttp3.internal.http2.Header;
 
 public class MyApi {
 
@@ -26,6 +29,10 @@ public class MyApi {
     public static final String RESET_PWD_INTENT = "2";
 
     public static final String CATALOG_NEWS_DETAIL = "news";
+
+
+
+    private static OkHttpClient okHttpClient;
    /*
     Map<String, String> params = new HashMap<>();
         params.put("username", "张鸿洋");
@@ -80,7 +87,7 @@ public class MyApi {
        // ClearableCookieJar cookieJar1 = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(getApplicationContext()));
       //  CookieJarImpl cookieJar = new CookieJarImpl(new PersistentCookieStore(GlobalApplication.getContext()));
 
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+        okHttpClient = new OkHttpClient.Builder()
                 //          .addInterceptor(new LoggerInterceptor("TAG"))
                 .connectTimeout(10000L, TimeUnit.MILLISECONDS)
                 .readTimeout(10000L, TimeUnit.MILLISECONDS)
@@ -102,9 +109,91 @@ public class MyApi {
 
         OkHttpUtils.initClient(okHttpClient);
     }
+    /*设置头cookie*/
+    public static void setCookieHeader(String cookie) {
+        if (!TextUtils.isEmpty(cookie))
+           // CLIENT.addHeader("Cookie", cookie);
+        Log.i("GCS","setCookieHeader:" + cookie);
+    }
+    /**
+     * 销毁当前AsyncHttpClient 并重新初始化网络参数，初始化Cookie等信息
+     *
+     * @param appContext AppContext
+     */
+    public static void destroyAndRestore(Application appContext) {
+        cleanCookie();
+        okHttpClient = null;
+        init(appContext);
+    }
 
+    public static void cleanCookie() {
+        // first clear store
+        // new PersistentCookieStore(AppContext.getInstance()).clear();
+        // clear header
+        /*if (client != null) {
+            HttpContext httpContext = client.getHttpContext();
+            CookieStore cookies = (CookieStore) httpContext
+                    .getAttribute(HttpClientContext.COOKIE_STORE);
+            // 清理Async本地存储
+            if (cookies != null) {
+                cookies.clear();
+            }
+            // 清理当前正在使用的Cookie
+            client.removeHeader("Cookie");
+        }*/
+        Log.i("GCS","网络请求的  cleanCookie");
+    }
 
+    /**
+     * 从okhttpClient自带缓存中获取CookieString
+     *
+     * @param
+     * @return CookieString
+     */
+    private static String getClientCookie(OkHttpClient client) {
+        String cookie = "";
+        if (client != null) {
+            //获得cookie
+            /*HttpContext httpContext = client.getHttpContext();
+            CookieStore cookies = (CookieStore) httpContext
+                    .getAttribute(HttpClientContext.COOKIE_STORE);*/
 
+            /*if (cookies != null && cookies.getCookies() != null && cookies.getCookies().size() > 0) {
+                for (Cookie c : cookies.getCookies()) {
+                    cookie += (c.getName() + "=" + c.getValue()) + ";";
+                }
+            }*/
+        }
+        Log.i("GCS","getClientCookie:" + cookie);
+        return cookie;
+    }
+
+    /**
+     * 得到当前的网络请求Cookie，
+     * 登录后触发
+     *
+     * @param headers Header
+     */
+    public static String getCookie(Header[] headers) {
+        String cookie = getClientCookie(okHttpClient);
+        /*if (TextUtils.isEmpty(cookie)) {
+            cookie = "";
+            if (headers != null) {
+                for (Header header : headers) {
+                    String key = header.getName();
+                    String value = header.getValue();
+                    if (key.contains("Set-Cookie"))
+                        cookie += value + ";";
+                }
+                if (cookie.length() > 0) {
+                    cookie = cookie.substring(0, cookie.length() - 1);
+                }
+            }
+        }*/
+
+        Log.i("GCS","getCookie:" + cookie);
+        return cookie;
+    }
 
     //根url通过build.gradle配置到setting的sp文件中，并获取得到
     public static String getAbsoluteApiUrl(String partUrl) {
@@ -149,7 +238,25 @@ public class MyApi {
         Log.i("GCS","登录url:"+getAbsoluteApiUrl("wind-phone/phone/login.do"));
     }
 
-    public static void sendSmsCode(String phone,StringCallback callback) {
+    /**
+     * login account
+     *
+     * @param username username
+     * @param pwd      pwd
+     */
+    public static void loginbysms(String username, String pwd,String jsessionid, StringCallback callback) {
+        Map<String, String> params = new HashMap<>();
+        // params.put("appId", "1");
+        // params.put("catalog", "1");
+        // params.put("all", "false");
+        params.put("name", username);
+        params.put("code", pwd);
+        params.put("JSESSIONID",jsessionid);
+        OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/smsLogin.do")).params(params).build().execute(callback);
+        Log.i("GCS","短信登录url:"+getAbsoluteApiUrl("wind-phone/phone/smsLogin.do"));
+    }
+
+    public static void sendRegisterSmsCode(String phone, StringCallback callback) {
         Map<String, String> params = new HashMap<>();
       //  params.put("appId", "1");
       //  params.put("token", "1");
@@ -160,20 +267,31 @@ public class MyApi {
         Log.i("GCS","请求发送短信验证码url:"+getAbsoluteApiUrl("wind-phone/phone/registerSendMsg.do"));
     }
 
+    public static void sendSmsCode(String phone, StringCallback callback) {
+        Map<String, String> params = new HashMap<>();
+        //  params.put("appId", "1");
+        //  params.put("token", "1");
+        params.put("name", phone);
+        //  params.put("intent", intent);
+
+        OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/smsSend.do")).params(params).build().execute(callback);
+        Log.i("GCS","请求发送短信验证码url:"+getAbsoluteApiUrl("wind-phone/phone/smsSend.do"));
+    }
     /**
-     * validate and get phone token
+     *
      *
      * @param phoneNumber phoneNumber
      * @param smsCode     smsCode
      * @param pwd      pwd
      */
-    public static void register(String phoneNumber, String smsCode, String pwd,StringCallback callback) {
+    public static void register(String phoneNumber, String smsCode, String pwd,String jsessionid,StringCallback callback) {
         Map<String, String> params = new HashMap<>();
        // params.put("appId", "1");
        /// params.put("phone", phoneNumber);
         params.put("name",phoneNumber);
         params.put("password",pwd);
         params.put("code",smsCode);
+        params.put("JSESSIONID",jsessionid);
         OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/register.do")).params(params).build().execute(callback);
         Log.i("GCS","注册账户url:"+getAbsoluteApiUrl("wind-phone/phone/register.do"));
         Log.i("GCS","短信验证码："+smsCode);
@@ -181,6 +299,24 @@ public class MyApi {
       //  OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/register.do?"+"name="+phoneNumber+"&password="+pwd+"&code="+smsCode)).build().execute(callback);
     }
 
+    /**
+     * validate and get phone token
+     *
+     * @param token token
+     *
+     */
+    public static void sendUserAgent(String token,StringCallback callback) {
+        Map<String, String> params = new HashMap<>();
+        // params.put("appId", "1");
+        /// params.put("phone", phoneNumber);
+        params.put("platform","ANDROID");
+        params.put("token",token);
+        OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/map/register.do")).params(params).build().execute(callback);
+        Log.i("GCS","发送平台信息url:"+getAbsoluteApiUrl("wind-phone/phone/map/register.do"));
+
+
+        //  OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/register.do?"+"name="+phoneNumber+"&password="+pwd+"&code="+smsCode)).build().execute(callback);
+    }
 
     /**
      * reset pwd
@@ -189,13 +325,13 @@ public class MyApi {
      * @param smsCode     smsCode
      * @param pwd      pwd
      */
-    public static void resetPwd(String phoneNumber, String smsCode, String pwd,StringCallback callback) {
+    public static void resetPwd(String phoneNumber, String smsCode, String pwd,String jsessionid,StringCallback callback) {
         Map<String, String> params = new HashMap<>();
-        params.put("appId", "1");
-        params.put("phone", phoneNumber);
-        params.put("code", smsCode);
-        params.put("password", pwd);
-        OkHttpUtils.post().url(getAbsoluteApiUrl("action/apiv2/account_login")).params(params).build().execute(callback);
+        params.put("name",phoneNumber);
+        params.put("password",pwd);
+        params.put("code",smsCode);
+        params.put("JSESSIONID",jsessionid);
+        OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/updatePass.do")).params(params).build().execute(callback);
     }
 
 }
