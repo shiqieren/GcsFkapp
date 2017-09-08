@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  * Created by Administrator on 0005 9-5.
  */
 
-public class IDCard {
+public class IDCardUtil {
     /**
      * 功能：身份证的有效验证
      *

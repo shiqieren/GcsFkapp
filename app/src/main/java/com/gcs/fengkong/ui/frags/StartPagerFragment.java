@@ -6,26 +6,18 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
-import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.account.AccountHelper;
-import com.gcs.fengkong.ui.adapter.BaseRecyclerAdapter;
 import com.gcs.fengkong.ui.atys.PhoneAdressActivity;
 import com.gcs.fengkong.ui.widget.statusbar.StatusBarCompat;
-import com.gcs.fengkong.utils.DialogHelper;
-import com.gcs.fengkong.utils.ShowUIHelper;
+import com.gcs.fengkong.utils.DialogUtil;
+import com.gcs.fengkong.ui.ShowUIHelper;
 import com.gcs.fengkong.utils.TDevice;
-import com.gcs.fengkong.utils.UIUtils;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
@@ -173,7 +165,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
         TextView tv_link = dialogview.findViewById(R.id.read_authbook_link);
         //Button bt_cancle = dialogview.findViewById(R.id.btn_cancel);
 
-        final AlertDialog dlgShowBack = DialogHelper.getDialog(getContext()).setView(dialogview).setPositiveButton("确认", new DialogInterface.OnClickListener() {
+        final AlertDialog dlgShowBack = DialogUtil.getDialog(getContext()).setView(dialogview).setPositiveButton("确认", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Intent intent = new Intent(getActivity(), PhoneAdressActivity.class);

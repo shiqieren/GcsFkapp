@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.atys.BaseActivity;
 import com.gcs.fengkong.ui.bean.Version;
-import com.gcs.fengkong.utils.DialogHelper;
+import com.gcs.fengkong.utils.DialogUtil;
 import com.gcs.fengkong.utils.TDevice;
 
 import java.util.List;
@@ -75,7 +75,7 @@ public class UpdateActivity extends BaseActivity implements View.OnClickListener
         switch (v.getId()) {
             case R.id.btn_update:
                 if (!TDevice.isWifiOpen()) {
-                    DialogHelper.getConfirmDialog(this, "当前非wifi环境，是否升级？", new DialogInterface.OnClickListener() {
+                    DialogUtil.getConfirmDialog(this, "当前非wifi环境，是否升级？", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                            requestExternalStorage();
@@ -109,7 +109,7 @@ public class UpdateActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
-        DialogHelper.getConfirmDialog(this, "温馨提示", "需要开启管云风控对您手机的存储权限才能下载安装，是否现在开启", "去开启", "取消", true, new DialogInterface.OnClickListener() {
+        DialogUtil.getConfirmDialog(this, "温馨提示", "需要开启管云风控对您手机的存储权限才能下载安装，是否现在开启", "去开启", "取消", true, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 startActivity(new Intent(Settings.ACTION_APPLICATION_SETTINGS));

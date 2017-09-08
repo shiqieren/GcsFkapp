@@ -11,8 +11,8 @@ import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.account.atys.LoginActivity;
 import com.gcs.fengkong.ui.bean.SimpleBackPage;
 import com.gcs.fengkong.ui.interf.OnTabReselectListener;
-import com.gcs.fengkong.utils.DialogHelper;
-import com.gcs.fengkong.utils.ShowUIHelper;
+import com.gcs.fengkong.utils.DialogUtil;
+import com.gcs.fengkong.ui.ShowUIHelper;
 
 
 /**
@@ -180,7 +180,7 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
     public ProgressDialog showWaitDialog(int messageId) {
         String message = getResources().getString(messageId);
         if (mDialog == null) {
-            mDialog = DialogHelper.getProgressDialog(getActivity(), message);
+            mDialog = DialogUtil.getProgressDialog(getActivity(), message);
         }
 
         mDialog.setMessage(message);

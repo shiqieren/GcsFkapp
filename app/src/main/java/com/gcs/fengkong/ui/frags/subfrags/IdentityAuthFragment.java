@@ -2,8 +2,6 @@ package com.gcs.fengkong.ui.frags.subfrags;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -21,13 +19,9 @@ import android.widget.Toast;
 
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.account.RichTextParser;
-import com.gcs.fengkong.ui.account.atys.LoginActivity;
-import com.gcs.fengkong.ui.account.atys.RegisterActivity;
-import com.gcs.fengkong.ui.account.atys.ResetPwdActivity;
 import com.gcs.fengkong.ui.atys.SimpleBackActivity;
 import com.gcs.fengkong.ui.frags.BaseFragment;
-import com.gcs.fengkong.utils.IDCard;
-import com.gcs.fengkong.utils.RegexUtils;
+import com.gcs.fengkong.utils.IDCardUtil;
 
 import java.text.ParseException;
 
@@ -159,7 +153,7 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
                     mIvIdentityNumberDel.setVisibility(View.INVISIBLE);
                 }
                 try {
-                    mIsIDcardnumber = IDCard.IDCardValidate(input);
+                    mIsIDcardnumber = IDCardUtil.IDCardValidate(input);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

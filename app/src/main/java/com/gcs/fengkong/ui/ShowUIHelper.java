@@ -1,4 +1,4 @@
-package com.gcs.fengkong.utils;
+package com.gcs.fengkong.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import com.gcs.fengkong.ui.account.atys.LoginActivity;
 import com.gcs.fengkong.ui.atys.SimpleBackActivity;
 import com.gcs.fengkong.ui.bean.SimpleBackPage;
 import com.gcs.fengkong.ui.frags.subfrags.BrowserFragment;
+import com.gcs.fengkong.utils.AppOperator;
 
 
 /**

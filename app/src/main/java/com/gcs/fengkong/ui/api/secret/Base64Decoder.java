@@ -1,4 +1,4 @@
-package com.gcs.fengkong.ui.api.myencrypt;
+package com.gcs.fengkong.ui.api.secret;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;

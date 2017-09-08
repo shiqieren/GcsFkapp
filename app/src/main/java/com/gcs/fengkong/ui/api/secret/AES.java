@@ -1,4 +1,4 @@
-package com.gcs.fengkong.ui.api.myencrypt;
+package com.gcs.fengkong.ui.api.secret;
 
 /**
  *  LICENSE AND TRADEMARK NOTICES

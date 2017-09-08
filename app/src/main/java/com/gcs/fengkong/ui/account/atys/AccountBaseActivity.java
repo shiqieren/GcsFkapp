@@ -20,9 +20,9 @@ import android.widget.Toast;
 
 
 import com.gcs.fengkong.R;
-import com.gcs.fengkong.ui.api.myencrypt.AES;
+import com.gcs.fengkong.ui.api.secret.AES;
 import com.gcs.fengkong.ui.atys.BaseActivity;
-import com.gcs.fengkong.utils.DialogHelper;
+import com.gcs.fengkong.utils.DialogUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -195,10 +195,10 @@ public class AccountBaseActivity extends BaseActivity {
     protected ProgressDialog showWaitDialog(@StringRes int messageId) {
         if (mDialog == null) {
             if (messageId <= 0) {
-                mDialog = DialogHelper.getProgressDialog(this, true);
+                mDialog = DialogUtil.getProgressDialog(this, true);
             } else {
                 String message = getResources().getString(messageId);
-                mDialog = DialogHelper.getProgressDialog(this, message, true);
+                mDialog = DialogUtil.getProgressDialog(this, message, true);
             }
         }
         mDialog.show();
@@ -215,7 +215,7 @@ public class AccountBaseActivity extends BaseActivity {
 
         String message = getResources().getString(R.string.progress_submit);
         if (mDialog == null) {
-            mDialog = DialogHelper.getProgressDialog(this, message, false);//DialogHelp.getWaitDialog(this, message);
+            mDialog = DialogUtil.getProgressDialog(this, message, false);//DialogHelp.getWaitDialog(this, message);
         }
         mDialog.show();
 

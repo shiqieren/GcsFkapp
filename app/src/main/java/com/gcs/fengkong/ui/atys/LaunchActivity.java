@@ -8,7 +8,6 @@ import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.Setting;
 import com.gcs.fengkong.ui.account.AccountHelper;
-import com.gcs.fengkong.ui.account.atys.LoginActivity;
 import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.utils.AppOperator;
 
@@ -29,7 +28,7 @@ public class LaunchActivity extends BaseActivity {
 
         //配置文件生成并记录app当前进入时间点
         //  AppConfig.getAppConfig(LaunchActivity.this).set("system_time", "初始化");
-        //GlobalApplication.getInstance().setProperty("system_time", "123456");
+
 
         super.initData();
         // 在这里我们检测是否是新版本安装，如果是则进行老版本数据迁移工作
@@ -50,13 +49,14 @@ public class LaunchActivity extends BaseActivity {
 
         // 判断是否是新版本
         if (Setting.checkIsNewVersion(this)) {
-            // Cookie迁移,获得保存着的，赋值前先移除，再赋给获得的登录user
-            String cookie = GlobalApplication.getInstance().getProperty("cookie");
+            Log.i("GCS","新版本更新后进行cookie搬移操作,全局中app_config中获取cookie赋值给user");
+            String cookie = GlobalApplication.getInstance().getContextAppConfigValue("cookie");
             //判断是否为空cookie
             if (!TextUtils.isEmpty(cookie)) {
-                GlobalApplication.getInstance().removeProperty("cookie");
+                GlobalApplication.getInstance().removeContextAppConfigValue("cookie");
                 User user = AccountHelper.getUser();
                 user.setCookie(cookie);
+                Log.i("GCS","app更新后自动登录和更新缓存");
                 AccountHelper.updateUserCache(user);
                 GlobalApplication.reInit();
             }

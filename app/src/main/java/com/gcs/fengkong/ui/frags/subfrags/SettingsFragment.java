@@ -20,10 +20,10 @@ import com.gcs.fengkong.ui.frags.BaseFragment;
 import com.gcs.fengkong.ui.widget.togglebutton.ToggleButton;
 import com.gcs.fengkong.update.CheckUpdateManager;
 import com.gcs.fengkong.update.DownloadService;
-import com.gcs.fengkong.utils.DialogHelper;
+import com.gcs.fengkong.utils.DialogUtil;
 import com.gcs.fengkong.utils.FileUtil;
 import com.gcs.fengkong.utils.MethodsCompat;
-import com.gcs.fengkong.utils.ShowUIHelper;
+import com.gcs.fengkong.ui.ShowUIHelper;
 
 import java.io.File;
 import java.util.List;
@@ -192,7 +192,7 @@ public class SettingsFragment extends BaseFragment implements EasyPermissions.Pe
     }
 
     private void onClickCleanCache() {
-        DialogHelper.getConfirmDialog(getActivity(), "是否清空缓存?", new DialogInterface.OnClickListener
+        DialogUtil.getConfirmDialog(getActivity(), "是否清空缓存?", new DialogInterface.OnClickListener
                 () {
             @SuppressLint("SetTextI18n")
             @Override
@@ -227,7 +227,7 @@ public class SettingsFragment extends BaseFragment implements EasyPermissions.Pe
 
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
-        DialogHelper.getConfirmDialog(getActivity(), "温馨提示", "需要开启管云风控对您手机的存储权限才能下载安装，是否现在开启", "去开启", "取消", new DialogInterface.OnClickListener() {
+        DialogUtil.getConfirmDialog(getActivity(), "温馨提示", "需要开启管云风控对您手机的存储权限才能下载安装，是否现在开启", "去开启", "取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 startActivity(new Intent(Settings.ACTION_APPLICATION_SETTINGS));

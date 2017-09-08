@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,11 +41,10 @@ import com.gcs.fengkong.ui.widget.FragmentTabHost;
 import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.update.CheckUpdateManager;
 import com.gcs.fengkong.update.DownloadService;
-import com.gcs.fengkong.utils.DialogHelper;
+import com.gcs.fengkong.utils.DialogUtil;
 import com.gcs.fengkong.utils.SharedPreferencesHelper;
-import com.gcs.fengkong.utils.ShowUIHelper;
+import com.gcs.fengkong.ui.ShowUIHelper;
 import com.gcs.fengkong.utils.TDevice;
-import com.gcs.fengkong.utils.UIUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.io.UnsupportedEncodingException;
@@ -106,7 +104,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         super.initWidget();
         Log.i("GCS","进入,Mainactivity首页如果未登录则跳转到登录页面");
         if (!AccountHelper.isLogin()) {
-            DialogHelper.getConfirmDialog(this, "您尚未登录，是否先进行登录操作", new DialogInterface.OnClickListener() {
+            DialogUtil.getConfirmDialog(this, "您尚未登录，是否先进行登录操作", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     ShowUIHelper.showLoginActivity(MainActivity.this);
@@ -171,6 +169,11 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         checkUpdate();
         checkLocation();
         ApiClientHelper.getUserAgent(GlobalApplication.getInstance());
+
+        //app_config文件创建
+        AppConfig.getAppConfig(this).set("system_time", "mainactivity"+String.valueOf(System.currentTimeMillis()));
+        AppConfig.getAppConfig(this).set("cookie", "模拟版本更新后cookie迁移");
+
         String token ="";
         if (AccountHelper.isLogin()) {
             token = SharedPreferencesHelper.load(GlobalApplication.getInstance(), User.class).getToken().toString();
@@ -271,7 +274,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         for (String perm : perms) {
             if (perm.equals(Manifest.permission.READ_EXTERNAL_STORAGE)) {
 
-                DialogHelper.getConfirmDialog(this, "温馨提示", "需要开启管云风控对您手机的存储权限才能下载安装，是否现在开启", "去开启", "取消", true, new DialogInterface.OnClickListener() {
+                DialogUtil.getConfirmDialog(this, "温馨提示", "需要开启管云风控对您手机的存储权限才能下载安装，是否现在开启", "去开启", "取消", true, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         startActivity(new Intent(Settings.ACTION_APPLICATION_SETTINGS));

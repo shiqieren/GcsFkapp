@@ -5,7 +5,7 @@ import android.widget.TextView;
 
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.frags.BaseFragment;
-import com.gcs.fengkong.utils.ShowUIHelper;
+import com.gcs.fengkong.ui.ShowUIHelper;
 import com.gcs.fengkong.utils.TDevice;
 
 

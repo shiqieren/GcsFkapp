@@ -29,8 +29,6 @@ import java.util.Properties;
 public class GlobalApplication extends Application {
     //sp设立的文件名字-基础application
     private static final String PREF_NAME = "creativelocker.pref";
-    // 默认分页大小
-    public static final int PAGE_SIZE = 20;
     //全局单例
     private static GlobalApplication instance;
     //上下文对象
@@ -69,22 +67,20 @@ public class GlobalApplication extends Application {
     }
 
 
-    //应用配置文件和sp文件不同
-
     //获取该全局对应的app_config目录下的config
-    public Properties getProperties() {
+    public Properties getContextAppConfig() {
         return AppConfig.getAppConfig(this).get();
     }
     //设置键值对
-    public void setProperty(String key, String value) {
+    public void setContextAppConfig(String key, String value) {
         AppConfig.getAppConfig(this).set(key, value);
     }
     //获取键对应值
-    public String getProperty(String key) {
+    public String getContextAppConfigValue(String key) {
         return AppConfig.getAppConfig(this).get(key);
     }
     //移除对应键
-    public void removeProperty(String... key) {
+    public void removeContextAppConfigValue(String... key) {
         AppConfig.getAppConfig(this).remove(key);
     }
 
@@ -102,11 +98,11 @@ public class GlobalApplication extends Application {
         }
 
         // 清除编辑器保存的临时内容
-        Properties props = getProperties();
+        Properties props = AppConfig.getAppConfig(this).get();
         for (Object key : props.keySet()) {
             String _key = key.toString();
             if (_key.startsWith("temp"))
-                removeProperty(_key);
+                removeContextAppConfigValue(_key);
         }
     }
 
@@ -143,6 +139,10 @@ public class GlobalApplication extends Application {
         MyApi.init(this);
     }
 
+    //获取文件名为xx的sp文件
+    public static SharedPreferences getPreferences() {
+        return getContext().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+    }
 
 
     //关于sp的静态操作方法
@@ -182,10 +182,6 @@ public class GlobalApplication extends Application {
 
     public static float get(String key, float defValue) {
         return getPreferences().getFloat(key, defValue);
-    }
-    //获取文件名为xx的sp文件
-    public static SharedPreferences getPreferences() {
-        return getContext().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }
 
     public static void showToast(int message) {

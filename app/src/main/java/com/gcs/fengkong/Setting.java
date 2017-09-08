@@ -26,6 +26,7 @@ public final class Setting {
     private static final String KEY_LOCATION_PERMISSION = "locationPermission";
     private static final String KEY_LOCATION_APP_CODE = "locationAppCode";
 
+
     public static SharedPreferences getSettingPreferences(Context context) {
         return context.getSharedPreferences(Setting.class.getName(), Context.MODE_PRIVATE);
     }

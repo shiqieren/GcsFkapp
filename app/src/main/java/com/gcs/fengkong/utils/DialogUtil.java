@@ -16,7 +16,7 @@ import android.view.View;
  * on 2016/11/2.
  */
 @SuppressWarnings("all")
-public final class DialogHelper {
+public final class DialogUtil {
     public static AlertDialog.Builder getDialog(Context context) {
         //return new AlertDialog.Builder(context, R.style.App_Theme_Dialog_Alert);
         return new AlertDialog.Builder(context);
