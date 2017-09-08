@@ -30,6 +30,7 @@ import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.ui.api.MyApi;
 import com.gcs.fengkong.ui.bean.base.ResultBean;
 import com.gcs.fengkong.utils.AppOperator;
+import com.gcs.fengkong.utils.MyLog;
 import com.gcs.fengkong.utils.TDevice;
 import com.google.gson.reflect.TypeToken;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -351,7 +352,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
         mRequestType = 2;
         String phoneNumber = mEtRegisterUsername.getText().toString().trim();
        //111 OSChinaApi.validateRegisterInfo(phoneNumber, smsCode, mHandler);注册信息提交的api
-        Log.i("GCS","加密前密码pwd："+pwd);
+        MyLog.i("GCS","加密前密码pwd："+pwd);
         MyApi.register(getAES(phoneNumber), smsCode, getAES(pwd),Jsessionid, new StringCallback() {
             @Override
             public void onBefore(Request request, int id) {
@@ -379,7 +380,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
 
             @Override
             public void onResponse(String response, int id) {
-                Log.i("GCS","注册返回response："+response);
+                MyLog.i("GCS","注册返回response："+response);
 
                 Type type = new TypeToken<ResultBean>() {
                 }.getType();
@@ -391,17 +392,17 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
                         //User user = resultBean.getResult();
                         //模拟用户返回
                         String phoneNumber = mEtRegisterUsername.getText().toString().trim();
-                         Log.i("GCS","手动创建用户id=1，名称为手机");
+                         MyLog.i("GCS","手动创建用户id=1，名称为手机");
                         User user =new User(1,phoneNumber);
                         //用户更新缓存和cookie
-                        Log.i("GCS","注册成功后用户更新缓存和cookie");
+                        MyLog.i("GCS","注册成功后用户更新缓存和cookie");
                         String netcookie = "gcs test login add cookie"+System.currentTimeMillis();
                         if (AccountHelper.login(user,netcookie)) {
                             GlobalApplication.showToast(getResources().getString(R.string.register_success_hint), Toast.LENGTH_SHORT);
                             //发送需要通知的成功广播
-                            Log.i("GCS","注册成功后发送需要通知的成功广播");
+                            MyLog.i("GCS","注册成功后发送需要通知的成功广播");
                             sendLocalReceiver();
-                            Log.i("GCS","关闭注册窗口");
+                            MyLog.i("GCS","关闭注册窗口");
                             finish();
                         } else {
                             showToastForKeyBord("注册异常");
@@ -456,7 +457,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
             //加密
             String phoneNumber = mEtRegisterUsername.getText().toString().trim();
 
-            Log.i("GCS","加密前的手机:"+phoneNumber);
+            MyLog.i("GCS","加密前的手机:"+phoneNumber);
           //1111  OSChinaApi.sendRegisterSmsCode(phoneNumber, OSChinaApi.REGISTER_INTENT, mHandler);发送短信的api
             MyApi.sendRegisterSmsCode(getAES(phoneNumber), new StringCallback() {
                 @Override
@@ -483,7 +484,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
 
                 @Override
                 public void onResponse(String response, int id) {
-                    Log.i("GCS","发送短信验证码返回response："+response);
+                    MyLog.i("GCS","发送短信验证码返回response："+response);
                     Type type = new TypeToken<ResultBean>() {
                     }.getType();
                     ResultBean resultBean = AppOperator.createGson().fromJson(response, type);

@@ -10,6 +10,7 @@ import com.gcs.fengkong.Setting;
 import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.utils.AppOperator;
+import com.gcs.fengkong.utils.MyLog;
 
 
 /**
@@ -37,7 +38,7 @@ public class LaunchActivity extends BaseActivity {
         AppOperator.runOnThread(new Runnable() {
             @Override
             public void run() {
-                Log.i("GCS","线程池开启线程，异步检查新版本的数据迁移工作");
+                MyLog.i("GCS","线程池开启线程，异步检查新版本的数据迁移工作");
                 doMerge();
             }
         });
@@ -49,14 +50,14 @@ public class LaunchActivity extends BaseActivity {
 
         // 判断是否是新版本
         if (Setting.checkIsNewVersion(this)) {
-            Log.i("GCS","新版本更新后进行cookie搬移操作,全局中app_config中获取cookie赋值给user");
+            MyLog.i("GCS","新版本更新后进行cookie搬移操作,全局中app_config中获取cookie赋值给user");
             String cookie = GlobalApplication.getInstance().getContextAppConfigValue("cookie");
             //判断是否为空cookie
             if (!TextUtils.isEmpty(cookie)) {
                 GlobalApplication.getInstance().removeContextAppConfigValue("cookie");
                 User user = AccountHelper.getUser();
                 user.setCookie(cookie);
-                Log.i("GCS","app更新后自动登录和更新缓存");
+                MyLog.i("GCS","app更新后自动登录和更新缓存");
                 AccountHelper.updateUserCache(user);
                 GlobalApplication.reInit();
             }
@@ -74,7 +75,7 @@ public class LaunchActivity extends BaseActivity {
     }
 
     private void redirectTo() {
-        Log.i("GCS","通常登录,非重新安装状态，先进入mainactivity再判断是否登录");
+        MyLog.i("GCS","通常登录,非重新安装状态，先进入mainactivity再判断是否登录");
         /*if (!AccountHelper.isLogin()) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);

@@ -12,6 +12,7 @@ import android.view.View;
 import com.gcs.fengkong.AppConfig;
 import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.ui.api.MyApi;
+import com.gcs.fengkong.utils.MyLog;
 import com.gcs.fengkong.utils.SharedPreferencesHelper;
 
 import okhttp3.internal.http2.Header;
@@ -38,7 +39,7 @@ public final class AccountHelper {
         else {
             // reload from source
             instances.user = SharedPreferencesHelper.loadFormSource(instances.application, User.class);
-            Log.d(TAG, "init reload:" + instances.user);
+            MyLog.d(TAG, "init reload:" + instances.user);
         }
     }
 
@@ -57,7 +58,7 @@ public final class AccountHelper {
 
     public synchronized static User getUser() {
         if (instances == null) {
-            Log.e(TAG,"AccountHelper instances is null, you need call init() method.");
+            MyLog.e(TAG,"AccountHelper instances is null, you need call init() method.");
             return new User();
         }
         if (instances.user == null)
@@ -91,7 +92,7 @@ public final class AccountHelper {
             return false;
         }
 
-        Log.d(TAG, "login:" + user + " cookie：" + cookie);
+        MyLog.d(TAG, "login:" + user + " cookie：" + cookie);
         //该用户的cookie
         user.setCookie(cookie);
 
@@ -104,7 +105,7 @@ public final class AccountHelper {
 
         if (saveOk) {
             //设置用户的cookie,会话设置
-            Log.i("GCS","用户更新文件存储后，每次请求头都要添加该用户cookie，以保持会话匹配");
+            MyLog.i("GCS","用户更新文件存储后，每次请求头都要添加该用户cookie，以保持会话匹配");
            //在该登录用户每次请求添加sp中存储的cookie MyApi.setCookieHeader(getCookie());
 
         }
@@ -145,7 +146,7 @@ public final class AccountHelper {
      * @param application Application
      */
     private static void clearAndPostBroadcast(Application application) {
-        Log.i("GCS","退出登录后清除和发广播处理");
+        MyLog.i("GCS","退出登录后清除和发广播处理");
         // 清理网络相关,cookie,client
         MyApi.destroyAndRestore(application);
 

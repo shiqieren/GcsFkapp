@@ -23,6 +23,7 @@ import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.api.secret.AES;
 import com.gcs.fengkong.ui.atys.BaseActivity;
 import com.gcs.fengkong.utils.DialogUtil;
+import com.gcs.fengkong.utils.MyLog;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -179,7 +180,7 @@ public class AccountBaseActivity extends BaseActivity {
                 public void onReceive(Context context, Intent intent) {
                     String action = intent.getAction();
                     if (ACTION_ACCOUNT_FINISH_ALL.equals(action)) {
-                        Log.i("GCS","广播通信finish()窗口");
+                        MyLog.i("GCS","广播通信finish()窗口");
                         finish();
                     }
                 }
@@ -316,7 +317,7 @@ public class AccountBaseActivity extends BaseActivity {
             e.printStackTrace();
         }
         String enString = mAes.encrypt(mBytes);
-        Log.i("GCS","加密后："+enString);
+        MyLog.i("GCS","加密后："+enString);
         return enString;
     }
 

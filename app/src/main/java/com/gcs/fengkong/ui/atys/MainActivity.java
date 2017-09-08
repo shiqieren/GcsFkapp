@@ -42,6 +42,7 @@ import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.update.CheckUpdateManager;
 import com.gcs.fengkong.update.DownloadService;
 import com.gcs.fengkong.utils.DialogUtil;
+import com.gcs.fengkong.utils.MyLog;
 import com.gcs.fengkong.utils.SharedPreferencesHelper;
 import com.gcs.fengkong.ui.ShowUIHelper;
 import com.gcs.fengkong.utils.TDevice;
@@ -102,7 +103,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     @Override
     protected void initWidget() {
         super.initWidget();
-        Log.i("GCS","进入,Mainactivity首页如果未登录则跳转到登录页面");
+        MyLog.i("GCS","进入,Mainactivity首页如果未登录则跳转到登录页面");
         if (!AccountHelper.isLogin()) {
             DialogUtil.getConfirmDialog(this, "您尚未登录，是否先进行登录操作", new DialogInterface.OnClickListener() {
                 @Override
@@ -188,7 +189,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 
                 @Override
                 public void onResponse(String response, int id) {
-                    Log.i("GCS","平台信息上传响应返回"+response.toString());
+                    MyLog.i("GCS","平台信息上传响应返回"+response.toString());
                 }
             });
         }
@@ -203,11 +204,11 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         manager.checkUpdate();
     }
     private void checkLocation() {
-        Log.i("GCS","开始定位");
+        MyLog.i("GCS","开始定位");
         //首先判断appCode是否存在，如果存在是否大于当前版本的appCode，或者第一次全新安装(默认0)表示没有保存appCode
         int hasLocationAppCode = Setting.hasLocationAppCode(getApplicationContext());
         int versionCode = TDevice.getVersionCode();
-        Log.i("GCS","hasLocationAppCode:"+hasLocationAppCode+"///"+"versionCode:"+versionCode);
+        MyLog.i("GCS","hasLocationAppCode:"+hasLocationAppCode+"///"+"versionCode:"+versionCode);
         //当app第一次被安装时，不管是覆盖安装（不管是否有定位权限）还是全新安装都必须进行定位请求
         //直接进行位置信息定位并上传-暂时不做登录状态判断
         Setting.updateLocationAppCode(getApplicationContext(), versionCode);
@@ -215,7 +216,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
          /*if ((hasLocationAppCode <= 0) || (hasLocationAppCode > versionCode)) {
             //如果是登陆状态
             if (AccountHelper.isLogin()) {
-            Log.i("GCS","hasLocationAppCode:"+hasLocationAppCode+"///"+"versionCode:"+versionCode);
+            MyLog.i("GCS","hasLocationAppCode:"+hasLocationAppCode+"///"+"versionCode:"+versionCode);
                 //当app第一次被安装时，不管是覆盖安装（不管是否有定位权限）还是全新安装都必须进行定位请求
                 Setting.updateLocationAppCode(getApplicationContext(), versionCode);
                 requestLocationPermission();
@@ -225,7 +226,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 
         //如果有账户登陆，并且有主动上传过位置信息。那么准备请求定位
        if (AccountHelper.isLogin() && Setting.hasLocation(getApplicationContext())) {
-        Log.i("GCS","请求定位授权");
+        MyLog.i("GCS","请求定位授权");
             //1.有主动授权过，直接进行定位，否则不进行操作任何操作
             if (Setting.hasLocationPermission(getApplicationContext())) {
                 requestLocationPermission();
@@ -253,7 +254,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
      */
     @AfterPermissionGranted(LOCATION_PERMISSION)
     private void requestLocationPermission() {
-        Log.i("GCS","授权");
+        MyLog.i("GCS","授权");
         if (EasyPermissions.hasPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.READ_PHONE_STATE)) {
             startLbs();
@@ -314,7 +315,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
      * start auto lbs service
      */
     private void startLbs() {
-        Log.i("GCS","启动定位start（）");
+        MyLog.i("GCS","启动定位start（）");
         if (mRadarSearchManager == null || mLocationClient == null) {
             initLbs();
         }
@@ -326,7 +327,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
      * init lbs service
      */
     private void initLbs() {
-        Log.i("GCS","初始化定位服务");
+        MyLog.i("GCS","初始化定位服务");
         if (mRadarSearchManager == null) {
 
             mRadarSearchManager = RadarSearchManager.getInstance();
@@ -355,7 +356,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                 public void onReceiveLocation(BDLocation bdLocation) {
                     super.onReceiveLocation(bdLocation);
                     //处理返回的定位信息，进行用户位置信息上传
-                    Log.i("GCS","位置信息回调处理");
+                    MyLog.i("GCS","位置信息回调处理");
                     ReceiveLocation(bdLocation);
                 }
             });
@@ -395,7 +396,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     private void ReceiveLocation(BDLocation location) {
 
         final int code = location.getLocType();
-        Log.i("GCS","code:"+code);
+        MyLog.i("GCS","code:"+code);
         switch (code) {
             case BDLocation.TypeCriteriaException://62
                 releaseLbs();
@@ -426,9 +427,9 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 
         //定位成功，网络ok，主动上传用户位置信息
         if (TDevice.hasInternet() && location.getLatitude() != 4.9E-324 && location.getLongitude() != 4.9E-324) {
-            Log.i("GCS","位置信息经纬度");
+            MyLog.i("GCS","位置信息经纬度");
             LatLng userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-            Log.i("GCS","经度："+location.getLatitude()+"纬度："+location.getLongitude()+"位置："+location.getAddrStr());
+            MyLog.i("GCS","经度："+location.getLatitude()+"纬度："+location.getLongitude()+"位置："+location.getAddrStr());
             Setting.updateLocationPermission(getApplicationContext(), true);
 
             //周边雷达设置用户身份标识，id为空默认是设备标识

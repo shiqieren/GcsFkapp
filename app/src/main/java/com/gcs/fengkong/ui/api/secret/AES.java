@@ -67,6 +67,8 @@ package com.gcs.fengkong.ui.api.secret;
 
 import android.util.Log;
 
+import com.gcs.fengkong.utils.MyLog;
+
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -112,10 +114,10 @@ public class AES {
 			keyfactory = SecretKeyFactory.getInstance(KEY_GENERATION_ALG);
 			sk = keyfactory.generateSecret(myKeyspec);
 		} catch (NoSuchAlgorithmException nsae) {
-			Log.e("AESdemo",
+			MyLog.e("AESdemo",
 					"no key factory support for PBEWITHSHAANDTWOFISH-CBC");
 		} catch (InvalidKeySpecException ikse) {
-			Log.e("AESdemo", "invalid key spec for PBEWITHSHAANDTWOFISH-CBC");
+			MyLog.e("AESdemo", "invalid key spec for PBEWITHSHAANDTWOFISH-CBC");
 		}
 
 		// This is our secret key. We could just save this to a file instead of
@@ -199,17 +201,17 @@ public class AES {
 			c.init(Cipher.ENCRYPT_MODE, sk, IV);
 			return c.doFinal(msg);
 		} catch (NoSuchAlgorithmException nsae) {
-			Log.e("AESdemo", "no cipher getinstance support for " + cmp);
+			MyLog.e("AESdemo", "no cipher getinstance support for " + cmp);
 		} catch (NoSuchPaddingException nspe) {
-			Log.e("AESdemo", "no cipher getinstance support for padding " + cmp);
+			MyLog.e("AESdemo", "no cipher getinstance support for padding " + cmp);
 		} catch (InvalidKeyException e) {
-			Log.e("AESdemo", "invalid key exception");
+			MyLog.e("AESdemo", "invalid key exception");
 		} catch (InvalidAlgorithmParameterException e) {
-			Log.e("AESdemo", "invalid algorithm parameter exception");
+			MyLog.e("AESdemo", "invalid algorithm parameter exception");
 		} catch (IllegalBlockSizeException e) {
-			Log.e("AESdemo", "illegal block size exception");
+			MyLog.e("AESdemo", "illegal block size exception");
 		} catch (BadPaddingException e) {
-			Log.e("AESdemo", "bad padding exception");
+			MyLog.e("AESdemo", "bad padding exception");
 		}
 		return null;
 	}
@@ -221,17 +223,17 @@ public class AES {
 			c.init(Cipher.DECRYPT_MODE, sk, IV);
 			return c.doFinal(ciphertext);
 		} catch (NoSuchAlgorithmException nsae) {
-			Log.e("AESdemo", "no cipher getinstance support for " + cmp);
+			MyLog.e("AESdemo", "no cipher getinstance support for " + cmp);
 		} catch (NoSuchPaddingException nspe) {
-			Log.e("AESdemo", "no cipher getinstance support for padding " + cmp);
+			MyLog.e("AESdemo", "no cipher getinstance support for padding " + cmp);
 		} catch (InvalidKeyException e) {
-			Log.e("AESdemo", "invalid key exception");
+			MyLog.e("AESdemo", "invalid key exception");
 		} catch (InvalidAlgorithmParameterException e) {
-			Log.e("AESdemo", "invalid algorithm parameter exception");
+			MyLog.e("AESdemo", "invalid algorithm parameter exception");
 		} catch (IllegalBlockSizeException e) {
-			Log.e("AESdemo", "illegal block size exception");
+			MyLog.e("AESdemo", "illegal block size exception");
 		} catch (BadPaddingException e) {
-			Log.e("AESdemo", "bad padding exception");
+			MyLog.e("AESdemo", "bad padding exception");
 			e.printStackTrace();
 		}
 		return null;

@@ -113,11 +113,11 @@ public final class SharedPreferencesHelper {
                 } else if (type.equals(String.class)) {
                     editor.putString(key, value.toString());
                 } else {
-                    Log.d(TAG, String.format("Con't support save this type:%s, value:%s, key:%s",
+                    MyLog.d(TAG, String.format("Con't support save this type:%s, value:%s, key:%s",
                             type, value, key));
                 }
             } catch (IllegalArgumentException e) {
-                Log.d(TAG, "Save error:" + e.getMessage());
+                MyLog.d(TAG, "Save error:" + e.getMessage());
             }
         }
 
@@ -241,7 +241,7 @@ public final class SharedPreferencesHelper {
             try {
                 value = field.get(t);
             } catch (IllegalArgumentException | IllegalAccessException e) {
-                Log.d(TAG, "buildValuesToMap error:" + e.getMessage());
+                MyLog.d(TAG, "buildValuesToMap error:" + e.getMessage());
                 continue;
             }
 
@@ -335,11 +335,11 @@ public final class SharedPreferencesHelper {
                     field.set(target, value);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
-                    Log.d(TAG, String.format("Set field error, Key:%s, type:%s, value:%s",
+                    MyLog.d(TAG, String.format("Set field error, Key:%s, type:%s, value:%s",
                             key, fieldType, value));
                 }
             } else {
-                Log.d(TAG, String.format("Get field value error, Key:%s, type:%s",
+                MyLog.d(TAG, String.format("Get field value error, Key:%s, type:%s",
                         key, fieldType));
             }
         }

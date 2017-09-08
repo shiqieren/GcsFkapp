@@ -35,6 +35,7 @@ import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.ui.api.MyApi;
 import com.gcs.fengkong.ui.bean.base.ResultBean;
 import com.gcs.fengkong.utils.AppOperator;
+import com.gcs.fengkong.utils.MyLog;
 import com.gcs.fengkong.utils.TDevice;
 import com.gcs.fengkong.utils.VibratorUtil;
 import com.google.gson.reflect.TypeToken;
@@ -85,7 +86,7 @@ public class LoginSmscodeActivity extends AccountBaseActivity implements View.On
         //发送关闭登录界面的广播
         sendLocalReceiver();
         //后台异步同步数据-同步认证状态信息
-        Log.i("GCS","同步认证状态");
+        MyLog.i("GCS","同步认证状态");
         //ContactsCacheManager.sync();
         holdAccount();
     }
@@ -434,7 +435,7 @@ public class LoginSmscodeActivity extends AccountBaseActivity implements View.On
             //加密
             String phoneNumber = mEtLoginUsername.getText().toString().trim();
 
-            Log.i("GCS","加密前的手机:"+phoneNumber);
+            MyLog.i("GCS","加密前的手机:"+phoneNumber);
             //1111  OSChinaApi.sendRegisterSmsCode(phoneNumber, OSChinaApi.REGISTER_INTENT, mHandler);发送短信的api
             MyApi.sendSmsCode(getAES(phoneNumber), new StringCallback() {
                 @Override
@@ -460,7 +461,7 @@ public class LoginSmscodeActivity extends AccountBaseActivity implements View.On
 
                 @Override
                 public void onResponse(String response, int id) {
-                    Log.i("GCS","发送短信验证码返回response："+response);
+                    MyLog.i("GCS","发送短信验证码返回response："+response);
                     Type type = new TypeToken<ResultBean>() {
                     }.getType();
                     ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
@@ -548,7 +549,7 @@ public class LoginSmscodeActivity extends AccountBaseActivity implements View.On
     }
 
     private void requestLogin(String tempUsername, String tempPwd) {
-        Log.i("GCS","加密前用户名："+tempUsername+",加密前密码："+tempPwd);
+        MyLog.i("GCS","加密前用户名："+tempUsername+",加密前密码："+tempPwd);
         MyApi.loginbysms(getAES(tempUsername), tempPwd,Jsessionid, new StringCallback() {
             @Override
             public void onBefore(Request request, int id) {
@@ -570,7 +571,7 @@ public class LoginSmscodeActivity extends AccountBaseActivity implements View.On
 
             @Override
             public void onResponse(String response, int id) {
-                Log.i("GCS","登录返回response："+response);
+                MyLog.i("GCS","登录返回response："+response);
                 try {
                     Type type = new TypeToken<ResultBean>() {}.getType();
                     ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
@@ -579,7 +580,7 @@ public class LoginSmscodeActivity extends AccountBaseActivity implements View.On
                         //User user = resultBean.getResult();
                         //模拟用户返回
                         String phoneNumber = mEtLoginUsername.getText().toString().trim();
-                        Log.i("GCS","手动创建用户id=1，名称为手机");
+                        MyLog.i("GCS","手动创建用户id=1，名称为手机");
                         User user =new User(1,phoneNumber);
                         String netcookie = "gcs test login add cookie"+System.currentTimeMillis();
                         if (AccountHelper.login(user,netcookie)) {

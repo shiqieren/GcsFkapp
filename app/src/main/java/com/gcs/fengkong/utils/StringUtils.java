@@ -452,7 +452,7 @@ public class StringUtils {
         try {
             return Integer.parseInt(str);
         } catch (Exception e) {
-            Log.d("oschina", e.getMessage());
+            MyLog.d("GCS", e.getMessage());
         }
         return defValue;
     }

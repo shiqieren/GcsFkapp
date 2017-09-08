@@ -7,6 +7,7 @@ import android.util.Log;
 import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.Setting;
 import com.gcs.fengkong.ui.account.bean.User;
+import com.gcs.fengkong.utils.MyLog;
 import com.gcs.fengkong.utils.SharedPreferencesHelper;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -113,7 +114,7 @@ public class MyApi {
     public static void setCookieHeader(String cookie) {
         if (!TextUtils.isEmpty(cookie))
            // CLIENT.addHeader("Cookie", cookie);
-        Log.i("GCS","setCookieHeader:" + cookie);
+        MyLog.i("GCS","setCookieHeader:" + cookie);
     }
     /**
      * 销毁当前AsyncHttpClient 并重新初始化网络参数，初始化Cookie等信息
@@ -141,7 +142,7 @@ public class MyApi {
             // 清理当前正在使用的Cookie
             client.removeHeader("Cookie");
         }*/
-        Log.i("GCS","网络请求的  cleanCookie");
+        MyLog.i("GCS","网络请求的  cleanCookie");
     }
 
     /**
@@ -164,7 +165,7 @@ public class MyApi {
                 }
             }*/
         }
-        Log.i("GCS","getClientCookie:" + cookie);
+        MyLog.i("GCS","getClientCookie:" + cookie);
         return cookie;
     }
 
@@ -191,7 +192,7 @@ public class MyApi {
             }
         }*/
 
-        Log.i("GCS","getCookie:" + cookie);
+        MyLog.i("GCS","getCookie:" + cookie);
         return cookie;
     }
 
@@ -201,7 +202,7 @@ public class MyApi {
         if (!partUrl.startsWith("http:") && !partUrl.startsWith("https:")) {
             url = Setting.getServerUrl(GlobalApplication.getContext())+partUrl;
         }
-        Log.i("url","request:" + url);
+        MyLog.i("url","request:" + url);
         return url;
     }
 
@@ -209,7 +210,7 @@ public class MyApi {
     * 检查更新
     * */
     public static void checkUpdate(StringCallback callback) {
-        Log.i("GCS","app检查更新");
+        MyLog.i("GCS","app检查更新");
         /*Map<String, String> params = new HashMap<>();
         params.put("appId", "1");
         params.put("catalog", "1");
@@ -235,7 +236,7 @@ public class MyApi {
         params.put("name", username);
         params.put("password", pwd);
         OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/login.do")).params(params).build().execute(callback);
-        Log.i("GCS","登录url:"+getAbsoluteApiUrl("wind-phone/phone/login.do"));
+        MyLog.i("GCS","登录url:"+getAbsoluteApiUrl("wind-phone/phone/login.do"));
     }
 
     /**
@@ -253,7 +254,7 @@ public class MyApi {
         params.put("code", pwd);
         params.put("JSESSIONID",jsessionid);
         OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/smsLogin.do")).params(params).build().execute(callback);
-        Log.i("GCS","短信登录url:"+getAbsoluteApiUrl("wind-phone/phone/smsLogin.do"));
+        MyLog.i("GCS","短信登录url:"+getAbsoluteApiUrl("wind-phone/phone/smsLogin.do"));
     }
 
     public static void sendRegisterSmsCode(String phone, StringCallback callback) {
@@ -264,7 +265,7 @@ public class MyApi {
       //  params.put("intent", intent);
 
         OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/registerSendMsg.do")).params(params).build().execute(callback);
-        Log.i("GCS","请求发送短信验证码url:"+getAbsoluteApiUrl("wind-phone/phone/registerSendMsg.do"));
+        MyLog.i("GCS","请求发送短信验证码url:"+getAbsoluteApiUrl("wind-phone/phone/registerSendMsg.do"));
     }
 
     public static void sendSmsCode(String phone, StringCallback callback) {
@@ -275,7 +276,7 @@ public class MyApi {
         //  params.put("intent", intent);
 
         OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/smsSend.do")).params(params).build().execute(callback);
-        Log.i("GCS","请求发送短信验证码url:"+getAbsoluteApiUrl("wind-phone/phone/smsSend.do"));
+        MyLog.i("GCS","请求发送短信验证码url:"+getAbsoluteApiUrl("wind-phone/phone/smsSend.do"));
     }
     /**
      *
@@ -293,8 +294,8 @@ public class MyApi {
         params.put("code",smsCode);
         params.put("JSESSIONID",jsessionid);
         OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/register.do")).params(params).build().execute(callback);
-        Log.i("GCS","注册账户url:"+getAbsoluteApiUrl("wind-phone/phone/register.do"));
-        Log.i("GCS","短信验证码："+smsCode);
+        MyLog.i("GCS","注册账户url:"+getAbsoluteApiUrl("wind-phone/phone/register.do"));
+        MyLog.i("GCS","短信验证码："+smsCode);
 
       //  OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/register.do?"+"name="+phoneNumber+"&password="+pwd+"&code="+smsCode)).build().execute(callback);
     }
@@ -312,7 +313,7 @@ public class MyApi {
         params.put("platform","ANDROID");
         params.put("token",token);
         OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/map/register.do")).params(params).build().execute(callback);
-        Log.i("GCS","发送平台信息url:"+getAbsoluteApiUrl("wind-phone/phone/map/register.do"));
+        MyLog.i("GCS","发送平台信息url:"+getAbsoluteApiUrl("wind-phone/phone/map/register.do"));
 
 
         //  OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/register.do?"+"name="+phoneNumber+"&password="+pwd+"&code="+smsCode)).build().execute(callback);

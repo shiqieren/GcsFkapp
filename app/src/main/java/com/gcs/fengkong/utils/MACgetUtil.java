@@ -42,9 +42,9 @@ public class MACgetUtil {
                     return result;
                 }
             } catch (IOException e) {
-                Log.e("MobileAccess", "Erreur lecture propriete Adresse MAC");
+                MyLog.e("MobileAccess", "Erreur lecture propriete Adresse MAC");
             } catch (Exception e) {
-                Log.e("MobileAcces", "Erreur lecture propriete Adresse MAC ");
+                MyLog.e("MobileAcces", "Erreur lecture propriete Adresse MAC ");
             }
         } else{
             if (wifiInf != null && wifiInf.getMacAddress() != null) {
@@ -79,7 +79,7 @@ public class MACgetUtil {
             }
 
         } catch (Exception e) {
-            Log.e("MobileAcces", "Erreur lecture propriete Adresse MAC ");
+            MyLog.e("MobileAcces", "Erreur lecture propriete Adresse MAC ");
         }
         return null;
     }

@@ -2,6 +2,7 @@ package com.gcs.fengkong.ui.bean.gson;
 
 import android.util.Log;
 
+import com.gcs.fengkong.utils.MyLog;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -19,7 +20,7 @@ public class DoubleJsonDeserializer implements JsonDeserializer<Double> {
         try {
             return json.getAsDouble();
         } catch (Exception e) {
-            Log.i("json_info","DoubleJsonDeserializer-deserialize-error:" + (json != null ? json.toString() : ""));
+            MyLog.i("json_info","DoubleJsonDeserializer-deserialize-error:" + (json != null ? json.toString() : ""));
             return 0D;
         }
     }

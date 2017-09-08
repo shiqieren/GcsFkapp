@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.bean.ContactBean;
+import com.gcs.fengkong.utils.MyLog;
 import com.google.gson.Gson;
 
 import java.io.InputStream;
@@ -70,7 +71,7 @@ public class PhoneAdressActivity extends ListActivity {
 		mListView = this.getListView();
 		/** 得到手机通讯录联系人信息 **/
 		mAllContact = getPhoneContacts();
-		Log.w("GCS",new Gson().toJson(mAllContact));
+		MyLog.w("GCS",new Gson().toJson(mAllContact));
 
 		mAdapter = new MyListAdapter(this);
 		setListAdapter(mAdapter);
@@ -157,7 +158,7 @@ public class PhoneAdressActivity extends ListActivity {
 
 				mContactsName.add(contactName);
 				mGetContact.setName(contactName);
-				Log.i("info", "contactName---" + contactName);
+				MyLog.i("info", "contactName---" + contactName);
 				// Log.i("info","mContactsName111"+mContactsName);
 
 				mAllContact.add(mGetContact);
@@ -241,7 +242,7 @@ public class PhoneAdressActivity extends ListActivity {
 			if (mContactsName.get(position) != null) {
 				name.setText(mContactsName.get(position));
 			}
-			Log.i("info",
+			MyLog.i("info",
 					position + "mContactsName------"
 							+ mContactsName.get(position));
 			company.setText(mContactsCompany.get(position));

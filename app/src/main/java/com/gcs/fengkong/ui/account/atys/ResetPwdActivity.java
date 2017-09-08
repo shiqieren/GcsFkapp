@@ -29,6 +29,7 @@ import com.gcs.fengkong.ui.account.RichTextParser;
 import com.gcs.fengkong.ui.api.MyApi;
 import com.gcs.fengkong.ui.bean.base.ResultBean;
 import com.gcs.fengkong.utils.AppOperator;
+import com.gcs.fengkong.utils.MyLog;
 import com.gcs.fengkong.utils.TDevice;
 import com.google.gson.reflect.TypeToken;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -385,7 +386,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
 
             @Override
             public void onResponse(String response, int id) {
-                Log.i("GCS","修改密码返回response："+response);
+                MyLog.i("GCS","修改密码返回response："+response);
 
                 Type type = new TypeToken<ResultBean>() {
                 }.getType();
@@ -468,7 +469,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
 
                 @Override
                 public void onResponse(String response, int id) {
-                    Log.i("GCS","发送短信验证码返回response："+response);
+                    MyLog.i("GCS","发送短信验证码返回response："+response);
                     Type type = new TypeToken<ResultBean>() {
                     }.getType();
                     ResultBean resultBean = AppOperator.createGson().fromJson(response, type);

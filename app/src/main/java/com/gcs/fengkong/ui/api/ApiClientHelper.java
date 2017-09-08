@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.gcs.fengkong.Setting;
 import com.gcs.fengkong.utils.MACgetUtil;
+import com.gcs.fengkong.utils.MyLog;
 import com.gcs.fengkong.utils.UIUtils;
 
 import java.util.UUID;
@@ -32,19 +33,19 @@ public class ApiClientHelper {
         TelephonyManager tm = (TelephonyManager) UIUtils.getContext().getSystemService(TELEPHONY_SERVICE);
         //// 获取智能设备唯一编号
         String deviceid  = tm.getDeviceId();
-        Log.i("GCS","deviceid:"+deviceid);
+        MyLog.i("GCS","deviceid:"+deviceid);
         // 获得SIM卡的序号
         String imei = tm.getSimSerialNumber();
-        Log.i("GCS","imei:"+imei);
+        MyLog.i("GCS","imei:"+imei);
         //国际移动用户识别码-用户Id
         String imsi = tm.getSubscriberId();
-        Log.i("GCS","imsi:"+imsi);
+        MyLog.i("GCS","imsi:"+imsi);
         //MAC
         String mac = MACgetUtil.getAdresseMAC(UIUtils.getContext());
-        Log.i("GCS","mac:"+mac);
+        MyLog.i("GCS","mac:"+mac);
         //本机号码
         String phone = tm.getLine1Number();
-        Log.i("GCS","phone:"+phone);
+        MyLog.i("GCS","phone:"+phone);
         // WebSettings.getDefaultUserAgent(appContext)
         //版本号
         int vCode = getPackageInfo(appContext).versionCode;
@@ -53,16 +54,16 @@ public class ApiClientHelper {
         String osVer = version.length() > 0 ? version : "1.0";
 
         String model = Build.MODEL;
-        Log.i("客户端唯一标识Build.MODEL>>>","getBuild.MODEL:" + model);
+        MyLog.i("客户端唯一标识Build.MODEL>>>","getBuild.MODEL:" + model);
         String id = Build.ID; // "MASTER" or "M4-rc20"
-        Log.i("客户端唯一标识Build.ID>>>","getBuild.ID:" + id);
+        MyLog.i("客户端唯一标识Build.ID>>>","getBuild.ID:" + id);
         if (id.length() > 0) {
             model += " Build/" + id;
         }
 
         String format = "GCSfk.NET/1.0 (gcsapp; %s; Android %s; %s; %s)";
         String ua = String.format(format, vCode, osVer, model, getAppId(appContext));
-        Log.i("客户端唯一标识>>>","getUserAgent:" + ua);
+        MyLog.i("客户端唯一标识>>>","getUserAgent:" + ua);
         return ua;
     }
 

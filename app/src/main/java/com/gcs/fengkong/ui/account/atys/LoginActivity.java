@@ -33,6 +33,7 @@ import com.gcs.fengkong.ui.api.MyApi;
 import com.gcs.fengkong.ui.atys.MainActivity;
 import com.gcs.fengkong.ui.bean.base.ResultBean;
 import com.gcs.fengkong.utils.AppOperator;
+import com.gcs.fengkong.utils.MyLog;
 import com.gcs.fengkong.utils.TDevice;
 import com.gcs.fengkong.utils.VibratorUtil;
 import com.google.gson.reflect.TypeToken;
@@ -81,7 +82,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
         //发送关闭登录界面的广播
         sendLocalReceiver();
         //后台异步同步数据-同步认证状态信息
-        Log.i("GCS","同步认证状态");
+        MyLog.i("GCS","同步认证状态");
         //ContactsCacheManager.sync();
         holdAccount();
     }
@@ -403,7 +404,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
     }
 
     private void requestLogin(String tempUsername, String tempPwd) {
-        Log.i("GCS","加密前用户名："+tempUsername+",加密前密码："+tempPwd);
+        MyLog.i("GCS","加密前用户名："+tempUsername+",加密前密码："+tempPwd);
         MyApi.login(getAES(tempUsername), getAES(tempPwd), new StringCallback() {
             @Override
             public void onBefore(Request request, int id) {
@@ -425,7 +426,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
 
             @Override
             public void onResponse(String response, int id) {
-                Log.i("GCS","登录返回response："+response);
+                MyLog.i("GCS","登录返回response："+response);
                 try {
                     Type type = new TypeToken<ResultBean>() {}.getType();
                     ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
@@ -436,12 +437,12 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                         //User user = resultBean.getResult();
                         //模拟用户返回
                         String phoneNumber = mEtLoginUsername.getText().toString().trim();
-                        Log.i("GCS","手动创建用户id=1，名称为手机");
+                        MyLog.i("GCS","手动创建用户id=1，名称为手机");
                         User user =new User(1,phoneNumber);
                         String netcookie = "gcs test login add cookie"+System.currentTimeMillis();
                         if(resultBean.getResult()!= null){
                             String token = resultBean.getResult().toString();
-                            Log.i("GCS","给user设置一个token");
+                            MyLog.i("GCS","给user设置一个token");
                             user.setToken(token);
                         }
 

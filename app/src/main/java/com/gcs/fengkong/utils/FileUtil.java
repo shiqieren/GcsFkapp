@@ -27,7 +27,7 @@ public class FileUtil {
      * 写文本文件 在Android系统中，文件保存在 /data/data/PACKAGE_NAME/files 目录下
      *
      * @param context
-     * @param msg
+     * @param
      */
     public static void write(Context context, String fileName, String content) {
         if (content == null)
@@ -74,7 +74,7 @@ public class FileUtil {
             inStream.close();
             return outStream.toString();
         } catch (IOException e) {
-            Log.i("FileTest", e.getMessage());
+            MyLog.i("FileTest", e.getMessage());
         }
         return null;
     }
@@ -262,7 +262,7 @@ public class FileUtil {
     /**
      * 获取目录文件个数
      *
-     * @param emojiFragment
+     * @param
      * @return
      */
     public long getFileList(File dir) {
@@ -409,7 +409,7 @@ public class FileUtil {
                         deletedFile.delete();
                     }
                     newPath.delete();
-                    Log.i("DirectoryManager deleteDirectory", fileName);
+                    MyLog.i("DirectoryManager deleteDirectory", fileName);
                     status = true;
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -440,7 +440,7 @@ public class FileUtil {
             checker.checkDelete(newPath.toString());
             if (newPath.isFile()) {
                 try {
-                    Log.i("DirectoryManager deleteFile", fileName);
+                    MyLog.i("DirectoryManager deleteFile", fileName);
                     newPath.delete();
                     status = true;
                 } catch (SecurityException se) {
@@ -497,7 +497,7 @@ public class FileUtil {
         File f = new File(filePath);
         checker.checkDelete(filePath);
         if (f.isFile()) {
-            Log.i("DirectoryManager deleteFile", filePath);
+            MyLog.i("DirectoryManager deleteFile", filePath);
             f.delete();
             return true;
         }
@@ -507,7 +507,7 @@ public class FileUtil {
     /**
      * 清空一个文件夹
      *
-     * @param files
+     * @param
      */
     public static void clearFileWithPath(String filePath) {
         List<File> files = FileUtil.listPathFiles(filePath);
@@ -548,7 +548,7 @@ public class FileUtil {
     /**
      * 列出root目录下所有子目录
      *
-     * @param path
+     * @param
      * @return 绝对路径
      */
     public static List<String> listPath(String root) {
@@ -595,7 +595,7 @@ public class FileUtil {
     /**
      * 创建目录
      *
-     * @param path
+     * @param
      */
     public static PathStatus createPath(String newPath) {
         File path = new File(newPath);
