@@ -23,6 +23,8 @@ import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.radar.RadarSearchError;
 import com.baidu.mapapi.radar.RadarSearchManager;
 import com.baidu.mapapi.radar.RadarUploadInfo;
+import com.bqs.crawler.cloud.sdk.BqsCrawlerCloudSDK;
+import com.bqs.crawler.cloud.sdk.BqsParams;
 import com.gcs.fengkong.AppConfig;
 import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
@@ -167,6 +169,17 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     @Override
     protected void initData() {
         super.initData();
+
+        BqsParams params = new BqsParams();
+        params.setName("李全朴");//􀮠􀤴􀒅􀦨􀝷
+        params.setCertNo("410927199307065033");//􀮠􀤴􀒅􁫝􀕲􁦤􀝩
+        params.setMobile("133605021");//􀮠􀤴􀒅􀲋􀹢􀝩
+        params.setPartnerId("guanchesuo");//􀮠􀤴􀒅􀠟􀲁􁖫􀝩
+        BqsCrawlerCloudSDK.setParams(params);
+
+
+
+
         checkUpdate();
         checkLocation();
         ApiClientHelper.getUserAgent(GlobalApplication.getInstance());
