@@ -19,28 +19,51 @@
                 android:layout_height="@dimen/myhead_h_bg"
                 android:background="@mipmap/bg_my"
                 android:scaleType="fitXY"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="@dimen/space_16">
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/iv_avatar"
-                    android:layout_width="100dip"
-                    android:layout_height="100dip"
-                    app:civ_border_width="@dimen/lay_4"
-                    android:background="@drawable/head_shape_bg"
-                    app:civ_border_color="#80F0F0F0"
-                    android:padding="@dimen/lay_12"
-                    android:src = "@mipmap/widget_default_face"
-                    />
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/lay_28">
+                    <View
+                        android:id="@+id/view_set"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/lay_32"/>
+                    <ImageView
+                        android:id="@+id/iv_logo_setting"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:layout_marginRight="5dp"
+                        android:background="@drawable/ic_title_bar_icon_bg"
+                        android:contentDescription="@null"
+                        android:padding="10dp"
+                        android:layout_alignParentRight="true"
+                        android:scaleType="centerInside"
+                        android:src="@mipmap/btn_my_setting" />
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iv_avatar"
+                        android:layout_width="100dip"
+                        android:layout_height="100dip"
+                        app:civ_border_width="@dimen/lay_4"
+                        android:background="@drawable/head_shape_bg"
+                        android:layout_centerInParent="true"
+                        app:civ_border_color="#80F0F0F0"
+                        android:padding="@dimen/lay_12"
+                        android:layout_below="@+id/view_set"
+                        android:src = "@mipmap/widget_default_face"
+                        />
+                </RelativeLayout>
+
 
                 <TextView
                     android:id="@+id/tv_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/lay_12"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_18"
+                    android:gravity="center"
                     android:text="Hi，管云" />
+
 
             </LinearLayout>
             <View

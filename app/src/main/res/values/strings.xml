@@ -95,8 +95,9 @@
     <string name="double_click_exit">双击退出</string>
     <string name="update">检查更新</string>
     <string name="loading_more">自动加载\"更多\"</string>
-    <string name="about" translatable="false">关于我们</string>
+    <string name="about" translatable="false">关于管云</string>
     <string name="feedback">意见反馈</string>
+    <string name="submit_feedback_hint">提交反馈</string>
     <string name="setting_cancel">注销</string>
     <string name="logout_success_hint">注销成功</string>
     <string name="grade">去评分</string>
@@ -153,4 +154,7 @@
     <string name="imme_auth_btn">立即授权</string>
     <string name="read_auth_book"><u>查看授权协议书</u></string>
     <string name="contact_auth_string">通讯录授权</string>
+    <string name="setting_reset_password">重置登录密码</string>
+    <string name="setting_feedback">意见反馈</string>
+    <string name="setting_loginout">退出登录</string>
 </resources>

@@ -4,15 +4,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.gcs.fengkong.R;
+import com.gcs.fengkong.ui.ShowUIHelper;
 import com.gcs.fengkong.ui.atys.SimpleBackActivity;
 import com.gcs.fengkong.ui.frags.BaseFragment;
-import com.gcs.fengkong.ui.ShowUIHelper;
 import com.gcs.fengkong.utils.TDevice;
 
 
-public class AboutGCSFragment extends BaseFragment {
+public class FeedbackFragment extends BaseFragment {
 
-    private TextView mTvVersionName;
 
   /*  @Override
     public View onCreateView(LayoutInflater inflater,
@@ -25,33 +24,24 @@ public class AboutGCSFragment extends BaseFragment {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_about;
+        return R.layout.fragment_feed_back;
     }
 
 
     @Override
     public void initView(View view) {
-        ((SimpleBackActivity)getActivity()).setToolBarTitle(R.string.about);
-        mTvVersionName =  view.findViewById(R.id.tv_version_name);
-        view.findViewById(R.id.tv_oscsite).setOnClickListener(this);
-        view.findViewById(R.id.tv_knowmore).setOnClickListener(this);
+        ((SimpleBackActivity)getActivity()).setToolBarTitle(R.string.feedback);
     }
 
     @Override
     public void initData() {
-        mTvVersionName.setText(TDevice.getVersionName());
+
     }
 
     public void onClick(View v) {
         final int id = v.getId();
         switch (id) {
-            case R.id.tv_oscsite:
-                ShowUIHelper.openInternalBrowser(getActivity(), "https://www.oschina.net");
-                break;
-            case R.id.tv_knowmore:
-                ShowUIHelper.openInternalBrowser(getActivity(),
-                        "https://www.oschina.net/home/aboutosc");
-                break;
+
             default:
                 break;
         }
