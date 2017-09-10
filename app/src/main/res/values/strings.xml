@@ -97,6 +97,7 @@
     <string name="loading_more">自动加载\"更多\"</string>
     <string name="about" translatable="false">关于管云</string>
     <string name="feedback">意见反馈</string>
+    <string name="personal_data">个人资料</string>
     <string name="submit_feedback_hint">提交反馈</string>
     <string name="setting_cancel">注销</string>
     <string name="logout_success_hint">注销成功</string>

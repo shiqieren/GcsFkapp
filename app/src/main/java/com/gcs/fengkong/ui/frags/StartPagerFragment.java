@@ -65,6 +65,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
      mCv_taobao  = view.findViewById(R.id.cv_taobao);
      mCv_zhima  = view.findViewById(R.id.cv_zhima);
         mIvLogoSetting =(ImageView) view.findViewById(R.id.iv_logo_setting);
+       view.findViewById(R.id.iv_avatar).setOnClickListener(this);
     }
     @Override
     public void initData() {
@@ -81,6 +82,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
         mCv_taobao.setOnClickListener(this);
         mCv_zhima.setOnClickListener(this);
         mIvLogoSetting.setOnClickListener(this);
+
     }
 
     /*需要作登录判断
@@ -151,6 +153,9 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                 break;
             case R.id.iv_logo_setting:
                 ShowUIHelper.showSimpleBack(getActivity(), SimpleBackPage.SETTING);
+                break;
+            case R.id.iv_avatar:
+                ShowUIHelper.showSimpleBack(getActivity(), SimpleBackPage.PERSONAL_DATA);
                 break;
 
             default:

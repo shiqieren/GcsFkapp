@@ -85,6 +85,15 @@ public class ShowUIHelper {
     }
 
     /**
+     * 显示个人资料
+     *
+     * @param context
+     */
+    public static void showPersonalDATA(Context context) {
+        showSimpleBack(context, SimpleBackPage.PERSONAL_DATA);
+    }
+
+    /**
      * 显示重置密码
      *
      * @param context

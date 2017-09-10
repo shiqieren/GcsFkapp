@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/green_btn_color_normal"
+    android:fitsSystemWindows="false"
+    android:orientation="vertical">
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/gray"
+            android:layout_marginTop="10dip"/>
+        <View
+            android:id="@+id/about_line"
+            style="@style/h_line"
+            android:layout_height="1px"
+            android:background="#FF6FDB94" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/lay_15"
+                    android:layout_marginRight="@dimen/lay_15"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/rl_message"
+                        style="@style/option_item_rl"
+                        android:layout_marginTop="@dimen/lay_12"
+                        android:layout_marginBottom="@dimen/lay_12">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:contentDescription="@null"
+                            android:src="@mipmap/data_name" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/size_10"
+                            android:text="姓名"/>
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="10dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="xxxx"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+                <View
+                    style="@style/h_line"
+                    android:layout_height="1px"
+                    android:background="@color/list_divider_color" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/lay_15"
+                    android:layout_marginRight="@dimen/lay_15"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/rl_message_idcard"
+                        style="@style/option_item_rl"
+                        android:layout_marginTop="@dimen/lay_12"
+                        android:layout_marginBottom="@dimen/lay_12">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:contentDescription="@null"
+                            android:src="@mipmap/data_idcard" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/size_10"
+                            android:text="身份证号"/>
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="10dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="xxxx"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+                <View
+                    style="@style/h_line"
+                    android:layout_height="1px"
+                    android:background="@color/list_divider_color" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/lay_15"
+                    android:layout_marginRight="@dimen/lay_15"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/rl_message_phone"
+                        style="@style/option_item_rl"
+                        android:layout_marginTop="@dimen/lay_12"
+                        android:layout_marginBottom="@dimen/lay_12">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:contentDescription="@null"
+                            android:src="@mipmap/data_phone" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/size_10"
+                            android:text="手机号码"/>
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="10dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="xxxx"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+                <View
+                    style="@style/h_line"
+                    android:layout_height="1px"
+                    android:background="@color/list_divider_color" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/lay_15"
+                    android:layout_marginRight="@dimen/lay_15"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/rl_message_bankcard"
+                        style="@style/option_item_rl"
+                        android:layout_marginTop="@dimen/lay_12"
+                        android:layout_marginBottom="@dimen/lay_12">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:contentDescription="@null"
+                            android:src="@mipmap/data_bankcard" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/size_10"
+                            android:text="银行卡号"/>
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="10dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="xxxx"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+                <View
+                    style="@style/h_line"
+                    android:layout_height="1px"
+                    android:background="@color/list_divider_color" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/gray"
+                    android:layout_marginTop="10dip"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/lay_15"
+                    android:layout_marginRight="@dimen/lay_15"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/rl_message_zhima"
+                        style="@style/option_item_rl"
+                        android:layout_marginTop="@dimen/lay_12"
+                        android:layout_marginBottom="@dimen/lay_12">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:contentDescription="@null"
+                            android:src="@mipmap/data_zhima" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/size_10"
+                            android:text="芝麻信用分"/>
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="10dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="xxxx"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+                <View
+                    style="@style/h_line"
+                    android:layout_height="1px"
+                    android:background="@color/list_divider_color" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/lay_15"
+                    android:layout_marginRight="@dimen/lay_15"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/rl_message_alipay"
+                        style="@style/option_item_rl"
+                        android:layout_marginTop="@dimen/lay_12"
+                        android:layout_marginBottom="@dimen/lay_12">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:contentDescription="@null"
+                            android:src="@mipmap/data_alipay" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/size_10"
+                            android:text="支付宝账户"/>
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="10dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="xxxx"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+                <View
+                    style="@style/h_line"
+                    android:layout_height="1px"
+                    android:background="@color/list_divider_color" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/lay_15"
+                    android:layout_marginRight="@dimen/lay_15"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/rl_message_taobao"
+                        style="@style/option_item_rl"
+                        android:layout_marginTop="@dimen/lay_12"
+                        android:layout_marginBottom="@dimen/lay_12">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:contentDescription="@null"
+                            android:src="@mipmap/data_taobao" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/size_10"
+                            android:text="淘宝账户"/>
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="10dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="xxxx"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+                <View
+                    style="@style/h_line"
+                    android:layout_height="1px"
+                    android:background="@color/list_divider_color" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/lay_15"
+                    android:layout_marginRight="@dimen/lay_15"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/rl_message_jd"
+                        style="@style/option_item_rl"
+                        android:layout_marginTop="@dimen/lay_12"
+                        android:layout_marginBottom="@dimen/lay_12">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:contentDescription="@null"
+                            android:src="@mipmap/data_jd" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/size_10"
+                            android:text="京东账户"/>
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="10dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:text="xxxx"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+                <View
+                    style="@style/h_line"
+                    android:layout_height="1px"
+                    android:background="@color/list_divider_color" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</LinearLayout>
+
+
