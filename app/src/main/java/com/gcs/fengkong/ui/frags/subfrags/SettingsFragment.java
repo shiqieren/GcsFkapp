@@ -15,6 +15,8 @@ import com.gcs.fengkong.AppConfig;
 import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.account.AccountHelper;
+import com.gcs.fengkong.ui.account.atys.LoginActivity;
+import com.gcs.fengkong.ui.atys.SimpleBackActivity;
 import com.gcs.fengkong.ui.bean.Version;
 import com.gcs.fengkong.ui.frags.BaseFragment;
 import com.gcs.fengkong.ui.widget.togglebutton.ToggleButton;
@@ -66,7 +68,7 @@ public class SettingsFragment extends BaseFragment implements EasyPermissions.Pe
 
     @Override
     public void initView(View view) {
-
+        ((SimpleBackActivity)getActivity()).setToolBarTitle(R.string.actionbar_title_setting);
         mTvCacheSize = view.findViewById(R.id.tv_cache_size);
         mRlCheck_version= view.findViewById(R.id.rl_check_version);
         mTbDoubleClickExit= view.findViewById(R.id.tb_double_click_exit);
@@ -85,6 +87,8 @@ public class SettingsFragment extends BaseFragment implements EasyPermissions.Pe
         view.findViewById(R.id.rl_clean_cache).setOnClickListener(this);
         view.findViewById(R.id.rl_double_click_exit).setOnClickListener(this);
         view.findViewById(R.id.rl_about).setOnClickListener(this);
+        view.findViewById(R.id.rl_feedback).setOnClickListener(this);
+        view.findViewById(R.id.rl_reset_password).setOnClickListener(this);
         mRlCheck_version.setOnClickListener(this);
         // view.findViewById(R.id.rl_exit).setOnClickListener(this);
         mCancel.setOnClickListener(this);
@@ -161,6 +165,20 @@ public class SettingsFragment extends BaseFragment implements EasyPermissions.Pe
                 break;
             case R.id.rl_about:
                 ShowUIHelper.showAboutGCS(getActivity());
+                break;
+            case R.id.rl_feedback:
+                if (!AccountHelper.isLogin()) {
+                    LoginActivity.show(getContext());
+                    return;
+                }
+                ShowUIHelper.showFeedBack(getActivity());
+                break;
+            case R.id.rl_reset_password:
+                if (!AccountHelper.isLogin()) {
+                    LoginActivity.show(getContext());
+                    return;
+                }
+                 ShowUIHelper.showResetPassword(getActivity());
                 break;
             case R.id.rl_cancel:
                 // 清理所有缓存

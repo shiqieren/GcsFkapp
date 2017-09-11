@@ -8,12 +8,14 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.atys.PhoneAdressActivity;
+import com.gcs.fengkong.ui.bean.SimpleBackPage;
 import com.gcs.fengkong.ui.widget.statusbar.StatusBarCompat;
 import com.gcs.fengkong.utils.DialogUtil;
 import com.gcs.fengkong.ui.ShowUIHelper;
@@ -34,7 +36,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
     private CardView mCv_operator;
     private CardView mCv_taobao;
     private CardView mCv_zhima;
-
+    private ImageView mIvLogoSetting;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +64,8 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
      mCv_operator  = view.findViewById(R.id.cv_operator);
      mCv_taobao  = view.findViewById(R.id.cv_taobao);
      mCv_zhima  = view.findViewById(R.id.cv_zhima);
+        mIvLogoSetting =(ImageView) view.findViewById(R.id.iv_logo_setting);
+       view.findViewById(R.id.iv_avatar).setOnClickListener(this);
     }
     @Override
     public void initData() {
@@ -77,6 +81,8 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
         mCv_operator.setOnClickListener(this);
         mCv_taobao.setOnClickListener(this);
         mCv_zhima.setOnClickListener(this);
+        mIvLogoSetting.setOnClickListener(this);
+
     }
 
     /*需要作登录判断
@@ -144,8 +150,12 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                     return;
                 }
                 showAuthbookconfirm();
-
-
+                break;
+            case R.id.iv_logo_setting:
+                ShowUIHelper.showSimpleBack(getActivity(), SimpleBackPage.SETTING);
+                break;
+            case R.id.iv_avatar:
+                ShowUIHelper.showSimpleBack(getActivity(), SimpleBackPage.PERSONAL_DATA);
                 break;
 
             default:

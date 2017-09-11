@@ -9,9 +9,12 @@ import com.gcs.fengkong.ui.frags.subfrags.AlipayAuthFragment;
 import com.gcs.fengkong.ui.frags.subfrags.BankAuthFragment;
 import com.gcs.fengkong.ui.frags.subfrags.BrowserFragment;
 import com.gcs.fengkong.ui.frags.subfrags.ContactsAuthFragment;
+import com.gcs.fengkong.ui.frags.subfrags.FeedbackFragment;
 import com.gcs.fengkong.ui.frags.subfrags.IdentityAuthFragment;
 import com.gcs.fengkong.ui.frags.subfrags.JdAuthFragment;
 import com.gcs.fengkong.ui.frags.subfrags.OperatorAuthFragment;
+import com.gcs.fengkong.ui.frags.subfrags.PersonalDataFragment;
+import com.gcs.fengkong.ui.frags.subfrags.ResetPasswordFrament;
 import com.gcs.fengkong.ui.frags.subfrags.SettingsFragment;
 import com.gcs.fengkong.ui.frags.subfrags.TaobaoAuthFragment;
 import com.gcs.fengkong.ui.frags.subfrags.ZhimaAuthFragment;
@@ -26,11 +29,12 @@ public enum SimpleBackPage {
     TAOBAO_AUTH(5, R.string.taobao_string, TaobaoAuthFragment.class),
     JD_AUTH(6, R.string.jd_string, JdAuthFragment.class),
     OPERATOR_AUTH(7, R.string.operator_string, OperatorAuthFragment.class),
-
+    PERSONAL_DATA(14, R.string.personal_data, PersonalDataFragment.class),
     SETTING(15, R.string.actionbar_title_setting, SettingsFragment.class),
 
     BROWSER(26, R.string.app_name, BrowserFragment.class),
-
+    FEEDBACK_GCS(16, R.string.feedback, FeedbackFragment.class),
+    RESET_PASSWORD(18, R.string.setting_reset_password, ResetPasswordFrament.class),
     ABOUT_GCS(17, R.string.actionbar_title_about_gcs, AboutGCSFragment.class);
 
 

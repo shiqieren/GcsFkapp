@@ -19,7 +19,7 @@
             android:layout_gravity="center"
             android:singleLine="true"
             android:textColor="@color/white"
-            android:text="1111"
+            android:text=""
             android:textSize="20sp" />
     </android.support.v7.widget.Toolbar>
     <FrameLayout

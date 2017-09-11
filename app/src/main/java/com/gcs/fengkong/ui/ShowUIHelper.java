@@ -76,6 +76,33 @@ public class ShowUIHelper {
     }
 
     /**
+     * 显示意见反馈
+     *
+     * @param context
+     */
+    public static void showFeedBack(Context context) {
+        showSimpleBack(context, SimpleBackPage.FEEDBACK_GCS);
+    }
+
+    /**
+     * 显示个人资料
+     *
+     * @param context
+     */
+    public static void showPersonalDATA(Context context) {
+        showSimpleBack(context, SimpleBackPage.PERSONAL_DATA);
+    }
+
+    /**
+     * 显示重置密码
+     *
+     * @param context
+     */
+    public static void showResetPassword(Context context) {
+        showSimpleBack(context, SimpleBackPage.RESET_PASSWORD);
+    }
+
+    /**
      * 显示身份信息输入
      *
      * @param context

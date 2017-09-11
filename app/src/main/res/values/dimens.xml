@@ -54,7 +54,7 @@
     <dimen name="timeline_small_card_padding_right">5.0dip</dimen>
 
     <!-- 我的信息 -->
-    <dimen name="myhead_h_bg">205.0dip</dimen>
+    <dimen name="myhead_h_bg">230.0dip</dimen>
 
     <!-- 时间选择dialog -->
     <dimen name="done_label_size">14sp</dimen>
