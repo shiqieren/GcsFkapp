@@ -38,6 +38,8 @@ public class AppConfig {
     public static final String HOLD_ACCOUNT = "hold_account";
     public static final String RETRIEVE_PWD_URL = "https://www.oschina.net/home/reset-pwd";
 
+    //设置授权状态显示
+    public static final String KEY_AUTH_OPERATOR = "KEY_AUTH_OPERATOR";
 
     //短信倒计时
     public static final  int SMSCODE_TIME_OUT = 80;

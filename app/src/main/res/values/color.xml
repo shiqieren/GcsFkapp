@@ -32,4 +32,7 @@
     <color name="base_app_color">#0f81c7</color>
     <color name="hint_font_color">#78ccff</color>
    <color name="login_border_colors">#52ffffff</color>
+
+   <color name="edit_hint_text_color">#bfbfbf</color>
+   <color name="edit_text_color">#6d6d6d</color>
 </resources>

@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.DecelerateInterpolator;
@@ -398,7 +399,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
                         MyLog.i("GCS","注册成功后用户更新缓存和cookie");
                         String netcookie = "gcs test login add cookie"+System.currentTimeMillis();
                         if (AccountHelper.login(user,netcookie)) {
-                            GlobalApplication.showToast(getResources().getString(R.string.register_success_hint), Toast.LENGTH_SHORT);
+                            GlobalApplication.showToast(getResources().getString(R.string.register_success_hint), 0,0, Gravity.CENTER);
                             //发送需要通知的成功广播
                             MyLog.i("GCS","注册成功后发送需要通知的成功广播");
                             sendLocalReceiver();

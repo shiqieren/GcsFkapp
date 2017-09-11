@@ -103,6 +103,19 @@
                         app:cardElevation="0dp"
                         android:layout_height="match_parent">
                         <LinearLayout
+                            android:id="@+id/ll_suauth_identity_iv"
+                            android:layout_width="@dimen/lay_48"
+                            android:layout_height="@dimen/lay_64"
+                            android:gravity="right|top"
+                            android:layout_gravity="center"
+                            android:visibility="gone">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@mipmap/auth_success"
+                                android:alpha="1"/>
+                        </LinearLayout>
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
@@ -135,6 +148,19 @@
                         app:cardElevation="0dp"
                         android:layout_height="match_parent">
                         <LinearLayout
+                            android:id="@+id/ll_suauth_bankcard_iv"
+                            android:layout_width="@dimen/lay_48"
+                            android:layout_height="@dimen/lay_64"
+                            android:gravity="right|top"
+                            android:layout_gravity="center"
+                            android:visibility="gone">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@mipmap/auth_success"
+                                android:alpha="1"/>
+                        </LinearLayout>
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
@@ -166,6 +192,19 @@
                         app:cardCornerRadius="0dp"
                         app:cardElevation="0dp"
                         android:layout_height="match_parent">
+                        <LinearLayout
+                            android:id="@+id/ll_suauth_zhima_iv"
+                            android:layout_width="@dimen/lay_36"
+                            android:layout_height="@dimen/lay_64"
+                            android:gravity="right|top"
+                            android:layout_gravity="center"
+                            android:visibility="gone">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@mipmap/auth_success"
+                                android:alpha="1"/>
+                        </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -225,6 +264,20 @@
                         app:cardElevation="0dp"
                         android:layout_height="match_parent">
                         <LinearLayout
+                            android:id="@+id/ll_suauth_alipay_iv"
+                            android:layout_width="@dimen/lay_36"
+                            android:layout_height="@dimen/lay_64"
+                            android:gravity="right|top"
+                            android:layout_gravity="center"
+                            android:visibility="gone">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@mipmap/auth_success"
+                                android:alpha="1"/>
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
@@ -232,7 +285,8 @@
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@mipmap/alipay_logo"/>
+                                android:src="@mipmap/alipay_logo"
+                                />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -256,6 +310,19 @@
                         app:cardCornerRadius="0dp"
                         app:cardElevation="0dp"
                         android:layout_height="match_parent">
+                        <LinearLayout
+                            android:id="@+id/ll_suauth_taobao_iv"
+                            android:layout_width="@dimen/lay_40"
+                            android:layout_height="@dimen/lay_64"
+                            android:gravity="right|top"
+                            android:layout_gravity="center"
+                            android:visibility="gone">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@mipmap/auth_success"
+                                android:alpha="1"/>
+                        </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -288,6 +355,19 @@
                         app:cardCornerRadius="0dp"
                         app:cardElevation="0dp"
                         android:layout_height="match_parent">
+                        <LinearLayout
+                            android:id="@+id/ll_suauth_jd_iv"
+                            android:layout_width="@dimen/lay_40"
+                            android:layout_height="@dimen/lay_64"
+                            android:gravity="right|top"
+                            android:layout_gravity="center"
+                            android:visibility="gone">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@mipmap/auth_success"
+                                android:alpha="1"/>
+                        </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -347,6 +427,19 @@
                         app:cardElevation="0dp"
                         android:layout_height="match_parent">
                         <LinearLayout
+                            android:id="@+id/ll_suauth_operator_iv"
+                            android:layout_width="@dimen/lay_40"
+                            android:layout_height="@dimen/lay_56"
+                            android:gravity="right|top"
+                            android:layout_gravity="center"
+                            android:visibility="gone">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@mipmap/auth_success"
+                                android:alpha="1"/>
+                        </LinearLayout>
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
@@ -378,6 +471,19 @@
                         app:cardCornerRadius="0dp"
                         app:cardElevation="0dp"
                         android:layout_height="match_parent">
+                        <LinearLayout
+                            android:id="@+id/ll_suauth_contact_iv"
+                            android:layout_width="@dimen/lay_48"
+                            android:layout_height="@dimen/lay_56"
+                            android:gravity="right|top"
+                            android:layout_gravity="center"
+                            android:visibility="gone">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@mipmap/auth_success"
+                                android:alpha="1"/>
+                        </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"

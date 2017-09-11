@@ -26,6 +26,8 @@
     <string name="login_password_hint">请输入您的登录密码</string>
     <string name="login_hold_hint">记住密码</string>
     <string name="login_forget_hint">忘记密码？</string>
+    <string name="u_login_forget_hint"><u>忘记密码？</u></string>
+
     <string name="login_smscode_hint">验证码登录</string>
     <string name="login_password_tip">密码登录</string>
     <string name="login_registerfirst_tip">没有帐号？立即注册</string>
@@ -71,7 +73,7 @@
 
     <string name="tip_double_click_exit">再次点击退出app</string>
     <string name="progress_submit">正在提交…</string>
-
+    <string name="progress_holdon">请求中，请稍等…</string>
 
     <array name="g_default_loading_fg">
         <item>#00bcd4</item>
@@ -158,4 +160,7 @@
     <string name="setting_reset_password">重置登录密码</string>
     <string name="setting_feedback">意见反馈</string>
     <string name="setting_loginout">退出登录</string>
+    <string name="feedback_hint">请输入反馈意见</string>
+    <string name="operator_authpassword_hint">请输入服务密码</string>
+    <string name="operator_auth_hint">请输入您的手机号</string>
 </resources>

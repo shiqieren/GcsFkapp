@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/base_app_color"
+        >
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:src="@mipmap/btn_back_normal"
+            android:layout_centerVertical="true"
+            android:paddingLeft="20dp"
+            android:paddingRight="28dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#ffffff"
+            android:text="运营商重置密码"
+            android:textSize="18sp"
+            android:padding="10dp"
+            android:gravity="center"/>
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/et_mobile"
+        android:hint="请输入手机号"
+        style="@style/EditStyle"
+        android:enabled="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:inputType="numberDecimal"
+        android:layout_marginTop="28dp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_smscode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:orientation="horizontal"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/et_smscode"
+            style="@style/EditStyleMini"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:hint="短信验证码"/>
+
+        <com.gcs.fengkong.ui.widget.TimerButton
+            android:id="@+id/btn_timer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="8dp"
+            android:gravity="center"
+            style="@style/ButtonStyle"
+            android:layout_marginRight="0dp"
+            android:text="重发"
+            app:afterText="重发"
+            app:ms="60000" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/et_service_pwd"
+        android:hint="请输入新服务密码"
+        style="@style/EditStyle"
+        android:inputType="numberPassword"
+        android:layout_marginTop="18dp"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tv_pwd_tips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/defaultTextColor"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        android:visibility="gone"/>
+
+    <EditText
+        android:id="@+id/et_contacts"
+        android:hint="请输入联系人号码，多个号码以','隔开"
+        style="@style/EditStyle"
+        android:inputType="text"
+        android:layout_marginTop="18dp"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tv_contacts_tips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/defaultTextColor"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:id="@+id/ll_tips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        android:layout_marginTop="8dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tips:"
+            android:textColor="@color/defaultTextColor"/>
+
+        <TextView
+            android:id="@+id/tv_tips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:textColor="@color/defaultTextColor" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_submit"
+        style="@style/ButtonStyle"
+        android:layout_marginTop="18dp"
+        android:text="提  交"/>
+</LinearLayout>

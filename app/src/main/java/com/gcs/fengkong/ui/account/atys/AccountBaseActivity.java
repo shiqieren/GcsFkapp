@@ -133,7 +133,7 @@ public class AccountBaseActivity extends BaseActivity {
         if (isCenter) {
             toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
         } else {
-            toast.setGravity(Gravity.BOTTOM, 0, getResources().getDimensionPixelSize(R.dimen.toast_y_offset));
+            toast.setGravity(Gravity.CENTER, 0, getResources().getDimensionPixelSize(R.dimen.toast_y_offset));
         }
     }
 

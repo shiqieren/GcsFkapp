@@ -25,6 +25,7 @@ import com.baidu.mapapi.radar.RadarSearchManager;
 import com.baidu.mapapi.radar.RadarUploadInfo;
 import com.bqs.crawler.cloud.sdk.BqsCrawlerCloudSDK;
 import com.bqs.crawler.cloud.sdk.BqsParams;
+import com.bqs.crawler.cloud.sdk.OnLoginResultListener;
 import com.gcs.fengkong.AppConfig;
 import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
@@ -63,7 +64,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * Created by lyw on 2017/7/25.
  */
 
-public class MainActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks, CheckUpdateManager.RequestPermissions  {
+public class MainActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks, CheckUpdateManager.RequestPermissions{
     public static final int LOCATION_PERMISSION = 0x0100;//定位权限
     private static final int RC_EXTERNAL_STORAGE = 0x04;//存储权限
     public static final String CHARSET = "UTF-8";
@@ -169,17 +170,6 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     @Override
     protected void initData() {
         super.initData();
-
-        BqsParams params = new BqsParams();
-        params.setName("李全朴");//􀮠􀤴􀒅􀦨􀝷
-        params.setCertNo("410927199307065033");//􀮠􀤴􀒅􁫝􀕲􁦤􀝩
-        params.setMobile("133605021");//􀮠􀤴􀒅􀲋􀹢􀝩
-        params.setPartnerId("guanchesuo");//􀮠􀤴􀒅􀠟􀲁􁖫􀝩
-        BqsCrawlerCloudSDK.setParams(params);
-
-
-
-
         checkUpdate();
         checkLocation();
         ApiClientHelper.getUserAgent(GlobalApplication.getInstance());
@@ -208,6 +198,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         }
 
     }
+
     private void checkUpdate() {
         if (!GlobalApplication.get(AppConfig.KEY_CHECK_UPDATE, true)) {
             return;

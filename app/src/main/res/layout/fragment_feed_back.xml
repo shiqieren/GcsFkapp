@@ -3,20 +3,24 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical">
+              android:orientation="vertical"
+                android:background="@color/white">
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:background="@color/gray"
         android:layout_marginTop="10dip"/>
+
     <TextView
+        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/lay_48"
-        android:text="@string/feedback"
+        android:background="@color/white"
         android:gravity="center_vertical"
         android:padding="@dimen/lay_15"
-        android:background="@color/white"/>
+        android:text="@string/feedback" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
@@ -29,9 +33,12 @@
         android:layout_marginBottom="@dimen/lay_12"
         android:layout_marginLeft="@dimen/lay_16"
         android:layout_marginRight="@dimen/lay_16"
-        android:background="@color/white"
+        android:layout_marginTop="@dimen/lay_15"
+        android:background="@drawable/edit_bg"
+        android:hint="@string/feedback_hint"
         android:gravity="top"
         android:padding="@dimen/lay_8"
+
         android:textSize="@dimen/font_14"/>
 
 

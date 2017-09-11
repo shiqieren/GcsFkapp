@@ -33,18 +33,18 @@
                 android:text="@string/operator_phone_string"
                 android:textColor="@color/base_app_color"
                 android:textSize="@dimen/font_16" />
-
             <EditText
                 android:id="@+id/et_auth_username"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_weight="1"
+                android:layout_weight="5"
                 android:background="@null"
-                android:ems="15"
+                android:ems="11"
                 android:focusable="true"
-                android:hint="@string/hint_et_name"
+                android:gravity="center|right"
+                android:hint="@string/operator_auth_hint"
                 android:imeOptions="actionDone"
                 android:inputType="text"
                 android:lines="1"
@@ -56,16 +56,7 @@
                 android:textColorHint="@color/black_alpha_80"
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/font_16" />
-            <ImageView
-                android:id="@+id/iv_auth_username_del"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:contentDescription="@null"
-                android:scaleType="fitCenter"
-                android:visibility="gone"
-                app:srcCompat="@mipmap/ic_clear" />
+
         </LinearLayout>
         <View
             android:layout_width="match_parent"
@@ -93,20 +84,20 @@
                 android:text="@string/operator_pass_string"
                 android:textColor="@color/base_app_color"
                 android:textSize="@dimen/font_16" />
-
             <EditText
                 android:id="@+id/et_auth_password"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_weight="1"
+                android:layout_weight="5"
                 android:background="@null"
-                android:ems="15"
+                android:gravity="center|right"
+                android:ems="6"
                 android:focusable="true"
-                android:hint="@string/hint_et_idnumber"
+                android:hint="@string/operator_authpassword_hint"
                 android:imeOptions="actionDone"
-                android:inputType="text"
+                android:inputType="textPassword"
                 android:lines="1"
                 android:maxLines="1"
                 android:minLines="1"
@@ -116,16 +107,7 @@
                 android:textColorHint="@color/black_alpha_80"
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/font_16" />
-            <ImageView
-                android:id="@+id/iv_auth_password_del"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:contentDescription="@null"
-                android:scaleType="fitCenter"
-                android:visibility="gone"
-                app:srcCompat="@mipmap/ic_clear" />
+
         </LinearLayout>
         <View
             android:layout_width="match_parent"
@@ -138,13 +120,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/lay_15"
-            android:paddingRight="@dimen/lay_15">
+            android:paddingRight="@dimen/lay_15"
+            android:gravity="right">
             <TextView
+                android:id="@+id/tv_ResetPwd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10.5dip"
+                android:clickable="true"
                 android:autoLink="all"
-                android:text="@string/login_forget_hint"
+                android:text="@string/u_login_forget_hint"
                 android:textColor="@color/defaultTextColor"
                 android:textSize="@dimen/font_14"
                 android:paddingBottom="@dimen/lay_15"
@@ -177,12 +162,9 @@
             android:layout_marginRight="24dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/bg_login_submit"
-            android:elevation="0dp"
-            android:outlineProvider="none"
             android:text="@string/confirm_btn"
             android:textColor="@color/white"
-            android:textSize="@dimen/font_18"
-            tools:targetApi="lollipop"/>
+            android:textSize="@dimen/font_18"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

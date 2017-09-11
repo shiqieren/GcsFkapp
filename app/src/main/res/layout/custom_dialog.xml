@@ -5,8 +5,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/lay_14"
-        android:layout_marginTop="@dimen/lay_12"
+        android:layout_marginTop="@dimen/lay_16"
         android:gravity="center"
         android:textSize="@dimen/font_18"
         android:text="@string/contact_auth_string"
@@ -21,7 +20,7 @@
         android:padding="@dimen/lay_8"
         android:gravity="center"
         android:clickable="true"
-        android:textSize="@dimen/font_14"
+        android:textSize="@dimen/font_12"
         android:text="@string/read_auth_book"
         android:textColor="@color/gray"
         android:autoLink="all"
@@ -31,14 +30,14 @@
         android:layout_height="0.5dp"
         android:background="@color/gray"/>
 
-        <!--
         <Button
             android:id="@+id/btn_cancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@null"
             android:textColor="@color/base_app_color"
-            android:text="@string/confirm_btn" />-->
+            android:text="@string/confirm_btn"
+            android:textSize="@dimen/font_18"/>
 
 
 </LinearLayout>

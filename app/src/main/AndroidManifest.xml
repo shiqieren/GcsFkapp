@@ -112,6 +112,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/Account_Base.App.Theme.NoTitle"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
+
+        <activity android:name=".ui.account.atys.MnoResetPwdActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:configChanges="keyboardHidden|orientation"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"/>
         <activity
             android:name=".ui.atys.PhoneAdressActivity"/>
         <service

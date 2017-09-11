@@ -53,6 +53,30 @@
         <item name="android:layout_width">45dp</item>
         <item name="android:layout_height">20dp</item>
     </style>
-
-
+    <style name="EditStyleMini">
+        <item name="android:textColorHint">@color/edit_hint_text_color</item>
+        <item name="android:textColor">@color/edit_text_color</item>
+        <item name="android:background">@drawable/bg_edittext</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+    </style>
+    <style name="EditStyle" parent="EditStyleMini">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">28dp</item>
+        <item name="android:layout_marginRight">28dp</item>
+    </style>
+    <style name="ButtonStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">38dp</item>
+        <item name="android:layout_marginLeft">28dp</item>
+        <item name="android:layout_marginRight">28dp</item>
+        <item name="android:background">@drawable/bqs_common_btn</item>
+        <item name="android:textColor">#1f81d2</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:maxLines">1</item>
+    </style>
 </resources>

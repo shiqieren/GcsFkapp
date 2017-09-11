@@ -6,6 +6,7 @@ import android.content.SharedPreferences.Editor;
 import android.support.v4.content.SharedPreferencesCompat;
 import android.text.TextUtils;
 
+import com.bqs.crawler.cloud.sdk.BqsParams;
 import com.gcs.fengkong.utils.VersionUtil;
 
 
@@ -25,7 +26,8 @@ public final class Setting {
     private static final String KEY_LOCATION_INFO = "locationInfo";
     private static final String KEY_LOCATION_PERMISSION = "locationPermission";
     private static final String KEY_LOCATION_APP_CODE = "locationAppCode";
-
+    //白骑士授权参数
+    public static BqsParams bqsParams;
 
     public static SharedPreferences getSettingPreferences(Context context) {
         return context.getSharedPreferences(Setting.class.getName(), Context.MODE_PRIVATE);
