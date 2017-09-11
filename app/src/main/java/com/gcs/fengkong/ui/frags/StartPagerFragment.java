@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,13 +50,21 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
     private CardView mCv_taobao;
     private CardView mCv_zhima;
     private ImageView mIvLogoSetting;
-
+    private TextView mTv_name;
+    private LinearLayout mLlidentityiv;
+    private LinearLayout mLlbankcardiv;
+    private LinearLayout mLlzhimaiv;
+    private LinearLayout mLlalipayiv;
+    private LinearLayout mLltaobaoiv;
+    private LinearLayout mLljdiv;
+    private LinearLayout mLloperatoriv;
+    private LinearLayout mLlcontactiv;
     /**
      * requestData
      */
     private void sendRequestData() {
         if (TDevice.hasInternet() && AccountHelper.isLogin())
-            Log.i("GCS", "每次到首页显示时就去获取个人信息User");
+            Log.i("GCS", "每次到首页显示时就去获取个人信息User,在响应结果中更新主页");
         // MyApi.getUserInfo(requestUserInfoHandler);
     }
     @Override
@@ -78,7 +87,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle arguments = getArguments();
-
+        sendRequestData();
     }
 
 
@@ -95,6 +104,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
 
     @Override
     public void initView(View view) {
+        mTv_name  = view.findViewById(R.id.tv_name);
         mCv_alipay  = view.findViewById(R.id.cv_alipay);
         mCv_bankcard  = view.findViewById(R.id.cv_bankcard);
         mCv_contact  = view.findViewById(R.id.cv_contact);
@@ -104,6 +114,17 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
         mCv_taobao  = view.findViewById(R.id.cv_taobao);
         mCv_zhima  = view.findViewById(R.id.cv_zhima);
         mIvLogoSetting = view.findViewById(R.id.iv_logo_setting);
+
+        //状态勾选
+        mLlidentityiv = view.findViewById(R.id.ll_suauth_identity_iv);
+        mLlbankcardiv = view.findViewById(R.id.ll_suauth_bankcard_iv);
+        mLlzhimaiv = view.findViewById(R.id.ll_suauth_zhima_iv);
+        mLlalipayiv = view.findViewById(R.id.ll_suauth_alipay_iv);
+        mLltaobaoiv = view.findViewById(R.id.ll_suauth_taobao_iv);
+        mLljdiv = view.findViewById(R.id.ll_suauth_jd_iv);
+        mLloperatoriv = view.findViewById(R.id.ll_suauth_operator_iv);
+        mLlcontactiv = view.findViewById(R.id.ll_suauth_contact_iv);
+
         view.findViewById(R.id.iv_avatar).setOnClickListener(this);
     }
     @Override
@@ -229,13 +250,13 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
         params.setPartnerId("guanchesuo");
         params.setName("李全朴");
         params.setCertNo("410927199307065033");
-        params.setMobile("13414467522");
+        params.setMobile("18018746184");
 
 
         Log.i("GCS","guanchesuo");
         Log.i("GCS","李全朴");
         Log.i("GCS","410927199307065033");
-        Log.i("GCS","13414467522");
+        Log.i("GCS","18018746184");
 
         BqsCrawlerCloudSDK.setParams(params);
 
@@ -267,7 +288,12 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
         tv_link.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(),"xxxxx",Toast.LENGTH_SHORT).show();
+                Log.i("GCS","模拟运营商授权成功");
+                User user = AccountHelper.getUser();
+                //设置该用户运营商授权状态
+                user.getAuthstate().setAuth_contact(true);
+                AccountHelper.updateUserCache(user);
+
             }
         });
         bt_cancle.setOnClickListener(new View.OnClickListener() {
@@ -308,11 +334,106 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
      */
     private void updateView(User userInfo) {
         Log.i("GCS","更新UI登录后的显示状态");
+        Log.i("GCS","头像更新");
+        mTv_name.setText(userInfo.getName());
+            if (userInfo.getAuthstate().getAuth_identity()!=null){
+                if(userInfo.getAuthstate().getAuth_identity()){
+                    mLlidentityiv.setVisibility(View.VISIBLE);
+                }else {
+                    mLlidentityiv.setVisibility(View.GONE);
+                }
+            }else {
+                mLlidentityiv.setVisibility(View.GONE);
+            }
+
+            if (userInfo.getAuthstate().getAuth_bankcard()!=null){
+                if(userInfo.getAuthstate().getAuth_bankcard()){
+                    mLlbankcardiv.setVisibility(View.VISIBLE);
+                }else {
+                    mLlbankcardiv.setVisibility(View.GONE);
+                }
+            }else {
+                mLlbankcardiv.setVisibility(View.GONE);
+            }
+
+            if (userInfo.getAuthstate().getAuth_zhima()!=null) {
+                if(userInfo.getAuthstate().getAuth_zhima()){
+                    mLlzhimaiv.setVisibility(View.VISIBLE);
+                }else {
+                    mLlzhimaiv.setVisibility(View.GONE);
+                }
+            }else {
+                mLlzhimaiv.setVisibility(View.GONE);
+            }
+
+            if (userInfo.getAuthstate().getAuth_alipay()!=null){
+                if(userInfo.getAuthstate().getAuth_alipay()){
+                    mLlalipayiv.setVisibility(View.VISIBLE);
+                }else {
+                    mLlalipayiv.setVisibility(View.GONE);
+                }
+            }else {
+                mLlalipayiv.setVisibility(View.GONE);
+            }
+
+            if (userInfo.getAuthstate().getAuth_taobao()!=null){
+                if(userInfo.getAuthstate().getAuth_taobao()){
+                    mLltaobaoiv.setVisibility(View.VISIBLE);
+                }else {
+                    mLltaobaoiv.setVisibility(View.GONE);
+                }
+            }else {
+                mLltaobaoiv.setVisibility(View.GONE);
+            }
+
+            if (userInfo.getAuthstate().getAuth_jd()!=null){
+                if(userInfo.getAuthstate().getAuth_jd()){
+                    mLljdiv.setVisibility(View.VISIBLE);
+                }else {
+                    mLljdiv.setVisibility(View.GONE);
+                }
+            }else {
+                mLljdiv.setVisibility(View.GONE);
+            }
+
+            if (userInfo.getAuthstate().getAuth_operator()!=null){
+                if(userInfo.getAuthstate().getAuth_operator()){
+                    mLloperatoriv.setVisibility(View.VISIBLE);
+                }else {
+                    mLloperatoriv.setVisibility(View.GONE);
+                }
+            }else {
+                mLloperatoriv.setVisibility(View.GONE);
+            }
+
+            if (userInfo.getAuthstate().getAuth_contact()!=null){
+                if(userInfo.getAuthstate().getAuth_contact()){
+                    mLlcontactiv.setVisibility(View.VISIBLE);
+                }else {
+                    mLlcontactiv.setVisibility(View.GONE);
+                }
+            }else {
+                mLlcontactiv.setVisibility(View.GONE);
+            }
+
+
+
     }
     /**
      *退出登录后清除信息，
      */
     private void hideView() {
         Log.i("GCS","恢复未登录的默认状态显示");
+        mTv_name.setText(R.string.unlogin_string);
+        mLlidentityiv.setVisibility(View.GONE);
+        mLlbankcardiv.setVisibility(View.GONE);
+        mLlzhimaiv.setVisibility(View.GONE);
+        mLlalipayiv.setVisibility(View.GONE);
+        mLltaobaoiv.setVisibility(View.GONE);
+        mLljdiv.setVisibility(View.GONE);
+        mLloperatoriv.setVisibility(View.GONE);
+        mLlcontactiv.setVisibility(View.GONE);
     }
+
+
 }

@@ -163,4 +163,5 @@
     <string name="feedback_hint">请输入反馈意见</string>
     <string name="operator_authpassword_hint">请输入服务密码</string>
     <string name="operator_auth_hint">请输入您的手机号</string>
+    <string name="unlogin_string">未登录</string>
 </resources>

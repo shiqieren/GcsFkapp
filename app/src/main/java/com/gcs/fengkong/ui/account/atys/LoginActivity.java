@@ -336,7 +336,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                 finish();
                 break;
             case R.id.bt_login_submit:
-               loginRequest();
+                loginRequestno();
                 break;
             case R.id.iv_login_hold_pwd:
                 //记住密码
@@ -361,7 +361,20 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
 
 
 
-
+    private void loginRequestno(){
+        String tempUsername = mEtLoginUsername.getText().toString().trim();
+        MyLog.i("GCS","手动创建用户id=1，名称为手机");
+        User user =new User(1,tempUsername);
+        String netcookie = "gcs test login add cookie"+System.currentTimeMillis();
+        String token ="xxxxxxxxxxxxxxxxxxxxxxxxxxx";
+        MyLog.i("GCS","给user设置一个token");
+        user.setToken(token);
+        if (AccountHelper.login(user,netcookie)) {
+            logSucceed();
+        } else {
+            showToastForKeyBord("登录异常");
+        }
+    }
 
     @SuppressWarnings("ConstantConditions")
     private void loginRequest() {
