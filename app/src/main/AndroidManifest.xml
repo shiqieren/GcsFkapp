@@ -113,7 +113,7 @@
             android:theme="@style/Account_Base.App.Theme.NoTitle"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
-        <activity android:name=".ui.account.atys.MnoResetPwdActivity"
+        <activity android:name=".ui.authpager.MnoResetPwdActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
             android:configChanges="keyboardHidden|orientation"

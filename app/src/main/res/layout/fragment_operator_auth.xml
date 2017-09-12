@@ -135,6 +135,72 @@
                 android:paddingBottom="@dimen/lay_15"
                 />
         </LinearLayout>
+        <!--android:visibility="gone"-->
+        <TextView
+            android:id="@+id/tv_smscode_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="短信验证码"
+            android:textColor="#A7A7A7"
+            android:textSize="14sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="28dp"
+            android:layout_marginRight="28dp"
+            android:visibility="gone"/>
+        <!--android:visibility="gone"-->
+        <LinearLayout
+            android:id="@+id/ll_smscode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:orientation="horizontal"
+            android:layout_marginLeft="28dp"
+            android:layout_marginRight="28dp"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/et_smscode"
+                style="@style/EditStyleMini"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:hint="短信验证码"/>
+
+            <com.gcs.fengkong.ui.widget.TimerButton
+                android:id="@+id/btn_timer"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginLeft="8dp"
+                android:gravity="center"
+                style="@style/ButtonStyle"
+                android:layout_marginRight="0dp"
+                android:text="重发"
+                app:afterText="重发"
+                app:ms="60000" />
+        </LinearLayout>
+        <!--android:visibility="gone"-->
+        <LinearLayout
+            android:id="@+id/ll_tips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="28dp"
+            android:layout_marginRight="28dp"
+            android:layout_marginTop="8dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tips:"/>
+
+            <TextView
+                android:id="@+id/tv_tips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp" />
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/lay_60"

@@ -1,4 +1,4 @@
-package com.gcs.fengkong.ui.account.atys;
+package com.gcs.fengkong.ui.authpager;
 
 import android.app.ProgressDialog;
 import android.graphics.Color;
@@ -31,18 +31,19 @@ import java.util.Locale;
  */
 public class MnoResetPwdActivity extends BaseActivity implements OnMnoResetPwdListener, OnMnoSendSmsListener {
 
-    ProgressDialog mDialog;
-    EditText etSmscode;
-    TextView tvTips;
-    LinearLayout llTips;
-    TimerButton btnTimer;
+    private ProgressDialog mDialog;
+    private EditText etSmscode;
+    private TextView tvTips;
+    private LinearLayout llTips;
+    private TimerButton btnTimer;
 
-    EditText etNewPwd;
-    TextView tvNewPwdTips;
+    private EditText etNewPwd;
+    private TextView tvNewPwdTips;
 
-    EditText etContacts;
-    TextView tvContactsTips;
-    LinearLayout llSmsCode;
+    private EditText etContacts;
+    private TextView tvContactsTips;
+    private LinearLayout llSmsCode;
+    private
     EditText etMobile;
     private boolean smsCodeFlag, newPwdFlag, contactsFlag;
     private int contactsCount;

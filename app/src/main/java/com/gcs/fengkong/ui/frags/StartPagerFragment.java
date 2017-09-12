@@ -288,18 +288,18 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
         tv_link.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("GCS","模拟运营商授权成功");
+                Log.i("GCS","模拟通讯录授权成功");
                 User user = AccountHelper.getUser();
                 //设置该用户运营商授权状态
                 user.getAuthstate().setAuth_contact(true);
                 AccountHelper.updateUserCache(user);
-
             }
         });
         bt_cancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dlgShowBack.dismiss();
+                mLlcontactiv.setVisibility(View.VISIBLE);
             }
         });
         dlgShowBack.show();
@@ -434,6 +434,4 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
         mLloperatoriv.setVisibility(View.GONE);
         mLlcontactiv.setVisibility(View.GONE);
     }
-
-
 }

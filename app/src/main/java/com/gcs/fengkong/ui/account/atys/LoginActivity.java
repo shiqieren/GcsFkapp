@@ -364,7 +364,13 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
     private void loginRequestno(){
         String tempUsername = mEtLoginUsername.getText().toString().trim();
         MyLog.i("GCS","手动创建用户id=1，名称为手机");
-        User user =new User(1,tempUsername);
+        User user;
+        if (AccountHelper.getUser()!=null){
+            user = AccountHelper.getUser();
+        }else {
+            user =new User(1,tempUsername);
+        }
+
         String netcookie = "gcs test login add cookie"+System.currentTimeMillis();
         String token ="xxxxxxxxxxxxxxxxxxxxxxxxxxx";
         MyLog.i("GCS","给user设置一个token");
@@ -452,7 +458,12 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                         //模拟用户返回
                         String phoneNumber = mEtLoginUsername.getText().toString().trim();
                         MyLog.i("GCS","手动创建用户id=1，名称为手机");
-                        User user =new User(1,phoneNumber);
+                        User user;
+                        if (AccountHelper.getUser()!=null){
+                            user = AccountHelper.getUser();
+                        }else {
+                            user =new User(1,phoneNumber);
+                        }
                         String netcookie = "gcs test login add cookie"+System.currentTimeMillis();
                         if(resultBean.getResult()!= null){
                             String token = resultBean.getResult().toString();

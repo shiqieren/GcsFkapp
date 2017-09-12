@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.bqs.crawler.cloud.sdk.view.OnLoginViewListener;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.atys.SimpleBackActivity;
 import com.gcs.fengkong.ui.frags.BaseFragment;
@@ -22,15 +23,13 @@ import com.gcs.fengkong.ui.frags.BaseFragment;
  * Created by Administrator on 0029 8-29.
  */
 @SuppressLint("NewApi")
-public class TaobaoAuthFragment extends BaseFragment implements View.OnClickListener, View.OnFocusChangeListener{
+public class TaobaoAuthFragment extends BaseFragment implements View.OnClickListener,OnLoginViewListener, View.OnFocusChangeListener{
 
     private CheckBox mCbAgreeAuthbook;
     private LinearLayout mLlAuthUsername;
     private LinearLayout mLlAuthPassword;
     private EditText mEtAuthUsername;
     private EditText mEtAuthPassword;
-    private ImageView mIvAuthUsernaneDel;
-    private ImageView mIvAuthPasswordDel;
     private Button mBtAuthSubmit;
     @Override
     protected int getLayoutId() {
@@ -46,9 +45,8 @@ public class TaobaoAuthFragment extends BaseFragment implements View.OnClickList
         mLlAuthPassword = view.findViewById(R.id.ll_auth_password);
         mEtAuthUsername = view.findViewById(R.id.et_auth_username);
         mEtAuthPassword = view.findViewById(R.id.et_auth_password);
-        mIvAuthUsernaneDel = view.findViewById(R.id.iv_auth_username_del);
-        mIvAuthPasswordDel = view.findViewById(R.id.iv_auth_password_del);
         mBtAuthSubmit = view.findViewById(R.id.bt_auth_submit);
+
 
         setListener();
         mEtAuthUsername.setOnFocusChangeListener(this);
@@ -67,13 +65,7 @@ public class TaobaoAuthFragment extends BaseFragment implements View.OnClickList
             @Override
             public void afterTextChanged(Editable s) {
                 String username = s.toString().trim();
-                if (username.length() > 0) {
-                    //   mLlIdentityName.setBackgroundResource(R.drawable.bg_login_input_ok);
-                    mIvAuthUsernaneDel.setVisibility(View.VISIBLE);
-                } else {
-                    //   mLlIdentityName.setBackgroundResource(R.drawable.bg_login_input_ok);
-                    mIvAuthUsernaneDel.setVisibility(View.INVISIBLE);
-                }
+
 
                 String name = mEtAuthUsername.getText().toString().trim();
                 String pwd = mEtAuthPassword.getText().toString().trim();
@@ -107,12 +99,7 @@ public class TaobaoAuthFragment extends BaseFragment implements View.OnClickList
             @Override
             public void afterTextChanged(Editable s) {
                 int length = s.length();
-                if (length > 0) {
-                    // mLlIdentityNumber.setBackgroundResource(R.drawable.bg_login_input_ok);
-                    mIvAuthPasswordDel.setVisibility(View.VISIBLE);
-                } else {
-                    mIvAuthPasswordDel.setVisibility(View.INVISIBLE);
-                }
+
 
                 String pwd = mEtAuthPassword.getText().toString().trim();
                 String name = mEtAuthUsername.getText().toString().trim();
@@ -134,8 +121,6 @@ public class TaobaoAuthFragment extends BaseFragment implements View.OnClickList
         mLlAuthPassword.setOnClickListener(this);
         mEtAuthUsername.setOnClickListener(this);
         mEtAuthPassword.setOnClickListener(this);
-        mIvAuthUsernaneDel.setOnClickListener(this);
-        mIvAuthPasswordDel.setOnClickListener(this);
         mBtAuthSubmit.setOnClickListener(this);
     }
 
@@ -187,6 +172,31 @@ public class TaobaoAuthFragment extends BaseFragment implements View.OnClickList
 
     @Override
     public void onFocusChange(View view, boolean b) {
+
+    }
+
+    @Override
+    public void onLoadUrlProgress(int i) {
+
+    }
+
+    @Override
+    public void onLoadUrlStart() {
+
+    }
+
+    @Override
+    public void onLoadUrlFinish() {
+
+    }
+
+    @Override
+    public void onLoginSuccess(int i) {
+
+    }
+
+    @Override
+    public void onLoginFailure(String s, String s1, int i) {
 
     }
 }
