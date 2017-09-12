@@ -7,9 +7,11 @@ import android.os.SystemClock;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 
 import com.gcs.fengkong.AppConfig;
+import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.ui.api.MyApi;
 import com.gcs.fengkong.utils.MyLog;
@@ -127,6 +129,7 @@ public final class AccountHelper {
             public void run() {
                 view.removeCallbacks(this);
                 User user = SharedPreferencesHelper.load(instances.application, User.class);
+                Toast.makeText(GlobalApplication.getContext(),"清理User",Toast.LENGTH_SHORT).show();
                 // 判断当前用户信息是否清理成功
                 if (user == null || user.getId() <= 0) {
                     //做一些退出后的工作，清除数据+发送切换和退出的广播让需要的接收器处理

@@ -88,6 +88,18 @@ public class User implements Serializable {
         private Boolean auth_jd;
         private Boolean auth_operator;
         private Boolean auth_contact;
+
+        public AuthState(Boolean defauth) {
+            this.auth_identity = defauth;
+            this.auth_bankcard = defauth;
+            this.auth_zhima = defauth;
+            this.auth_alipay = defauth;
+            this.auth_taobao = defauth;
+            this.auth_jd = defauth;
+            this.auth_operator = defauth;
+            this.auth_contact = defauth;
+        }
+
         public Boolean getAuth_identity() {
             return auth_identity;
         }

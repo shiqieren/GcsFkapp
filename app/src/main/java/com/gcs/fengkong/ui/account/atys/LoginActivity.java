@@ -64,12 +64,11 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
     private LinearLayout mLlLoginPwd;
     private EditText mEtLoginPwd;
     private ImageView mIvLoginPwdDel;
-    private  ImageView mIvHoldPwd;
+    private ImageView mIvHoldPwd;
     private TextView mTvLoginForgetPwd;
     private TextView mTvLoginSmsCodePwd;
     private Button mBtLoginSubmit;
     private TextView mTvLoginRegister;
-
 
     //第三方接入的handler登录接收器callback
 
@@ -336,7 +335,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                 finish();
                 break;
             case R.id.bt_login_submit:
-                loginRequestno();
+                loginRequest();
                 break;
             case R.id.iv_login_hold_pwd:
                 //记住密码
@@ -361,20 +360,16 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
 
 
 
-    private void loginRequestno(){
-        String tempUsername = mEtLoginUsername.getText().toString().trim();
-        MyLog.i("GCS","手动创建用户id=1，名称为手机");
-        User user;
-        if (AccountHelper.getUser()!=null){
-            user = AccountHelper.getUser();
-        }else {
-            user =new User(1,tempUsername);
-        }
+    private void requestLoginno(String tempUsername, String tempPwd){
+        ;
 
+        User user = AccountHelper.getUser();
+        user.setToken("xxxxxxxxxx");
+        user.setId(1);
+        user.setAuthstate(new User.AuthState(false));
+        user.setName(tempUsername);
         String netcookie = "gcs test login add cookie"+System.currentTimeMillis();
-        String token ="xxxxxxxxxxxxxxxxxxxxxxxxxxx";
-        MyLog.i("GCS","给user设置一个token");
-        user.setToken(token);
+
         if (AccountHelper.login(user,netcookie)) {
             logSucceed();
         } else {
@@ -395,7 +390,8 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
             //登录成功,请求数据进入用户个人中心页面
 
             if (TDevice.hasInternet()) {
-                requestLogin(tempUsername, tempPwd);
+               // requestLogin(tempUsername, tempPwd);
+                requestLoginno(tempUsername, tempPwd);
             } else {
                 showToastForKeyBord(R.string.footer_type_net_error);
             }

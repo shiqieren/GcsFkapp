@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.gcs.fengkong.AppConfig;
@@ -183,6 +184,7 @@ public class SettingsFragment extends BaseFragment implements EasyPermissions.Pe
             case R.id.rl_cancel:
                 // 清理所有缓存
                 ShowUIHelper.clearAppCache(false);
+                Toast.makeText(getActivity(),"清理缓存",Toast.LENGTH_SHORT).show();
                 // 注销操作
                 AccountHelper.logout(mCancel, new Runnable() {
                     @SuppressLint("SetTextI18n")
