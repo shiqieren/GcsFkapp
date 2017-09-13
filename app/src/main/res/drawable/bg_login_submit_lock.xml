@@ -7,7 +7,7 @@
             <solid android:color="@color/account_lock_bg"/>
             <stroke
                 android:width="0.5dp"
-                android:color="@color/login_border_colors"/>
+                android:color="@color/white"/>
         </shape>
     </item>
 </selector>

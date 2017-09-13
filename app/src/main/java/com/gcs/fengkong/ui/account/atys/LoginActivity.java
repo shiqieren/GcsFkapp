@@ -242,10 +242,6 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                 } else {
                     mIvLoginPwdDel.setVisibility(View.INVISIBLE);
                 }
-                String username = mEtLoginUsername.getText().toString().trim();
-                if (TextUtils.isEmpty(username)) {
-                    showToastForKeyBord(R.string.usernull);
-                }
                 String pwd = mEtLoginPwd.getText().toString().trim();
                 if (!TextUtils.isEmpty(pwd)) {
 
@@ -366,7 +362,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
         User user = AccountHelper.getUser();
         user.setToken("xxxxxxxxxx");
         user.setId(1);
-        user.setAuthstate(new User.AuthState(false));
+        user.setAuthstate(new User.AuthState());
         user.setName(tempUsername);
         String netcookie = "gcs test login add cookie"+System.currentTimeMillis();
 

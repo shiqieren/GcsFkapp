@@ -22,8 +22,10 @@ import android.widget.Toast;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.api.secret.AES;
 import com.gcs.fengkong.ui.atys.BaseActivity;
+import com.gcs.fengkong.ui.widget.statusbar.StatusBarCompat;
 import com.gcs.fengkong.utils.DialogUtil;
 import com.gcs.fengkong.utils.MyLog;
+import com.gcs.fengkong.utils.UIUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -54,6 +56,7 @@ public class AccountBaseActivity extends BaseActivity {
     @Override
     protected void initData() {
         super.initData();
+        StatusBarCompat.setStatusBarColor(this, UIUtils.getColor(R.color.base_app_color));
         registerLocalReceiver();
         mInputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
     }

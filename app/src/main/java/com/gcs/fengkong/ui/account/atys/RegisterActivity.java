@@ -58,6 +58,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
     private LinearLayout mLlRegisterPhone;
     private EditText mEtRegisterUsername;
     private ImageView mIvRegisterDel;
+    private ImageView mIvRegisterPwdDel;
     private LinearLayout mLlRegisterSmsCode;
     private EditText mEtRegisterPwd;
     private LinearLayout mLlRegisterTwoPwd;
@@ -161,7 +162,6 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
                                 }
                             } else {
                                 mLlRegisterPhone.setBackgroundResource(R.drawable.bg_login_input_error);
-                                showToastForKeyBord(R.string.hint_username_ok);
                                 mTvRegisterSmsCall.setAlpha(0.4f);
                             }
                         } else if (length > 11) {
@@ -221,6 +221,11 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
             @Override
             public void afterTextChanged(Editable s) {
                 int length = s.length();
+                if (length > 0) {
+                    mIvRegisterPwdDel.setVisibility(View.VISIBLE);
+                } else {
+                    mIvRegisterPwdDel.setVisibility(View.INVISIBLE);
+                }
                 if (length < 6||length>18) {
                     mLlRegisterTwoPwd.setBackgroundResource(R.drawable.bg_login_input_error);
                 } else {
@@ -250,6 +255,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
         mLlRegisterPhone= (LinearLayout) findViewById(R.id.ll_register_phone);
         mEtRegisterUsername= (EditText) findViewById(R.id.et_register_username);
         mIvRegisterDel= (ImageView) findViewById(R.id.iv_register_username_del);
+        mIvRegisterPwdDel= (ImageView) findViewById(R.id.iv_register_pwd_del);
         mLlRegisterSmsCode= (LinearLayout) findViewById(R.id.ll_register_sms_code);
         mEtRegisterAuthCode= (EditText) findViewById(R.id.et_register_auth_code);
         mTvRegisterSmsCall= (TextView) findViewById(R.id.tv_register_sms_call);
@@ -284,6 +290,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
         mLlRegisterPhone.setOnClickListener(this);
         mEtRegisterUsername.setOnClickListener(this);
         mIvRegisterDel.setOnClickListener(this);
+        mIvRegisterPwdDel.setOnClickListener(this);
         mLlRegisterSmsCode.setOnClickListener(this);
         mEtRegisterAuthCode.setOnClickListener(this);
         mTvRegisterSmsCall.setOnClickListener(this);
@@ -317,6 +324,9 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
                 break;
             case R.id.iv_register_username_del:
                 mEtRegisterUsername.setText(null);
+                break;
+            case R.id.iv_register_pwd_del:
+                mEtRegisterPwd.setText(null);
                 break;
             case R.id.tv_register_sms_call:
                 requestSmsCode();

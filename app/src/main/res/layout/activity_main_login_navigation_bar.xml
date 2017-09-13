@@ -5,29 +5,31 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:background="@color/transparent"
-              android:gravity="center_horizontal"
-              android:orientation="horizontal">
+              android:orientation="horizontal"
+              android:gravity="center_horizontal">
 
-    <ImageButton
-        android:id="@+id/ib_navigation_back"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:background="@drawable/bg_login_navigation_bar"
-        android:contentDescription="@null"
-        app:srcCompat="@mipmap/btn_back_normal"/>
+        <ImageButton
+            android:id="@+id/ib_navigation_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_login_navigation_bar"
+            android:contentDescription="@null"
+            app:srcCompat="@mipmap/btn_back_normal"/>
 
-    <TextView
-        android:id="@+id/tv_navigation_label"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_vertical"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        tools:text="@string/login_btn"/>
+        <TextView
+            android:id="@+id/tv_navigation_label"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            tools:text="@string/login_btn"/>
 
-    <Space
-        android:layout_width="48dp"
-        android:layout_height="48dp"/>
+        <Space
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+
+
 </LinearLayout>

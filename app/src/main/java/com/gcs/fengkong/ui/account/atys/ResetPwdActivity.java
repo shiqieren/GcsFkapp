@@ -206,22 +206,24 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
             @SuppressWarnings("deprecation")
             @Override
             public void afterTextChanged(Editable s) {
+
                 int length = s.length();
-                String smsCode = mEtRetrieveCodeInput.getText().toString().trim();
-                String resetpwd = mEtResetPwd.getText().toString().trim();
-                if (length >= 6 && mMachPhoneNum && mMachPhoneNum && !TextUtils.isEmpty(smsCode) && mMachPhoneNum && !TextUtils.isEmpty(resetpwd)) {
+                if (length > 0) {
                     mIvResetPwdDel.setVisibility(View.VISIBLE);
+                } else {
+                    mIvResetPwdDel.setVisibility(View.INVISIBLE);
+                }
+                if (length < 6||length>18) {
+                    mLlResetPwd.setBackgroundResource(R.drawable.bg_login_input_error);
+                } else {
                     mLlResetPwd.setBackgroundResource(R.drawable.bg_login_input_ok);
+                }
+                String username = mEtRetrieveTel.getText().toString().trim();
+                String authcode = mEtRetrieveCodeInput.getText().toString().trim();
+                if (!TextUtils.isEmpty(username)&&!TextUtils.isEmpty(authcode)) {
                     mBtRetrieveSubmit.setBackgroundResource(R.drawable.bg_login_submit);
                     mBtRetrieveSubmit.setTextColor(getResources().getColor(R.color.white));
                 } else {
-                    if (length <= 0) {
-                        mIvResetPwdDel.setVisibility(View.GONE);
-                        mLlResetPwd.setBackgroundResource(R.drawable.bg_login_input_ok);
-                    } else {
-                        mIvResetPwdDel.setVisibility(View.VISIBLE);
-                        mLlResetPwd.setBackgroundResource(R.drawable.bg_login_input_error);
-                    }
                     mBtRetrieveSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
                     mBtRetrieveSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));
                 }

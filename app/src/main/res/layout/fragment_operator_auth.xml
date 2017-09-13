@@ -69,6 +69,8 @@
             android:id="@+id/ll_auth_password"
             android:layout_width="match_parent"
             android:layout_height="@dimen/lay_60"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -98,6 +100,7 @@
                 android:hint="@string/operator_authpassword_hint"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
+                android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 android:lines="1"
                 android:maxLines="1"
                 android:minLines="1"

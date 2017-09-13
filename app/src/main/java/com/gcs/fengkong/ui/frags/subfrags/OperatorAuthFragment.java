@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -20,9 +21,11 @@ import android.widget.Toast;
 import com.bqs.crawler.cloud.sdk.mno.MnoLoginAction;
 import com.bqs.crawler.cloud.sdk.mno.OnMnoLoginListener;
 import com.bqs.crawler.cloud.sdk.mno.OnMnoSendSmsListener;
+import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.Setting;
 import com.gcs.fengkong.ui.account.AccountHelper;
+import com.gcs.fengkong.ui.account.RichTextParser;
 import com.gcs.fengkong.ui.authpager.MnoAuthActivity;
 import com.gcs.fengkong.ui.authpager.MnoResetPwdActivity;
 import com.gcs.fengkong.ui.account.bean.User;
@@ -198,20 +201,25 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
     }
 
     private void AuthRequest() {
+       String username =  mEtAuthUsername.getText().toString();
+        if (RichTextParser.machPhoneNum(username)){
+            if(!mCbAgreeAuthbook.isChecked()){
+                GlobalApplication.showToast("需勾选授权协议哦!",0,0, Gravity.CENTER);
+            }else {
+                String servicePwd = mEtAuthPassword.getText().toString();
+                if (TextUtils.isEmpty(servicePwd) || servicePwd.length() < 6||servicePwd.length() > 18) {
+                    Toast.makeText(getActivity(), "请输入有效的服务密码", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-        if(!mCbAgreeAuthbook.isChecked()){
-            Toast.makeText(getActivity(),"尚未勾选授权协议书",Toast.LENGTH_SHORT).show();
-        }else {
-            String servicePwd = mEtAuthPassword.getText().toString();
-            if (TextUtils.isEmpty(servicePwd) || servicePwd.length() < 6) {
-                Toast.makeText(getActivity(), "请输入有效的服务密码", Toast.LENGTH_SHORT).show();
-                return;
+                mDialog.show();
+
+                loginAction.login(servicePwd, this);
             }
-
-            mDialog.show();
-
-            loginAction.login(servicePwd, this);
+        }else {
+            GlobalApplication.showToast("手机号码有误.请重新填写!",0,0, Gravity.CENTER);
         }
+
 
 
     }
@@ -224,7 +232,7 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
     @Override
     public void onLoginSuccess() {
         //登录成功
-        Toast.makeText(getActivity(), "运营商授权成功", Toast.LENGTH_SHORT).show();
+        GlobalApplication.showToast("认证成功",0,0, Gravity.CENTER);
         User user = AccountHelper.getUser();
         //设置该用户运营商授权状态
         user.getAuthstate().setAuth_operator(true);
@@ -255,7 +263,7 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
     @Override
     public void onLoginFailure(String s, String s1) {
         mDialog.hide();
-        Toast.makeText(getActivity(), "失败："+s1, Toast.LENGTH_SHORT).show();
+        GlobalApplication.showToast("认证失败",0,0, Gravity.CENTER);
     }
 
 
