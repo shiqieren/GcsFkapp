@@ -18,7 +18,7 @@ import android.widget.FrameLayout;
 
 /**
  * After kitkat add fake status bar
- * Created by qiu on 8/27/16.
+ * Created by lyw on 8/27/16.
  */
 @TargetApi(Build.VERSION_CODES.KITKAT)
 class StatusBarCompatKitKat {

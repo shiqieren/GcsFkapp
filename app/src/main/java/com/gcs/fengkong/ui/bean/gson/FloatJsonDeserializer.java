@@ -11,7 +11,7 @@ import com.google.gson.JsonParseException;
 import java.lang.reflect.Type;
 
 /**
- * Created by qiujuer
+ * Created by lyw
  * on 2016/11/22.
  */
 public class FloatJsonDeserializer implements JsonDeserializer<Float> {

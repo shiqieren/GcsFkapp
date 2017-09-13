@@ -27,7 +27,7 @@ import android.graphics.RectF;
  * <p>
  * Form:https://github.com/qiujuer/Genius-Android
  *
- * @author qiujuer Email:qiujuer@live.cn
+ * @author lyw
  * @version 1.0.0
  */
 public class LoadingCircleDrawable extends LoadingDrawable {

@@ -40,7 +40,7 @@ import com.gcs.fengkong.R;
  * <p>
  * Form:https://github.com/qiujuer/Genius-Android
  *
- * @author qiujuer Email:qiujuer@live.cn
+ * @author lyw
  * @version 1.0.0
  */
 public class Loading extends View {

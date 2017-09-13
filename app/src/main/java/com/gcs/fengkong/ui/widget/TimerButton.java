@@ -10,7 +10,7 @@ import com.gcs.fengkong.R;
 
 
 /**
- * Created by pengjianbo on 2016/11/16.
+ * Created by lyw on 2016/11/16.
  */
 public class TimerButton extends Button {
 

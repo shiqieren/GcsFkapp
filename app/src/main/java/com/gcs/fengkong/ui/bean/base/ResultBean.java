@@ -5,7 +5,7 @@ package com.gcs.fengkong.ui.bean.base;
 //import com.lyw.app.ui.notice.NoticeManager;
 
 /**
- * Created by huanghaibin
+ * Created by lyw
  * on 16-5-23.
  */
 public class ResultBean<T> {

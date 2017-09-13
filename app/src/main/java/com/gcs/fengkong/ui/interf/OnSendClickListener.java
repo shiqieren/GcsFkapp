@@ -18,7 +18,7 @@ package com.gcs.fengkong.ui.interf;
 import android.text.Editable;
 
 /**
- * @author kymjs (http://www.kymjs.com)
+ * @author lyw
  */
 public interface OnSendClickListener {
     void onClickSendButton(Editable str);

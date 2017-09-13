@@ -47,7 +47,7 @@ import okhttp3.Request;
 
 
 /**
- * Created by fei on 2016/10/14.
+ * Created by lyw on 2016/10/14.
  * desc:
  */
 
@@ -362,7 +362,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
 
     private void requestLoginno(String tempUsername, String tempPwd){
         ;
-
+        showToastForKeyBord("初始化User");
         User user = AccountHelper.getUser();
         user.setToken("xxxxxxxxxx");
         user.setId(1);

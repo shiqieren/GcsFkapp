@@ -32,7 +32,7 @@ import java.io.File;
 import java.util.List;
 
 /**
- * @updator thanatosx
+ * @updator lyw
  */
 public class TDevice {
 

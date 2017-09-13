@@ -22,7 +22,7 @@ import com.gcs.fengkong.R;
 
 
 /**
- * @author Qiujuer
+ * @author lyw
  */
 public class ToggleButton extends View {
     /** */

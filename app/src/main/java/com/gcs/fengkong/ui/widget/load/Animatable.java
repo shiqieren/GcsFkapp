@@ -25,7 +25,7 @@ package com.gcs.fengkong.ui.widget.load;
  * <p>
  * Form:https://github.com/qiujuer/Genius-Android
  *
- * @author qiujuer Email:qiujuer@live.cn
+ * @author lyw
  * @version 1.0.0
  */
 public interface Animatable extends android.graphics.drawable.Animatable {

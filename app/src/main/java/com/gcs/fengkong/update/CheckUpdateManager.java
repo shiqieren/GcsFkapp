@@ -19,7 +19,7 @@ import okhttp3.Call;
 
 
 /**
- * Created by haibin
+ * Created by lyw
  * on 2016/10/19.
  */
 public class CheckUpdateManager {

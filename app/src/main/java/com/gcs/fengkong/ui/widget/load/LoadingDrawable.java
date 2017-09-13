@@ -31,7 +31,7 @@ import android.os.SystemClock;
  * <p>
  * Form:https://github.com/qiujuer/Genius-Android
  *
- * @author qiujuer Email:qiujuer@live.cn
+ * @author lyw
  * @version 1.0.0
  */
 @SuppressWarnings("WeakerAccess")

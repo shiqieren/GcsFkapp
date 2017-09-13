@@ -21,7 +21,7 @@ import com.gcs.fengkong.utils.ActivityManager;
 import com.gcs.fengkong.utils.DialogUtil;
 
 /**
- * Created by pengjianbo on 2016/11/16.
+ * Created by lyw on 2016/11/16.
  */
 public class MnoAuthActivity extends BaseActivity implements OnMnoAuthListener,OnMnoSendSmsListener {
 

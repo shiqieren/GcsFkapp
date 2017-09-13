@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * MVP刷新列表基类，再无逻辑判断，清晰自然
- * Created by haibin
+ * Created by lyw
  * on 2016/12/27.
  */
 

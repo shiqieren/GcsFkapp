@@ -20,7 +20,7 @@ import android.view.WindowManager;
 
 /**
  * After Lollipop use system method.
- * Created by qiu on 8/27/16.
+ * Created by lyw on 8/27/16.
  */
 @TargetApi(Build.VERSION_CODES.LOLLIPOP)
 class StatusBarCompatLollipop {

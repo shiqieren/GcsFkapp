@@ -10,7 +10,7 @@ import android.support.v7.widget.Toolbar;
 
 /**
  * Utils for status bar
- * Created by qiu on 3/29/16.
+ * Created by lyw on 3/29/16.
  */
 public class StatusBarCompat {
 

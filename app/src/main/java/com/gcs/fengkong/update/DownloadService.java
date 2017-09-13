@@ -29,7 +29,7 @@ import java.net.URL;
 
 /**
  * 下载服务
- * Created by haibin
+ * Created by lyw
  * on 2016/10/19.
  */
 @SuppressWarnings("all")

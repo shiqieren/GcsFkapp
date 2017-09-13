@@ -1,7 +1,7 @@
 package com.gcs.fengkong.ui.interf;
 
 /**
- * @author deyi
+ * @author lyw
  */
 public interface BaseViewInterface {
 

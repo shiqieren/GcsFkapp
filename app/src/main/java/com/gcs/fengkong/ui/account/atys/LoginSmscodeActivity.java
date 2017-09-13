@@ -49,7 +49,7 @@ import okhttp3.Request;
 
 
 /**
- * Created by fei on 2016/10/14.
+ * Created by lyw on 2016/10/14.
  * desc:
  */
 
@@ -69,9 +69,7 @@ public class LoginSmscodeActivity extends AccountBaseActivity implements View.On
     private TextView mTvLoginForgetPwd;
     private Button mBtLoginSubmit;
     private TextView mTvRegisterSmsCall;
-
     private TextView mTvLoginRegister;
-
     private boolean mMachPhoneNum;
     private CountDownTimer mTimer;
     private String Jsessionid;

@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  * the base adapter for RecyclerView
- * Created by huanghaibin on 16-5-3.
+ * Created by lyw on 16-5-3.
  */
 @SuppressWarnings("unused")
 public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {

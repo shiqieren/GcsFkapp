@@ -19,7 +19,7 @@ import com.gcs.fengkong.utils.AppOperator;
 /**
  * 界面帮助类
  *
- * @author FireAnt（http://my.oschina.net/LittleDY）
+ * @author lyw
  * @version 创建时间：2014年10月10日 下午3:33:36
  */
 public class ShowUIHelper {

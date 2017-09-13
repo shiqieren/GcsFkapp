@@ -16,7 +16,7 @@ import com.gcs.fengkong.R;
 
 /**
  * 下拉刷新上拉加载控件，目前适用于RecyclerView
- * Created by huanghaibin on 16-5-3.
+ * Created by lyw on 16-5-3.
  */
 public class RecyclerRefreshLayout extends SwipeRefreshLayout implements SwipeRefreshLayout.OnRefreshListener {
     private RecyclerView mRecycleView;

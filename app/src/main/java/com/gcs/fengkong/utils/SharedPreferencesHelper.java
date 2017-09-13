@@ -17,7 +17,7 @@ import java.util.Set;
  * 该辅助类能让SharedPreferences配合一个Bean使用，
  * 以简化复杂的"KEY"定义问题。
  * <p>
- * Created by qiujuer
+ * Created by lyw
  * on 2016/10/27.
  */
 public final class SharedPreferencesHelper {

@@ -42,7 +42,7 @@ import com.gcs.fengkong.utils.TDevice;
 /**
  * 浏览器界面
  *
- * @author kymjs(kymjs123@gmail.com)
+ * @author lyw
  */
 @SuppressLint("NewApi")
 public class BrowserFragment extends BaseFragment {

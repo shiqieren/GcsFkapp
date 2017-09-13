@@ -3,7 +3,7 @@ package com.gcs.fengkong.ui.bean;
 import java.io.Serializable;
 
 /**
- * Created by haibin
+ * Created by lyw
  * on 2016/10/19.
  */
 

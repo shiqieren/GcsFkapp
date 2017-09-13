@@ -19,8 +19,8 @@ import java.util.regex.Pattern;
 /**
  * 字符串操作工具包
  *
- * @author liux (http://my.oschina.net/liux)
- * @author thanatosx
+ * @author lyw
+ * @author lyw
  * @version 2.0
  *          Updated 2016-08-11
  */

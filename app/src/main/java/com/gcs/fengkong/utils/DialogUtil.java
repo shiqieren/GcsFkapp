@@ -12,7 +12,7 @@ import android.view.View;
 
 /**
  * 通用的对话框
- * Created by haibin
+ * Created by lyw
  * on 2016/11/2.
  */
 @SuppressWarnings("all")

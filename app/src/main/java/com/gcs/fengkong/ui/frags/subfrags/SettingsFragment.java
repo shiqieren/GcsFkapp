@@ -37,7 +37,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 /**
  * 系统设置界面
  *
- * @author kymjs
+ * @author lyw
  */
 public class SettingsFragment extends BaseFragment implements EasyPermissions.PermissionCallbacks, CheckUpdateManager.RequestPermissions {
 

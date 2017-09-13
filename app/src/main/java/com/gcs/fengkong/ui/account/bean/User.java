@@ -25,6 +25,15 @@ public class User implements Serializable {
         this.name = name;
     }
 
+    public User(long id, String name, String cookie, String token, More more, AuthState authstate) {
+        this.id = id;
+        this.name = name;
+        this.cookie = cookie;
+        this.token = token;
+        this.more = more;
+        this.authstate = authstate;
+    }
+
     public long getId() {
         return id;
     }
@@ -157,15 +166,30 @@ public class User implements Serializable {
         public void setAuth_contact(Boolean contact) {
             this.auth_contact = contact;
         }
+        @Override
+        public String toString() {
+            return "AuthState{" +
+                    "identity=" + auth_identity +
+                    ", bankcard='" + auth_bankcard +
+                    ", zhima='" + auth_zhima +
+                    ", alipay='" + auth_alipay +
+                    ", taobao='" + auth_taobao +
+                    ", jd='" + auth_jd +
+                    ", operator='" + auth_operator +
+                    ", contact='" + auth_contact   + '\'' +
+                    '}';
+        }
     }
+
 
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + name +
+                ", token='" + token +
+                ", cookie='" + cookie  + '\'' +
                 '}';
     }
-
 
 }

@@ -27,10 +27,6 @@ public class LaunchActivity extends BaseActivity {
     @Override
     protected void initData() {
 
-        //配置文件生成并记录app当前进入时间点
-        //  AppConfig.getAppConfig(LaunchActivity.this).set("system_time", "初始化");
-
-
         super.initData();
         // 在这里我们检测是否是新版本安装，如果是则进行老版本数据迁移工作
         // 该工作可能消耗大量时间所以放在自线程中执行
@@ -84,6 +80,11 @@ public class LaunchActivity extends BaseActivity {
         }else {
 
         }*/
+        User user = AccountHelper.getUser();
+
+        MyLog.i("GCS","user.toString():"+user.toString());
+
+        MyLog.i("GCS","user.getAuthstate().toString():"+user.getAuthstate().toString());
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();

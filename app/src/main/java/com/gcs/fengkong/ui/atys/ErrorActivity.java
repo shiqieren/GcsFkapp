@@ -12,7 +12,7 @@ import com.gcs.fengkong.R;
 
 /**
  * 异常信息界面
- * Created by haibin on 2017/5/8.
+ * Created by lyw on 2017/5/8.
  */
 
 public class ErrorActivity extends BaseActivity implements View.OnClickListener {

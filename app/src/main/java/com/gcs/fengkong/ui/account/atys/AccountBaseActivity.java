@@ -30,7 +30,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * Created by fei
+ * Created by lyw
  * on 2016/10/31.
  * desc:
  */

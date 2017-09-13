@@ -4,7 +4,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 
 /**
- * Created by jzz
+ * Created by lyw
  * on 2017/2/8.
  * desc:
  */

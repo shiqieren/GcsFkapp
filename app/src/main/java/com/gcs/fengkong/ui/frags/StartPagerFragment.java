@@ -36,7 +36,7 @@ import com.gcs.fengkong.utils.TDevice;
 
 
 /**
- * Created by Ivan on 15/9/22.
+ * Created by lyw on 15/9/22.
  */
 public class StartPagerFragment extends BaseFragment implements View.OnClickListener{
 

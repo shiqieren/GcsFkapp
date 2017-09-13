@@ -1,7 +1,7 @@
 package com.gcs.fengkong.ui.bean;
 
 /**
- * Created by Ivan on 15/9/25.
+ * Created by lyw on 15/9/25.
  */
 public class Tab {
 

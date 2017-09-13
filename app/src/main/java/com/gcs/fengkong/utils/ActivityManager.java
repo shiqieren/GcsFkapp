@@ -9,7 +9,7 @@ import java.util.Stack;
 
 /**
  * Desction:应用程序Activity管理类：用于Activity管理和应用程序退出
- * Author:pengjianbo
+ * Author:lyw
  * Date:15/9/17 下午4:48
  */
 public class ActivityManager {

@@ -28,7 +28,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * 在线更新对话框
- * Created by haibin on 2017/5/4.
+ * Created by lyw on 2017/5/4.
  */
 
 public class UpdateActivity extends BaseActivity implements View.OnClickListener,
