@@ -67,7 +67,7 @@
                 android:focusable="true"
                 android:hint="@string/hint_username_ok"
                 android:imeOptions="actionDone"
-                android:inputType="phone|number"
+                android:inputType="number"
                 android:lines="1"
                 android:maxLines="1"
                 android:minLines="1"
@@ -114,6 +114,7 @@
                 android:layout_width="1px"
                 android:layout_height="22dp"
                 android:background="@color/login_line_color" />
+
 
             <EditText
                 android:id="@+id/et_login_pwd"

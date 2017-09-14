@@ -16,10 +16,13 @@ import android.widget.TextView;
 import com.bqs.crawler.cloud.sdk.BqsCrawlerCloudSDK;
 import com.bqs.crawler.cloud.sdk.BqsParams;
 import com.bqs.crawler.cloud.sdk.ServiceId;
+import com.gcs.fengkong.AppConfig;
+import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.Setting;
 import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.account.bean.User;
+import com.gcs.fengkong.ui.api.ApiClientHelper;
 import com.gcs.fengkong.ui.baiqishiauthpager.ViewLoginActivity;
 import com.gcs.fengkong.ui.bean.SimpleBackPage;
 import com.gcs.fengkong.ui.widget.statusbar.StatusBarCompat;
@@ -237,6 +240,8 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                 break;
             case R.id.iv_avatar:
                 ShowUIHelper.showSimpleBack(getActivity(), SimpleBackPage.PERSONAL_DATA);
+
+                ApiClientHelper.getUserAgent(GlobalApplication.getInstance(),AppConfig.getAppConfig(GlobalApplication.getContext()).get("address"));
                 break;
 
             default:

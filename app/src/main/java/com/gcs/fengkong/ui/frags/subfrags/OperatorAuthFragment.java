@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,7 +48,8 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
     private EditText mEtAuthPassword;
     private Button mBtAuthSubmit;
     private TextView mTvResetPwd;
-
+    private ImageView mIvAuthUsernaneDel;
+    private ImageView mIvAuthPasswordDel;
     private EditText etSmscode;
     private LinearLayout llSmscode;
     private TimerButton btnTimer;
@@ -75,6 +77,8 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
         mEtAuthUsername = view.findViewById(R.id.et_auth_username);
         mEtAuthPassword = view.findViewById(R.id.et_auth_password);
         mBtAuthSubmit = view.findViewById(R.id.bt_auth_submit);
+        mIvAuthUsernaneDel = view.findViewById(R.id.iv_auth_username_del);
+        mIvAuthPasswordDel = view.findViewById(R.id.iv_auth_password_del);
         mTvResetPwd= view.findViewById(R.id.tv_ResetPwd);
         //自动获取当前手机号码值
         mEtAuthUsername.setText(Setting.bqsParams.getMobile());
@@ -95,8 +99,15 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
             @SuppressWarnings("deprecation")
             @Override
             public void afterTextChanged(Editable s) {
-                String username = s.toString().trim();
 
+                String username = s.toString().trim();
+                if (username.length() > 0) {
+                    //   mLlIdentityName.setBackgroundResource(R.drawable.bg_login_input_ok);
+                    mIvAuthUsernaneDel.setVisibility(View.VISIBLE);
+                } else {
+                    //   mLlIdentityName.setBackgroundResource(R.drawable.bg_login_input_ok);
+                    mIvAuthUsernaneDel.setVisibility(View.GONE);
+                }
                 String name = mEtAuthUsername.getText().toString().trim();
                 String pwd = mEtAuthPassword.getText().toString().trim();
                 if (!TextUtils.isEmpty(name)&&!TextUtils.isEmpty(pwd)) {
@@ -127,7 +138,12 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
             @Override
             public void afterTextChanged(Editable s) {
                 int length = s.length();
-
+                if (length > 0) {
+                    // mLlIdentityNumber.setBackgroundResource(R.drawable.bg_login_input_ok);
+                    mIvAuthPasswordDel.setVisibility(View.VISIBLE);
+                } else {
+                    mIvAuthPasswordDel.setVisibility(View.GONE);
+                }
                 String pwd = mEtAuthPassword.getText().toString().trim();
                 String name = mEtAuthUsername.getText().toString().trim();
                 if (!TextUtils.isEmpty(pwd)&&!TextUtils.isEmpty(name)&& mCbAgreeAuthbook.isChecked()) {
@@ -156,6 +172,8 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
         mLlAuthPassword.setOnClickListener(this);
         mEtAuthUsername.setOnClickListener(this);
         mEtAuthPassword.setOnClickListener(this);
+        mIvAuthUsernaneDel.setOnClickListener(this);
+        mIvAuthPasswordDel.setOnClickListener(this);
         mBtAuthSubmit.setOnClickListener(this);
         mTvResetPwd.setOnClickListener(new View.OnClickListener() {
             @Override

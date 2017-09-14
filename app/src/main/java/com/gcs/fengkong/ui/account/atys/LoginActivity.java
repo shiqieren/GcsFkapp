@@ -356,22 +356,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
 
 
 
-    private void requestLoginno(String tempUsername, String tempPwd){
-        ;
-        showToastForKeyBord("初始化User");
-        User user = AccountHelper.getUser();
-        user.setToken("xxxxxxxxxx");
-        user.setId(1);
-        user.setAuthstate(new User.AuthState());
-        user.setName(tempUsername);
-        String netcookie = "gcs test login add cookie"+System.currentTimeMillis();
 
-        if (AccountHelper.login(user,netcookie)) {
-            logSucceed();
-        } else {
-            showToastForKeyBord("登录异常");
-        }
-    }
 
     @SuppressWarnings("ConstantConditions")
     private void loginRequest() {
@@ -386,8 +371,8 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
             //登录成功,请求数据进入用户个人中心页面
 
             if (TDevice.hasInternet()) {
-               // requestLogin(tempUsername, tempPwd);
-                requestLoginno(tempUsername, tempPwd);
+               requestLogin(tempUsername, tempPwd);
+               // requestLoginno(tempUsername, tempPwd);
             } else {
                 showToastForKeyBord(R.string.footer_type_net_error);
             }
@@ -415,6 +400,22 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
 
     }
 
+    private void requestLoginno(String tempUsername, String tempPwd){
+        ;
+        showToastForKeyBord("初始化User");
+        User user = AccountHelper.getUser();
+        user.setToken("xxxxxxxxxx");
+        user.setId(1);
+        user.setAuthstate(new User.AuthState());
+        user.setName(tempUsername);
+        String netcookie = "gcs test login add cookie"+System.currentTimeMillis();
+
+        if (AccountHelper.login(user,netcookie)) {
+            logSucceed();
+        } else {
+            showToastForKeyBord("登录异常");
+        }
+    }
     private void requestLogin(String tempUsername, String tempPwd) {
         MyLog.i("GCS","加密前用户名："+tempUsername+",加密前密码："+tempPwd);
         MyApi.login(getAES(tempUsername), getAES(tempPwd), new StringCallback() {
@@ -450,12 +451,10 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                         //模拟用户返回
                         String phoneNumber = mEtLoginUsername.getText().toString().trim();
                         MyLog.i("GCS","手动创建用户id=1，名称为手机");
-                        User user;
-                        if (AccountHelper.getUser()!=null){
-                            user = AccountHelper.getUser();
-                        }else {
-                            user =new User(1,phoneNumber);
-                        }
+                        User user = AccountHelper.getUser();
+                        user.setId(1);
+                        user.setAuthstate(new User.AuthState());
+                        user.setName(phoneNumber);
                         String netcookie = "gcs test login add cookie"+System.currentTimeMillis();
                         if(resultBean.getResult()!= null){
                             String token = resultBean.getResult().toString();

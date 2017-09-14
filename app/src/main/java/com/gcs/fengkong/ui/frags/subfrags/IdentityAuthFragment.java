@@ -99,7 +99,7 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
                     mIvIdentityNameDel.setVisibility(View.VISIBLE);
                 } else {
                  //   mLlIdentityName.setBackgroundResource(R.drawable.bg_login_input_ok);
-                    mIvIdentityNameDel.setVisibility(View.INVISIBLE);
+                    mIvIdentityNameDel.setVisibility(View.GONE);
                 }
 
                 String identitynumber = mEtIdentityName.getText().toString().trim();
@@ -150,7 +150,7 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
                     // mLlIdentityNumber.setBackgroundResource(R.drawable.bg_login_input_ok);
                     mIvIdentityNumberDel.setVisibility(View.VISIBLE);
                 } else {
-                    mIvIdentityNumberDel.setVisibility(View.INVISIBLE);
+                    mIvIdentityNumberDel.setVisibility(View.GONE);
                 }
                 try {
                     mIsIDcardnumber = IDCardUtil.IDCardValidate(input);

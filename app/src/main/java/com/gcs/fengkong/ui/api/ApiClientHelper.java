@@ -11,11 +11,16 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.gcs.fengkong.Setting;
+import com.gcs.fengkong.ui.account.AccountHelper;
+import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.utils.MACgetUtil;
 import com.gcs.fengkong.utils.MyLog;
 import com.gcs.fengkong.utils.UIUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.UUID;
+
+import okhttp3.Call;
 
 import static android.content.Context.TELEPHONY_SERVICE;
 
@@ -28,7 +33,7 @@ public class ApiClientHelper {
      * @param appContext
      * @return
      */
-    public static String getUserAgent(Application appContext) {
+    public static String getUserAgent(Application appContext,String myaddress) {
         //全局手机管理器
         TelephonyManager tm = (TelephonyManager) UIUtils.getContext().getSystemService(TELEPHONY_SERVICE);
         //// 获取智能设备唯一编号
@@ -64,6 +69,23 @@ public class ApiClientHelper {
         String format = "GCSfk.NET/1.0 (gcsapp; %s; Android %s; %s; %s)";
         String ua = String.format(format, vCode, osVer, model, getAppId(appContext));
         MyLog.i("客户端唯一标识>>>","getUserAgent:" + ua);
+        if (AccountHelper.getUser().getId()>0){
+            User user = AccountHelper.getUser();
+            MyApi.sendUserAgent(imei,imsi,"IP",mac,myaddress,user.getToken(), new StringCallback() {
+                @Override
+                public void onError(Call call, Exception e, int id) {
+
+                }
+
+                @Override
+                public void onResponse(String response, int id) {
+                    MyLog.i("GCS","平台信息上传响应返回"+response.toString());
+                }
+            });
+        }else {
+
+        }
+
         return ua;
     }
 

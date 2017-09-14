@@ -580,7 +580,10 @@ public class LoginSmscodeActivity extends AccountBaseActivity implements View.On
                         //模拟用户返回
                         String phoneNumber = mEtLoginUsername.getText().toString().trim();
                         MyLog.i("GCS","手动创建用户id=1，名称为手机");
-                        User user =new User(1,phoneNumber);
+                        User user = AccountHelper.getUser();
+                        user.setId(1);
+                        user.setAuthstate(new User.AuthState());
+                        user.setName(phoneNumber);
                         String netcookie = "gcs test login add cookie"+System.currentTimeMillis();
                         if (AccountHelper.login(user,netcookie)) {
                             logSucceed();

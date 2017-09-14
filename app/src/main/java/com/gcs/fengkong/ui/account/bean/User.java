@@ -61,6 +61,7 @@ public class User implements Serializable {
         this.cookie = cookie;
     }
 
+
     public String getToken() {
         return token;
     }

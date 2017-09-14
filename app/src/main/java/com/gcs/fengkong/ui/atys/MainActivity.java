@@ -176,7 +176,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         super.initData();
         checkUpdate();
         checkLocation();
-        ApiClientHelper.getUserAgent(GlobalApplication.getInstance());
+
 
         //app_config文件创建
         AppConfig.getAppConfig(this).set("system_time", "mainactivity"+String.valueOf(System.currentTimeMillis()));
@@ -188,7 +188,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
             return;
         }
         if(token != null){
-            MyApi.sendUserAgent(token, new StringCallback() {
+           /* MyApi.sendUserAgent(token, new StringCallback() {
                 @Override
                 public void onError(Call call, Exception e, int id) {
 
@@ -198,7 +198,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                 public void onResponse(String response, int id) {
                     MyLog.i("GCS","平台信息上传响应返回"+response.toString());
                 }
-            });
+            });*/
         }
 
     }
@@ -435,9 +435,12 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 
         //定位成功，网络ok，主动上传用户位置信息
         if (TDevice.hasInternet() && location.getLatitude() != 4.9E-324 && location.getLongitude() != 4.9E-324) {
-            MyLog.i("GCS","位置信息经纬度");
+
             LatLng userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
             MyLog.i("GCS","经度："+location.getLatitude()+"纬度："+location.getLongitude()+"位置："+location.getAddrStr());
+            MyLog.i("GCS","位置信息经纬度存放在AppConfig");
+            AppConfig.getAppConfig(this).set("address", location.getAddrStr());
+            ApiClientHelper.getUserAgent(GlobalApplication.getInstance(),location.getAddrStr());
             Setting.updateLocationPermission(getApplicationContext(), true);
 
             //周边雷达设置用户身份标识，id为空默认是设备标识

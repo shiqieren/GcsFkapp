@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.Setting;
+import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.utils.MyLog;
 import com.gcs.fengkong.utils.SharedPreferencesHelper;
@@ -306,14 +307,20 @@ public class MyApi {
      * @param token token
      *
      */
-    public static void sendUserAgent(String token,StringCallback callback) {
+    public static void sendUserAgent(String imei,String imsi,String ip,String mac,String address,String token,StringCallback callback) {
         Map<String, String> params = new HashMap<>();
         // params.put("appId", "1");
         /// params.put("phone", phoneNumber);
+        params.put("imei",imei);
+        params.put("imsi",imsi);
+        params.put("ip",ip);
+        params.put("mac",mac);
+
+        params.put("address", address);
         params.put("platform","ANDROID");
         params.put("token",token);
-        OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/map/register.do")).params(params).build().execute(callback);
-        MyLog.i("GCS","发送平台信息url:"+getAbsoluteApiUrl("wind-phone/phone/map/register.do"));
+        OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/map/statistical.do")).params(params).build().execute(callback);
+        MyLog.i("GCS","发送平台信息url:"+getAbsoluteApiUrl("wind-phone/phone/map/statistical.do"));
 
 
         //  OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/register.do?"+"name="+phoneNumber+"&password="+pwd+"&code="+smsCode)).build().execute(callback);

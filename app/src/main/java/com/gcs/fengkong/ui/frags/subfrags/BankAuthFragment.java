@@ -122,7 +122,7 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
                     mIvBankcardNameDel.setVisibility(View.VISIBLE);
                 } else {
                     //   mLlIdentityName.setBackgroundResource(R.drawable.bg_login_input_ok);
-                    mIvBankcardNameDel.setVisibility(View.INVISIBLE);
+                    mIvBankcardNameDel.setVisibility(View.GONE);
                 }
                 String phone = mEtBankcardPhone.getText().toString().trim();
                 String identitynumber = mEtBankcardNumber.getText().toString().trim();
@@ -186,7 +186,7 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
                     // mLlIdentityNumber.setBackgroundResource(R.drawable.bg_login_input_ok);
                     mIvBankcardNumberDel.setVisibility(View.VISIBLE);
                 } else {
-                    mIvBankcardNumberDel.setVisibility(View.INVISIBLE);
+                    mIvBankcardNumberDel.setVisibility(View.GONE);
                 }
                 mBankcardNum = RegexUtils.isBankCard(input);
 
@@ -235,7 +235,7 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
                     // mLlIdentityNumber.setBackgroundResource(R.drawable.bg_login_input_ok);
                     mIvBankcardPhoneDel.setVisibility(View.VISIBLE);
                 } else {
-                    mIvBankcardPhoneDel.setVisibility(View.INVISIBLE);
+                    mIvBankcardPhoneDel.setVisibility(View.GONE);
                 }
                 mMachPhoneNum = RichTextParser.machPhoneNum(input);
 

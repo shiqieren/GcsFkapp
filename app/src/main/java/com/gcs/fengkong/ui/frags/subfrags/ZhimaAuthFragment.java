@@ -69,7 +69,7 @@ public class ZhimaAuthFragment extends BaseFragment implements View.OnClickListe
                     mIvAuthUsernaneDel.setVisibility(View.VISIBLE);
                 } else {
                     //   mLlIdentityName.setBackgroundResource(R.drawable.bg_login_input_ok);
-                    mIvAuthUsernaneDel.setVisibility(View.INVISIBLE);
+                    mIvAuthUsernaneDel.setVisibility(View.GONE);
                 }
 
                 String name = mEtAuthUsername.getText().toString().trim();
@@ -108,7 +108,7 @@ public class ZhimaAuthFragment extends BaseFragment implements View.OnClickListe
                     // mLlIdentityNumber.setBackgroundResource(R.drawable.bg_login_input_ok);
                     mIvAuthPasswordDel.setVisibility(View.VISIBLE);
                 } else {
-                    mIvAuthPasswordDel.setVisibility(View.INVISIBLE);
+                    mIvAuthPasswordDel.setVisibility(View.GONE);
                 }
 
                 String pwd = mEtAuthPassword.getText().toString().trim();
