@@ -1,9 +1,6 @@
-package com.gcs.fengkong.ui.authpager;
+package com.gcs.fengkong.ui.baiqishiauthpager;
 
 import android.app.ProgressDialog;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;

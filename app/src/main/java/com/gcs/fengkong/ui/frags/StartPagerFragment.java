@@ -1,11 +1,9 @@
 package com.gcs.fengkong.ui.frags;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.AlertDialogLayout;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
@@ -14,20 +12,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bqs.crawler.cloud.sdk.BqsCrawlerCloudSDK;
 import com.bqs.crawler.cloud.sdk.BqsParams;
-import com.bqs.crawler.cloud.sdk.OnLoginResultListener;
-import com.gcs.fengkong.AppConfig;
-import com.gcs.fengkong.GlobalApplication;
+import com.bqs.crawler.cloud.sdk.ServiceId;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.Setting;
 import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.account.bean.User;
-import com.gcs.fengkong.ui.api.MyApi;
-import com.gcs.fengkong.ui.atys.MainActivity;
-import com.gcs.fengkong.ui.atys.PhoneAdressActivity;
+import com.gcs.fengkong.ui.baiqishiauthpager.ViewLoginActivity;
 import com.gcs.fengkong.ui.bean.SimpleBackPage;
 import com.gcs.fengkong.ui.widget.statusbar.StatusBarCompat;
 import com.gcs.fengkong.utils.DialogUtil;
@@ -167,6 +160,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
     @Override
     public void onClick(View v) {
         int id = v.getId();
+        Intent intent = new Intent(getActivity(), ViewLoginActivity.class);
         switch (id) {
             case R.id.cv_identity:
                 if (!AccountHelper.isLogin()) {
@@ -198,7 +192,9 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                     return;
                 }
                 configBqsParams();
-                ShowUIHelper.showAlipayAuth(getActivity());
+                intent.putExtra(ViewLoginActivity.PARAMS_DATA_TYPE, ServiceId.ALIPAY_SERVICE_ID);
+                startActivity(intent);
+                //ShowUIHelper.showAlipayAuth(getActivity());
                 break;
             case R.id.cv_taobao:
                 if (!AccountHelper.isLogin()) {
@@ -206,7 +202,9 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                     return;
                 }
                 configBqsParams();
-                ShowUIHelper.showTaobaoAuth(getActivity());
+                intent.putExtra(ViewLoginActivity.PARAMS_DATA_TYPE, ServiceId.TB_SERVICE_ID);
+                startActivity(intent);
+               // ShowUIHelper.showTaobaoAuth(getActivity());
                 break;
             case R.id.cv_jd:
                 if (!AccountHelper.isLogin()) {
@@ -214,7 +212,9 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                     return;
                 }
                 configBqsParams();
-                ShowUIHelper.showJdAuth(getActivity());
+                intent.putExtra(ViewLoginActivity.PARAMS_DATA_TYPE, ServiceId.JD_SERVICE_ID);
+                startActivity(intent);
+               // ShowUIHelper.showJdAuth(getActivity());
                 break;
             case R.id.cv_operator:
                 if (!AccountHelper.isLogin()) {

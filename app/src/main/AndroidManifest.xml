@@ -113,7 +113,13 @@
             android:theme="@style/Account_Base.App.Theme.NoTitle"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
 
-        <activity android:name=".ui.authpager.MnoResetPwdActivity"
+        <activity android:name=".ui.baiqishiauthpager.MnoResetPwdActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:configChanges="keyboardHidden|orientation"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"/>
+        <activity android:name=".ui.baiqishiauthpager.ViewLoginActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
             android:configChanges="keyboardHidden|orientation"

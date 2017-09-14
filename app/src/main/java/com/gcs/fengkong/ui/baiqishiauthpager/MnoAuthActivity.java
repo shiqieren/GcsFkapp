@@ -1,8 +1,6 @@
-package com.gcs.fengkong.ui.authpager;
+package com.gcs.fengkong.ui.baiqishiauthpager;
 
 import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
