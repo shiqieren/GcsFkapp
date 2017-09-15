@@ -5,6 +5,7 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -12,9 +13,25 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
+import com.gcs.fengkong.ui.ShowUIHelper;
+import com.gcs.fengkong.ui.account.AccountHelper;
+import com.gcs.fengkong.ui.account.bean.User;
+import com.gcs.fengkong.ui.api.MyApi;
 import com.gcs.fengkong.ui.atys.SimpleBackActivity;
+import com.gcs.fengkong.ui.bean.base.ResultBean;
 import com.gcs.fengkong.ui.frags.BaseFragment;
+import com.gcs.fengkong.utils.AppOperator;
+import com.gcs.fengkong.utils.MyLog;
+import com.gcs.fengkong.utils.TDevice;
+import com.gcs.fengkong.utils.VibratorUtil;
+import com.google.gson.reflect.TypeToken;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import java.lang.reflect.Type;
+
+import okhttp3.Call;
 
 /**
  * Created by Administrator on 0029 8-29.
@@ -75,11 +92,9 @@ public class ZhimaAuthFragment extends BaseFragment implements View.OnClickListe
                 String name = mEtAuthUsername.getText().toString().trim();
                 String pwd = mEtAuthPassword.getText().toString().trim();
                 if (!TextUtils.isEmpty(name)&&!TextUtils.isEmpty(pwd)) {
-                    mBtAuthSubmit.setEnabled(true);
                    /* mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.white));*/
                 } else {
-                    mBtAuthSubmit.setEnabled(false);
                   /*  mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));*/
                 }
@@ -114,16 +129,16 @@ public class ZhimaAuthFragment extends BaseFragment implements View.OnClickListe
                 String pwd = mEtAuthPassword.getText().toString().trim();
                 String name = mEtAuthUsername.getText().toString().trim();
                 if (!TextUtils.isEmpty(pwd)&&!TextUtils.isEmpty(name)) {
-                    mBtAuthSubmit.setEnabled(true);
                    /* mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.white));*/
                 }else {
-                    mBtAuthSubmit.setEnabled(false);
                    /* mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));*/
                 }
             }
         });
+
+
     }
 
     private void setListener() {
@@ -172,10 +187,71 @@ public class ZhimaAuthFragment extends BaseFragment implements View.OnClickListe
     }
 
     private void AuthRequest() {
+
+        String tempUsername = mEtAuthUsername.getText().toString().trim();
+        MyLog.i("GCS","点击返回："+tempUsername);
+        if (!TextUtils.isEmpty(tempUsername)) {
+
+            //登录成功,请求数据进入用户个人中心页面
+            User user = AccountHelper.getUser();
+            String token =  user.getToken();
+            String idcard = "35052419910512451X";
+            MyLog.i("GCS","token："+token);
+            MyLog.i("GCS","idcard："+idcard);
+            MyLog.i("GCS","tempUsername："+tempUsername);
+
+                MyApi.authzhima(token, tempUsername, idcard, "李毅伟", "", new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        MyLog.i("GCS","Exception："+e);
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        MyLog.i("GCS","登录返回response："+response);
+                        try {
+                            Type type = new TypeToken<ResultBean>() {}.getType();
+                            ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
+                            int code = resultBean.getCode();
+
+                            if (code == 200) {
+                                MyLog.i("GCS","跳转到回调url："+response);
+                               String url =  resultBean.getResult().toString();
+                                ShowUIHelper.openInternalBrowser(getActivity(), url);
+                            } else {
+
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                // requestLoginno(tempUsername, tempPwd);
+
+
+        } else {
+
+        }
     }
 
     @Override
-    public void onFocusChange(View view, boolean b) {
+    public void onFocusChange(View view, boolean hasFocus) {
+        int id = view.getId();
 
+        if (id == R.id.et_auth_username) {
+            if (hasFocus) {
+                mLlAuthUsername.setActivated(true);
+                mLlAuthPassword.setActivated(false);
+                mIvAuthUsernaneDel.setVisibility(View.VISIBLE);
+                mIvAuthPasswordDel.setVisibility(View.GONE);
+            }
+        } else {
+            if (hasFocus) {
+                mLlAuthUsername.setActivated(true);
+                mLlAuthPassword.setActivated(false);
+                mIvAuthUsernaneDel.setVisibility(View.GONE);
+                mIvAuthPasswordDel.setVisibility(View.VISIBLE);
+            }
+        }
     }
 }

@@ -342,4 +342,17 @@ public class MyApi {
         OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/updatePass.do")).params(params).build().execute(callback);
     }
 
+    /**
+     * zhima auth
+     *
+     */
+    public static void authzhima(String token, String mobileno, String certno,String name,String openid,StringCallback callback) {
+        Map<String, String> params = new HashMap<>();
+        params.put("token",token);
+        params.put("mobileno",mobileno);
+        params.put("certno",certno);
+        params.put("name",name);
+        //params.put("openid ",openid);
+        OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/zhima/authOpenId.do")).params(params).build().execute(callback);
+    }
 }

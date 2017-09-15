@@ -18,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bqs.crawler.cloud.sdk.mno.MnoLoginAction;
 import com.bqs.crawler.cloud.sdk.mno.OnMnoLoginListener;
 import com.bqs.crawler.cloud.sdk.mno.OnMnoSendSmsListener;
@@ -165,6 +164,7 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
         });
         llSmscode = (LinearLayout)view.findViewById(R.id.ll_smscode);
         etSmscode = (EditText)view.findViewById(R.id.et_smscode);
+
     }
 
     private void setListener() {
@@ -302,8 +302,24 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
 
 
     @Override
-    public void onFocusChange(View view, boolean b) {
+    public void onFocusChange(View view, boolean hasFocus) {
+        int id = view.getId();
 
+        if (id == R.id.et_auth_username) {
+            if (hasFocus) {
+                mLlAuthUsername.setActivated(true);
+                mLlAuthPassword.setActivated(false);
+                mIvAuthUsernaneDel.setVisibility(View.VISIBLE);
+                mIvAuthPasswordDel.setVisibility(View.GONE);
+            }
+        } else {
+            if (hasFocus) {
+                mLlAuthUsername.setActivated(true);
+                mLlAuthPassword.setActivated(false);
+                mIvAuthUsernaneDel.setVisibility(View.GONE);
+                mIvAuthPasswordDel.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     @Override

@@ -181,6 +181,8 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
 
             }
         });
+
+
     }
 
     private void setListener() {
@@ -253,11 +255,15 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
             if (hasFocus) {
                 mLlIdentityName.setActivated(true);
                 mLlIdentityNumber.setActivated(false);
+                mIvIdentityNameDel.setVisibility(View.VISIBLE);
+                mIvIdentityNumberDel.setVisibility(View.GONE);
             }
         } else {
             if (hasFocus) {
                 mLlIdentityNumber.setActivated(true);
                 mLlIdentityName.setActivated(false);
+                mIvIdentityNameDel.setVisibility(View.GONE);
+                mIvIdentityNumberDel.setVisibility(View.VISIBLE);
             }
         }
     }

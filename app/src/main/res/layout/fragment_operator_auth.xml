@@ -12,6 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:orientation="vertical">
 
         <LinearLayout
@@ -50,18 +52,15 @@
                 android:lines="1"
                 android:maxLines="1"
                 android:minLines="1"
-                android:paddingLeft="4dp"
-                android:paddingRight="4dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black_alpha_80"
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/font_16" />
             <ImageView
                 android:id="@+id/iv_auth_username_del"
-                android:layout_width="20dp"
+                android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginRight="5dp"
                 android:contentDescription="@null"
                 android:scaleType="fitCenter"
                 android:visibility="gone"
@@ -115,18 +114,15 @@
                 android:lines="1"
                 android:maxLines="1"
                 android:minLines="1"
-                android:paddingLeft="4dp"
-                android:paddingRight="4dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black_alpha_80"
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/font_16" />
             <ImageView
                 android:id="@+id/iv_auth_password_del"
-                android:layout_width="20dp"
+                android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginRight="5dp"
                 android:contentDescription="@null"
                 android:scaleType="fitCenter"
                 android:visibility="gone"

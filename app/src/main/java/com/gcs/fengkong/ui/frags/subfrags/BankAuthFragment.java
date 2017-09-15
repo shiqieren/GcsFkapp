@@ -426,6 +426,9 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
                     mLlBankcardName.setActivated(true);
                     mLlBankcardNumber.setActivated(false);
                     mLlBankcardPhone.setActivated(false);
+                    mIvBankcardNameDel.setVisibility(View.VISIBLE);
+                    mIvBankcardNumberDel.setVisibility(View.GONE);
+                    mIvBankcardPhoneDel.setVisibility(View.GONE);
                 }
                 break;
             case  R.id.et_bankcard_number:
@@ -433,6 +436,9 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
                     mLlBankcardNumber.setActivated(true);
                     mLlBankcardName.setActivated(false);
                     mLlBankcardPhone.setActivated(false);
+                    mIvBankcardNameDel.setVisibility(View.GONE);
+                    mIvBankcardNumberDel.setVisibility(View.VISIBLE);
+                    mIvBankcardPhoneDel.setVisibility(View.GONE);
                 }
                 break;
             case  R.id.et_bankcard_phone:
@@ -440,6 +446,9 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
                     mLlBankcardNumber.setActivated(false);
                     mLlBankcardName.setActivated(false);
                     mLlBankcardPhone.setActivated(true);
+                    mIvBankcardNameDel.setVisibility(View.GONE);
+                    mIvBankcardNumberDel.setVisibility(View.GONE);
+                    mIvBankcardPhoneDel.setVisibility(View.VISIBLE);
                 }
                 break;
             default:
