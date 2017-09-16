@@ -298,6 +298,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                 //设置该用户运营商授权状态
                 user.getAuthstate().setAuth_contact(true);
                 AccountHelper.updateUserCache(user);
+                ShowUIHelper.openInternalBrowser(getActivity(), "http://www.guanchesuo.com/");
             }
         });
         bt_cancle.setOnClickListener(new View.OnClickListener() {

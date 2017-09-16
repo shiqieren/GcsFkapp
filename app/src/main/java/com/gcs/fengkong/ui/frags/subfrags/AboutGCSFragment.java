@@ -46,11 +46,11 @@ public class AboutGCSFragment extends BaseFragment {
         final int id = v.getId();
         switch (id) {
             case R.id.tv_oscsite:
-                ShowUIHelper.openInternalBrowser(getActivity(), "https://www.oschina.net");
+                ShowUIHelper.openInternalBrowser(getActivity(), "http://www.guanchesuo.com/");
                 break;
             case R.id.tv_knowmore:
                 ShowUIHelper.openInternalBrowser(getActivity(),
-                        "https://www.oschina.net/home/aboutosc");
+                        "http://www.guanchesuo.com/comcontent_detail.html");
                 break;
             default:
                 break;
