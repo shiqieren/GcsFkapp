@@ -107,7 +107,6 @@ public class ApiClientHelper {
         }else {
 
         }
-
     }
 
     public static String getDefaultUserAgent() {
