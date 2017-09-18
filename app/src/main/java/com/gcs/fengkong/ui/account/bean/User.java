@@ -9,9 +9,16 @@ import java.io.Serializable;
 
 public class User implements Serializable {
     protected long id;
+    private String phone;
+    private String status;
+    private String createtime;
+    private String updatetime;
+    private String certno;
     protected String name;
+    protected String userid;
     // 本地缓存多余信息
     private String cookie;
+
     private String token;
 
     private More more;
@@ -44,6 +51,54 @@ public class User implements Serializable {
         this.id = id;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(String createtime) {
+        this.createtime = createtime;
+    }
+
+    public String getUpdatetime() {
+        return updatetime;
+    }
+
+    public void setUpdatetime(String updatetime) {
+        this.updatetime = updatetime;
+    }
+
+    public String getCertno() {
+        return phone;
+    }
+
+    public void setCertno(String certno) {
+        this.certno = certno;
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
+
     public String getName() {
         return name;
     }
@@ -51,6 +106,8 @@ public class User implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+
 
 
     public String getCookie() {
@@ -87,11 +144,87 @@ public class User implements Serializable {
     }
 
     public static class More implements Serializable {
+        public More() {
+            this("","","","","","");
+        }
+
+        public More(String imei, String imsi, String ip, String mac, String address, String platform) {
+            this.imei = imei;
+            this.imsi = imsi;
+            this.ip = ip;
+            this.mac = mac;
+            this.address = address;
+            this.platform = platform;
+        }
+
+        private String imei;
+        private String imsi;
+        private String ip;
+        private String mac;
+        private String address;
+        private String platform;
 
 
+        public String getImei() {
+            return imei;
+        }
+
+        public void setImei(String imei) {
+            this.imei = imei;
+        }
+        public String getImsi() {
+            return address;
+        }
+
+        public void setImsi(String imsi) {
+            this.imsi = imsi;
+        }
+        public String getIpnum() {
+            return ip;
+        }
+
+        public void setIpnum(String ip) {
+            this.ip = ip;
+        }
+        public String getMac() {
+            return mac;
+        }
+
+        public void setMac(String mac) {
+            this.mac = mac;
+        }
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+        public String getPlatform() {
+            return platform;
+        }
+
+        public void setPlatform(String platform) {
+            this.platform = platform;
+        }
     }
 
     public static class AuthState implements Serializable {
+        public AuthState() {
+            this(false,false,false,false,false,false,false,false);
+        }
+
+        public AuthState(Boolean auth_identity, Boolean auth_bankcard, Boolean auth_zhima, Boolean auth_alipay, Boolean auth_taobao, Boolean auth_jd, Boolean auth_operator, Boolean auth_contact) {
+            this.auth_identity = auth_identity;
+            this.auth_bankcard = auth_bankcard;
+            this.auth_zhima = auth_zhima;
+            this.auth_alipay = auth_alipay;
+            this.auth_taobao = auth_taobao;
+            this.auth_jd = auth_jd;
+            this.auth_operator = auth_operator;
+            this.auth_contact = auth_contact;
+        }
+
         private Boolean auth_identity;
         private Boolean auth_bankcard;
         private Boolean auth_zhima;

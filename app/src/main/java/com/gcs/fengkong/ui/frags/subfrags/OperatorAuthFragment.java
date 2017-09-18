@@ -249,15 +249,20 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
 
     @Override
     public void onLoginSuccess() {
-        //登录成功
-        GlobalApplication.showToast("认证成功",0,0, Gravity.CENTER);
-        User user = AccountHelper.getUser();
-        //设置该用户运营商授权状态
-        user.getAuthstate().setAuth_operator(true);
-        AccountHelper.updateUserCache(user);
-        Log.i("GCS","更新sp中user的认证状态值");
-        getActivity().finish();
-        mDialog.hide();
+
+        if (AccountHelper.isLogin()){
+            //登录成功
+            GlobalApplication.showToast("认证成功",0,0, Gravity.CENTER);
+            User user = AccountHelper.getUser();
+            //设置该用户运营商授权状态
+            user.getAuthstate().setAuth_operator(true);
+            AccountHelper.updateUserCache(user);
+            Log.i("GCS","更新sp中user的认证状态值");
+            getActivity().finish();
+            mDialog.hide();
+        }
+
+
     }
     @Override
     public void onInputAuthSmsCode() {

@@ -2,23 +2,21 @@ package com.gcs.fengkong.ui.api;
 
 import android.app.Application;
 import android.text.TextUtils;
-import android.util.Log;
+import android.view.View;
 
 import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.Setting;
-import com.gcs.fengkong.ui.account.AccountHelper;
-import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.utils.MyLog;
-import com.gcs.fengkong.utils.SharedPreferencesHelper;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
-import com.zhy.http.okhttp.cookie.store.CookieStore;
+import com.zhy.http.okhttp.cookie.CookieJarImpl;
+import com.zhy.http.okhttp.cookie.store.PersistentCookieStore;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Cookie;
+import okhttp3.CookieJar;
 import okhttp3.OkHttpClient;
 import okhttp3.internal.http2.Header;
 
@@ -34,7 +32,6 @@ public class MyApi {
 
 
 
-    private static OkHttpClient okHttpClient;
    /*
     Map<String, String> params = new HashMap<>();
         params.put("username", "张鸿洋");
@@ -86,16 +83,15 @@ public class MyApi {
         //PersistentCookieStore //持久化cookie
         //SerializableHttpCookie //持久化cookie
        // MemoryCookieStore //cookie信息存在内存中
-       // ClearableCookieJar cookieJar1 = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(getApplicationContext()));
-      //  CookieJarImpl cookieJar = new CookieJarImpl(new PersistentCookieStore(GlobalApplication.getContext()));
+      // ClearableCookieJar cookieJar1 = new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(getApplicationContext()));
+        CookieJarImpl cookieJar = new CookieJarImpl(new PersistentCookieStore(GlobalApplication.getContext()));
 
-        okHttpClient = new OkHttpClient.Builder()
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 //          .addInterceptor(new LoggerInterceptor("TAG"))
                 .connectTimeout(10000L, TimeUnit.MILLISECONDS)
                 .readTimeout(10000L, TimeUnit.MILLISECONDS)
                 //其他配置固定设置值
-                //.cookieJar(cookieJar)
-               // AccountHelper.getCookie();
+                .cookieJar(cookieJar)
                 // 校验安全
                 /*.hostnameVerifier(new HostnameVerifier()
                 {
@@ -111,12 +107,7 @@ public class MyApi {
 
         OkHttpUtils.initClient(okHttpClient);
     }
-    /*设置头cookie*/
-    public static void setCookieHeader(String cookie) {
-        if (!TextUtils.isEmpty(cookie))
-           // CLIENT.addHeader("Cookie", cookie);
-        MyLog.i("GCS","setCookieHeader:" + cookie);
-    }
+
     /**
      * 销毁当前AsyncHttpClient 并重新初始化网络参数，初始化Cookie等信息
      *
@@ -124,78 +115,23 @@ public class MyApi {
      */
     public static void destroyAndRestore(Application appContext) {
         cleanCookie();
-        okHttpClient = null;
         init(appContext);
     }
 
-    public static void cleanCookie() {
-        // first clear store
-        // new PersistentCookieStore(AppContext.getInstance()).clear();
-        // clear header
-        /*if (client != null) {
-            HttpContext httpContext = client.getHttpContext();
-            CookieStore cookies = (CookieStore) httpContext
-                    .getAttribute(HttpClientContext.COOKIE_STORE);
-            // 清理Async本地存储
-            if (cookies != null) {
-                cookies.clear();
+    public static void cleanCookie(){
+        if (OkHttpUtils.getInstance().getOkHttpClient()!= null) {
+            CookieJar cookieJar = OkHttpUtils.getInstance().getOkHttpClient().cookieJar();
+            MyLog.i("GCS","未添加清除本地存储代码");
+            if (cookieJar instanceof CookieJarImpl) {
+                ((CookieJarImpl) cookieJar).getCookieStore().removeAll();
             }
-            // 清理当前正在使用的Cookie
-            client.removeHeader("Cookie");
-        }*/
-        MyLog.i("GCS","网络请求的  cleanCookie");
-    }
-
-    /**
-     * 从okhttpClient自带缓存中获取CookieString
-     *
-     * @param
-     * @return CookieString
-     */
-    private static String getClientCookie(OkHttpClient client) {
-        String cookie = "";
-        if (client != null) {
-            //获得cookie
-            /*HttpContext httpContext = client.getHttpContext();
-            CookieStore cookies = (CookieStore) httpContext
-                    .getAttribute(HttpClientContext.COOKIE_STORE);*/
-
-            /*if (cookies != null && cookies.getCookies() != null && cookies.getCookies().size() > 0) {
-                for (Cookie c : cookies.getCookies()) {
-                    cookie += (c.getName() + "=" + c.getValue()) + ";";
-                }
-            }*/
         }
-        MyLog.i("GCS","getClientCookie:" + cookie);
-        return cookie;
+
     }
 
-    /**
-     * 得到当前的网络请求Cookie，
-     * 登录后触发
-     *
-     * @param headers Header
-     */
-    public static String getCookie(Header[] headers) {
-        String cookie = getClientCookie(okHttpClient);
-        /*if (TextUtils.isEmpty(cookie)) {
-            cookie = "";
-            if (headers != null) {
-                for (Header header : headers) {
-                    String key = header.getName();
-                    String value = header.getValue();
-                    if (key.contains("Set-Cookie"))
-                        cookie += value + ";";
-                }
-                if (cookie.length() > 0) {
-                    cookie = cookie.substring(0, cookie.length() - 1);
-                }
-            }
-        }*/
 
-        MyLog.i("GCS","getCookie:" + cookie);
-        return cookie;
-    }
+
+
 
     //根url通过build.gradle配置到setting的sp文件中，并获取得到
     public static String getAbsoluteApiUrl(String partUrl) {
@@ -315,7 +251,6 @@ public class MyApi {
         params.put("imsi",imsi);
         params.put("ip",ip);
         params.put("mac",mac);
-
         params.put("address", address);
         params.put("platform","ANDROID");
         params.put("token",token);

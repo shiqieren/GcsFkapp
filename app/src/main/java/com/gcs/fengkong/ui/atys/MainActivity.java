@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,43 +19,29 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.model.LatLng;
-import com.baidu.mapapi.radar.RadarSearchError;
-import com.baidu.mapapi.radar.RadarSearchManager;
-import com.baidu.mapapi.radar.RadarUploadInfo;
-import com.bqs.crawler.cloud.sdk.BqsCrawlerCloudSDK;
-import com.bqs.crawler.cloud.sdk.BqsParams;
-import com.bqs.crawler.cloud.sdk.OnLoginResultListener;
 import com.gcs.fengkong.AppConfig;
 import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.Setting;
 import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.account.bean.User;
-import com.gcs.fengkong.ui.api.ApiClientHelper;
-import com.gcs.fengkong.ui.api.MyApi;
 import com.gcs.fengkong.ui.bean.Tab;
 import com.gcs.fengkong.ui.bean.Version;
 import com.gcs.fengkong.ui.frags.StartPagerFragment;
-import com.gcs.fengkong.ui.frags.UserInfoFragment;
 import com.gcs.fengkong.ui.location.BDLocationAdapter;
-import com.gcs.fengkong.ui.location.RadarSearchAdapter;
 import com.gcs.fengkong.ui.widget.FragmentTabHost;
 import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.update.CheckUpdateManager;
 import com.gcs.fengkong.update.DownloadService;
 import com.gcs.fengkong.utils.DialogUtil;
 import com.gcs.fengkong.utils.MyLog;
-import com.gcs.fengkong.utils.SharedPreferencesHelper;
 import com.gcs.fengkong.ui.ShowUIHelper;
 import com.gcs.fengkong.utils.TDevice;
-import com.zhy.http.okhttp.callback.StringCallback;
+import com.zhy.http.okhttp.OkHttpUtils;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.Call;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -76,19 +61,8 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     private FragmentTabHost mTabhost;
     //定位
     private LocationClient mLocationClient;
-    private RadarSearchManager mRadarSearchManager;
-    private RadarSearchAdapter mRadarSearchAdapter;
     private List<Tab> mTabs = new ArrayList<>(1);
 
-
-  /*  @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        initTab();
-
-    }*/
 
     @Override
     protected int getContentView() {
@@ -99,6 +73,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     protected void initWindow() {
         super.initWindow();
 
+
         initTab();
 
     }
@@ -106,6 +81,13 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     @Override
     protected void initWidget() {
         super.initWidget();
+        /*
+        第一次启动app
+            if (AppContext.get("isFirstComing", true)) {
+                AppContext.set("isFirstComing", false);
+            }
+        */
+
         MyLog.i("GCS","进入,Mainactivity首页如果未登录则跳转到登录页面");
         if (!AccountHelper.isLogin()) {
             DialogUtil.getConfirmDialog(this, "您尚未登录，是否先进行登录操作", new DialogInterface.OnClickListener() {
@@ -119,19 +101,11 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     }
 
     private void initTab() {
-
-
-
-
-
-
         Tab tab_mine1 = new Tab(StartPagerFragment.class,R.string.tab1,R.drawable.selector_icon_mine);
       //  Tab tab_mine2 = new Tab( UserInfoFragment.class,R.string.tab2,R.drawable.selector_icon_mine);
 
         mTabs.add(tab_mine1);
        // mTabs.add(tab_mine2);
-
-
 
         mInflater = LayoutInflater.from(this);
         mTabhost = (FragmentTabHost) this.findViewById(android.R.id.tabhost);
@@ -177,31 +151,11 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         checkUpdate();
         checkLocation();
 
-
         //app_config文件创建
-        AppConfig.getAppConfig(this).set("system_time", "mainactivity"+String.valueOf(System.currentTimeMillis()));
-        AppConfig.getAppConfig(this).set("cookie", "模拟版本更新后cookie迁移");
-
-        String token ="";
-        if (AccountHelper.isLogin()) {
-            token = SharedPreferencesHelper.load(GlobalApplication.getInstance(), User.class).getToken().toString();
-            return;
-        }
-        if(token != null){
-           /* MyApi.sendUserAgent(token, new StringCallback() {
-                @Override
-                public void onError(Call call, Exception e, int id) {
-
-                }
-
-                @Override
-                public void onResponse(String response, int id) {
-                    MyLog.i("GCS","平台信息上传响应返回"+response.toString());
-                }
-            });*/
-        }
+        AppConfig.getAppConfig(this).set("cookie", "模拟版本更新后cookie迁移"+String.valueOf(System.currentTimeMillis()));
 
     }
+
 
     private void checkUpdate() {
         if (!GlobalApplication.get(AppConfig.KEY_CHECK_UPDATE, true)) {
@@ -221,7 +175,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         //直接进行位置信息定位并上传-暂时不做登录状态判断
         Setting.updateLocationAppCode(getApplicationContext(), versionCode);
         requestLocationPermission();
-         /*if ((hasLocationAppCode <= 0) || (hasLocationAppCode > versionCode)) {
+         if ((hasLocationAppCode <= 0) || (hasLocationAppCode > versionCode)) {
             //如果是登陆状态
             if (AccountHelper.isLogin()) {
             MyLog.i("GCS","hasLocationAppCode:"+hasLocationAppCode+"///"+"versionCode:"+versionCode);
@@ -230,7 +184,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                 requestLocationPermission();
             }
             return;
-         }*/
+         }
 
         //如果有账户登陆，并且有主动上传过位置信息。那么准备请求定位
        if (AccountHelper.isLogin() && Setting.hasLocation(getApplicationContext())) {
@@ -324,7 +278,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
      */
     private void startLbs() {
         MyLog.i("GCS","启动定位start（）");
-        if (mRadarSearchManager == null || mLocationClient == null) {
+        if ( mLocationClient == null) {
             initLbs();
         }
         //进行定位
@@ -336,26 +290,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
      */
     private void initLbs() {
         MyLog.i("GCS","初始化定位服务");
-        if (mRadarSearchManager == null) {
 
-            mRadarSearchManager = RadarSearchManager.getInstance();
-
-            mRadarSearchManager.addNearbyInfoListener(this.mRadarSearchAdapter = new RadarSearchAdapter() {
-                @Override
-                public void onGetUploadState(RadarSearchError radarSearchError) {
-                    super.onGetUploadState(radarSearchError);
-                    //上传成功，更新用户本地定位信息标示
-
-                    if (radarSearchError == RadarSearchError.RADAR_NO_ERROR) {
-                        Setting.updateLocationInfo(getApplicationContext(), true);
-                    } else {
-                        Setting.updateLocationInfo(getApplicationContext(), false);
-                    }
-                    //不管是否上传成功，都主动释放lbs资源
-                    releaseLbs();
-                }
-            });
-        }
 
         if (mLocationClient == null) {
             mLocationClient = new LocationClient(this);
@@ -437,46 +372,20 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         if (TDevice.hasInternet() && location.getLatitude() != 4.9E-324 && location.getLongitude() != 4.9E-324) {
 
             LatLng userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+
             MyLog.i("GCS","经度："+location.getLatitude()+"纬度："+location.getLongitude()+"位置："+location.getAddrStr());
-            MyLog.i("GCS","位置信息经纬度存放在AppConfig");
-            AppConfig.getAppConfig(this).set("address", location.getAddrStr());
-            ApiClientHelper.getUserAgent(GlobalApplication.getInstance(),location.getAddrStr());
+
             Setting.updateLocationPermission(getApplicationContext(), true);
-
-            //周边雷达设置用户身份标识，id为空默认是设备标识
-            String userId = null;
-
-            //上传位置
-            RadarUploadInfo info = new RadarUploadInfo();
-
             if (AccountHelper.isLogin()) {
-                userId = String.valueOf(AccountHelper.getUserId());
-
                 User user = AccountHelper.getUser();
-                try {
-                    String comments = String.format(
-                            "{" +
-                                    "\"id\":\"%s\"," +
-                                    "\"name\":\"%s\"," +
-                                    "}"
-                            , user.getId(), user.getName());
-                    comments = comments.replaceAll("[\\s\n]+", "");
-                    comments = URLEncoder.encode(comments, CHARSET);
-                    info.comments = comments;
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                    SimplexToast.show(this, getString(R.string.upload_lbs_info_hint));
+                MyLog.i("GCS","位置信息经纬度存放在User"+location.getAddrStr());
+                user.getMore().setAddress(location.getAddrStr());
+                AccountHelper.updateUserCache(user);
                 }
-
+            } else {
+                //返回的位置信息异常或网络有问题，即定位失败，停止定位功能，并释放lbs资源
+                releaseLbs();
             }
-
-            mRadarSearchManager.setUserID(userId);
-            info.pt = userLatLng;
-            mRadarSearchManager.uploadInfoRequest(info);
-        } else {
-            //返回的位置信息异常或网络有问题，即定位失败，停止定位功能，并释放lbs资源
-            releaseLbs();
-        }
     }
 
     /**
@@ -486,19 +395,14 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         if (mLocationClient != null && mLocationClient.isStarted())
             mLocationClient.stop();
         mLocationClient = null;
-        //移除监听
-        if (mRadarSearchManager != null) {
-            mRadarSearchManager.removeNearbyInfoListener(mRadarSearchAdapter);
-            //释放资源
-            mRadarSearchManager.destroy();
-            mRadarSearchManager = null;
-        }
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        //撤销网络请求
+        OkHttpUtils.getInstance().cancelTag(this);
         releaseLbs();
     }
 }

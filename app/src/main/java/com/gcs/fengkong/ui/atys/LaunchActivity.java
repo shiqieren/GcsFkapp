@@ -51,10 +51,12 @@ public class LaunchActivity extends BaseActivity {
             //判断是否为空cookie
             if (!TextUtils.isEmpty(cookie)) {
                 GlobalApplication.getInstance().removeContextAppConfigValue("cookie");
-                User user = AccountHelper.getUser();
-                user.setCookie(cookie);
-                MyLog.i("GCS","app更新后自动登录和更新缓存");
-                AccountHelper.updateUserCache(user);
+                if (AccountHelper.isLogin()){
+                    User user = AccountHelper.getUser();
+                    user.setCookie(cookie);
+                    MyLog.i("GCS","app更新后自动登录和更新缓存");
+                    AccountHelper.updateUserCache(user);
+                }
                 GlobalApplication.reInit();
             }
         }
@@ -72,19 +74,6 @@ public class LaunchActivity extends BaseActivity {
 
     private void redirectTo() {
         MyLog.i("GCS","通常登录,非重新安装状态，先进入mainactivity再判断是否登录");
-        /*if (!AccountHelper.isLogin()) {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-            finish();
-            return;
-        }else {
-
-        }*/
-        User user = AccountHelper.getUser();
-
-        MyLog.i("GCS","user.toString():"+user.toString());
-
-        MyLog.i("GCS","user.getAuthstate().toString():"+user.getAuthstate().toString());
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();

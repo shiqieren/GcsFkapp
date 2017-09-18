@@ -441,42 +441,25 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
             public void onResponse(String response, int id) {
                 MyLog.i("GCS","登录返回response："+response);
                 try {
-                    Type type = new TypeToken<ResultBean>() {}.getType();
+                    Type type = new TypeToken<ResultBean<User>>() {}.getType();
                     ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
                     int code = resultBean.getCode();
-
                     if (code == 200) {
-
-                        //User user = resultBean.getResult();
-                        //模拟用户返回
-                        String phoneNumber = mEtLoginUsername.getText().toString().trim();
-                        MyLog.i("GCS","手动创建用户id=1，名称为手机");
-                        User user = AccountHelper.getUser();
-                        user.setId(1);
+                        User user = (User) resultBean.getResult();
+                        //模拟用户登录cookie添加
+                        String netcookie = "gcs test login test add cookie"+System.currentTimeMillis();
+                        user.setId(Long.valueOf(user.getUserid()));
+                        user.setName(unAES(user.getPhone()));
+                        AppConfig.getAppConfig(GlobalApplication.getContext()).set("phone", unAES(user.getPhone()));
                         user.setAuthstate(new User.AuthState());
-                        user.setName(phoneNumber);
-                        String netcookie = "gcs test login add cookie"+System.currentTimeMillis();
-                        if(resultBean.getResult()!= null){
-                            String token = resultBean.getResult().toString();
-                            MyLog.i("GCS","给user设置一个token");
-                            user.setToken(token);
-                        }
-
                         if (AccountHelper.login(user,netcookie)) {
                             logSucceed();
                         } else {
                             showToastForKeyBord("登录异常");
                         }
                     } else {
-
                         String message = resultBean.getMessage();
-                        if (code == 211) {
-                            mEtLoginPwd.setFocusableInTouchMode(false);
-                            mEtLoginPwd.clearFocus();
-                            mEtLoginUsername.requestFocus();
-                            mEtLoginUsername.setFocusableInTouchMode(true);
-                            mLlLoginUsername.setBackgroundResource(R.drawable.bg_login_input_error);
-                        } else if (code == 500) {
+                         if (code == 500) {
                             mEtLoginUsername.setFocusableInTouchMode(false);
                             mEtLoginUsername.clearFocus();
                             mEtLoginPwd.requestFocus();

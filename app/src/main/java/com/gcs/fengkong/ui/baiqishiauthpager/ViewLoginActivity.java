@@ -117,32 +117,34 @@ public class ViewLoginActivity extends BaseActivity implements OnLoginViewListen
     @Override
     public void onLoginSuccess(int serviceId) {
         //AppCacheUtils.getInstance(ViewLoginActivity.this).put(serviceId + "", true);
-        User user = AccountHelper.getUser();
-        String s = "";
-        if (serviceId == ServiceId.JD_SERVICE_ID) {
-            //设置该用户京东授权状态
-            user.getAuthstate().setAuth_jd(true);
-            s = "京东";
-        } else if (serviceId == ServiceId.TB_SERVICE_ID) {
-            //设置该用户淘宝授权状态
-            user.getAuthstate().setAuth_taobao(true);
-            s = "淘宝";
-        } else if (serviceId == ServiceId.ALIPAY_SERVICE_ID) {
-            //设置该用户支付宝授权状态
-            user.getAuthstate().setAuth_alipay(true);
-            s = "支付宝";
-        } else if (serviceId == ServiceId.LINKEDIN_SERVICE_ID) {
-            s = "LinkedIn";
-        } else if (serviceId == ServiceId.QZONE_SERVICE_ID) {
-            s = "QQ";
-        } else if (serviceId == ServiceId.WEIBO_SERVICE_ID) {
-            s = "微博";
+        if (AccountHelper.isLogin()){
+            User user = AccountHelper.getUser();
+            String s = "";
+            if (serviceId == ServiceId.JD_SERVICE_ID) {
+                //设置该用户京东授权状态
+                user.getAuthstate().setAuth_jd(true);
+                s = "京东";
+            } else if (serviceId == ServiceId.TB_SERVICE_ID) {
+                //设置该用户淘宝授权状态
+                user.getAuthstate().setAuth_taobao(true);
+                s = "淘宝";
+            } else if (serviceId == ServiceId.ALIPAY_SERVICE_ID) {
+                //设置该用户支付宝授权状态
+                user.getAuthstate().setAuth_alipay(true);
+                s = "支付宝";
+            } else if (serviceId == ServiceId.LINKEDIN_SERVICE_ID) {
+                s = "LinkedIn";
+            } else if (serviceId == ServiceId.QZONE_SERVICE_ID) {
+                s = "QQ";
+            } else if (serviceId == ServiceId.WEIBO_SERVICE_ID) {
+                s = "微博";
+            }
+            //Toast.makeText(getBaseContext(), "\"" + s + "\"授权成功", Toast.LENGTH_SHORT).show();
+            GlobalApplication.showToast(s+"认证成功",0,0, Gravity.CENTER);
+            AccountHelper.updateUserCache(user);
+            MyLog.i("GCS","更新sp中user的认证状态值");
+            finish();
         }
-        //Toast.makeText(getBaseContext(), "\"" + s + "\"授权成功", Toast.LENGTH_SHORT).show();
-        GlobalApplication.showToast(s+"认证成功",0,0, Gravity.CENTER);
-        AccountHelper.updateUserCache(user);
-        MyLog.i("GCS","更新sp中user的认证状态值");
-        finish();
     }
     
     @Override

@@ -26,8 +26,10 @@ import com.gcs.fengkong.ui.api.ApiClientHelper;
 import com.gcs.fengkong.ui.baiqishiauthpager.ViewLoginActivity;
 import com.gcs.fengkong.ui.bean.SimpleBackPage;
 import com.gcs.fengkong.ui.widget.statusbar.StatusBarCompat;
+import com.gcs.fengkong.utils.AppOperator;
 import com.gcs.fengkong.utils.DialogUtil;
 import com.gcs.fengkong.ui.ShowUIHelper;
+import com.gcs.fengkong.utils.MyLog;
 import com.gcs.fengkong.utils.TDevice;
 
 
@@ -71,6 +73,8 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
             User user = AccountHelper.getUser();
             Log.i("GCS", "网络实时的User，目前先用本地获取的User");
             updateView(user);
+            MyLog.i("GCS","初始化发送设备信息和定位信息");
+            ApiClientHelper.getUserAgent(GlobalApplication.getInstance());
         } else {
             hideView();
         }
@@ -241,7 +245,6 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
             case R.id.iv_avatar:
                 ShowUIHelper.showSimpleBack(getActivity(), SimpleBackPage.PERSONAL_DATA);
 
-                ApiClientHelper.getUserAgent(GlobalApplication.getInstance(),AppConfig.getAppConfig(GlobalApplication.getContext()).get("address"));
                 break;
 
             default:
@@ -294,11 +297,14 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
             @Override
             public void onClick(View view) {
                 Log.i("GCS","模拟通讯录授权成功");
-                User user = AccountHelper.getUser();
-                //设置该用户运营商授权状态
-                user.getAuthstate().setAuth_contact(true);
-                AccountHelper.updateUserCache(user);
-                ShowUIHelper.openInternalBrowser(getActivity(), "http://www.guanchesuo.com/");
+                if (AccountHelper.isLogin()){
+                    User user = AccountHelper.getUser();
+                    //设置该用户运营商授权状态
+                    user.getAuthstate().setAuth_contact(true);
+                    AccountHelper.updateUserCache(user);
+                    ShowUIHelper.openInternalBrowser(getActivity(), "http://www.guanchesuo.com/");
+                }
+
             }
         });
         bt_cancle.setOnClickListener(new View.OnClickListener() {

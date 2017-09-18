@@ -10,11 +10,14 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.gcs.fengkong.AppConfig;
+import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.Setting;
 import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.utils.MACgetUtil;
 import com.gcs.fengkong.utils.MyLog;
+import com.gcs.fengkong.utils.NetWorkUtils;
 import com.gcs.fengkong.utils.UIUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -26,6 +29,7 @@ import static android.content.Context.TELEPHONY_SERVICE;
 
 public class ApiClientHelper {
 
+
     /**
      * 获得请求的服务端数据的userAgent
      * 客户端唯一标识
@@ -33,7 +37,8 @@ public class ApiClientHelper {
      * @param appContext
      * @return
      */
-    public static String getUserAgent(Application appContext,String myaddress) {
+    public static void getUserAgent(Application appContext) {
+
         //全局手机管理器
         TelephonyManager tm = (TelephonyManager) UIUtils.getContext().getSystemService(TELEPHONY_SERVICE);
         //// 获取智能设备唯一编号
@@ -41,15 +46,23 @@ public class ApiClientHelper {
         MyLog.i("GCS","deviceid:"+deviceid);
         // 获得SIM卡的序号
         String imei = tm.getSimSerialNumber();
+
         MyLog.i("GCS","imei:"+imei);
         //国际移动用户识别码-用户Id
         String imsi = tm.getSubscriberId();
+
         MyLog.i("GCS","imsi:"+imsi);
         //MAC
         String mac = MACgetUtil.getAdresseMAC(UIUtils.getContext());
+
         MyLog.i("GCS","mac:"+mac);
+        //ip
+        String ip = NetWorkUtils.getIPAddress(GlobalApplication.getContext());
+
+        MyLog.i("GCS","ip:"+ip);
         //本机号码
         String phone = tm.getLine1Number();
+
         MyLog.i("GCS","phone:"+phone);
         // WebSettings.getDefaultUserAgent(appContext)
         //版本号
@@ -67,11 +80,20 @@ public class ApiClientHelper {
         }
 
         String format = "GCSfk.NET/1.0 (gcsapp; %s; Android %s; %s; %s)";
-        String ua = String.format(format, vCode, osVer, model, getAppId(appContext));
-        MyLog.i("客户端唯一标识>>>","getUserAgent:" + ua);
-        if (AccountHelper.getUser().getId()>0){
+       // String ua = String.format(format, vCode, osVer, model, getAppId(appContext));
+        if (AccountHelper.isLogin()){
             User user = AccountHelper.getUser();
-            MyApi.sendUserAgent(imei,imsi,"IP",mac,myaddress,user.getToken(), new StringCallback() {
+            user.getMore().setImei(imei);
+            user.getMore().setImsi(imsi);
+            user.getMore().setMac(mac);
+            user.getMore().setIpnum(ip);
+            if (phone!=""){
+                user.setPhone(phone);
+            }
+            //地理位置
+            String myaddress = user.getMore().getAddress();
+            AccountHelper.updateUserCache(user);
+            MyApi.sendUserAgent(imei,imsi,ip,mac,myaddress,user.getToken(), new StringCallback() {
                 @Override
                 public void onError(Call call, Exception e, int id) {
 
@@ -86,7 +108,6 @@ public class ApiClientHelper {
 
         }
 
-        return ua;
     }
 
     public static String getDefaultUserAgent() {

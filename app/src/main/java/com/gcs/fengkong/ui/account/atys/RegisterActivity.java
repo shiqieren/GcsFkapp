@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.gcs.fengkong.AppConfig;
 import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
+import com.gcs.fengkong.ui.ShowUIHelper;
 import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.account.RichTextParser;
 import com.gcs.fengkong.ui.account.bean.User;
@@ -400,25 +401,13 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
                 int code = resultBean.getCode();
                 switch (code) {
                     case 200://注册成功,进行用户信息填写
-                        //User user = resultBean.getResult();
-                        //模拟用户返回
-                        String phoneNumber = mEtRegisterUsername.getText().toString().trim();
-                         MyLog.i("GCS","手动创建用户id=1，名称为手机");
-                        User user =new User(1,phoneNumber);
-                        //用户更新缓存和cookie
-                        MyLog.i("GCS","注册成功后用户更新缓存和cookie");
-                        String netcookie = "gcs test login add cookie"+System.currentTimeMillis();
-                        if (AccountHelper.login(user,netcookie)) {
+
                             GlobalApplication.showToast(getResources().getString(R.string.register_success_hint), 0,0, Gravity.CENTER);
                             //发送需要通知的成功广播
-                            MyLog.i("GCS","注册成功后发送需要通知的成功广播");
-                            sendLocalReceiver();
-                            MyLog.i("GCS","关闭注册窗口");
+                           // MyLog.i("GCS","注册成功后发送需要通知的成功广播");
+                           // sendLocalReceiver();
+                            MyLog.i("GCS","关闭注册窗口,跳转到登录");
                             finish();
-                        } else {
-                            showToastForKeyBord("注册异常");
-                        }
-
                         break;
                     case 500://注册失败,手机验证码错误
                         mLlRegisterSmsCode.setBackgroundResource(R.drawable.bg_login_input_error);

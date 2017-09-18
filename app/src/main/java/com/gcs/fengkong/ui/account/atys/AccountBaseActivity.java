@@ -324,6 +324,19 @@ public class AccountBaseActivity extends BaseActivity {
         return enString;
     }
 
-
+    /**
+     * 解密
+     * AES
+     *
+     * @param tempPwd tempPwd
+     * @return sha-1 pwd
+     */
+    @NonNull
+    protected String unAES(String tempPwd) {
+        AES mAes = new AES();
+        String deString = mAes.decrypt(tempPwd);
+        MyLog.i("GCS","解密后："+deString);
+        return deString;
+    }
 
 }

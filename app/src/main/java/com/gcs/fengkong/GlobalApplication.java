@@ -137,6 +137,7 @@ public class GlobalApplication extends Application {
         //初始化百度地图
         SDKInitializer.initialize(this);
         MyApi.init(this);
+
     }
 
     //获取文件名为xx的sp文件
