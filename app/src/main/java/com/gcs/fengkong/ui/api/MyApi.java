@@ -302,4 +302,19 @@ public class MyApi {
         //params.put("openid ",openid);
         OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/zhima/authOpenId.do")).params(params).build().execute(callback);
     }
+
+    /**
+     * reset password
+     *
+     */
+    public static void updatePasswd(String token, String opasswd, String npasswd,String vpasswd,StringCallback callback) {
+        Map<String, String> params = new HashMap<>();
+        params.put("token",token);
+        params.put("opasswd",opasswd);
+        params.put("npasswd",npasswd);
+        params.put("vpasswd",vpasswd);
+        //params.put("openid ",openid);
+        OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/updatePasswd.do")).params(params).build().execute(callback);
+        MyLog.i("GCS","更新密码url:"+getAbsoluteApiUrl("wind-phone/phone/updatePasswd.do"));
+    }
 }

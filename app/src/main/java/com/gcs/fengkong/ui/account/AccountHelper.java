@@ -142,6 +142,7 @@ public final class AccountHelper {
 
     }
 
+
     /**
      * 当前用户信息清理完成后调用方法清理服务等信息
      *

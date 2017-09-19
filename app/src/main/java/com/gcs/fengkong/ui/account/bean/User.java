@@ -95,7 +95,7 @@ public class User implements Serializable {
     }
 
     public String getCertno() {
-        return phone;
+        return certno;
     }
 
     public void setCertno(String certno) {
