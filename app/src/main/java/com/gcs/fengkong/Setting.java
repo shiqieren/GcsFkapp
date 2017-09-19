@@ -7,6 +7,7 @@ import android.support.v4.content.SharedPreferencesCompat;
 import android.text.TextUtils;
 
 import com.bqs.crawler.cloud.sdk.BqsParams;
+import com.gcs.fengkong.utils.MyLog;
 import com.gcs.fengkong.utils.VersionUtil;
 
 
@@ -68,7 +69,7 @@ public final class Setting {
             updateServerUrl(context, url);
         }
 
-        GlobalApplication.showToast(url);
+        MyLog.i("GCS","当前服务器连接url固定地址"+url);
         return url;
     }
 

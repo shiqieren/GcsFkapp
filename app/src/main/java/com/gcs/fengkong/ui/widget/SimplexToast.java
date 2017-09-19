@@ -1,8 +1,17 @@
 package com.gcs.fengkong.ui.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.gcs.fengkong.R;
+import com.gcs.fengkong.utils.UIUtils;
 
 /**
  * 自定义吐司
@@ -33,6 +42,7 @@ public class SimplexToast {
         return mToast;
     }
 
+
     public static void show(String content) {
         show(content, Toast.LENGTH_SHORT);
     }
@@ -62,5 +72,105 @@ public class SimplexToast {
         mToast.setGravity(gravity, 0, yOffset);
         nextTimeMillis = current + (duration == Toast.LENGTH_LONG ? 3500 : 2000);
         mToast.show();
+    }
+
+    @SuppressLint("InflateParams")
+    public static void showMyToast(String text,Context context) {
+        if (mToast == null) init(context.getApplicationContext());
+        View rootView = LayoutInflater.from(context).inflate(R.layout.view_toast, null, false);
+        TextView textView = (TextView) rootView.findViewById(R.id.title_tv);
+        textView.setText(text);
+        mToast.setView(rootView);
+        mToast.setGravity(Gravity.CENTER, 0, yOffset);
+        mToast.show();
+    }
+
+    /**
+     * showToast
+     *
+     * @param id id
+     */
+    @SuppressLint("InflateParams")
+    public static void showMyToast(@StringRes int id,Context context) {
+        if (mToast == null) init(context.getApplicationContext());
+        View rootView = LayoutInflater.from(context).inflate(R.layout.view_toast, null, false);
+        TextView textView = (TextView) rootView.findViewById(R.id.title_tv);
+        textView.setText(id);
+        mToast.setView(rootView);
+        mToast.show();
+    }
+
+    @SuppressLint("InflateParams")
+    public static void showMyToast(String text,Context context,Boolean openKeyBord) {
+        if (mToast == null) init(context.getApplicationContext());
+        View rootView = LayoutInflater.from(context).inflate(R.layout.view_toast, null, false);
+        TextView textView = (TextView) rootView.findViewById(R.id.title_tv);
+        textView.setText(text);
+        mToast.setView(rootView);
+        initToastGravity(mToast,openKeyBord);
+        mToast.show();
+    }
+
+    /**
+     * showToast
+     *
+     * @param id id
+     */
+    @SuppressLint("InflateParams")
+    public static void showMyToast(@StringRes int id,Context context,Boolean openKeyBord) {
+        if (mToast == null) init(context.getApplicationContext());
+        View rootView = LayoutInflater.from(context).inflate(R.layout.view_toast, null, false);
+        TextView textView = (TextView) rootView.findViewById(R.id.title_tv);
+        textView.setText(id);
+        mToast.setView(rootView);
+        initToastGravity(mToast,openKeyBord);
+        mToast.show();
+    }
+
+
+   /*键盘是否弹起的标志位
+   private boolean mKeyBoardIsActive;
+
+    protected void updateKeyBoardActiveStatus(boolean isActive) {
+        this.mKeyBoardIsActive = isActive;
+    }*/
+    public static void initToastGravity(Toast toast,Boolean openKeyBord) {
+        boolean isCenter = openKeyBord;
+        if (isCenter) {
+            toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
+        } else {
+            toast.setGravity(Gravity.CENTER, 0, UIUtils.getDimen(R.dimen.toast_y_offset));
+        }
+    }
+
+
+
+    /**
+     * cancelToast
+     */
+    public static void cancelToast() {
+        if (mToast != null) {
+            mToast.cancel();
+        }
+    }
+
+    public static void showToastForKeyBord(@StringRes int id,Context context,Boolean openKeyBord) {
+        showMyToast(id,context,openKeyBord);
+    }
+
+    public static void showToastForKeyBord(String message,Context context,Boolean openKeyBord) {
+        showMyToast(message,context,openKeyBord);
+    }
+
+    /**
+     * request network error
+     *异常吐司
+     * @param throwable throwable
+     */
+    public static void requestFailureHint(Throwable throwable,Context context) {
+        if (throwable != null) {
+            throwable.printStackTrace();
+        }
+        showMyToast(R.string.request_error_hint,context);
     }
 }

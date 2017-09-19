@@ -14,9 +14,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.atys.SimpleBackActivity;
 import com.gcs.fengkong.ui.frags.BaseFragment;
+import com.gcs.fengkong.ui.widget.SimplexToast;
 
 /**
  * Created by Administrator on 0029 8-29.
@@ -174,7 +176,7 @@ public class AlipayAuthFragment extends BaseFragment implements View.OnClickList
 
     private void AuthRequest() {
         if(!mCbAgreeAuthbook.isChecked()){
-            Toast.makeText(getActivity(),"尚未勾选授权协议书",Toast.LENGTH_SHORT).show();
+            SimplexToast.showMyToast("尚未勾选授权协议书", GlobalApplication.getContext());
         }else {
 
         }

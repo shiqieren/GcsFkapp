@@ -42,26 +42,26 @@ public class ApiClientHelper {
         //全局手机管理器
         TelephonyManager tm = (TelephonyManager) UIUtils.getContext().getSystemService(TELEPHONY_SERVICE);
         //// 获取智能设备唯一编号
-        String deviceid  = tm.getDeviceId();
+        String deviceid  = tm.getDeviceId()+"";
         MyLog.i("GCS","deviceid:"+deviceid);
         // 获得SIM卡的序号
-        String imei = tm.getSimSerialNumber();
+        String imei = tm.getSimSerialNumber()+"";
 
         MyLog.i("GCS","imei:"+imei);
         //国际移动用户识别码-用户Id
-        String imsi = tm.getSubscriberId();
+        String imsi = tm.getSubscriberId()+"";
 
         MyLog.i("GCS","imsi:"+imsi);
         //MAC
-        String mac = MACgetUtil.getAdresseMAC(UIUtils.getContext());
+        String mac = MACgetUtil.getAdresseMAC(UIUtils.getContext())+"";
 
         MyLog.i("GCS","mac:"+mac);
         //ip
-        String ip = NetWorkUtils.getIPAddress(GlobalApplication.getContext());
+        String ip = NetWorkUtils.getIPAddress(GlobalApplication.getContext())+"";
 
         MyLog.i("GCS","ip:"+ip);
         //本机号码
-        String phone = tm.getLine1Number();
+        String phone = tm.getLine1Number()+"";
 
         MyLog.i("GCS","phone:"+phone);
         // WebSettings.getDefaultUserAgent(appContext)
@@ -87,13 +87,14 @@ public class ApiClientHelper {
             user.getMore().setImsi(imsi);
             user.getMore().setMac(mac);
             user.getMore().setIpnum(ip);
-            if (phone!=""){
-                user.setPhone(phone);
-            }
+            user.setPhone(phone);
+
             //地理位置
-            String myaddress = user.getMore().getAddress();
+            String myaddress = user.getMore().getAddress()+"";
+            //token
+            String token = user.getToken().toString()+"";
             AccountHelper.updateUserCache(user);
-            MyApi.sendUserAgent(imei,imsi,ip,mac,myaddress,user.getToken(), new StringCallback() {
+            MyApi.sendUserAgent(imei,imsi,ip,mac,myaddress,token,new StringCallback() {
                 @Override
                 public void onError(Call call, Exception e, int id) {
 

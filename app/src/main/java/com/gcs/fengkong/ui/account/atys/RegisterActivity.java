@@ -31,6 +31,7 @@ import com.gcs.fengkong.ui.account.RichTextParser;
 import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.ui.api.MyApi;
 import com.gcs.fengkong.ui.bean.base.ResultBean;
+import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.utils.AppOperator;
 import com.gcs.fengkong.utils.MyLog;
 import com.gcs.fengkong.utils.TDevice;
@@ -75,19 +76,19 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
 
     private String Jsessionid;
 
-
-    /*private TextHttpResponseHandler mHandler = new TextHttpResponseHandler() {
-
-
-        @Override
-        public void onSuccess(int statusCode, Header[] headers, String responseString) {
-
-
-        }
-    };*/
     private int mLogoHeight;
     private int mLogoWidth;
 
+    private boolean mKeyBoardIsActive;
+    //第三方接入的handler登录接收器callback
+    /**
+     * update keyBord active status
+     *
+     * @param isActive isActive
+     */
+    protected void updateKeyBoardActiveStatus(boolean isActive) {
+        this.mKeyBoardIsActive = isActive;
+    }
     /**
      * show the register activity
      *
@@ -357,7 +358,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
         }
 
         if (!TDevice.hasInternet()) {
-            showToastForKeyBord(R.string.tip_network_error);
+            SimplexToast.showToastForKeyBord(R.string.tip_network_error,GlobalApplication.getContext(),mKeyBoardIsActive);
             return;
         }
 
@@ -387,7 +388,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
                         mTimer.cancel();
                     }
                 }
-                requestFailureHint(e);
+                SimplexToast.requestFailureHint(e,RegisterActivity.this);
             }
 
             @Override
@@ -402,7 +403,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
                 switch (code) {
                     case 200://注册成功,进行用户信息填写
 
-                            GlobalApplication.showToast(getResources().getString(R.string.register_success_hint), 0,0, Gravity.CENTER);
+                        SimplexToast.showMyToast(R.string.register_success_hint,GlobalApplication.getContext());
                             //发送需要通知的成功广播
                            // MyLog.i("GCS","注册成功后发送需要通知的成功广播");
                            // sendLocalReceiver();
@@ -411,10 +412,10 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
                         break;
                     case 500://注册失败,手机验证码错误
                         mLlRegisterSmsCode.setBackgroundResource(R.drawable.bg_login_input_error);
-                        showToastForKeyBord(resultBean.getMessage());
+                        SimplexToast.showToastForKeyBord(resultBean.getMessage(),GlobalApplication.getContext(),mKeyBoardIsActive);
                         break;
                     case 400://用户已存在
-                        showToastForKeyBord(resultBean.getMessage());
+                        SimplexToast.showToastForKeyBord(resultBean.getMessage(),GlobalApplication.getContext(),mKeyBoardIsActive);
                         break;
                     default:
                         break;
@@ -430,7 +431,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
             return;
         }
         if (!TDevice.hasInternet()) {
-            showToastForKeyBord(R.string.tip_network_error);
+            SimplexToast.showToastForKeyBord(R.string.tip_network_error,GlobalApplication.getContext(),mKeyBoardIsActive);
             return;
         }
 
@@ -479,7 +480,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
                             mTimer.cancel();
                         }
                     }
-                    requestFailureHint(e);
+                    SimplexToast.requestFailureHint(e,RegisterActivity.this);
                 }
 
                 @Override
@@ -498,7 +499,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
                             //发送验证码成功,请求进入下一步
                             //意味着我们可以进行第二次请求了,获取phoneToken
                             //mRequestType = 2;
-                            showToastForKeyBord(R.string.send_sms_code_success_hint);
+                            SimplexToast.showToastForKeyBord(R.string.send_sms_code_success_hint,GlobalApplication.getContext(),mKeyBoardIsActive);
                             mEtRegisterAuthCode.setText(null);
                             break;
                         case 400:
@@ -507,7 +508,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
                                 mTimer.onFinish();
                                 mTimer.cancel();
                             }
-                            showToastForKeyBord(resultBean.getMessage());
+                            SimplexToast.showToastForKeyBord(resultBean.getMessage(),GlobalApplication.getContext(),mKeyBoardIsActive);
                             break;
                         case 500:
                             //异常错误，发送验证码失败,回收timer,需重新请求发送验证码
@@ -515,7 +516,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
                                 mTimer.onFinish();
                                 mTimer.cancel();
                             }
-                            showToastForKeyBord(resultBean.getMessage());
+                            SimplexToast.showToastForKeyBord(resultBean.getMessage(),GlobalApplication.getContext(),mKeyBoardIsActive);
                             break;
                         default:
                             break;
@@ -524,7 +525,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
             });
 
         } else {
-            GlobalApplication.showToast(getResources().getString(R.string.register_sms_wait_hint), Toast.LENGTH_SHORT);
+            SimplexToast.showMyToast(R.string.register_sms_wait_hint,GlobalApplication.getContext());
         }
     }
 

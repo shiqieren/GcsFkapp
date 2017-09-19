@@ -20,6 +20,7 @@ import com.gcs.fengkong.ui.account.atys.LoginActivity;
 import com.gcs.fengkong.ui.atys.SimpleBackActivity;
 import com.gcs.fengkong.ui.bean.Version;
 import com.gcs.fengkong.ui.frags.BaseFragment;
+import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.ui.widget.togglebutton.ToggleButton;
 import com.gcs.fengkong.update.CheckUpdateManager;
 import com.gcs.fengkong.update.DownloadService;
@@ -184,7 +185,7 @@ public class SettingsFragment extends BaseFragment implements EasyPermissions.Pe
             case R.id.rl_cancel:
                 // 清理所有缓存
                 ShowUIHelper.clearAppCache(false);
-                Toast.makeText(getActivity(),"清理缓存",Toast.LENGTH_SHORT).show();
+                SimplexToast.showMyToast("清理缓存", GlobalApplication.getContext());
                 // 注销操作
                 AccountHelper.logout(mCancel, new Runnable() {
                     @SuppressLint("SetTextI18n")
@@ -192,7 +193,7 @@ public class SettingsFragment extends BaseFragment implements EasyPermissions.Pe
                     public void run() {
                         //getActivity().finish();
                         mTvCacheSize.setText("0KB");
-                        GlobalApplication.showToastShort(getString(R.string.logout_success_hint));
+                        SimplexToast.showMyToast(R.string.logout_success_hint,GlobalApplication.getContext());
                         mCancel.setVisibility(View.INVISIBLE);
                         mSettingLineTop.setVisibility(View.INVISIBLE);
                         mSettingLineBottom.setVisibility(View.INVISIBLE);

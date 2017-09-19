@@ -12,9 +12,11 @@ import android.widget.Toast;
 import com.bqs.crawler.cloud.sdk.mno.MnoResetPwdAction;
 import com.bqs.crawler.cloud.sdk.mno.OnMnoResetPwdListener;
 import com.bqs.crawler.cloud.sdk.mno.OnMnoSendSmsListener;
+import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.Setting;
 import com.gcs.fengkong.ui.atys.BaseActivity;
+import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.ui.widget.TimerButton;
 import com.gcs.fengkong.utils.DialogUtil;
 
@@ -154,7 +156,7 @@ public class MnoResetPwdActivity extends BaseActivity implements OnMnoResetPwdLi
     @Override
     public void onResetPwdSuccess() {
         mDialog.hide();
-        Toast.makeText(this, "密码修改成功", Toast.LENGTH_SHORT).show();
+        SimplexToast.showMyToast("密码修改成功", GlobalApplication.getContext());
         finish();
     }
 

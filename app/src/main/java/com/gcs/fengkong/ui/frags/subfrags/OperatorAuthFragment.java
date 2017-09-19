@@ -31,8 +31,10 @@ import com.gcs.fengkong.ui.baiqishiauthpager.MnoResetPwdActivity;
 import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.ui.atys.SimpleBackActivity;
 import com.gcs.fengkong.ui.frags.BaseFragment;
+import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.ui.widget.TimerButton;
 import com.gcs.fengkong.utils.DialogUtil;
+import com.gcs.fengkong.utils.MyLog;
 
 /**
  * Created by Administrator on 0029 8-29.
@@ -222,11 +224,12 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
        String username =  mEtAuthUsername.getText().toString();
         if (RichTextParser.machPhoneNum(username)){
             if(!mCbAgreeAuthbook.isChecked()){
-                GlobalApplication.showToast("需勾选授权协议哦!",0,0, Gravity.CENTER);
+                SimplexToast.showMyToast("需勾选授权协议哦!",GlobalApplication.getContext());
             }else {
                 String servicePwd = mEtAuthPassword.getText().toString();
                 if (TextUtils.isEmpty(servicePwd) || servicePwd.length() < 6||servicePwd.length() > 18) {
-                    Toast.makeText(getActivity(), "请输入有效的服务密码", Toast.LENGTH_SHORT).show();
+
+                    SimplexToast.showMyToast("请输入有效的服务密码", GlobalApplication.getContext());
                     return;
                 }
 
@@ -235,7 +238,7 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
                 loginAction.login(servicePwd, this);
             }
         }else {
-            GlobalApplication.showToast("手机号码有误.请重新填写!",0,0, Gravity.CENTER);
+            SimplexToast.showMyToast("手机号码有误.请重新填写!",GlobalApplication.getContext());
         }
 
 
@@ -252,12 +255,12 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
 
         if (AccountHelper.isLogin()){
             //登录成功
-            GlobalApplication.showToast("认证成功",0,0, Gravity.CENTER);
+            SimplexToast.showMyToast("认证成功",GlobalApplication.getContext());
             User user = AccountHelper.getUser();
             //设置该用户运营商授权状态
             user.getAuthstate().setAuth_operator(true);
             AccountHelper.updateUserCache(user);
-            Log.i("GCS","更新sp中user的认证状态值");
+            MyLog.i("GCS","更新sp中user的认证状态值");
             getActivity().finish();
             mDialog.hide();
         }
@@ -270,8 +273,7 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
         //可使用带结果返回的启动方式，便于关闭相对的simplebackactivity
         Intent intent = new Intent(getActivity(), MnoAuthActivity.class);
         startActivity(intent);
-        Toast.makeText(getActivity(), "", Toast.LENGTH_SHORT).show();
-        Log.i("GCS","");
+        MyLog.i("GCS","");
     }
 
     @Override
@@ -279,14 +281,14 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
         mDialog.hide();
         llSmscode.setVisibility(View.VISIBLE);
         btnTimer.startTimer();
-        Toast.makeText(getActivity(), "请输入登录短信验证码", Toast.LENGTH_SHORT).show();
-        Log.i("GCS","请输入登录短信验证码");
+        SimplexToast.showMyToast("请输入登录短信验证码", GlobalApplication.getContext());
+        MyLog.i("GCS","请输入登录短信验证码");
     }
 
     @Override
     public void onLoginFailure(String s, String s1) {
         mDialog.hide();
-        GlobalApplication.showToast("认证失败",0,0, Gravity.CENTER);
+        SimplexToast.showMyToast("认证失败",GlobalApplication.getContext());
     }
 
 
@@ -294,15 +296,15 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
     public void onSendSmsSuccess() {
         mDialog.hide();
         btnTimer.startTimer();
-        Toast.makeText(getActivity(), "动码发送成功", Toast.LENGTH_SHORT).show();
-        Log.i("GCS","动码发送成功");
+        SimplexToast.showMyToast("动态码发送成功", GlobalApplication.getContext());
+        MyLog.i("GCS","动态码发送成功");
     }
 
     @Override
     public void onSendSmsFailure(String s, String resultDesc) {
         mDialog.hide();
-        Toast.makeText(getActivity(), resultDesc, Toast.LENGTH_SHORT).show();
-        Log.i("GCS",resultDesc);
+        SimplexToast.showMyToast(resultDesc, GlobalApplication.getContext());
+        MyLog.i("GCS",resultDesc);
     }
 
 

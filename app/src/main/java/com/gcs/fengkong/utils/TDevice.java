@@ -156,7 +156,7 @@ public class TDevice {
 
     public static void gotoMarket(Context context, String pck) {
         if (!isHaveMarket(context)) {
-            GlobalApplication.showToast("你手机中没有安装应用市场！");
+            SimplexToast.showMyToast("你手机中没有安装应用市场！",GlobalApplication.getContext());
             return;
         }
         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -249,7 +249,8 @@ public class TDevice {
         ClipboardManager clip = (ClipboardManager) GlobalApplication.getContext()
                 .getSystemService(Context.CLIPBOARD_SERVICE);
         clip.setText(string);
-        GlobalApplication.showToast(R.string.copy_success);
+        SimplexToast.showMyToast(R.string.copy_success,GlobalApplication.getContext());
+
     }
 
 

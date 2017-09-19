@@ -10,7 +10,6 @@ import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.content.LocalBroadcastManager;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,8 +44,7 @@ public class AccountBaseActivity extends BaseActivity {
     protected LocalBroadcastManager mManager;
     private BroadcastReceiver mReceiver;
     protected InputMethodManager mInputMethodManager;
-    protected Toast mToast;
-    private boolean mKeyBoardIsActive;
+
 
     @Override
     protected int getContentView() {
@@ -84,79 +82,10 @@ public class AccountBaseActivity extends BaseActivity {
         }
     }
 
-    /**
-     * showToast
-     *
-     * @param text text
-     */
-    @SuppressLint("InflateParams")
-    private void showToast(String text) {
-        Toast toast = this.mToast;
-        if (toast == null) {
-            toast = initToast();
-        }
-        View rootView = LayoutInflater.from(this).inflate(R.layout.view_toast, null, false);
-        TextView textView = (TextView) rootView.findViewById(R.id.title_tv);
-        textView.setText(text);
-        toast.setView(rootView);
-        initToastGravity(toast);
-        toast.show();
-    }
 
-    /**
-     * showToast
-     *
-     * @param id id
-     */
-    @SuppressLint("InflateParams")
-    private void showToast(@StringRes int id) {
-        Toast toast = this.mToast;
-        if (toast == null) {
-            toast = initToast();
-        }
-        View rootView = LayoutInflater.from(this).inflate(R.layout.view_toast, null, false);
-        TextView textView = (TextView) rootView.findViewById(R.id.title_tv);
-        textView.setText(id);
-        toast.setView(rootView);
-        initToastGravity(toast);
-        toast.show();
-    }
 
-    @NonNull
-    private Toast initToast() {
-        Toast toast;
-        toast = new Toast(this);
-        toast.setDuration(Toast.LENGTH_SHORT);
-        this.mToast = toast;
-        return toast;
-    }
 
-    private void initToastGravity(Toast toast) {
-        boolean isCenter = this.mKeyBoardIsActive;
-        if (isCenter) {
-            toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
-        } else {
-            toast.setGravity(Gravity.CENTER, 0, getResources().getDimensionPixelSize(R.dimen.toast_y_offset));
-        }
-    }
 
-    /**
-     * update keyBord active status
-     *
-     * @param isActive isActive
-     */
-    protected void updateKeyBoardActiveStatus(boolean isActive) {
-        this.mKeyBoardIsActive = isActive;
-    }
-
-    /**
-     * cancelToast
-     */
-    protected void cancelToast() {
-        if (mToast != null) {
-            mToast.cancel();
-        }
-    }
 
     protected boolean sendLocalReceiver() {
         if (mManager != null) {
@@ -242,13 +171,6 @@ public class AccountBaseActivity extends BaseActivity {
         }
     }
 
-    protected void showToastForKeyBord(@StringRes int id) {
-        showToast(id);
-    }
-
-    protected void showToastForKeyBord(String message) {
-        showToast(message);
-    }
 
     protected void hideKeyBoard(IBinder windowToken) {
         InputMethodManager inputMethodManager = this.mInputMethodManager;
@@ -259,17 +181,6 @@ public class AccountBaseActivity extends BaseActivity {
         }
     }
 
-    /**
-     * request network error
-     *异常吐司
-     * @param throwable throwable
-     */
-    protected void requestFailureHint(Throwable throwable) {
-        if (throwable != null) {
-            throwable.printStackTrace();
-        }
-        showToastForKeyBord(R.string.request_error_hint);
-    }
 
     /**
      * 加密

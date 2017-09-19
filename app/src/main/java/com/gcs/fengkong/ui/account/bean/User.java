@@ -18,16 +18,27 @@ public class User implements Serializable {
     protected String userid;
     // 本地缓存多余信息
     private String cookie;
-
     private String token;
-
     private More more;
     private AuthState authstate;
 
     public User() {
+        //this(0,"","","","","","","");
         more = new More();
         authstate = new AuthState();
     }
+
+    public User(long id, String phone, String status, String createtime, String updatetime, String certno, String cookie, String token) {
+        this.id = id;
+        this.phone = phone;
+        this.status = status;
+        this.createtime = createtime;
+        this.updatetime = updatetime;
+        this.certno = certno;
+        this.cookie = cookie;
+        this.token = token;
+    }
+
 
     public User(long id, String name) {
         this.id = id;

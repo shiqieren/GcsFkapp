@@ -17,6 +17,7 @@ import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.ui.atys.BaseActivity;
+import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.ui.widget.statusbar.StatusBarCompat;
 import com.gcs.fengkong.utils.DialogUtil;
 import com.gcs.fengkong.utils.MyLog;
@@ -139,8 +140,7 @@ public class ViewLoginActivity extends BaseActivity implements OnLoginViewListen
             } else if (serviceId == ServiceId.WEIBO_SERVICE_ID) {
                 s = "微博";
             }
-            //Toast.makeText(getBaseContext(), "\"" + s + "\"授权成功", Toast.LENGTH_SHORT).show();
-            GlobalApplication.showToast(s+"认证成功",0,0, Gravity.CENTER);
+            SimplexToast.showMyToast(s+"认证成功",GlobalApplication.getContext());
             AccountHelper.updateUserCache(user);
             MyLog.i("GCS","更新sp中user的认证状态值");
             finish();
@@ -149,7 +149,7 @@ public class ViewLoginActivity extends BaseActivity implements OnLoginViewListen
     
     @Override
     public void onLoginFailure(String resultCode, String resultDesc, int serviceId) {
-        Toast.makeText(getBaseContext(), resultDesc, Toast.LENGTH_SHORT).show();
+        SimplexToast.showMyToast(resultDesc,getBaseContext());
     }
 
     @Override

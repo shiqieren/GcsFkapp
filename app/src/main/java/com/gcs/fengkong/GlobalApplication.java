@@ -185,53 +185,6 @@ public class GlobalApplication extends Application {
         return getPreferences().getFloat(key, defValue);
     }
 
-    public static void showToast(int message) {
-        showToast(message, Toast.LENGTH_LONG, 0);
-    }
-
-    public static void showToast(String message) {
-        showToast(message, Toast.LENGTH_LONG, 0, Gravity.BOTTOM);
-    }
-
-    public static void showToast(int message, int icon) {
-        showToast(message, Toast.LENGTH_LONG, icon);
-    }
-
-    public static void showToast(String message, int icon) {
-        showToast(message, Toast.LENGTH_LONG, icon, Gravity.BOTTOM);
-    }
-
-    public static void showToastShort(int message) {
-        showToast(message, Toast.LENGTH_SHORT, 0);
-    }
-
-    public static void showToastShort(String message) {
-        showToast(message, Toast.LENGTH_SHORT, 0, Gravity.BOTTOM);
-    }
-
-    public static void showToastShort(int message, Object... args) {
-        showToast(message, Toast.LENGTH_SHORT, 0, Gravity.BOTTOM, args);
-    }
-
-    public static void showToast(int message, int duration, int icon) {
-        showToast(message, duration, icon, Gravity.BOTTOM);
-    }
-
-    public static void showToast(int message, int duration, int icon,
-                                 int gravity) {
-        showToast(getContext().getString(message), duration, icon, gravity);
-    }
-
-    public static void showToast(int message, int duration, int icon,
-                                 int gravity, Object... args) {
-        showToast(getContext().getString(message, args), duration, icon, gravity);
-    }
-
-    public static void showToast(String message, int duration, int icon, int gravity) {
-        Context context = _context;
-        if (context != null)
-            SimplexToast.show(context, message, gravity, duration);
-    }
 
 
 }

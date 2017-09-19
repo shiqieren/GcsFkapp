@@ -26,6 +26,7 @@ import com.gcs.fengkong.ui.api.MyApi;
 import com.gcs.fengkong.ui.atys.SimpleBackActivity;
 import com.gcs.fengkong.ui.bean.base.ResultBean;
 import com.gcs.fengkong.ui.frags.BaseFragment;
+import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.utils.AppOperator;
 import com.gcs.fengkong.utils.RegexUtils;
 import com.gcs.fengkong.utils.TDevice;
@@ -94,7 +95,7 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
                                        Spanned dest, int dstart, int dend) {
                 for (int i = start; i < end; i++) {
                     if (!RichTextParser.isChinese(source.charAt(i))) {
-                        Toast.makeText(getActivity(),"请输入中文字符",Toast.LENGTH_SHORT).show();
+                       // SimplexToast.showMyToast("请输入中文字符",GlobalApplication.getContext());
                         return "";
                     }
                 }

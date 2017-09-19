@@ -22,15 +22,25 @@ import com.gcs.fengkong.R;
 import com.gcs.fengkong.Setting;
 import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.account.bean.User;
+import com.gcs.fengkong.ui.account.bean.VerifyStatus;
 import com.gcs.fengkong.ui.api.ApiClientHelper;
+import com.gcs.fengkong.ui.api.MyApi;
 import com.gcs.fengkong.ui.baiqishiauthpager.ViewLoginActivity;
 import com.gcs.fengkong.ui.bean.SimpleBackPage;
+import com.gcs.fengkong.ui.bean.base.ResultBean;
+import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.ui.widget.statusbar.StatusBarCompat;
 import com.gcs.fengkong.utils.AppOperator;
 import com.gcs.fengkong.utils.DialogUtil;
 import com.gcs.fengkong.ui.ShowUIHelper;
 import com.gcs.fengkong.utils.MyLog;
 import com.gcs.fengkong.utils.TDevice;
+import com.google.gson.reflect.TypeToken;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import java.lang.reflect.Type;
+
+import okhttp3.Call;
 
 
 /**
@@ -57,21 +67,14 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
     private LinearLayout mLljdiv;
     private LinearLayout mLloperatoriv;
     private LinearLayout mLlcontactiv;
-    /**
-     * requestData
-     */
-    private void sendRequestData() {
-        if (TDevice.hasInternet() && AccountHelper.isLogin())
-            Log.i("GCS", "每次到首页显示时就去获取个人信息User,在响应结果中更新主页");
-        // MyApi.getUserInfo(requestUserInfoHandler);
-    }
+
     @Override
     public void onResume() {
         super.onResume();
         if (AccountHelper.isLogin()) {
-            sendRequestData();
             User user = AccountHelper.getUser();
-            Log.i("GCS", "网络实时的User，目前先用本地获取的User");
+            sendRequestData(user);
+            MyLog.i("GCS", "网络实时的User，目前先用本地获取的User");
             updateView(user);
             MyLog.i("GCS","初始化发送设备信息和定位信息");
             ApiClientHelper.getUserAgent(GlobalApplication.getInstance());
@@ -81,13 +84,66 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
 
     }
 
+    /**
+     * requestData
+     */
+    private void sendRequestData(final User user) {
+        if (TDevice.hasInternet() && AccountHelper.isLogin()){
+                MyLog.i("GCS", "每次到首页显示时就去获取个人认证信息并赋值给User,在响应结果中更新主页");
+                MyApi.getverifyStatus(user.getToken(), new StringCallback() {
+                @Override
+                public void onError(Call call, Exception e, int id) {
+                    MyLog.i("GCS",e.toString());
+                }
 
+                @Override
+                public void onResponse(String response, int id) {
+                    MyLog.i("GCS","获取返回status信息："+response);
+                    try {
+                        Type type = new TypeToken<ResultBean<VerifyStatus>>() {}.getType();
+                        ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
+                        int code = resultBean.getCode();
+                        if (code == 200) {
+                            VerifyStatus status = (VerifyStatus) resultBean.getResult();
+                            MyLog.i("GCS","返回statusid"+String.valueOf(status.getPhone_user_id()));
+                            MyLog.i("GCS","Userid"+user.getUserid());
+
+
+                            user.setPhone(unAES(status.getPhone()));
+                            user.setCertno(unAES(status.getCertno()));
+                            user.setName(unAES(status.getName()));
+
+                            user.getAuthstate().setAuth_identity(Boolean.valueOf(status.getIdentity()));
+                            user.getAuthstate().setAuth_bankcard(Boolean.valueOf(status.getBankcard()));
+                            user.getAuthstate().setAuth_alipay(Boolean.valueOf(status.getAlipay()));
+                            user.getAuthstate().setAuth_taobao(Boolean.valueOf(status.getTaobao()));
+                            user.getAuthstate().setAuth_jd(Boolean.valueOf(status.getJd()));
+                            user.getAuthstate().setAuth_operator(Boolean.valueOf(status.getOperator()));
+
+
+                        } else {
+                            String message = resultBean.getMessage();
+                            if (code == 500) {
+
+                            }else if (code == 300){
+
+                            }
+                            SimplexToast.showMyToast(message,GlobalApplication.getContext());
+                            //更新失败应该是不进行任何的本地操作
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle arguments = getArguments();
-        sendRequestData();
     }
 
 
@@ -139,8 +195,8 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
     private void requestUserCache() {
         if (AccountHelper.isLogin()) {
             User user = AccountHelper.getUser();
+            sendRequestData(user);
             updateView(user);
-            sendRequestData();
         } else {
             hideView();
         }
@@ -153,7 +209,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
         mCv_jd.setOnClickListener(this);
         mCv_operator.setOnClickListener(this);
         mCv_taobao.setOnClickListener(this);
-        mCv_zhima.setOnClickListener(this);
+     //   mCv_zhima.setOnClickListener(this);
         mIvLogoSetting.setOnClickListener(this);
 
     }
@@ -185,14 +241,14 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                 configBqsParams();
                 ShowUIHelper.showBankAuth(getActivity());
                 break;
-            case R.id.cv_zhima:
+           /* case R.id.cv_zhima:
                 if (!AccountHelper.isLogin()) {
                     ShowUIHelper.showLoginActivity(getActivity());
                     return;
                 }
                 configBqsParams();
                 ShowUIHelper.showZhimaAuth(getActivity());
-                break;
+                break;*/
             case R.id.cv_alipay:
                 if (!AccountHelper.isLogin()) {
                     ShowUIHelper.showLoginActivity(getActivity());
@@ -296,7 +352,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
         tv_link.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("GCS","模拟通讯录授权成功");
+                MyLog.i("GCS","模拟通讯录授权成功");
                 if (AccountHelper.isLogin()){
                     User user = AccountHelper.getUser();
                     //设置该用户运营商授权状态
@@ -345,8 +401,8 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
      * @param userInfo userInfo
      */
     private void updateView(User userInfo) {
-        Log.i("GCS","更新UI登录后的显示状态");
-        Log.i("GCS","头像更新");
+        MyLog.i("GCS","更新UI登录后的显示状态");
+        MyLog.i("GCS","头像更新");
         mTv_name.setText(userInfo.getName());
             if (userInfo.getAuthstate().getAuth_identity()!=null){
                 if(userInfo.getAuthstate().getAuth_identity()){
@@ -435,7 +491,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
      *退出登录后清除信息，
      */
     private void hideView() {
-        Log.i("GCS","恢复未登录的默认状态显示");
+        MyLog.i("GCS","恢复未登录的默认状态显示");
         mTv_name.setText(R.string.unlogin_string);
         mLlidentityiv.setVisibility(View.GONE);
         mLlbankcardiv.setVisibility(View.GONE);

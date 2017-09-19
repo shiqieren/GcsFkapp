@@ -2,17 +2,12 @@ package com.gcs.fengkong.ui.frags.subfrags;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -21,21 +16,18 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
 import android.webkit.CookieManager;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
-
-import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.atys.SimpleBackActivity;
 import com.gcs.fengkong.ui.frags.BaseFragment;
+import com.gcs.fengkong.utils.MyLog;
 import com.gcs.fengkong.utils.TDevice;
 
 
@@ -47,15 +39,10 @@ import com.gcs.fengkong.utils.TDevice;
 @SuppressLint("NewApi")
 public class BrowserFragment extends BaseFragment {
    private WebView mWebView;
-    private ImageView mImgBack;
-    private ImageView mImgForward;
-    private ImageView mImgRefresh;
-    private ImageView mImgSystemBrowser;
-    private LinearLayout mLayoutBottom;
     private ProgressBar mProgress;
 
     public static final String BROWSER_KEY = "browser_url";
-    public static final String DEFAULT = "http://www.oschina.net/";
+    public static final String DEFAULT = "http://www.guanchesuo.com/";
 
     private int TAG = 1; // 双击事件需要
     private Activity aty;
@@ -68,49 +55,19 @@ public class BrowserFragment extends BaseFragment {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.browser_back:
-                mWebView.goBack();
-                break;
-            case R.id.browser_forward:
-                mWebView.goForward();
-                break;
-            case R.id.browser_refresh:
-                mWebView.loadUrl(mWebView.getUrl());
-                break;
-            case R.id.browser_system_browser:
-                try {
-                    // 启用外部浏览器
-                    Uri uri = Uri.parse(mCurrentUrl);
-                    Intent it = new Intent(Intent.ACTION_VIEW, uri);
-                    aty.startActivity(it);
-                } catch (Exception e) {
-                    GlobalApplication.showToast("网页地址错误");
-                }
-                break;
-        }
+
     }
 
     @Override
     public void initView(View view) {
         mWebView = view.findViewById(R.id.webview);
-        mImgBack = view.findViewById(R.id.browser_back);
-        mImgForward = view.findViewById(R.id.browser_forward);
-        mImgRefresh = view.findViewById(R.id.browser_refresh);
-        mImgSystemBrowser = view.findViewById(R.id.browser_system_browser);
-        mLayoutBottom = view.findViewById(R.id.browser_bottom);
         mProgress= view.findViewById(R.id.progress);
-
-
 
         initWebView();
         initBarAnim();
-        mImgBack.setOnClickListener(this);
-        mImgForward.setOnClickListener(this);
-        mImgRefresh.setOnClickListener(this);
-        mImgSystemBrowser.setOnClickListener(this);
-
+        initData();
         mGestureDetector = new GestureDetector(aty, new MyGestureListener());
+        mWebView.addJavascriptInterface(new JsToJava(), "androidShare");
         mWebView.loadUrl(mCurrentUrl);
         mWebView.setOnTouchListener(new OnTouchListener() {
             @Override
@@ -118,6 +75,15 @@ public class BrowserFragment extends BaseFragment {
                 return mGestureDetector.onTouchEvent(event);
             }
         });
+
+    }
+
+    private class JsToJava{
+        //这里需要加@JavascriptInterface，4.2之后提供给javascript调用的函数必须带有@JavascriptInterface
+        @JavascriptInterface
+        public void jsMethod(String paramFromJS){
+            System.out.println("js返回结果:" + paramFromJS);//处理返回的结果
+        }
     }
 
     @Override
@@ -189,26 +155,7 @@ public class BrowserFragment extends BaseFragment {
         return R.layout.fragment_browser;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.browser_menu, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.public_menu_shared:
-                Toast.makeText(getActivity(),"分享",Toast.LENGTH_SHORT).show();
-                break;
-        }
-        return true;
-    }
 
     /**
      * 初始化上下栏的动画并设置结束监听事件
@@ -228,7 +175,7 @@ public class BrowserFragment extends BaseFragment {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                mLayoutBottom.setVisibility(View.VISIBLE);
+                //mLayoutBottom.setVisibility(View.VISIBLE);
             }
         });
         animBottomOut.setAnimationListener(new AnimationListener() {
@@ -242,7 +189,7 @@ public class BrowserFragment extends BaseFragment {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                mLayoutBottom.setVisibility(View.GONE);
+                //mLayoutBottom.setVisibility(View.GONE);
             }
         });
     }
@@ -296,6 +243,7 @@ public class BrowserFragment extends BaseFragment {
     /**
      * 初始化浏览器设置信息
      */
+    @SuppressLint("SetJavaScriptEnabled")
     private void initWebView() {
         cookie = CookieManager.getInstance();
         WebSettings webSettings = mWebView.getSettings();
@@ -344,6 +292,8 @@ public class BrowserFragment extends BaseFragment {
 
         @Override
         public void onPageFinished(WebView view, String url) {
+            //网页加载完之后，java调用js方法
+            mWebView.loadUrl("javascript:shareToFriends()");
             super.onPageFinished(view, url);
             onUrlFinished(view, url);
         }
@@ -355,20 +305,13 @@ public class BrowserFragment extends BaseFragment {
         public boolean onDoubleTap(MotionEvent e) {// webview的双击事件
             if (TAG % 2 == 0) {
                 TAG++;
-                mLayoutBottom.startAnimation(animBottomIn);
+                //mLayoutBottom.startAnimation(animBottomIn);
             } else {
                 TAG++;
-                mLayoutBottom.startAnimation(animBottomOut);
+               // mLayoutBottom.startAnimation(animBottomOut);
             }
             return super.onDoubleTap(e);
         }
     }
 
-    private String getShareTitle() {
-        return mWebView.getTitle();
-    }
-
-    private String getShareContent() {
-        return mWebView.getTitle();
-    }
 }

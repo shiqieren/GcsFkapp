@@ -5,6 +5,7 @@ import android.os.Looper;
 import android.widget.Toast;
 
 import com.gcs.fengkong.ui.atys.ErrorActivity;
+import com.gcs.fengkong.ui.widget.SimplexToast;
 
 
 /**
@@ -59,7 +60,7 @@ public class AppCrashHandler implements Thread.UncaughtExceptionHandler {
             @Override
             public void run() {
                 Looper.prepare();
-                Toast.makeText(mContext, "OSC异常；正准备重启！！", Toast.LENGTH_LONG).show();
+                SimplexToast.showMyToast("OSC异常；正准备重启！！",GlobalApplication.getContext());
                 Looper.loop();
             }
         }.start();

@@ -2,6 +2,7 @@ package com.gcs.fengkong.ui.frags;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 
 
 import com.gcs.fengkong.GlobalApplication;
+import com.gcs.fengkong.ui.api.secret.AES;
+import com.gcs.fengkong.utils.MyLog;
 
 import java.io.Serializable;
 
@@ -132,5 +135,42 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
     protected void onRestartInstance(Bundle bundle) {
 
+    }
+
+    /**
+     * 加密
+     * AES
+     *
+     * @param tempPwd tempPwd
+     * @return sha-1 pwd
+     */
+    @NonNull
+    protected String getAES(String tempPwd) {
+        AES mAes = new AES();
+        byte[] mBytes = null;
+        try {
+
+            mBytes = tempPwd.getBytes("UTF8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String enString = mAes.encrypt(mBytes);
+        MyLog.i("GCS","加密后："+enString);
+        return enString;
+    }
+
+    /**
+     * 解密
+     * AES
+     *
+     * @param tempPwd tempPwd
+     * @return sha-1 pwd
+     */
+    @NonNull
+    protected String unAES(String tempPwd) {
+        AES mAes = new AES();
+        String deString = mAes.decrypt(tempPwd);
+        MyLog.i("GCS","解密后："+deString);
+        return deString;
     }
 }

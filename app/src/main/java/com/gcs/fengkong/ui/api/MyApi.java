@@ -196,13 +196,25 @@ public class MyApi {
 
     public static void sendRegisterSmsCode(String phone, StringCallback callback) {
         Map<String, String> params = new HashMap<>();
-      //  params.put("appId", "1");
-      //  params.put("token", "1");
+        //  params.put("appId", "1");
+        //  params.put("token", "1");
         params.put("name", phone);
-      //  params.put("intent", intent);
+        //  params.put("intent", intent);
 
         OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/registerSendMsg.do")).params(params).build().execute(callback);
         MyLog.i("GCS","请求发送短信验证码url:"+getAbsoluteApiUrl("wind-phone/phone/registerSendMsg.do"));
+    }
+
+
+    public static void getverifyStatus(String token, StringCallback callback) {
+        Map<String, String> params = new HashMap<>();
+      //  params.put("appId", "1");
+      //  params.put("token", "1");
+        params.put("token", token);
+      //  params.put("intent", intent);
+
+        OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/verifyStatus.do")).params(params).build().execute(callback);
+        MyLog.i("GCS","请求发送短信验证码url:"+getAbsoluteApiUrl("wind-phone/phone/verifyStatus.do"));
     }
 
     public static void sendSmsCode(String phone, StringCallback callback) {

@@ -9,6 +9,7 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.NumberKeyListener;
+import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -17,13 +18,27 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
+import com.gcs.fengkong.ui.ShowUIHelper;
+import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.account.RichTextParser;
+import com.gcs.fengkong.ui.account.bean.User;
+import com.gcs.fengkong.ui.api.MyApi;
 import com.gcs.fengkong.ui.atys.SimpleBackActivity;
+import com.gcs.fengkong.ui.bean.base.ResultBean;
 import com.gcs.fengkong.ui.frags.BaseFragment;
+import com.gcs.fengkong.ui.widget.SimplexToast;
+import com.gcs.fengkong.utils.AppOperator;
 import com.gcs.fengkong.utils.IDCardUtil;
+import com.gcs.fengkong.utils.MyLog;
+import com.google.gson.reflect.TypeToken;
+import com.zhy.http.okhttp.callback.StringCallback;
 
+import java.lang.reflect.Type;
 import java.text.ParseException;
+
+import okhttp3.Call;
 
 /**
  * Created by Administrator on 0029 8-29.
@@ -67,7 +82,7 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
                                        Spanned dest, int dstart, int dend) {
                 for (int i = start; i < end; i++) {
                     if (!RichTextParser.isChinese(source.charAt(i))) {
-                        Toast.makeText(getActivity(),"请输入中文字符",Toast.LENGTH_SHORT).show();
+                        //SimplexToast.showMyToast("请输入中文字符",GlobalApplication.getContext());
                         return "";
                     }
                 }
@@ -185,6 +200,15 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
 
     }
 
+    @Override
+    protected void initData() {
+        super.initData();
+        if (AccountHelper.isLogin()){
+            User user = AccountHelper.getUser();
+            mEtIdentityName.setText(user.getName());
+           mEtIdentityNumber.setText(user.getCertno());
+        }
+    }
     private void setListener() {
         mLlIdentityName.setOnClickListener(this);
         mEtIdentityName.setOnClickListener(this);
@@ -230,22 +254,55 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
     }
 
     private void AuthIdentityRequest() {
+        String tempUsername = mEtIdentityName.getText().toString().trim();
+        String tempIdcard = mEtIdentityNumber.getText().toString().trim();
         if(!TextUtils.isEmpty(mEtIdentityName.getText().toString().trim())){
-            if (mIsIDcardnumber){
-                AuthIdentityRequest();
-            }else {
-                Toast.makeText(getActivity(),"身份证格式有误",Toast.LENGTH_SHORT).show();
+            if (!mIsIDcardnumber){
+                SimplexToast.showMyToast("身份证格式有误", GlobalApplication.getContext());
             }
         }else {
-            Toast.makeText(getActivity(),"姓名不能为空",Toast.LENGTH_SHORT).show();
+            SimplexToast.showMyToast("姓名不能为空", GlobalApplication.getContext());
+        }
+
+        if (!TextUtils.isEmpty(tempUsername)&&AccountHelper.isLogin()&&!TextUtils.isEmpty(tempIdcard)){
+
+            //登录成功,请求数据进入用户个人中心页面
+            User user = AccountHelper.getUser();
+            String token =  user.getToken();
+            String phone = user.getPhone();
+            MyApi.authzhima(token, getAES("18018746184"), getAES(tempIdcard), tempUsername, "", new StringCallback() {
+                @Override
+                public void onError(Call call, Exception e, int id) {
+                    MyLog.i("GCS","Exception："+e);
+                }
+
+                @Override
+                public void onResponse(String response, int id) {
+                    MyLog.i("GCS","登录返回response："+response);
+                    try {
+                        Type type = new TypeToken<ResultBean>() {}.getType();
+                        ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
+                        int code = resultBean.getCode();
+
+                        if (code == 200) {
+                            MyLog.i("GCS","跳转到回调url："+response);
+                            String url =  resultBean.getResult().toString();
+                            MyLog.i("GCS","授权按钮点击，打开webview："+url);
+                            ShowUIHelper.openInternalBrowser(getActivity(), url);
+                        } else {
+
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            // requestLoginno(tempUsername, tempPwd);
         }
 
     }
 
-    @Override
-    protected void initData() {
-        super.initData();
-    }
+
 
     @Override
     public void onFocusChange(View v, boolean hasFocus) {

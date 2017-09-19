@@ -6,11 +6,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.account.atys.LoginActivity;
 import com.gcs.fengkong.ui.bean.SimpleBackPage;
 import com.gcs.fengkong.ui.interf.OnTabReselectListener;
+import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.utils.DialogUtil;
 import com.gcs.fengkong.ui.ShowUIHelper;
 
@@ -168,7 +170,7 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
 
             switch (id) {
                 case R.id.rl_message:
-                    Toast.makeText(getActivity(),"第一条目",Toast.LENGTH_SHORT).show();
+                    SimplexToast.showMyToast("第一条目", GlobalApplication.getContext());
                     break;
                 default:
                     break;

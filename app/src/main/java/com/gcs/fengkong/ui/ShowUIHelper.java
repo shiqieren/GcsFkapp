@@ -2,6 +2,7 @@ package com.gcs.fengkong.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,7 +14,9 @@ import com.gcs.fengkong.ui.account.atys.LoginActivity;
 import com.gcs.fengkong.ui.atys.SimpleBackActivity;
 import com.gcs.fengkong.ui.bean.SimpleBackPage;
 import com.gcs.fengkong.ui.frags.subfrags.BrowserFragment;
+import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.utils.AppOperator;
+import com.gcs.fengkong.utils.MyLog;
 
 
 /**
@@ -142,6 +145,7 @@ public class ShowUIHelper {
      * 显示淘宝输入
      *
      * @param context
+     *
      */
     public static void showTaobaoAuth(Context context) {
         showSimpleBack(context, SimpleBackPage.TAOBAO_AUTH);
@@ -174,12 +178,26 @@ public class ShowUIHelper {
     public static void openInternalBrowser(Context context, String url) {
         try {
             Bundle bundle = new Bundle();
+
             bundle.putString(BrowserFragment.BROWSER_KEY, url);
+
             showSimpleBack(context, SimpleBackPage.BROWSER, bundle);
         } catch (Exception e) {
             e.printStackTrace();
-         //111外置浏览器   openExternalBrowser(context, url);
+           openExternalBrowser(context, url);
         }
+    }
+
+    /**
+     * 打开外置的浏览器
+     *
+     * @param context
+     * @param url
+     */
+    public static void openExternalBrowser(Context context, String url) {
+        Uri uri = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        context.startActivity(Intent.createChooser(intent, "选择打开的应用"));
     }
 
     /**
@@ -190,9 +208,9 @@ public class ShowUIHelper {
             @Override
             public void handleMessage(Message msg) {
                 if (msg.what == 1) {
-                    GlobalApplication.showToastShort("缓存清除成功");
+                    SimplexToast.showMyToast("缓存清除成功",GlobalApplication.getContext());
                 } else {
-                    GlobalApplication.showToastShort("缓存清除失败");
+                    SimplexToast.showMyToast("缓存清除失败",GlobalApplication.getContext());
                 }
             }
         } : null;

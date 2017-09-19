@@ -11,9 +11,11 @@ import android.widget.Toast;
 import com.bqs.crawler.cloud.sdk.mno.MnoAuthAction;
 import com.bqs.crawler.cloud.sdk.mno.OnMnoAuthListener;
 import com.bqs.crawler.cloud.sdk.mno.OnMnoSendSmsListener;
+import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.atys.BaseActivity;
 import com.gcs.fengkong.ui.atys.SimpleBackActivity;
+import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.ui.widget.TimerButton;
 import com.gcs.fengkong.utils.ActivityManager;
 import com.gcs.fengkong.utils.DialogUtil;
@@ -90,7 +92,7 @@ public class MnoAuthActivity extends BaseActivity implements OnMnoAuthListener,O
     //mark OnMnoAuthListener
     @Override
     public void onAuthSuccess() {
-        Toast.makeText(this, "运营商授权成功", Toast.LENGTH_SHORT).show();
+        SimplexToast.showMyToast("运营商授权成功", GlobalApplication.getContext());
         mDialog.hide();
         ActivityManager.getActivityManager().finishActivity(this);
         //此处可能关闭不必要的activity，后期优化改为结果启动和结果返回来辨别

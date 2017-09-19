@@ -33,6 +33,7 @@ import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.ui.api.MyApi;
 import com.gcs.fengkong.ui.atys.MainActivity;
 import com.gcs.fengkong.ui.bean.base.ResultBean;
+import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.utils.AppOperator;
 import com.gcs.fengkong.utils.MyLog;
 import com.gcs.fengkong.utils.TDevice;
@@ -70,14 +71,24 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
     private Button mBtLoginSubmit;
     private TextView mTvLoginRegister;
 
+    private boolean mKeyBoardIsActive;
     //第三方接入的handler登录接收器callback
+    /**
+     * update keyBord active status
+     *
+     * @param isActive isActive
+     */
+    protected void updateKeyBoardActiveStatus(boolean isActive) {
+        this.mKeyBoardIsActive = isActive;
+    }
 
     private void logSucceed() {
         View view;
         if ((view = getCurrentFocus()) != null) {
             hideKeyBoard(view.getWindowToken());
         }
-        GlobalApplication.showToast(R.string.login_success_hint,0,0, Gravity.CENTER);
+       // GlobalApplication.showToast(R.string.login_success_hint,0,0, Gravity.CENTER);
+        SimplexToast.showMyToast(R.string.login_success_hint,GlobalApplication.getContext());
         setResult(RESULT_OK);
         //发送关闭登录界面的广播
         sendLocalReceiver();
@@ -374,7 +385,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                requestLogin(tempUsername, tempPwd);
                // requestLoginno(tempUsername, tempPwd);
             } else {
-                showToastForKeyBord(R.string.footer_type_net_error);
+                SimplexToast.showToastForKeyBord(R.string.footer_type_net_error,GlobalApplication.getContext(),mKeyBoardIsActive);
             }
 
         } else {
@@ -386,14 +397,14 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                 mEtLoginUsername.requestFocus();
                 mEtLoginUsername.setFocusableInTouchMode(true);
                 mLlLoginUsername.setBackgroundResource(R.drawable.bg_login_input_error);
-                showToastForKeyBord(R.string.login_input_username_hint_error);
+                SimplexToast.showToastForKeyBord(R.string.login_input_username_hint_error,GlobalApplication.getContext(),mKeyBoardIsActive);
             }else if (TextUtils.isEmpty(tempPwd)){
                 mEtLoginUsername.setFocusableInTouchMode(false);
                 mEtLoginUsername.clearFocus();
                 mEtLoginPwd.requestFocus();
                 mEtLoginPwd.setFocusableInTouchMode(true);
                 mLlLoginPwd.setBackgroundResource(R.drawable.bg_login_input_error);
-                showToastForKeyBord(R.string.login_password_hint);
+                SimplexToast.showToastForKeyBord(R.string.login_password_hint,GlobalApplication.getContext(),mKeyBoardIsActive);
             }
 
         }
@@ -401,8 +412,6 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
     }
 
     private void requestLoginno(String tempUsername, String tempPwd){
-        ;
-        showToastForKeyBord("初始化User");
         User user = AccountHelper.getUser();
         user.setToken("xxxxxxxxxx");
         user.setId(1);
@@ -413,7 +422,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
         if (AccountHelper.login(user,netcookie)) {
             logSucceed();
         } else {
-            showToastForKeyBord("登录异常");
+            SimplexToast.showToastForKeyBord("登录异常",GlobalApplication.getContext(),mKeyBoardIsActive);
         }
     }
     private void requestLogin(String tempUsername, String tempPwd) {
@@ -434,7 +443,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
             @Override
             public void onError(Call call, Exception e, int id) {
                 hideWaitDialog();
-                requestFailureHint(e);
+                SimplexToast.requestFailureHint(e,LoginActivity.this);
             }
 
             @Override
@@ -449,13 +458,11 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                         //模拟用户登录cookie添加
                         String netcookie = "gcs test login test add cookie"+System.currentTimeMillis();
                         user.setId(Long.valueOf(user.getUserid()));
-                        user.setName(unAES(user.getPhone()));
-                        AppConfig.getAppConfig(GlobalApplication.getContext()).set("phone", unAES(user.getPhone()));
                         user.setAuthstate(new User.AuthState());
                         if (AccountHelper.login(user,netcookie)) {
                             logSucceed();
                         } else {
-                            showToastForKeyBord("登录异常");
+                            SimplexToast.showToastForKeyBord("登录异常",GlobalApplication.getContext(),mKeyBoardIsActive);
                         }
                     } else {
                         String message = resultBean.getMessage();
@@ -467,7 +474,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                             message += "," + getResources().getString(R.string.message_pwd_error);
                             mLlLoginPwd.setBackgroundResource(R.drawable.bg_login_input_error);
                         }
-                        showToastForKeyBord(message);
+                        SimplexToast.showToastForKeyBord(message,GlobalApplication.getContext(),mKeyBoardIsActive);
                         //更新失败应该是不进行任何的本地操作
                     }
                 } catch (Exception e) {

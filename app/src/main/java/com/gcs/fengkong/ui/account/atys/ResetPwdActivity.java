@@ -28,6 +28,7 @@ import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.account.RichTextParser;
 import com.gcs.fengkong.ui.api.MyApi;
 import com.gcs.fengkong.ui.bean.base.ResultBean;
+import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.utils.AppOperator;
 import com.gcs.fengkong.utils.MyLog;
 import com.gcs.fengkong.utils.TDevice;
@@ -72,7 +73,16 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
     private String Jsessionid;
 
     private int mTopMargin;
-
+    private boolean mKeyBoardIsActive;
+    //第三方接入的handler登录接收器callback
+    /**
+     * update keyBord active status
+     *
+     * @param isActive isActive
+     */
+    protected void updateKeyBoardActiveStatus(boolean isActive) {
+        this.mKeyBoardIsActive = isActive;
+    }
     /**
      * show the retrieve activity
      *
@@ -149,7 +159,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
                         }
                     } else {
                         mLlRetrieveTel.setBackgroundResource(R.drawable.bg_login_input_error);
-                        showToastForKeyBord(R.string.hint_username_ok);
+                        SimplexToast.showToastForKeyBord(R.string.hint_username_ok,GlobalApplication.getContext(),mKeyBoardIsActive);
                         mTvRetrieveSmsCall.setAlpha(0.4f);
                     }
                 } else if (length > 11) {
@@ -350,12 +360,12 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
         String smsCode = mEtRetrieveCodeInput.getText().toString().trim();
         if (!mMachPhoneNum || TextUtils.isEmpty(smsCode)||TextUtils.isEmpty(tempPwd) || tempPwd.length() < 6) {
             // showToastForKeyBord(R.string.hint_username_ok);
-            showToastForKeyBord(R.string.reset_pwd_hint);
+            SimplexToast.showToastForKeyBord(R.string.reset_pwd_hint,GlobalApplication.getContext(),mKeyBoardIsActive);
             return;
         }
 
         if (!TDevice.hasInternet()) {
-            showToastForKeyBord(R.string.tip_network_error);
+            SimplexToast.showToastForKeyBord(R.string.tip_network_error,GlobalApplication.getContext(),mKeyBoardIsActive);
             return;
         }
         mRequestType = 2;
@@ -383,7 +393,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
                         mTimer.cancel();
                     }
                 }
-                requestFailureHint(e);
+                SimplexToast.requestFailureHint(e,ResetPwdActivity.this);
             }
 
             @Override
@@ -402,7 +412,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
                         break;
                     case 500://注册失败,手机验证码错误
                         mLlRetrieveCode.setBackgroundResource(R.drawable.bg_login_input_error);
-                        showToastForKeyBord(resultBean.getMessage());
+                        SimplexToast.showToastForKeyBord(resultBean.getMessage(),GlobalApplication.getContext(),mKeyBoardIsActive);
                         break;
                     default:
                         break;
@@ -418,7 +428,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
         }
 
         if (!TDevice.hasInternet()) {
-            showToastForKeyBord(R.string.tip_network_error);
+            SimplexToast.showToastForKeyBord(R.string.tip_network_error,GlobalApplication.getContext(),mKeyBoardIsActive);
             return;
         }
 
@@ -466,7 +476,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
                             mTimer.cancel();
                         }
                     }
-                    requestFailureHint(e);
+                    SimplexToast.requestFailureHint(e,ResetPwdActivity.this);
                 }
 
                 @Override
@@ -485,7 +495,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
                             //发送验证码成功,请求进入下一步
                             //意味着我们可以进行第二次请求了,获取phoneToken
                             //mRequestType = 2;
-                            showToastForKeyBord(R.string.send_sms_code_success_hint);
+                            SimplexToast.showToastForKeyBord(R.string.send_sms_code_success_hint,GlobalApplication.getContext(),mKeyBoardIsActive);
                             mEtRetrieveCodeInput.setText(null);
                             break;
                         case 400:
@@ -494,7 +504,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
                                 mTimer.onFinish();
                                 mTimer.cancel();
                             }
-                            showToastForKeyBord(resultBean.getMessage());
+                            SimplexToast.showToastForKeyBord(resultBean.getMessage(),GlobalApplication.getContext(),mKeyBoardIsActive);
                             break;
                         case 500:
                             //异常错误，发送验证码失败,回收timer,需重新请求发送验证码
@@ -502,7 +512,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
                                 mTimer.onFinish();
                                 mTimer.cancel();
                             }
-                            showToastForKeyBord(resultBean.getMessage());
+                            SimplexToast.showToastForKeyBord(resultBean.getMessage(),GlobalApplication.getContext(),mKeyBoardIsActive);
                             break;
                         default:
                             break;
@@ -511,7 +521,8 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
                 }
             });
         } else {
-            GlobalApplication.showToast(getResources().getString(R.string.register_sms_wait_hint), Toast.LENGTH_SHORT);
+
+            SimplexToast.showMyToast(R.string.register_sms_wait_hint,GlobalApplication.getContext());
         }
     }
 

@@ -189,18 +189,18 @@ public class ZhimaAuthFragment extends BaseFragment implements View.OnClickListe
     private void AuthRequest() {
 
         String tempUsername = mEtAuthUsername.getText().toString().trim();
+        String tempIdcard = mEtAuthPassword.getText().toString().trim();
         MyLog.i("GCS","点击返回："+tempUsername);
-        if (!TextUtils.isEmpty(tempUsername)) {
+        if (!TextUtils.isEmpty(tempUsername)&&AccountHelper.isLogin()&&!TextUtils.isEmpty(tempIdcard)) {
 
             //登录成功,请求数据进入用户个人中心页面
             User user = AccountHelper.getUser();
             String token =  user.getToken();
-            String idcard = "35052419910512451X";
             MyLog.i("GCS","token："+token);
-            MyLog.i("GCS","idcard："+idcard);
+            MyLog.i("GCS","idcard："+tempIdcard);
             MyLog.i("GCS","tempUsername："+tempUsername);
 
-                MyApi.authzhima(token, tempUsername, idcard, "李毅伟", "", new StringCallback() {
+                MyApi.authzhima(token, getAES(tempUsername), getAES(tempIdcard), "李毅伟", "", new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         MyLog.i("GCS","Exception："+e);
@@ -217,6 +217,7 @@ public class ZhimaAuthFragment extends BaseFragment implements View.OnClickListe
                             if (code == 200) {
                                 MyLog.i("GCS","跳转到回调url："+response);
                                String url =  resultBean.getResult().toString();
+                                MyLog.i("GCS","授权按钮点击，打开webview："+url);
                                 ShowUIHelper.openInternalBrowser(getActivity(), url);
                             } else {
 

@@ -265,7 +265,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                 finish();
             } else {
                 mBackPressedTime = curTime;
-                Toast.makeText(this, R.string.tip_double_click_exit, Toast.LENGTH_LONG).show();
+                SimplexToast.showMyToast(R.string.tip_double_click_exit,GlobalApplication.getContext());
             }
         } else {
             finish();
