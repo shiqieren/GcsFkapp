@@ -1,7 +1,5 @@
 package com.gcs.fengkong.ui.frags.subfrags;
 
-import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,13 +10,11 @@ import com.gcs.fengkong.ui.ShowUIHelper;
 import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.ui.api.MyApi;
-import com.gcs.fengkong.ui.atys.MainActivity;
 import com.gcs.fengkong.ui.atys.SimpleBackActivity;
 import com.gcs.fengkong.ui.bean.base.ResultBean;
 import com.gcs.fengkong.ui.frags.BaseFragment;
 import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.utils.AppOperator;
-import com.gcs.fengkong.utils.DialogUtil;
 import com.gcs.fengkong.utils.MyLog;
 import com.google.gson.reflect.TypeToken;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -28,7 +24,7 @@ import java.lang.reflect.Type;
 import okhttp3.Call;
 
 
-public class ResetPasswordFrament extends BaseFragment {
+public class ResetPasswordFrament extends BaseFragment{
 
 
     private EditText mEtoldpassword;
@@ -48,6 +44,7 @@ public class ResetPasswordFrament extends BaseFragment {
         mEtnewpassword = view.findViewById(R.id.et_newpassword);
         mEtquerypassword = view.findViewById(R.id.et_querypassword);
         mBtnchange = view.findViewById(R.id.bt_query_change);
+
     }
 
     @Override
@@ -68,10 +65,15 @@ public class ResetPasswordFrament extends BaseFragment {
     private void changeRequest() {
         String oldpass = mEtoldpassword.getText().toString().trim();
         String newpass = mEtnewpassword.getText().toString().trim();
-        String querypass = mEtnewpassword.getText().toString().trim();
+        String querypass = mEtquerypassword.getText().toString().trim();
+
         if (AccountHelper.isLogin()){
             User user = AccountHelper.getUser();
             String token = user.getToken();
+            if (newpass.length()<6 || newpass.length()>18){
+                SimplexToast.showMyToast("请输入至少6-18位新密码！", GlobalApplication.getContext());
+                return;
+            }
             if (newpass.equals(querypass)){
                 MyApi.updatePasswd(token, getAES(oldpass), getAES(newpass), getAES(querypass), new StringCallback() {
                     @Override
@@ -88,26 +90,18 @@ public class ResetPasswordFrament extends BaseFragment {
                             int code = resultBean.getCode();
                             if (code == 200) {
                                 SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
-                                DialogUtil.getConfirmDialog(getActivity(), "修改成功,重新登录", new DialogInterface.OnClickListener() {
+                                ShowUIHelper.clearAppCache(false);
+                                AccountHelper.logoutauto(new Runnable() {
                                     @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        ShowUIHelper.clearAppCache(false);
-                                        // 注销操作
-                                        AccountHelper.logout(mBtnchange, new Runnable() {
-                                            @SuppressLint("SetTextI18n")
-                                            @Override
-                                            public void run() {
-                                               mBtnchange.setFocusable(false);
-                                            }
-                                        });
-                                        ShowUIHelper.showLoginActivity(getActivity());
-                                    }
-                                }, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-
+                                    public void run() {
+                                        SimplexToast.showMyToast("请重新登录",GlobalApplication.getContext());
                                     }
                                 });
+                                getActivity().finish();
+                                // 注销操作
+                                // 清理所有缓存
+
+
                             } else {
 
                                 String message = resultBean.getMessage();
@@ -128,4 +122,5 @@ public class ResetPasswordFrament extends BaseFragment {
         }
 
     }
+
 }

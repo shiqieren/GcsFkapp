@@ -387,6 +387,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
 
             @Override
             public void onError(Call call, Exception e, int id) {
+                MyLog.i("GCS","修改密码返回Exception："+e.toString());
                 if (mRequestType == 1) {
                     if (mTimer != null) {
                         mTimer.onFinish();
@@ -470,6 +471,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
 
                 @Override
                 public void onError(Call call, Exception e, int id) {
+                    MyLog.i("GCS","发送短信验证码返回Exception："+e.toString());
                     if (mRequestType == 1) {
                         if (mTimer != null) {
                             mTimer.onFinish();

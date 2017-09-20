@@ -112,6 +112,7 @@
                 android:lines="1"
                 android:maxLines="1"
                 android:minLines="1"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black_alpha_80"
                 android:textCursorDrawable="@null"

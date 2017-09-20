@@ -270,10 +270,10 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
             User user = AccountHelper.getUser();
             String token =  user.getToken();
             String phone = user.getPhone();
-            MyApi.authzhima(token, getAES("18018746184"), getAES(tempIdcard), tempUsername, "", new StringCallback() {
+            MyApi.authzhima(token, getAES(phone), getAES(tempIdcard), tempUsername, "", new StringCallback() {
                 @Override
                 public void onError(Call call, Exception e, int id) {
-                    MyLog.i("GCS","Exception："+e);
+                    MyLog.i("GCS","身份认证返回Exception："+e);
                 }
 
                 @Override
@@ -283,14 +283,24 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
                         Type type = new TypeToken<ResultBean>() {}.getType();
                         ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
                         int code = resultBean.getCode();
-
-                        if (code == 200) {
-                            MyLog.i("GCS","跳转到回调url："+response);
-                            String url =  resultBean.getResult().toString();
-                            MyLog.i("GCS","授权按钮点击，打开webview："+url);
-                            ShowUIHelper.openInternalBrowser(getActivity(), url);
-                        } else {
-
+                        switch (code) {
+                            case 200://授权url获取成功
+                                MyLog.i("GCS","跳转到回调url："+response);
+                                String url =  resultBean.getResult().toString();
+                                MyLog.i("GCS","授权按钮点击，打开webview："+url);
+                                ShowUIHelper.openInternalBrowser(getActivity(), url);
+                                break;
+                            case 600://已经授权过,成功更新了用户芝麻数据
+                                SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
+                                break;
+                            case 300://账户问题
+                                SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
+                                break;
+                            case 500://失败
+                                SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
+                                break;
+                            default:
+                                break;
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

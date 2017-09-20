@@ -3,6 +3,7 @@ package com.gcs.fengkong.ui.account;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.text.TextUtils;
 import android.util.Log;
@@ -14,6 +15,7 @@ import com.gcs.fengkong.AppConfig;
 import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.ui.api.MyApi;
+import com.gcs.fengkong.ui.notice.NoticeManager;
 import com.gcs.fengkong.utils.MyLog;
 import com.gcs.fengkong.utils.SharedPreferencesHelper;
 
@@ -49,6 +51,9 @@ public final class AccountHelper {
         return getUserId() > 0 && !TextUtils.isEmpty(getCookie());
     }
 
+    public static boolean isAuth() {
+        return getUser().getCertno()!=null && getUser().getName()!=null;
+    }
     public static String getCookie() {
         String cookie = getUser().getCookie();
         return cookie == null ? "" : cookie;
@@ -109,6 +114,8 @@ public final class AccountHelper {
             //设置用户的cookie,会话设置
             MyLog.i("GCS","用户更新文件存储后，每次请求头都要添加该用户cookie，以保持会话匹配");
            //在该登录用户每次请求添加sp中存储的cookie MyApi.setCookieHeader(getCookie());
+            // 登陆成功,重新启动消息服务
+            NoticeManager.init(instances.application);
 
         }
         return saveOk;
@@ -142,7 +149,28 @@ public final class AccountHelper {
 
     }
 
+    public static void logoutauto(final Runnable runnable) {
+        // 清除用户缓存
+        clearUserCache();
+        // 等待缓存清理完成
+        final Handler handler=new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                handler.removeCallbacks(this);
+                User user = SharedPreferencesHelper.load(instances.application, User.class);
+                // 判断当前用户信息是否清理成功
+                if (user == null || user.getId() <= 0) {
+                    //做一些退出后的工作，清除数据+发送切换和退出的广播让需要的接收器处理
+                    clearAndPostBroadcast(instances.application);
+                    runnable.run();
+                } else {
+                    handler.postDelayed(this, 200);
+                }
+            }
+        }, 200);
 
+    }
     /**
      * 当前用户信息清理完成后调用方法清理服务等信息
      *
@@ -153,12 +181,16 @@ public final class AccountHelper {
         // 清理网络相关,cookie,client
         MyApi.destroyAndRestore(application);
 
+        // 用户退出时清理红点并退出服务
+        NoticeManager.clear(application, NoticeManager.FLAG_CLEAR_ALL);
+        NoticeManager.exitServer(application);
+
         // 清理对应缓存路径数据
        // CacheManager.deleteObject(application, 相应的缓存路径);
 
         // Logou  退出的广播
-        //Intent intent = new Intent(AppConfig.INTENT_ACTION_LOGOUT);
-        //application.sendBroadcast(intent);
+        Intent intent = new Intent(AppConfig.INTENT_ACTION_LOGOUT);
+        application.sendBroadcast(intent);
 
     }
 }

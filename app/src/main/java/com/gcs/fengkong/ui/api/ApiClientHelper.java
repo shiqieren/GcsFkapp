@@ -12,22 +12,28 @@ import android.util.Log;
 
 import com.gcs.fengkong.AppConfig;
 import com.gcs.fengkong.GlobalApplication;
+import com.gcs.fengkong.R;
 import com.gcs.fengkong.Setting;
 import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.account.bean.User;
+import com.gcs.fengkong.ui.bean.base.ResultBean;
+import com.gcs.fengkong.ui.widget.SimplexToast;
+import com.gcs.fengkong.utils.AppOperator;
 import com.gcs.fengkong.utils.MACgetUtil;
 import com.gcs.fengkong.utils.MyLog;
 import com.gcs.fengkong.utils.NetWorkUtils;
 import com.gcs.fengkong.utils.UIUtils;
+import com.google.gson.reflect.TypeToken;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import java.lang.reflect.Type;
 import java.util.UUID;
 
 import okhttp3.Call;
 
 import static android.content.Context.TELEPHONY_SERVICE;
 
-public class ApiClientHelper {
+public class ApiClientHelper{
 
 
     /**
@@ -87,7 +93,12 @@ public class ApiClientHelper {
             user.getMore().setImsi(imsi);
             user.getMore().setMac(mac);
             user.getMore().setIpnum(ip);
-            user.setPhone(phone);
+           /*关于通过代码获取手机号
+           if (phone !=null){
+                MyLog.i("GCS","通过后台代码获取到使用者当前手机号");
+                user.setPhone(phone);
+            }*/
+
 
             //地理位置
             String myaddress = user.getMore().getAddress()+"";
@@ -97,12 +108,31 @@ public class ApiClientHelper {
             MyApi.sendUserAgent(imei,imsi,ip,mac,myaddress,token,new StringCallback() {
                 @Override
                 public void onError(Call call, Exception e, int id) {
-
+                    MyLog.i("GCS","平台信息上传响应返回Exception"+e.toString());
                 }
 
                 @Override
                 public void onResponse(String response, int id) {
                     MyLog.i("GCS","平台信息上传响应返回"+response.toString());
+                    try {
+                        Type type = new TypeToken<ResultBean>() {}.getType();
+                        ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
+                        int code = resultBean.getCode();
+                        if (code == 200) {
+                            MyLog.i("GCS","平台信息上传200状态码");
+                        } else {
+                            String message = resultBean.getMessage();
+                            if (code == 500) {
+                                MyLog.i("GCS","状态码500"+message);
+                            }else if (code == 300){
+                                MyLog.i("GCS","状态码300"+message);
+                            }
+
+                            //更新失败应该是不进行任何的本地操作
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             });
         }else {

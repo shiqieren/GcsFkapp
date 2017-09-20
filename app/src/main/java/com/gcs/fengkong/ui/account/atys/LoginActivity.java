@@ -365,10 +365,6 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
     }
 
 
-
-
-
-
     @SuppressWarnings("ConstantConditions")
     private void loginRequest() {
 
@@ -383,7 +379,6 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
 
             if (TDevice.hasInternet()) {
                requestLogin(tempUsername, tempPwd);
-               // requestLoginno(tempUsername, tempPwd);
             } else {
                 SimplexToast.showToastForKeyBord(R.string.footer_type_net_error,GlobalApplication.getContext(),mKeyBoardIsActive);
             }
@@ -411,20 +406,6 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
 
     }
 
-    private void requestLoginno(String tempUsername, String tempPwd){
-        User user = AccountHelper.getUser();
-        user.setToken("xxxxxxxxxx");
-        user.setId(1);
-        user.setAuthstate(new User.AuthState());
-        user.setName(tempUsername);
-        String netcookie = "gcs test login add cookie"+System.currentTimeMillis();
-
-        if (AccountHelper.login(user,netcookie)) {
-            logSucceed();
-        } else {
-            SimplexToast.showToastForKeyBord("登录异常",GlobalApplication.getContext(),mKeyBoardIsActive);
-        }
-    }
     private void requestLogin(String tempUsername, String tempPwd) {
         MyLog.i("GCS","加密前用户名："+tempUsername+",加密前密码："+tempPwd);
         MyApi.login(getAES(tempUsername), getAES(tempPwd), new StringCallback() {
@@ -443,22 +424,23 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
             @Override
             public void onError(Call call, Exception e, int id) {
                 hideWaitDialog();
+                MyLog.i("GCS","登录返回Exception："+e.toString());
                 SimplexToast.requestFailureHint(e,LoginActivity.this);
             }
 
             @Override
             public void onResponse(String response, int id) {
-                MyLog.i("GCS","登录返回response："+response);
+                MyLog.i("GCS","登录成功返回response："+response);
                 try {
                     Type type = new TypeToken<ResultBean<User>>() {}.getType();
                     ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
                     int code = resultBean.getCode();
                     if (code == 200) {
                         User user = (User) resultBean.getResult();
+                        MyLog.i("GCS","登录成功返回User："+user.toString());
                         //模拟用户登录cookie添加
                         String netcookie = "gcs test login test add cookie"+System.currentTimeMillis();
                         user.setId(Long.valueOf(user.getUserid()));
-                        user.setAuthstate(new User.AuthState());
                         if (AccountHelper.login(user,netcookie)) {
                             logSucceed();
                         } else {

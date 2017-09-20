@@ -25,10 +25,12 @@ import com.gcs.fengkong.R;
 import com.gcs.fengkong.Setting;
 import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.account.bean.User;
+import com.gcs.fengkong.ui.api.ApiClientHelper;
 import com.gcs.fengkong.ui.bean.Tab;
 import com.gcs.fengkong.ui.bean.Version;
 import com.gcs.fengkong.ui.frags.StartPagerFragment;
 import com.gcs.fengkong.ui.location.BDLocationAdapter;
+import com.gcs.fengkong.ui.notice.NoticeManager;
 import com.gcs.fengkong.ui.widget.FragmentTabHost;
 import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.update.CheckUpdateManager;
@@ -53,7 +55,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     public static final int LOCATION_PERMISSION = 0x0100;//定位权限
     private static final int RC_EXTERNAL_STORAGE = 0x04;//存储权限
     public static final String CHARSET = "UTF-8";
-
+    public static final String ACTION_NOTICE = "ACTION_NOTICE";
     private Version mVersion;
     private long mBackPressedTime;
 
@@ -148,6 +150,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     @Override
     protected void initData() {
         super.initData();
+        NoticeManager.init(this);
         checkUpdate();
         checkLocation();
 
@@ -167,14 +170,10 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     }
     private void checkLocation() {
         MyLog.i("GCS","开始定位");
-        //首先判断appCode是否存在，如果存在是否大于当前版本的appCode，或者第一次全新安装(默认0)表示没有保存appCode
-        int hasLocationAppCode = Setting.hasLocationAppCode(getApplicationContext());
+        //首先判断appCode是否存在，如果存在是否大于当前版本的appCode，或者第一次全新安装(默认0)表示没有保存appCode，手动加1
+        int hasLocationAppCode = Setting.hasLocationAppCode(getApplicationContext())+1;
         int versionCode = TDevice.getVersionCode();
         MyLog.i("GCS","hasLocationAppCode:"+hasLocationAppCode+"///"+"versionCode:"+versionCode);
-        //当app第一次被安装时，不管是覆盖安装（不管是否有定位权限）还是全新安装都必须进行定位请求
-        //直接进行位置信息定位并上传-暂时不做登录状态判断
-        Setting.updateLocationAppCode(getApplicationContext(), versionCode);
-        requestLocationPermission();
          if ((hasLocationAppCode <= 0) || (hasLocationAppCode > versionCode)) {
             //如果是登陆状态
             if (AccountHelper.isLogin()) {
@@ -196,6 +195,8 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         }
     }
 
+
+
     @Override
     public void call(Version version) {
         this.mVersion = version;
@@ -216,7 +217,6 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
      */
     @AfterPermissionGranted(LOCATION_PERMISSION)
     private void requestLocationPermission() {
-        MyLog.i("GCS","授权");
         if (EasyPermissions.hasPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.READ_PHONE_STATE)) {
             startLbs();
@@ -225,6 +225,8 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                     Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.READ_PHONE_STATE);
         }
     }
+
+
 
     @Override
     public void onPermissionsGranted(int requestCode, List<String> perms) {
@@ -244,6 +246,8 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                     }
                 }, null).show();
 
+            }else {
+                Setting.updateLocationPermission(getApplicationContext(), false);
             }
         }
 
@@ -401,6 +405,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        NoticeManager.stopListen(this);
         //撤销网络请求
         OkHttpUtils.getInstance().cancelTag(this);
         releaseLbs();

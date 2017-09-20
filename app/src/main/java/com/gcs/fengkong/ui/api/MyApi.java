@@ -317,4 +317,16 @@ public class MyApi {
         OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/updatePasswd.do")).params(params).build().execute(callback);
         MyLog.i("GCS","更新密码url:"+getAbsoluteApiUrl("wind-phone/phone/updatePasswd.do"));
     }
+
+    /**
+     * feedback
+     *
+     */
+    public static void feedBack(String token, String message,StringCallback callback) {
+        Map<String, String> params = new HashMap<>();
+        params.put("token",token);
+        params.put("message",message);
+        OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/feedBackMess.do")).params(params).build().execute(callback);
+        MyLog.i("GCS","意见反馈url:"+getAbsoluteApiUrl("wind-phone/phone/feedBackMess.do"));
+    }
 }

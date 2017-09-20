@@ -12,6 +12,8 @@ import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.account.atys.LoginActivity;
 import com.gcs.fengkong.ui.bean.SimpleBackPage;
 import com.gcs.fengkong.ui.interf.OnTabReselectListener;
+import com.gcs.fengkong.ui.notice.NoticeBean;
+import com.gcs.fengkong.ui.notice.NoticeManager;
 import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.utils.DialogUtil;
 import com.gcs.fengkong.ui.ShowUIHelper;
@@ -23,7 +25,7 @@ import com.gcs.fengkong.ui.ShowUIHelper;
  * 用户个人界面
  */
 
-public class UserInfoFragment extends BaseFragment implements View.OnClickListener, OnTabReselectListener {
+public class UserInfoFragment extends BaseFragment implements View.OnClickListener, OnTabReselectListener,NoticeManager.NoticeNotify {
 
     private ImageView mIvLogoSetting;
     private LinearLayout mRl_message;
@@ -113,6 +115,7 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void initData() {
         super.initData();
+        NoticeManager.bindNotify(this);
     }
 
     /**
@@ -196,4 +199,13 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
         sendRequestData();
     }
 
+    @Override
+    public void onNoticeArrived(NoticeBean bean) {
+
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        NoticeManager.unBindNotify(this);
+    }
 }

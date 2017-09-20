@@ -62,7 +62,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_18"
                     android:gravity="center"
-                    android:text="管云" />
+                    android:text="未认证" />
 
 
             </LinearLayout>

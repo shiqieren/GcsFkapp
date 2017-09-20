@@ -1,5 +1,6 @@
 package com.gcs.fengkong.ui.frags;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,14 +11,16 @@ import android.view.ViewGroup;
 
 
 import com.gcs.fengkong.GlobalApplication;
+import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.api.secret.AES;
+import com.gcs.fengkong.utils.DialogUtil;
 import com.gcs.fengkong.utils.MyLog;
 
 import java.io.Serializable;
 
 
 public abstract class BaseFragment extends Fragment implements View.OnClickListener{
-
+    private ProgressDialog mDialog;
     protected Context mContext;
     protected View mView;
     protected Bundle mBundle;
@@ -136,7 +139,41 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     protected void onRestartInstance(Bundle bundle) {
 
     }
+    @Override
+    public void onStop() {
+        super.onStop();
+        hideWaitDialog();
+    }
+    /**
+     * show FocusWaitDialog
+     *
+     * @return progressDialog
+     */
+    protected ProgressDialog showFocusWaitDialog() {
 
+        String message = getResources().getString(R.string.progress_submit);
+        if (mDialog == null) {
+            mDialog = DialogUtil.getProgressDialog(getActivity(), message, false);//DialogHelp.getWaitDialog(this, message);
+        }
+        mDialog.show();
+
+        return mDialog;
+    }
+    /**
+     * hide waitDialog
+     */
+    protected void hideWaitDialog() {
+        ProgressDialog dialog = mDialog;
+        if (dialog != null) {
+            mDialog = null;
+            try {
+                dialog.cancel();
+                // dialog.dismiss();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
     /**
      * 加密
      * AES

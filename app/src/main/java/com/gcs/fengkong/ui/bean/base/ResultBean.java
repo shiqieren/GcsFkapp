@@ -4,6 +4,8 @@ package com.gcs.fengkong.ui.bean.base;
 //import com.lyw.app.ui.notice.NoticeBean;
 //import com.lyw.app.ui.notice.NoticeManager;
 
+import com.gcs.fengkong.ui.notice.NoticeBean;
+
 /**
  * Created by lyw
  * on 16-5-23.
@@ -22,7 +24,7 @@ public class ResultBean<T> {
     private int code;
     private String msg;
     ///private String time;
-   // private NoticeBean notice;
+    private NoticeBean notice;
 
     public T getResult() {
         return obj;
@@ -65,14 +67,13 @@ public class ResultBean<T> {
        // NoticeManager.publish(this, this.notice);
         return code == RESULT_SUCCESS && obj != null;
     }
-/*
     public NoticeBean getNotice() {
         return notice;
     }
 
     public void setNotice(NoticeBean notice) {
         this.notice = notice;
-    }*/
+    }
 
     @Override
     public String toString() {

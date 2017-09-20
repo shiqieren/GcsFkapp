@@ -382,6 +382,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
 
             @Override
             public void onError(Call call, Exception e, int id) {
+                MyLog.i("GCS","注册返回Exception："+e.toString());
                 if (mRequestType == 1) {
                     if (mTimer != null) {
                         mTimer.onFinish();
@@ -393,7 +394,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
 
             @Override
             public void onResponse(String response, int id) {
-                MyLog.i("GCS","注册返回response："+response);
+                MyLog.i("GCS","注册返回成功response："+response);
 
                 Type type = new TypeToken<ResultBean>() {
                 }.getType();
@@ -474,6 +475,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
 
                 @Override
                 public void onError(Call call, Exception e, int id) {
+                    MyLog.i("GCS","发送注册短信验证码返回Exception："+e.toString());
                     if (mRequestType == 1) {
                         if (mTimer != null) {
                             mTimer.onFinish();
@@ -485,7 +487,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
 
                 @Override
                 public void onResponse(String response, int id) {
-                    MyLog.i("GCS","发送短信验证码返回response："+response);
+                    MyLog.i("GCS","发送注册短信验证码返回response："+response);
                     Type type = new TypeToken<ResultBean>() {
                     }.getType();
                     ResultBean resultBean = AppOperator.createGson().fromJson(response, type);

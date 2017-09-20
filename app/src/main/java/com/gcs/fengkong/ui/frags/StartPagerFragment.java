@@ -1,7 +1,12 @@
 package com.gcs.fengkong.ui.frags;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
@@ -23,6 +28,7 @@ import com.gcs.fengkong.Setting;
 import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.ui.account.bean.VerifyStatus;
+import com.gcs.fengkong.ui.adapter.BaseRecyclerAdapter;
 import com.gcs.fengkong.ui.api.ApiClientHelper;
 import com.gcs.fengkong.ui.api.MyApi;
 import com.gcs.fengkong.ui.baiqishiauthpager.ViewLoginActivity;
@@ -30,6 +36,7 @@ import com.gcs.fengkong.ui.bean.SimpleBackPage;
 import com.gcs.fengkong.ui.bean.base.ResultBean;
 import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.ui.widget.statusbar.StatusBarCompat;
+import com.gcs.fengkong.update.DownloadService;
 import com.gcs.fengkong.utils.AppOperator;
 import com.gcs.fengkong.utils.DialogUtil;
 import com.gcs.fengkong.ui.ShowUIHelper;
@@ -39,8 +46,11 @@ import com.google.gson.reflect.TypeToken;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.lang.reflect.Type;
+import java.util.List;
 
 import okhttp3.Call;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
 
 /**
@@ -77,7 +87,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
             MyLog.i("GCS", "网络实时的User，目前先用本地获取的User");
             updateView(user);
             MyLog.i("GCS","初始化发送设备信息和定位信息");
-            ApiClientHelper.getUserAgent(GlobalApplication.getInstance());
+
         } else {
             hideView();
         }
@@ -93,22 +103,23 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                 MyApi.getverifyStatus(user.getToken(), new StringCallback() {
                 @Override
                 public void onError(Call call, Exception e, int id) {
-                    MyLog.i("GCS",e.toString());
+                    MyLog.i("GCS","获取返回status信息Exception："+e.toString());
                 }
 
                 @Override
                 public void onResponse(String response, int id) {
-                    MyLog.i("GCS","获取返回status信息："+response);
+                    MyLog.i("GCS","获取返回status成功信息："+response);
                     try {
                         Type type = new TypeToken<ResultBean<VerifyStatus>>() {}.getType();
                         ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
                         int code = resultBean.getCode();
                         if (code == 200) {
                             VerifyStatus status = (VerifyStatus) resultBean.getResult();
+                           // user.setId(status.getPhone_user_id());
                             MyLog.i("GCS","返回statusid"+String.valueOf(status.getPhone_user_id()));
                             MyLog.i("GCS","Userid"+user.getUserid());
-
-
+                            MyLog.i("GCS","id"+user.getId());
+                            MyLog.i("GCS","登录状态和在线状态下返回的电话，身份证号码，姓名，比对容错处理");
                             user.setPhone(unAES(status.getPhone()));
                             user.setCertno(unAES(status.getCertno()));
                             user.setName(unAES(status.getName()));
@@ -230,12 +241,19 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                     ShowUIHelper.showLoginActivity(getActivity());
                     return;
                 }
-                configBqsParams();
                 ShowUIHelper.showIdentityAuth(getActivity());
                 break;
             case R.id.cv_bankcard:
                 if (!AccountHelper.isLogin()) {
                     ShowUIHelper.showLoginActivity(getActivity());
+                    return;
+                }else if (!AccountHelper.isAuth()){
+                    DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号身份进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ShowUIHelper.showIdentityAuth(getActivity());
+                        }
+                    }).show();
                     return;
                 }
                 configBqsParams();
@@ -245,6 +263,14 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                 if (!AccountHelper.isLogin()) {
                     ShowUIHelper.showLoginActivity(getActivity());
                     return;
+                }else if (!AccountHelper.isAuth()){
+                    DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ShowUIHelper.showIdentityAuth(getActivity());
+                        }
+                    }).show();
+                    return;
                 }
                 configBqsParams();
                 ShowUIHelper.showZhimaAuth(getActivity());
@@ -252,6 +278,14 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
             case R.id.cv_alipay:
                 if (!AccountHelper.isLogin()) {
                     ShowUIHelper.showLoginActivity(getActivity());
+                    return;
+                }else if (!AccountHelper.isAuth()){
+                    DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号身份进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ShowUIHelper.showIdentityAuth(getActivity());
+                        }
+                    }).show();
                     return;
                 }
                 configBqsParams();
@@ -263,6 +297,14 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                 if (!AccountHelper.isLogin()) {
                     ShowUIHelper.showLoginActivity(getActivity());
                     return;
+                }else if (!AccountHelper.isAuth()){
+                    DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号身份进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ShowUIHelper.showIdentityAuth(getActivity());
+                        }
+                    }).show();
+                    return;
                 }
                 configBqsParams();
                 intent.putExtra(ViewLoginActivity.PARAMS_DATA_TYPE, ServiceId.TB_SERVICE_ID);
@@ -272,6 +314,14 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
             case R.id.cv_jd:
                 if (!AccountHelper.isLogin()) {
                     ShowUIHelper.showLoginActivity(getActivity());
+                    return;
+                }else if (!AccountHelper.isAuth()){
+                    DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号身份进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ShowUIHelper.showIdentityAuth(getActivity());
+                        }
+                    }).show();
                     return;
                 }
                 configBqsParams();
@@ -283,6 +333,14 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                 if (!AccountHelper.isLogin()) {
                     ShowUIHelper.showLoginActivity(getActivity());
                     return;
+                }else if (!AccountHelper.isAuth()){
+                    DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号身份进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            ShowUIHelper.showIdentityAuth(getActivity());
+                        }
+                    }).show();
+                    return;
                 }
                 configBqsParams();
                 ShowUIHelper.showOperatorAuth(getActivity());
@@ -292,13 +350,20 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                     ShowUIHelper.showLoginActivity(getActivity());
                     return;
                 }
-                configBqsParams();
                 showAuthbookconfirm();
                 break;
             case R.id.iv_logo_setting:
+                if (!AccountHelper.isLogin()) {
+                    ShowUIHelper.showLoginActivity(getActivity());
+                    return;
+                }
                 ShowUIHelper.showSimpleBack(getActivity(), SimpleBackPage.SETTING);
                 break;
             case R.id.iv_avatar:
+                if (!AccountHelper.isLogin()) {
+                    ShowUIHelper.showLoginActivity(getActivity());
+                    return;
+                }
                 ShowUIHelper.showSimpleBack(getActivity(), SimpleBackPage.PERSONAL_DATA);
 
                 break;
@@ -307,20 +372,38 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                 break;
         }
     }
-    /*设置该登录用户的全局参数*/
+    /*设置该登录用户的身份认证信息*/
     private void configBqsParams() {
-
+        User user = AccountHelper.getUser();
         BqsParams params = new BqsParams();
         params.setPartnerId("guanchesuo");
-        params.setName("李全朴");
-        params.setCertNo("410927199307065033");
-        params.setMobile("18018746184");
+        if(user.getName()!=null){
+            params.setName(unAES(user.getName()));
+        }else {
+            MyLog.i("GCS","白骑士姓名参数为空");
+            SimplexToast.showMyToast("身份认证信息不完整或者有误，请重新认证",GlobalApplication.getContext());
+            return;
+        }
+        if(user.getCertno()!=null){
+            params.setCertNo(unAES(user.getCertno()));
+        }
+        else {
+            MyLog.i("GCS","白骑士姓名参数为空");
+            SimplexToast.showMyToast("身份认证信息不完整或者有误，请重新认证",GlobalApplication.getContext());
+            return;
+        }
+        if(user.getPhone()!=null){
+            params.setMobile(unAES(user.getPhone()));
+        }
 
 
-        Log.i("GCS","guanchesuo");
-        Log.i("GCS","李全朴");
-        Log.i("GCS","410927199307065033");
-        Log.i("GCS","18018746184");
+
+
+
+        MyLog.i("GCS","guanchesuo");
+        MyLog.i("GCS","李全朴");
+        MyLog.i("GCS","410927199307065033");
+        MyLog.i("GCS","18018746184");
 
         BqsCrawlerCloudSDK.setParams(params);
 
@@ -403,7 +486,9 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
     private void updateView(User userInfo) {
         MyLog.i("GCS","更新UI登录后的显示状态");
         MyLog.i("GCS","头像更新");
-        mTv_name.setText(userInfo.getName());
+            if(userInfo.getName()!=null){
+                mTv_name.setText(unAES(userInfo.getName()));
+            }
             if (userInfo.getAuthstate().getAuth_identity()!=null){
                 if(userInfo.getAuthstate().getAuth_identity()){
                     mLlidentityiv.setVisibility(View.VISIBLE);
@@ -502,4 +587,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
         mLloperatoriv.setVisibility(View.GONE);
         mLlcontactiv.setVisibility(View.GONE);
     }
+
+
+
 }

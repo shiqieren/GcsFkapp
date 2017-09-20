@@ -118,7 +118,7 @@ public class ViewLoginActivity extends BaseActivity implements OnLoginViewListen
     @Override
     public void onLoginSuccess(int serviceId) {
         //AppCacheUtils.getInstance(ViewLoginActivity.this).put(serviceId + "", true);
-        if (AccountHelper.isLogin()){
+        if (AccountHelper.isLogin()&&AccountHelper.isAuth()){
             User user = AccountHelper.getUser();
             String s = "";
             if (serviceId == ServiceId.JD_SERVICE_ID) {

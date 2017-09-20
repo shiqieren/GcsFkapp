@@ -461,6 +461,7 @@ public class LoginSmscodeActivity extends AccountBaseActivity implements View.On
 
                 @Override
                 public void onError(Call call, Exception e, int id) {
+                    MyLog.i("GCS","发送短信验证码返回Exception："+e.toString());
                         if (mTimer != null) {
                             mTimer.onFinish();
                             mTimer.cancel();
@@ -576,12 +577,13 @@ public class LoginSmscodeActivity extends AccountBaseActivity implements View.On
             @Override
             public void onError(Call call, Exception e, int id) {
                 hideWaitDialog();
+                MyLog.i("GCS","短信登录返回Exception："+e.toString());
                 SimplexToast.requestFailureHint(e,LoginSmscodeActivity.this);
             }
 
             @Override
             public void onResponse(String response, int id) {
-                MyLog.i("GCS","登录返回response："+response);
+                MyLog.i("GCS","短信登录成功返回response："+response);
                 try {
                     Type type = new TypeToken<ResultBean<User>>() {}.getType();
                     ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
@@ -591,8 +593,6 @@ public class LoginSmscodeActivity extends AccountBaseActivity implements View.On
                         //模拟用户登录cookie添加
                         String netcookie = "gcs test login test add cookie"+System.currentTimeMillis();
                         user.setId(Long.valueOf(unAES(user.getUserid())));
-                        user.setName(unAES(user.getPhone()));
-                        user.setAuthstate(new User.AuthState());
                         if (AccountHelper.login(user,netcookie)) {
                             logSucceed();
                         } else {

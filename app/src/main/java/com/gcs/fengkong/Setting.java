@@ -64,7 +64,7 @@ public final class Setting {
             if (urls.length > 0) {
                 url = urls[0];
             } else {
-                url = "http://192.168.31.11:8080/";
+                url = "http://192.168.31.254:8080/";
             }
             updateServerUrl(context, url);
         }
