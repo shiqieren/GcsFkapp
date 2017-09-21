@@ -6,17 +6,21 @@ import android.view.View;
 
 import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.Setting;
+import com.gcs.fengkong.ui.bean.ContactBean;
 import com.gcs.fengkong.utils.MyLog;
+import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 import com.zhy.http.okhttp.cookie.CookieJarImpl;
 import com.zhy.http.okhttp.cookie.store.PersistentCookieStore;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.CookieJar;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.internal.http2.Header;
 
@@ -342,4 +346,17 @@ public class MyApi {
         OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/changeStatus.do")).params(params).build().execute(callback);
         MyLog.i("GCS","更改状态url:"+getAbsoluteApiUrl("wind-phone/phone/changeStatus.do"));
     }
+
+    /**
+     * uploadcontacts
+     *
+     */
+    public static void batchAdd(String token, List<ContactBean> contactlist, StringCallback callback) {
+        Map<String, String> params = new HashMap<>();
+        params.put("token",token);
+        OkHttpUtils.postString().url(getAbsoluteApiUrl("wind-phone/contactController/batchAdd.do")).content(new Gson().toJson(contactlist)).mediaType(MediaType.parse("application/json; charset=utf-8")).build().execute(callback);
+        MyLog.i("GCS","更改状态url:"+getAbsoluteApiUrl("wind-phone/contactController/batchAdd.do"));
+    }
+
+
 }

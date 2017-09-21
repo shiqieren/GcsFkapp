@@ -2,23 +2,16 @@ package com.gcs.fengkong.ui.atys;
 
 import android.app.ListActivity;
 import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
-import android.provider.ContactsContract.CommonDataKinds.Photo;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,8 +20,6 @@ import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.bean.ContactBean;
 import com.gcs.fengkong.utils.MyLog;
 import com.google.gson.Gson;
-
-import java.io.InputStream;
 import java.util.ArrayList;
 
 public class PhoneAdressActivity extends ListActivity {
@@ -71,7 +62,7 @@ public class PhoneAdressActivity extends ListActivity {
 		mListView = this.getListView();
 		/** 得到手机通讯录联系人信息 **/
 		mAllContact = getPhoneContacts();
-		MyLog.w("GCS",new Gson().toJson(mAllContact));
+		MyLog.w("GCS","全部联系人"+new Gson().toJson(mAllContact));
 
 		mAdapter = new MyListAdapter(this);
 		setListAdapter(mAdapter);

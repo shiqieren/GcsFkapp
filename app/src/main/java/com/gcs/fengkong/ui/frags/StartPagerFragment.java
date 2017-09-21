@@ -33,6 +33,7 @@ import com.gcs.fengkong.ui.api.ApiClientHelper;
 import com.gcs.fengkong.ui.api.MyApi;
 import com.gcs.fengkong.ui.atys.PhoneAdressActivity;
 import com.gcs.fengkong.ui.baiqishiauthpager.ViewLoginActivity;
+import com.gcs.fengkong.ui.bean.ContactBean;
 import com.gcs.fengkong.ui.bean.SimpleBackPage;
 import com.gcs.fengkong.ui.bean.base.ResultBean;
 import com.gcs.fengkong.ui.widget.SimplexToast;
@@ -78,6 +79,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
     private LinearLayout mLljdiv;
     private LinearLayout mLloperatoriv;
     private LinearLayout mLlcontactiv;
+    private List<ContactBean> contactlist;
 
     @Override
     public void onResume() {
@@ -478,14 +480,8 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
             @Override
             public void onClick(View view) {
                 MyLog.i("GCS","模拟通讯录授权成功");
-                if (AccountHelper.isLogin()){
-                    User user = AccountHelper.getUser();
-                    //设置该用户运营商授权状态
-                 //   user.getAuthstate().setAuth_contact(true);
-                    AccountHelper.updateUserCache(user);
-                    ShowUIHelper.openInternalBrowser(getActivity(), "http://www.guanchesuo.com/");
-                }
-
+                ShowUIHelper.openInternalBrowser(getActivity(), "http://www.guanchesuo.com/");
+               // contactlist = getContactslist();
             }
         });
         bt_cancle.setOnClickListener(new View.OnClickListener() {
@@ -498,9 +494,21 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                     User user = AccountHelper.getUser();
                     sendRequestData(user);
                     updateView(user);
+                  /*  MyApi.batchAdd(user.getToken(),contactlist, new StringCallback() {
+                        @Override
+                        public void onError(Call call, Exception e, int id) {
+
+                        }
+
+                        @Override
+                        public void onResponse(String response, int id) {
+
+                        }
+                    });*/
                 } else {
                     hideView();
                 }
+
                 Intent intent = new Intent(getActivity(), PhoneAdressActivity.class);
                 startActivity(intent);
             }
