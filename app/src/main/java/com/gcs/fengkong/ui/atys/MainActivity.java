@@ -219,7 +219,10 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     private void requestLocationPermission() {
         if (EasyPermissions.hasPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.READ_PHONE_STATE)) {
+            MyLog.i("GCS","开始定位");
             startLbs();
+            MyLog.i("GCS","请求手机状态信息");
+            ApiClientHelper.getUserAgent(GlobalApplication.getInstance());
         } else {
             EasyPermissions.requestPermissions(this, getString(R.string.need_lbs_permission_hint), LOCATION_PERMISSION,
                     Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.READ_PHONE_STATE);
@@ -246,6 +249,13 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                     }
                 }, null).show();
 
+            }else if (perm.equals(Manifest.permission.READ_PHONE_STATE)){
+                DialogUtil.getConfirmDialog(this, "温馨提示", "需要开启管云风控对您手机的状态读取", "去开启", "取消", true, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(Settings.ACTION_APPLICATION_SETTINGS));
+                    }
+                }, null).show();
             }else {
                 Setting.updateLocationPermission(getApplicationContext(), false);
             }
