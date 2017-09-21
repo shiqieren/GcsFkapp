@@ -7,7 +7,7 @@
 
     android:useLevel= "false" >
 
-    <solid android:color= "#80FFFFFF" />
+    <solid android:color= "#80c0c0c0" />
 
 
     <size android:width= "20dp"

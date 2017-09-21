@@ -19,17 +19,19 @@
         android:background="@color/white"
         android:gravity="center_vertical"
         android:padding="@dimen/lay_15"
+        android:textSize="@dimen/font_16"
+        android:textColor="@color/defaultTextColor"
         android:text="@string/feedback" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/gray"
-        android:layout_marginTop="10dip"/>
+        android:alpha="0.6"
+        android:background="@color/darker_gray2"/>
     <EditText
         android:id="@+id/et_feed_back"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="200dp"
         android:layout_marginBottom="@dimen/lay_12"
         android:layout_marginLeft="@dimen/lay_16"
         android:layout_marginRight="@dimen/lay_16"
@@ -37,16 +39,11 @@
         android:background="@drawable/edit_bg"
         android:hint="@string/feedback_hint"
         android:gravity="top"
+        android:textColor="@color/darker_gray2"
         android:padding="@dimen/lay_8"
-
         android:textSize="@dimen/font_14"/>
 
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:background="@color/gray"
-        android:layout_marginTop="10dip"/>
     <Button
         android:id="@+id/btn_commit"
         android:clickable="false"

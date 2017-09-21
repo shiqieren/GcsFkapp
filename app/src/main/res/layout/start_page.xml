@@ -46,7 +46,7 @@
                         app:civ_border_width="@dimen/lay_4"
                         android:background="@drawable/head_shape_bg"
                         android:layout_centerInParent="true"
-                        app:civ_border_color="#80F0F0F0"
+                        app:civ_border_color="#80F5F5F5"
                         android:padding="@dimen/lay_12"
                         android:layout_below="@+id/view_set"
                         android:src = "@mipmap/widget_default_face"

@@ -141,7 +141,7 @@
             android:layout_height="50dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="355dp"
+            android:layout_marginTop="25dp"
             android:background="@drawable/bg_login_submit"
             android:text="@string/bt_beginauth_string"
             android:textColor="@color/white"

@@ -53,21 +53,6 @@ public class SettingsFragment extends BaseFragment implements EasyPermissions.Pe
 
     private Version mVersion;
 
-
-  /*  @Override
-    public View onCreateView(LayoutInflater inflater,
-                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_setting, container,
-                false);
-        initView(view);
-        initData();
-        return view;
-    }*/
-
-
-
-
-
     @Override
     public void initView(View view) {
         ((SimpleBackActivity)getActivity()).setToolBarTitle(R.string.actionbar_title_setting);
@@ -114,11 +99,11 @@ public class SettingsFragment extends BaseFragment implements EasyPermissions.Pe
         boolean login = AccountHelper.isLogin();
         if (!login) {
             mCancel.setVisibility(View.INVISIBLE);
-            mSettingLineTop.setVisibility(View.INVISIBLE);
+            mSettingLineTop.setVisibility(View.GONE);
             mSettingLineBottom.setVisibility(View.INVISIBLE);
         } else {
             mCancel.setVisibility(View.VISIBLE);
-            mSettingLineTop.setVisibility(View.VISIBLE);
+            mSettingLineTop.setVisibility(View.GONE);
             mSettingLineBottom.setVisibility(View.VISIBLE);
         }
     }
@@ -195,7 +180,7 @@ public class SettingsFragment extends BaseFragment implements EasyPermissions.Pe
                         mTvCacheSize.setText("0KB");
                         SimplexToast.showMyToast(R.string.logout_success_hint,GlobalApplication.getContext());
                         mCancel.setVisibility(View.INVISIBLE);
-                        mSettingLineTop.setVisibility(View.INVISIBLE);
+                        mSettingLineTop.setVisibility(View.GONE);
                         mSettingLineBottom.setVisibility(View.INVISIBLE);
                     }
                 });

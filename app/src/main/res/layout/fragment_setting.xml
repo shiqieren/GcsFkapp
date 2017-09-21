@@ -12,7 +12,8 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1px"
+            android:layout_height="0.5dp"
+            android:alpha="0.6"
             android:background="@color/gray"
             android:layout_marginTop="10dip"/>
 
@@ -183,7 +184,8 @@
         </FrameLayout>
         <View
             android:layout_width="match_parent"
-            android:layout_height="1px"
+            android:layout_height="0.5dp"
+            android:alpha="0.6"
             android:background="@color/gray"/>
 
         <FrameLayout
@@ -223,7 +225,8 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1px"
+            android:layout_height="0.5dp"
+            android:alpha="0.6"
             android:background="@color/gray"/>
 
         <FrameLayout
@@ -262,8 +265,14 @@
         </FrameLayout>
         <View
             android:layout_width="match_parent"
-            android:layout_height="1px"
+            android:layout_height="0.5dp"
+            android:alpha="0.6"
             android:background="@color/gray"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/white"/>
 
         <View
             android:id="@+id/setting_line_top"
@@ -278,10 +287,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:padding="@dimen/space_12"
             android:gravity="center_vertical"
             android:orientation = "horizontal"
-            android:background="@drawable/ic_material">
+            android:background="@color/white">
             <Button
                 android:clickable="false"
                 android:layout_width="match_parent"
@@ -289,6 +297,7 @@
                 android:layout_marginLeft="24dp"
                 android:layout_marginRight="24dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/bg_login_submit_lock"
                 android:text="@string/setting_loginout"
                 android:textColor="@color/white"

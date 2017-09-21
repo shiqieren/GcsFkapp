@@ -11,7 +11,8 @@
                 />
             <stroke
                 android:width="0.5px"
-                android:color="#505050"/>
+                android:color="#80505050"/>
+
         </shape>
     </item>
 </selector>

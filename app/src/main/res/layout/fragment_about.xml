@@ -31,7 +31,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/gray"
+            android:alpha="0.6"
+            android:background="@color/darker_gray2"
             android:layout_marginTop="10dp" />
 
     </LinearLayout>
