@@ -26,15 +26,24 @@ import com.gcs.fengkong.R;
 import com.gcs.fengkong.Setting;
 import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.account.RichTextParser;
+import com.gcs.fengkong.ui.api.MyApi;
 import com.gcs.fengkong.ui.baiqishiauthpager.MnoAuthActivity;
 import com.gcs.fengkong.ui.baiqishiauthpager.MnoResetPwdActivity;
 import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.ui.atys.SimpleBackActivity;
+import com.gcs.fengkong.ui.bean.base.ResultBean;
 import com.gcs.fengkong.ui.frags.BaseFragment;
 import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.ui.widget.TimerButton;
+import com.gcs.fengkong.utils.AppOperator;
 import com.gcs.fengkong.utils.DialogUtil;
 import com.gcs.fengkong.utils.MyLog;
+import com.google.gson.reflect.TypeToken;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import java.lang.reflect.Type;
+
+import okhttp3.Call;
 
 /**
  * Created by Administrator on 0029 8-29.
@@ -251,14 +260,51 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
     }
 
     @Override
+    public void onLoginFailure(String s, String s1) {
+            SimplexToast.showMyToast("认证失败："+s1,GlobalApplication.getContext());
+            mDialog.hide();
+    }
+
+    @Override
     public void onLoginSuccess() {
 
         if (AccountHelper.isLogin()){
             //登录成功
-            SimplexToast.showMyToast("认证成功",GlobalApplication.getContext());
             User user = AccountHelper.getUser();
             //设置该用户运营商授权状态
-            user.getAuthstate().setAuth_operator(true);
+            user.getAuthstate().setAuth_operator("1");
+            MyApi.changestatus(user.getToken(), "operator", "1", new StringCallback() {
+                @Override
+                public void onError(Call call, Exception e, int id) {
+
+                }
+
+                @Override
+                public void onResponse(String response, int id) {
+                    try {
+                        Type type = new TypeToken<ResultBean>() {}.getType();
+                        ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
+                        //注册结果返回该用户User
+                        int code = resultBean.getCode();
+                        String msg = resultBean.getMessage();
+                        SimplexToast.showMyToast(msg,GlobalApplication.getContext());
+                        switch (code) {
+                            case 200://
+                                SimplexToast.showMyToast("运营商成功登录"+msg,GlobalApplication.getContext());
+                                break;
+                            case 500://
+                                SimplexToast.showMyToast("运营商已经登录成功,,但是服务器状态值未上传成功，失败信息："+msg,GlobalApplication.getContext());
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+            });
             AccountHelper.updateUserCache(user);
             MyLog.i("GCS","更新sp中user的认证状态值");
             getActivity().finish();
@@ -285,11 +331,6 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
         MyLog.i("GCS","请输入登录短信验证码");
     }
 
-    @Override
-    public void onLoginFailure(String s, String s1) {
-        mDialog.hide();
-        SimplexToast.showMyToast("认证失败",GlobalApplication.getContext());
-    }
 
 
     @Override

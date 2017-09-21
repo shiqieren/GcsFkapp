@@ -35,6 +35,7 @@ import com.gcs.fengkong.ui.widget.FragmentTabHost;
 import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.update.CheckUpdateManager;
 import com.gcs.fengkong.update.DownloadService;
+import com.gcs.fengkong.utils.AppOperator;
 import com.gcs.fengkong.utils.DialogUtil;
 import com.gcs.fengkong.utils.MyLog;
 import com.gcs.fengkong.ui.ShowUIHelper;
@@ -153,11 +154,13 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         NoticeManager.init(this);
         checkUpdate();
         checkLocation();
-
+        checkPhoneState();
         //app_config文件创建
         AppConfig.getAppConfig(this).set("cookie", "模拟版本更新后cookie迁移"+String.valueOf(System.currentTimeMillis()));
 
     }
+
+
 
 
     private void checkUpdate() {
@@ -194,8 +197,11 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
             }
         }
     }
-
-
+    private void checkPhoneState() {
+        if (AccountHelper.isLogin()) {
+            requestReadPhoneState();
+        }
+    }
 
     @Override
     public void call(Version version) {
@@ -212,6 +218,21 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         }
     }
 
+    public void requestReadPhoneState() {
+        if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_PHONE_STATE)) {
+            MyLog.i("GCS","请求手机状态信息");
+            AppOperator.runOnThread(new Runnable() {
+                @Override
+                public void run() {
+                    MyLog.i("GCS","线程池开启线程，异步上传手机状态信息");
+                    ApiClientHelper.getUserAgent(GlobalApplication.getInstance());
+                }
+            });
+
+        } else {
+            EasyPermissions.requestPermissions(this, "手机状态权限", 0, Manifest.permission.READ_PHONE_STATE);
+        }
+    }
     /**
      * proxy request permission
      */
@@ -221,8 +242,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                 Manifest.permission.READ_PHONE_STATE)) {
             MyLog.i("GCS","开始定位");
             startLbs();
-            MyLog.i("GCS","请求手机状态信息");
-            ApiClientHelper.getUserAgent(GlobalApplication.getInstance());
+
         } else {
             EasyPermissions.requestPermissions(this, getString(R.string.need_lbs_permission_hint), LOCATION_PERMISSION,
                     Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.READ_PHONE_STATE);
@@ -249,13 +269,6 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                     }
                 }, null).show();
 
-            }else if (perm.equals(Manifest.permission.READ_PHONE_STATE)){
-                DialogUtil.getConfirmDialog(this, "温馨提示", "需要开启管云风控对您手机的状态读取", "去开启", "取消", true, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        startActivity(new Intent(Settings.ACTION_APPLICATION_SETTINGS));
-                    }
-                }, null).show();
             }else {
                 Setting.updateLocationPermission(getApplicationContext(), false);
             }

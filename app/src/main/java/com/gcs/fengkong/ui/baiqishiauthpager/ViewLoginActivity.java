@@ -16,12 +16,21 @@ import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.account.bean.User;
+import com.gcs.fengkong.ui.api.MyApi;
 import com.gcs.fengkong.ui.atys.BaseActivity;
+import com.gcs.fengkong.ui.bean.base.ResultBean;
 import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.ui.widget.statusbar.StatusBarCompat;
+import com.gcs.fengkong.utils.AppOperator;
 import com.gcs.fengkong.utils.DialogUtil;
 import com.gcs.fengkong.utils.MyLog;
 import com.gcs.fengkong.utils.UIUtils;
+import com.google.gson.reflect.TypeToken;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import java.lang.reflect.Type;
+
+import okhttp3.Call;
 
 /**
  * Desction:授权成功操作
@@ -123,15 +132,111 @@ public class ViewLoginActivity extends BaseActivity implements OnLoginViewListen
             String s = "";
             if (serviceId == ServiceId.JD_SERVICE_ID) {
                 //设置该用户京东授权状态
-                user.getAuthstate().setAuth_jd(true);
+                user.getAuthstate().setAuth_jd("1");
+                MyApi.changestatus(user.getToken(), "jd", "1", new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        try {
+                            Type type = new TypeToken<ResultBean>() {}.getType();
+                            ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
+                            //注册结果返回该用户User
+                            int code = resultBean.getCode();
+                            String msg = resultBean.getMessage();
+                            SimplexToast.showMyToast(msg,GlobalApplication.getContext());
+                            switch (code) {
+                                case 200://
+                                    SimplexToast.showMyToast("京东成功登录"+msg,GlobalApplication.getContext());
+                                    break;
+                                case 500://
+                                    SimplexToast.showMyToast("京东已经登录成功,,但是服务器状态值未上传成功，失败信息："+msg,GlobalApplication.getContext());
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
                 s = "京东";
             } else if (serviceId == ServiceId.TB_SERVICE_ID) {
                 //设置该用户淘宝授权状态
-                user.getAuthstate().setAuth_taobao(true);
+                user.getAuthstate().setAuth_taobao("1");
+                MyApi.changestatus(user.getToken(), "taobao", "1", new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        try {
+                            Type type = new TypeToken<ResultBean>() {}.getType();
+                            ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
+                            //注册结果返回该用户User
+                            int code = resultBean.getCode();
+                            String msg = resultBean.getMessage();
+                            SimplexToast.showMyToast(msg,GlobalApplication.getContext());
+                            switch (code) {
+                                case 200://
+                                    SimplexToast.showMyToast("淘宝成功登录"+msg,GlobalApplication.getContext());
+                                    break;
+                                case 500://
+                                    SimplexToast.showMyToast("淘宝已经登录成功,,但是服务器状态值未上传成功，失败信息："+msg,GlobalApplication.getContext());
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
                 s = "淘宝";
             } else if (serviceId == ServiceId.ALIPAY_SERVICE_ID) {
                 //设置该用户支付宝授权状态
-                user.getAuthstate().setAuth_alipay(true);
+                user.getAuthstate().setAuth_alipay("1");
+                MyApi.changestatus(user.getToken(), "alipay", "1", new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        try {
+                            Type type = new TypeToken<ResultBean>() {}.getType();
+                            ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
+                            //注册结果返回该用户User
+                            int code = resultBean.getCode();
+                            String msg = resultBean.getMessage();
+                            SimplexToast.showMyToast(msg,GlobalApplication.getContext());
+                            switch (code) {
+                                case 200://
+                                    SimplexToast.showMyToast("支付宝成功登录"+msg,GlobalApplication.getContext());
+                                    break;
+                                case 500://
+                                    SimplexToast.showMyToast("支付宝已经登录成功,,但是服务器状态值未上传成功，失败信息："+msg,GlobalApplication.getContext());
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+
+                    }
+                });
                 s = "支付宝";
             } else if (serviceId == ServiceId.LINKEDIN_SERVICE_ID) {
                 s = "LinkedIn";
@@ -207,4 +312,7 @@ public class ViewLoginActivity extends BaseActivity implements OnLoginViewListen
         }
         loginView.destroy();
     }
+
+
+
 }

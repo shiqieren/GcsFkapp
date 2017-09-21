@@ -31,6 +31,7 @@ import com.gcs.fengkong.ui.account.bean.VerifyStatus;
 import com.gcs.fengkong.ui.adapter.BaseRecyclerAdapter;
 import com.gcs.fengkong.ui.api.ApiClientHelper;
 import com.gcs.fengkong.ui.api.MyApi;
+import com.gcs.fengkong.ui.atys.PhoneAdressActivity;
 import com.gcs.fengkong.ui.baiqishiauthpager.ViewLoginActivity;
 import com.gcs.fengkong.ui.bean.SimpleBackPage;
 import com.gcs.fengkong.ui.bean.base.ResultBean;
@@ -115,21 +116,52 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                         int code = resultBean.getCode();
                         if (code == 200) {
                             VerifyStatus status = (VerifyStatus) resultBean.getResult();
-                           // user.setId(status.getPhone_user_id());
-                            MyLog.i("GCS","返回statusid"+String.valueOf(status.getPhone_user_id()));
-                            MyLog.i("GCS","Userid"+user.getUserid());
-                            MyLog.i("GCS","id"+user.getId());
-                            MyLog.i("GCS","登录状态和在线状态下返回的电话，身份证号码，姓名，比对容错处理");
-                            user.setPhone(unAES(status.getPhone()));
-                            user.setCertno(unAES(status.getCertno()));
-                            user.setName(unAES(status.getName()));
+                            String loginid = user.getUserid();
+                            String sendid = String.valueOf(status.getPhone_user_id());
+                            if (loginid.equals(sendid)){
+                                user.setPhone(status.getPhone());
+                                user.setCertno(status.getCertno());
+                                user.setName(status.getName());
 
-                            user.getAuthstate().setAuth_identity(Boolean.valueOf(status.getIdentity()));
-                            user.getAuthstate().setAuth_bankcard(Boolean.valueOf(status.getBankcard()));
-                            user.getAuthstate().setAuth_alipay(Boolean.valueOf(status.getAlipay()));
-                            user.getAuthstate().setAuth_taobao(Boolean.valueOf(status.getTaobao()));
-                            user.getAuthstate().setAuth_jd(Boolean.valueOf(status.getJd()));
-                            user.getAuthstate().setAuth_operator(Boolean.valueOf(status.getOperator()));
+                                changeLocalUser(status);
+
+                                if(status.getIdentity().equals("1")){
+                                    mLlidentityiv.setVisibility(View.VISIBLE);
+                                }else {
+                                    mLlidentityiv.setVisibility(View.GONE);
+                                }
+
+                                if(status.getBankcard().equals("1")){
+                                    mLlbankcardiv.setVisibility(View.VISIBLE);
+                                }else {
+                                    mLlbankcardiv.setVisibility(View.GONE);
+                                }
+
+                                if(status.getAlipay().equals("1")){
+                                    mLlalipayiv.setVisibility(View.VISIBLE);
+                                }else {
+                                    mLlalipayiv.setVisibility(View.GONE);
+                                }
+
+                                if(status.getTaobao().equals("1")){
+                                    mLltaobaoiv.setVisibility(View.VISIBLE);
+                                }else {
+                                    mLltaobaoiv.setVisibility(View.GONE);
+                                }
+
+                                if(status.getJd().equals("1")){
+                                    mLljdiv.setVisibility(View.VISIBLE);
+                                }else {
+                                    mLljdiv.setVisibility(View.GONE);
+                                }
+
+                                if(status.getOperator().equals("1")){
+                                    mLloperatoriv.setVisibility(View.VISIBLE);
+                                }else {
+                                    mLloperatoriv.setVisibility(View.GONE);
+                                }
+
+                            }
 
 
                         } else {
@@ -149,6 +181,20 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                 }
             });
         }
+    }
+
+    private void changeLocalUser(VerifyStatus status) {
+        if (AccountHelper.isLogin()){
+            User user = AccountHelper.getUser();
+            user.getAuthstate().setAuth_identity(status.getIdentity());
+            user.getAuthstate().setAuth_bankcard(status.getBankcard());
+            user.getAuthstate().setAuth_alipay(status.getAlipay());
+            user.getAuthstate().setAuth_taobao(status.getTaobao());
+            user.getAuthstate().setAuth_jd(status.getJd());
+            user.getAuthstate().setAuth_operator(status.getOperator());
+            AccountHelper.updateUserCache(user);
+        }
+
     }
 
     @Override
@@ -396,10 +442,6 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
             params.setMobile(unAES(user.getPhone()));
         }
 
-
-
-
-
         MyLog.i("GCS","guanchesuo");
         MyLog.i("GCS","李全朴");
         MyLog.i("GCS","410927199307065033");
@@ -439,7 +481,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                 if (AccountHelper.isLogin()){
                     User user = AccountHelper.getUser();
                     //设置该用户运营商授权状态
-                    user.getAuthstate().setAuth_contact(true);
+                 //   user.getAuthstate().setAuth_contact(true);
                     AccountHelper.updateUserCache(user);
                     ShowUIHelper.openInternalBrowser(getActivity(), "http://www.guanchesuo.com/");
                 }
@@ -450,7 +492,17 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
             @Override
             public void onClick(View view) {
                 dlgShowBack.dismiss();
-                mLlcontactiv.setVisibility(View.VISIBLE);
+                MyLog.i("GCS","上传通讯录");
+
+                if (AccountHelper.isLogin()) {
+                    User user = AccountHelper.getUser();
+                    sendRequestData(user);
+                    updateView(user);
+                } else {
+                    hideView();
+                }
+                Intent intent = new Intent(getActivity(), PhoneAdressActivity.class);
+                startActivity(intent);
             }
         });
         dlgShowBack.show();
@@ -489,87 +541,54 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
             if(userInfo.getName()!=null){
                 mTv_name.setText(unAES(userInfo.getName()));
             }
-            if (userInfo.getAuthstate().getAuth_identity()!=null){
-                if(userInfo.getAuthstate().getAuth_identity()){
-                    mLlidentityiv.setVisibility(View.VISIBLE);
-                }else {
-                    mLlidentityiv.setVisibility(View.GONE);
-                }
+
+        /*    if(userInfo.getAuthstate().getAuth_identity()){
+                mLlidentityiv.setVisibility(View.VISIBLE);
             }else {
                 mLlidentityiv.setVisibility(View.GONE);
             }
 
-            if (userInfo.getAuthstate().getAuth_bankcard()!=null){
-                if(userInfo.getAuthstate().getAuth_bankcard()){
-                    mLlbankcardiv.setVisibility(View.VISIBLE);
-                }else {
-                    mLlbankcardiv.setVisibility(View.GONE);
-                }
+            if(userInfo.getAuthstate().getAuth_bankcard()){
+                mLlbankcardiv.setVisibility(View.VISIBLE);
             }else {
                 mLlbankcardiv.setVisibility(View.GONE);
             }
 
-            if (userInfo.getAuthstate().getAuth_zhima()!=null) {
-                if(userInfo.getAuthstate().getAuth_zhima()){
-                    mLlzhimaiv.setVisibility(View.VISIBLE);
-                }else {
-                    mLlzhimaiv.setVisibility(View.GONE);
-                }
+            if(userInfo.getAuthstate().getAuth_zhima()){
+                mLlzhimaiv.setVisibility(View.VISIBLE);
             }else {
                 mLlzhimaiv.setVisibility(View.GONE);
             }
 
-            if (userInfo.getAuthstate().getAuth_alipay()!=null){
-                if(userInfo.getAuthstate().getAuth_alipay()){
-                    mLlalipayiv.setVisibility(View.VISIBLE);
-                }else {
-                    mLlalipayiv.setVisibility(View.GONE);
-                }
+            if(userInfo.getAuthstate().getAuth_alipay()){
+                mLlalipayiv.setVisibility(View.VISIBLE);
             }else {
                 mLlalipayiv.setVisibility(View.GONE);
             }
 
-            if (userInfo.getAuthstate().getAuth_taobao()!=null){
-                if(userInfo.getAuthstate().getAuth_taobao()){
-                    mLltaobaoiv.setVisibility(View.VISIBLE);
-                }else {
-                    mLltaobaoiv.setVisibility(View.GONE);
-                }
+            if(userInfo.getAuthstate().getAuth_taobao()){
+                mLltaobaoiv.setVisibility(View.VISIBLE);
             }else {
                 mLltaobaoiv.setVisibility(View.GONE);
             }
 
-            if (userInfo.getAuthstate().getAuth_jd()!=null){
-                if(userInfo.getAuthstate().getAuth_jd()){
-                    mLljdiv.setVisibility(View.VISIBLE);
-                }else {
-                    mLljdiv.setVisibility(View.GONE);
-                }
+            if(userInfo.getAuthstate().getAuth_jd()){
+                mLljdiv.setVisibility(View.VISIBLE);
             }else {
                 mLljdiv.setVisibility(View.GONE);
             }
 
-            if (userInfo.getAuthstate().getAuth_operator()!=null){
-                if(userInfo.getAuthstate().getAuth_operator()){
-                    mLloperatoriv.setVisibility(View.VISIBLE);
-                }else {
-                    mLloperatoriv.setVisibility(View.GONE);
-                }
+            if(userInfo.getAuthstate().getAuth_operator()){
+                mLloperatoriv.setVisibility(View.VISIBLE);
             }else {
                 mLloperatoriv.setVisibility(View.GONE);
             }
 
-            if (userInfo.getAuthstate().getAuth_contact()!=null){
-                if(userInfo.getAuthstate().getAuth_contact()){
-                    mLlcontactiv.setVisibility(View.VISIBLE);
-                }else {
-                    mLlcontactiv.setVisibility(View.GONE);
-                }
+            if(userInfo.getAuthstate().getAuth_contact()){
+                mLlcontactiv.setVisibility(View.VISIBLE);
             }else {
                 mLlcontactiv.setVisibility(View.GONE);
-            }
-
-
+            }*/
 
     }
     /**

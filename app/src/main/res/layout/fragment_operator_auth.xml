@@ -141,7 +141,8 @@
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/lay_15"
             android:paddingRight="@dimen/lay_15"
-            android:gravity="right">
+            android:gravity="right"
+            android:visibility="gone">
             <TextView
                 android:id="@+id/tv_ResetPwd"
                 android:layout_width="wrap_content"

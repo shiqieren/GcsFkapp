@@ -329,4 +329,17 @@ public class MyApi {
         OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/feedBackMess.do")).params(params).build().execute(callback);
         MyLog.i("GCS","意见反馈url:"+getAbsoluteApiUrl("wind-phone/phone/feedBackMess.do"));
     }
+
+    /**
+     * changestatus
+     *
+     */
+    public static void changestatus(String token, String type,String status,StringCallback callback) {
+        Map<String, String> params = new HashMap<>();
+        params.put("token",token);
+        params.put("type",type);
+        params.put("status",status);
+        OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/changeStatus.do")).params(params).build().execute(callback);
+        MyLog.i("GCS","更改状态url:"+getAbsoluteApiUrl("wind-phone/phone/changeStatus.do"));
+    }
 }

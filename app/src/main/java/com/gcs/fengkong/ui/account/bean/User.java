@@ -156,7 +156,6 @@ public class User implements Serializable {
 
     public static class More implements Serializable {
         public More() {
-            this("","","","","","");
         }
 
         public More(String imei, String imsi, String ip, String mac, String address, String platform) {
@@ -222,10 +221,9 @@ public class User implements Serializable {
 
     public static class AuthState implements Serializable {
         public AuthState() {
-            this(false,false,false,false,false,false,false,false);
         }
 
-        public AuthState(Boolean auth_identity, Boolean auth_bankcard, Boolean auth_zhima, Boolean auth_alipay, Boolean auth_taobao, Boolean auth_jd, Boolean auth_operator, Boolean auth_contact) {
+        public AuthState(String auth_identity, String auth_bankcard, String auth_zhima, String auth_alipay, String auth_taobao, String auth_jd, String auth_operator, String auth_contact) {
             this.auth_identity = auth_identity;
             this.auth_bankcard = auth_bankcard;
             this.auth_zhima = auth_zhima;
@@ -236,87 +234,75 @@ public class User implements Serializable {
             this.auth_contact = auth_contact;
         }
 
-        private Boolean auth_identity;
-        private Boolean auth_bankcard;
-        private Boolean auth_zhima;
-        private Boolean auth_alipay;
-        private Boolean auth_taobao;
-        private Boolean auth_jd;
-        private Boolean auth_operator;
-        private Boolean auth_contact;
+        private String auth_identity;
+        private String auth_bankcard;
+        private String auth_zhima;
+        private String auth_alipay;
+        private String auth_taobao;
+        private String auth_jd;
+        private String auth_operator;
+        private String auth_contact;
 
 
 
-        public Boolean getAuth_identity() {
+        public String getAuth_identity() {
             return auth_identity;
         }
 
-        public void setAuth_identity(Boolean auth_identity) {
+        public void setAuth_identity(String auth_identity) {
             this.auth_identity = auth_identity;
         }
 
-        public Boolean getAuth_bankcard() {
+        public String getAuth_bankcard() {
             return auth_bankcard;
         }
 
-        public void setAuth_bankcard(Boolean setAuth_bankcard) {
+        public void setAuth_bankcard(String setAuth_bankcard) {
             this.auth_bankcard = setAuth_bankcard;
         }
-        public Boolean getAuth_zhima() {
+        public String getAuth_zhima() {
             return auth_zhima;
         }
 
-        public void setAuth_zhima(Boolean zhima) {
+        public void setAuth_zhima(String zhima) {
             this.auth_zhima = zhima;
         }
-        public Boolean getAuth_alipay() {
+        public String getAuth_alipay() {
             return auth_alipay;
         }
 
-        public void setAuth_alipay(Boolean alipay) {
+        public void setAuth_alipay(String alipay) {
             this.auth_alipay = alipay;
         }
-        public Boolean getAuth_taobao() {
+        public String getAuth_taobao() {
             return auth_taobao;
         }
 
-        public void setAuth_taobao(Boolean taobao) {
+        public void setAuth_taobao(String taobao) {
             this.auth_taobao = taobao;
         }
-        public Boolean getAuth_jd() {
+        public String getAuth_jd() {
             return auth_jd;
         }
 
-        public void setAuth_jd(Boolean jd) {
+        public void setAuth_jd(String jd) {
             this.auth_jd = jd;
         }
-        public Boolean getAuth_operator() {
+        public String getAuth_operator() {
             return auth_operator;
         }
 
-        public void setAuth_operator(Boolean operator) {
+        public void setAuth_operator(String operator) {
             this.auth_operator = operator;
         }
-        public Boolean getAuth_contact() {
+        public String getAuth_contact() {
             return auth_contact;
         }
 
-        public void setAuth_contact(Boolean contact) {
+        public void setAuth_contact(String contact) {
             this.auth_contact = contact;
         }
-        @Override
-        public String toString() {
-            return "AuthState{" +
-                    "identity=" + auth_identity +
-                    ", bankcard='" + auth_bankcard +
-                    ", zhima='" + auth_zhima +
-                    ", alipay='" + auth_alipay +
-                    ", taobao='" + auth_taobao +
-                    ", jd='" + auth_jd +
-                    ", operator='" + auth_operator +
-                    ", contact='" + auth_contact   + '\'' +
-                    '}';
-        }
+
     }
 
 
