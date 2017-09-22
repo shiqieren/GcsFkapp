@@ -24,6 +24,7 @@ import com.bqs.crawler.cloud.sdk.mno.OnMnoSendSmsListener;
 import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.Setting;
+import com.gcs.fengkong.ui.ShowUIHelper;
 import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.account.RichTextParser;
 import com.gcs.fengkong.ui.api.MyApi;
@@ -57,6 +58,7 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
     private EditText mEtAuthUsername;
     private EditText mEtAuthPassword;
     private Button mBtAuthSubmit;
+    private TextView mTvauthbook;
     private TextView mTvResetPwd;
     private ImageView mIvAuthUsernaneDel;
     private ImageView mIvAuthPasswordDel;
@@ -86,6 +88,7 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
         mLlAuthPassword = view.findViewById(R.id.ll_auth_password);
         mEtAuthUsername = view.findViewById(R.id.et_auth_username);
         mEtAuthPassword = view.findViewById(R.id.et_auth_password);
+        mTvauthbook = view.findViewById(R.id.tv_authbook);
         mBtAuthSubmit = view.findViewById(R.id.bt_auth_submit);
         mIvAuthUsernaneDel = view.findViewById(R.id.iv_auth_username_del);
         mIvAuthPasswordDel = view.findViewById(R.id.iv_auth_password_del);
@@ -183,6 +186,7 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
         mLlAuthPassword.setOnClickListener(this);
         mEtAuthUsername.setOnClickListener(this);
         mEtAuthPassword.setOnClickListener(this);
+        mTvauthbook.setOnClickListener(this);
         mIvAuthUsernaneDel.setOnClickListener(this);
         mIvAuthPasswordDel.setOnClickListener(this);
         mBtAuthSubmit.setOnClickListener(this);
@@ -222,6 +226,9 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
                 break;
             case R.id.iv_auth_password_del:
                 mEtAuthPassword.setText(null);
+                break;
+            case R.id.tv_authbook:
+                ShowUIHelper.openInternalBrowser(getActivity(), "http://1z8339d726.iask.in/wind-phone/authOperatorAgreement.jsp");
                 break;
             default:
                 break;

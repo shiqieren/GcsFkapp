@@ -85,8 +85,6 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
             sendRequestData(user);
             MyLog.i("GCS", "网络实时的User，目前先用本地获取的User");
             updateView(user);
-            MyLog.i("GCS","初始化发送设备信息和定位信息");
-
         } else {
             hideView();
         }
@@ -408,7 +406,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                     ShowUIHelper.showLoginActivity(getActivity());
                     return;
                 }
-                ShowUIHelper.showSimpleBack(getActivity(), SimpleBackPage.PERSONAL_DATA);
+               // ShowUIHelper.showSimpleBack(getActivity(), SimpleBackPage.PERSONAL_DATA);
 
                 break;
 
@@ -476,7 +474,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
             @Override
             public void onClick(View view) {
                 MyLog.i("GCS","模拟通讯录授权成功");
-                ShowUIHelper.openInternalBrowser(getActivity(), "http://www.guanchesuo.com/");
+                ShowUIHelper.openInternalBrowser(getActivity(), "http://1z8339d726.iask.in/wind-phone/authAgreement.jsp");
                 List<ContactBean> contactlist = GetContactsUtil.getContactslist(getActivity());
                 MyLog.i("GCS",new Gson().toJson(contactlist));
                 if (AccountHelper.isLogin()) {
@@ -561,7 +559,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
         MyLog.i("GCS","更新UI登录后的显示状态");
         MyLog.i("GCS","头像更新");
             if(userInfo.getName()!=null){
-                mTv_name.setText(unAES(userInfo.getName()));
+                mTv_name.setText("hi,"+unAES(userInfo.getName()));
             }
 
         /*    if(userInfo.getAuthstate().getAuth_identity()){

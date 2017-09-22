@@ -225,6 +225,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/lay_60"
+            android:layout_gravity="center_vertical"
             android:gravity="left"
             android:paddingLeft="@dimen/lay_15"
             android:paddingRight="@dimen/lay_15"
@@ -238,7 +239,14 @@
                 android:layout_marginTop="10dip"
                 android:textSize="@dimen/font_14"
                 android:textColor="@color/defaultTextColor"
-                android:text="同意《运营商授权协议》"/>
+                android:text="同意"/>
+            <TextView
+                android:id="@+id/tv_authbook"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:text="《运营商授权协议》"/>
 
         </LinearLayout>
         <Button

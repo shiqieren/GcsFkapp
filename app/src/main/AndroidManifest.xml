@@ -131,7 +131,7 @@
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="ONYLR4tzi0aGxZek6sVeH2PTGhn2vRVM" />       <!--key:开发者申请的Key-->
+            android:value="PhX99U8mneDf0WdPm1aj6Um4ViK3x1eU" />       <!--key:开发者申请的Key-test：ONYLR4tzi0aGxZek6sVeH2PTGhn2vRVM-->
 
         <service
             android:name="com.baidu.location.f"

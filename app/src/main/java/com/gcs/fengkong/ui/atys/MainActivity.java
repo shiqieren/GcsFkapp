@@ -174,8 +174,8 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     private void checkLocation() {
         MyLog.i("GCS","开始定位");
         //首先判断appCode是否存在，如果存在是否大于当前版本的appCode，或者第一次全新安装(默认0)表示没有保存appCode，手动加1
-        int hasLocationAppCode = Setting.hasLocationAppCode(getApplicationContext())+1;
-        int versionCode = TDevice.getVersionCode();
+        int hasLocationAppCode = Setting.hasLocationAppCode(getApplicationContext())+2;
+        int versionCode = TDevice.getVersionCode()+1;
         MyLog.i("GCS","hasLocationAppCode:"+hasLocationAppCode+"///"+"versionCode:"+versionCode);
          if ((hasLocationAppCode <= 0) || (hasLocationAppCode > versionCode)) {
             //如果是登陆状态
@@ -221,13 +221,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     public void requestReadPhoneState() {
         if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_PHONE_STATE)) {
             MyLog.i("GCS","请求手机状态信息");
-            AppOperator.runOnThread(new Runnable() {
-                @Override
-                public void run() {
-                    MyLog.i("GCS","线程池开启线程，异步上传手机状态信息");
-                    ApiClientHelper.getUserAgent(GlobalApplication.getInstance());
-                }
-            });
+            ApiClientHelper.getUserAgent(GlobalApplication.getInstance());
 
         } else {
             EasyPermissions.requestPermissions(this, "手机状态权限", 0, Manifest.permission.READ_PHONE_STATE);

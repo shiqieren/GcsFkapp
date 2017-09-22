@@ -1,5 +1,6 @@
 package com.gcs.fengkong.ui.frags.subfrags;
 
+import android.content.DialogInterface;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +16,7 @@ import com.gcs.fengkong.ui.bean.base.ResultBean;
 import com.gcs.fengkong.ui.frags.BaseFragment;
 import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.utils.AppOperator;
+import com.gcs.fengkong.utils.DialogUtil;
 import com.gcs.fengkong.utils.MyLog;
 import com.google.gson.reflect.TypeToken;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -94,10 +96,16 @@ public class ResetPasswordFrament extends BaseFragment{
                                 AccountHelper.logoutauto(new Runnable() {
                                     @Override
                                     public void run() {
-                                        SimplexToast.showMyToast("请重新登录",GlobalApplication.getContext());
+
                                     }
                                 });
-                                getActivity().finish();
+                                DialogUtil.getConfirmDialog(getActivity(), "密码已修改需重新登录", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        getActivity().finish();
+                                    }
+                                }).show();
+
                                 // 注销操作
                                 // 清理所有缓存
 

@@ -5,12 +5,16 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/suprisece_hint"
+        android:gravity="center"/>
 
     <LinearLayout
         android:id="@+id/traceroute_rootview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:focusable="true"
         android:orientation="vertical">
 
