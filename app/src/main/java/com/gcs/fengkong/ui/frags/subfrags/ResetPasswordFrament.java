@@ -99,12 +99,12 @@ public class ResetPasswordFrament extends BaseFragment{
 
                                     }
                                 });
-                                DialogUtil.getConfirmDialog(getActivity(), "密码已修改需重新登录", new DialogInterface.OnClickListener() {
+                                DialogUtil.getConfirmDialog(getActivity(), "密码已修改需重新登录",false,new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         getActivity().finish();
                                     }
-                                }).show();
+                                }).setCancelable(true).show();
 
                                 // 注销操作
                                 // 清理所有缓存
