@@ -125,8 +125,6 @@
             android:configChanges="keyboardHidden|orientation"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:windowSoftInputMode="stateHidden|stateUnchanged"/>
-        <activity
-            android:name=".ui.atys.PhoneAdressActivity"/>
         <service
             android:name=".update.DownloadService"
             android:exported="false" />

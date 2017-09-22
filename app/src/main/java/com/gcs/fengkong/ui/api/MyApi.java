@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.Setting;
+import com.gcs.fengkong.ui.account.bean.UploadContacts;
 import com.gcs.fengkong.ui.bean.ContactBean;
 import com.gcs.fengkong.utils.MyLog;
 import com.google.gson.Gson;
@@ -351,9 +352,7 @@ public class MyApi {
      * uploadcontacts
      *
      */
-    public static void batchAdd(String token, List<ContactBean> contactlist, StringCallback callback) {
-        Map<String, String> params = new HashMap<>();
-        params.put("token",token);
+    public static void batchAdd(UploadContacts contactlist, StringCallback callback) {
         OkHttpUtils.postString().url(getAbsoluteApiUrl("wind-phone/contactController/batchAdd.do")).content(new Gson().toJson(contactlist)).mediaType(MediaType.parse("application/json; charset=utf-8")).build().execute(callback);
         MyLog.i("GCS","更改状态url:"+getAbsoluteApiUrl("wind-phone/contactController/batchAdd.do"));
     }

@@ -3,11 +3,13 @@ package com.gcs.fengkong.ui.frags;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 
 import com.gcs.fengkong.GlobalApplication;
@@ -18,6 +20,8 @@ import com.gcs.fengkong.utils.MyLog;
 
 import java.io.Serializable;
 
+import static android.content.Context.INPUT_METHOD_SERVICE;
+
 
 public abstract class BaseFragment extends Fragment implements View.OnClickListener{
     private ProgressDialog mDialog;
@@ -25,7 +29,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     protected View mView;
     protected Bundle mBundle;
     protected LayoutInflater mInflater;
-
     public GlobalApplication getApplication() {
         return (GlobalApplication) getActivity().getApplication();
     }
@@ -97,6 +100,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     }
 
 
+
     //获取布局id
     protected abstract int getLayoutId();
 
@@ -108,7 +112,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     }
 
     protected void initData() {
-
     }
 
     protected <T extends Serializable> T getBundleSerializable(String key) {

@@ -71,8 +71,8 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
         mLlIdentityNumber = view.findViewById(R.id.ll_identity_number);
         mIvIdentityNameDel = (ImageView) view.findViewById(R.id.iv_identity_name_del);
         mIvIdentityNumberDel = (ImageView) view.findViewById(R.id.iv_identity_number_del);
-       mEtIdentityName = view.findViewById(R.id.et_identity_name);
-       mEtIdentityNumber = view.findViewById(R.id.et_identity_number);
+        mEtIdentityName = view.findViewById(R.id.et_identity_name);
+        mEtIdentityNumber = view.findViewById(R.id.et_identity_number);
         mBtIdentitySubmit = view.findViewById(R.id.bt_identity_submit);
         setListener();
         mEtIdentityName.setOnFocusChangeListener(this);

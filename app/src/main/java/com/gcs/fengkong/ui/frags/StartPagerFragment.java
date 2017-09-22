@@ -26,32 +26,28 @@ import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.Setting;
 import com.gcs.fengkong.ui.account.AccountHelper;
+import com.gcs.fengkong.ui.account.bean.UploadContacts;
 import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.ui.account.bean.VerifyStatus;
-import com.gcs.fengkong.ui.adapter.BaseRecyclerAdapter;
-import com.gcs.fengkong.ui.api.ApiClientHelper;
 import com.gcs.fengkong.ui.api.MyApi;
-import com.gcs.fengkong.ui.atys.PhoneAdressActivity;
 import com.gcs.fengkong.ui.baiqishiauthpager.ViewLoginActivity;
 import com.gcs.fengkong.ui.bean.ContactBean;
 import com.gcs.fengkong.ui.bean.SimpleBackPage;
 import com.gcs.fengkong.ui.bean.base.ResultBean;
 import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.ui.widget.statusbar.StatusBarCompat;
-import com.gcs.fengkong.update.DownloadService;
 import com.gcs.fengkong.utils.AppOperator;
 import com.gcs.fengkong.utils.DialogUtil;
 import com.gcs.fengkong.ui.ShowUIHelper;
+import com.gcs.fengkong.utils.GetContactsUtil;
 import com.gcs.fengkong.utils.MyLog;
 import com.gcs.fengkong.utils.TDevice;
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zhy.http.okhttp.callback.StringCallback;
-
 import java.lang.reflect.Type;
 import java.util.List;
-
 import okhttp3.Call;
-import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
 
@@ -79,7 +75,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
     private LinearLayout mLljdiv;
     private LinearLayout mLloperatoriv;
     private LinearLayout mLlcontactiv;
-    private List<ContactBean> contactlist;
+
 
     @Override
     public void onResume() {
@@ -481,7 +477,46 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
             public void onClick(View view) {
                 MyLog.i("GCS","模拟通讯录授权成功");
                 ShowUIHelper.openInternalBrowser(getActivity(), "http://www.guanchesuo.com/");
-               // contactlist = getContactslist();
+                List<ContactBean> contactlist = GetContactsUtil.getContactslist(getActivity());
+                MyLog.i("GCS",new Gson().toJson(contactlist));
+                if (AccountHelper.isLogin()) {
+                    final User user = AccountHelper.getUser();
+                    sendRequestData(user);
+                    updateView(user);
+                    MyLog.i("GCS","token="+user.getToken());
+                    MyApi.batchAdd(new UploadContacts(user.getToken(),contactlist), new StringCallback() {
+                        @Override
+                        public void onError(Call call, Exception e, int id) {
+                            MyLog.i("GCS","上传通讯录返回Exception："+e.toString());
+                        }
+
+                        @Override
+                        public void onResponse(String response, int id) {
+                            MyLog.i("GCS","上传通讯录返回成功response："+response);
+
+                            Type type = new TypeToken<ResultBean>() {}.getType();
+                            ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
+                            //注册结果返回该用户User
+                            int code = resultBean.getCode();
+                            String msg = resultBean.getMessage();
+                            switch (code) {
+                                case 200://
+                                    MyLog.i("GCS","通讯录上传结果"+msg);
+                                    break;
+                                case 300://
+                                    MyLog.i("GCS","通讯录上传结果"+msg);
+                                    break;
+                                case 500://
+                                    MyLog.i("GCS","通讯录上传结果"+msg);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    });
+                } else {
+                    hideView();
+                }
             }
         });
         bt_cancle.setOnClickListener(new View.OnClickListener() {
@@ -490,27 +525,6 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                 dlgShowBack.dismiss();
                 MyLog.i("GCS","上传通讯录");
 
-                if (AccountHelper.isLogin()) {
-                    User user = AccountHelper.getUser();
-                    sendRequestData(user);
-                    updateView(user);
-                  /*  MyApi.batchAdd(user.getToken(),contactlist, new StringCallback() {
-                        @Override
-                        public void onError(Call call, Exception e, int id) {
-
-                        }
-
-                        @Override
-                        public void onResponse(String response, int id) {
-
-                        }
-                    });*/
-                } else {
-                    hideView();
-                }
-
-                Intent intent = new Intent(getActivity(), PhoneAdressActivity.class);
-                startActivity(intent);
             }
         });
         dlgShowBack.show();
@@ -614,7 +628,6 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
         mLloperatoriv.setVisibility(View.GONE);
         mLlcontactiv.setVisibility(View.GONE);
     }
-
 
 
 }

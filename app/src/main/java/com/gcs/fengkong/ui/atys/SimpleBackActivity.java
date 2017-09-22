@@ -3,6 +3,7 @@ package com.gcs.fengkong.ui.atys;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
@@ -33,6 +34,7 @@ public class SimpleBackActivity extends BaseActivity {
     protected int mPageValue = -1;
     protected Toolbar mToolBar;
     protected TextView textView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +54,7 @@ public class SimpleBackActivity extends BaseActivity {
     protected void initWindow() {
         super.initWindow();
         StatusBarCompat.setStatusBarColor(this, UIUtils.getColor(R.color.base_app_color));
+
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
         textView = (TextView) findViewById(R.id.toolbar_title);
         if (mToolBar != null) {
@@ -84,13 +87,10 @@ public class SimpleBackActivity extends BaseActivity {
         super.startActivity(intent);
     }
 
-
-
     @Override
     protected int getContentView() {
         return R.layout.activity_simple_fragment;
     }
-
 
     @Override
     protected void init(Bundle savedInstanceState) {
@@ -185,9 +185,6 @@ public class SimpleBackActivity extends BaseActivity {
     protected void onActivityResult(int arg0, int arg1, Intent arg2) {
         super.onActivityResult(arg0, arg1, arg2);
     }
-
-
-
 
 
 }

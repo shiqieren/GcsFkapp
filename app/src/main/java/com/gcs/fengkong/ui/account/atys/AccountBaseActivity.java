@@ -84,9 +84,6 @@ public class AccountBaseActivity extends BaseActivity {
 
 
 
-
-
-
     protected boolean sendLocalReceiver() {
         if (mManager != null) {
             Intent intent = new Intent();

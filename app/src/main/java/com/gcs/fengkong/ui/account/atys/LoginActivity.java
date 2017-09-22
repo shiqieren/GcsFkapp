@@ -54,7 +54,6 @@ import okhttp3.Request;
 
 public class LoginActivity extends AccountBaseActivity implements View.OnClickListener, View.OnFocusChangeListener, ViewTreeObserver.OnGlobalLayoutListener {
     public static final String HOLD_USERNAME_KEY = "holdUsernameKey";
-
     private LinearLayout mLayBackBar;
     private ImageButton mIb_navigation_back;
     private LinearLayout mLayLoginContains;
