@@ -391,6 +391,7 @@ public class LoginSmscodeActivity extends AccountBaseActivity implements View.On
                 break;
             case R.id.tv_register_sms_call:
                 requestSmsCode();
+                break;
             case R.id.bt_login_submit:
                loginRequest();
                 break;
@@ -589,11 +590,14 @@ public class LoginSmscodeActivity extends AccountBaseActivity implements View.On
                     ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
                     int code = resultBean.getCode();
                     if (code == 200) {
+                        MyLog.i("GCS","短信登录");
                         User user = (User) resultBean.getResult();
                         //模拟用户登录cookie添加
-                        String netcookie = "gcs test login test add cookie"+System.currentTimeMillis();
-                        user.setId(Long.valueOf(unAES(user.getUserid())));
+                        String netcookie = "gcs test login test add cookie2222222"+System.currentTimeMillis();
+                        user.setId(Long.valueOf(user.getUserid()));
+                        MyLog.i("GCS","短信登录2");
                         if (AccountHelper.login(user,netcookie)) {
+                           // MyLog.i("GCS","短信登录logsucced（）");
                             logSucceed();
                         } else {
                             SimplexToast.showToastForKeyBord("登录异常",GlobalApplication.getContext(),mKeyBoardIsActive);
@@ -608,6 +612,8 @@ public class LoginSmscodeActivity extends AccountBaseActivity implements View.On
                             mEtLoginPwd.setFocusableInTouchMode(true);
                             message += "," + getResources().getString(R.string.message_pwd_error);
                             mLlLoginPwd.setBackgroundResource(R.drawable.bg_login_input_error);
+                        }else if (code == 400) {
+
                         }
                         SimplexToast.showToastForKeyBord(message,GlobalApplication.getContext(),mKeyBoardIsActive);
                         //更新失败应该是不进行任何的本地操作

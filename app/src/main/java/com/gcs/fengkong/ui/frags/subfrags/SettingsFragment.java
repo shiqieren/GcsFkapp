@@ -166,6 +166,7 @@ public class SettingsFragment extends BaseFragment implements EasyPermissions.Pe
                     return;
                 }
                  ShowUIHelper.showResetPassword(getActivity());
+                getActivity().finish();
                 break;
             case R.id.rl_cancel:
                 // 清理所有缓存

@@ -435,8 +435,9 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                     ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
                     int code = resultBean.getCode();
                     if (code == 200) {
+                        MyLog.i("GCS","登录");
                         User user = (User) resultBean.getResult();
-                        MyLog.i("GCS","登录成功返回User："+user.toString());
+                        //MyLog.i("GCS","登录成功返回User："+user.toString());
                         //模拟用户登录cookie添加
                         String netcookie = "gcs test login test add cookie"+System.currentTimeMillis();
                         user.setId(Long.valueOf(user.getUserid()));

@@ -103,6 +103,7 @@ public class ShowUIHelper {
      */
     public static void showResetPassword(Context context) {
         showSimpleBack(context, SimpleBackPage.RESET_PASSWORD);
+
     }
 
     /**

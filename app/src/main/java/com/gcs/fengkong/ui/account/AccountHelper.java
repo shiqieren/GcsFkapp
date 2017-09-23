@@ -94,7 +94,8 @@ public final class AccountHelper {
     public static boolean login(final User user,String netcookie) {
         // 从请求头更新Cookie  获取原有cookie
        // String cookie = ApiHttpClient.getCookie(headers);
-        String cookie = netcookie;
+       // String cookie = netcookie;
+        String cookie = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
         if (TextUtils.isEmpty(cookie) || cookie.length() < 6) {
             return false;
         }
@@ -115,7 +116,7 @@ public final class AccountHelper {
             MyLog.i("GCS","用户更新文件存储后，每次请求头都要添加该用户cookie，以保持会话匹配");
            //在该登录用户每次请求添加sp中存储的cookie MyApi.setCookieHeader(getCookie());
             // 登陆成功,重新启动消息服务
-            NoticeManager.init(instances.application);
+          //  NoticeManager.init(instances.application);
 
         }
         return saveOk;

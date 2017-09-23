@@ -205,8 +205,8 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
         super.initData();
         if (AccountHelper.isLogin()){
             User user = AccountHelper.getUser();
-            mEtIdentityName.setText(unAES(user.getName()));
-           mEtIdentityNumber.setText(unAES(user.getCertno()));
+            if(user.getName()!=null){ mEtIdentityName.setText(unAES(user.getName()));}
+            if (user.getCertno()!=null){ mEtIdentityNumber.setText(unAES(user.getCertno()));}
         }
     }
 

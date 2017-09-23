@@ -42,7 +42,7 @@ public class AppConfig {
     public static final String KEY_AUTH_OPERATOR = "KEY_AUTH_OPERATOR";
 
     //短信倒计时
-    public static final  int SMSCODE_TIME_OUT = 80;
+    public static final  int SMSCODE_TIME_OUT = 60;
 
     // 默认存放图片的路径
     public final static String DEFAULT_SAVE_IMAGE_PATH = Environment

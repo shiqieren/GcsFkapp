@@ -1,27 +1,38 @@
 package com.gcs.fengkong.ui.frags.subfrags;
 
 import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.ShowUIHelper;
 import com.gcs.fengkong.ui.account.AccountHelper;
+import com.gcs.fengkong.ui.account.bean.UploadContacts;
 import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.ui.api.MyApi;
+import com.gcs.fengkong.ui.atys.MainActivity;
 import com.gcs.fengkong.ui.atys.SimpleBackActivity;
+import com.gcs.fengkong.ui.bean.ContactBean;
 import com.gcs.fengkong.ui.bean.base.ResultBean;
 import com.gcs.fengkong.ui.frags.BaseFragment;
 import com.gcs.fengkong.ui.widget.SimplexToast;
+import com.gcs.fengkong.utils.ActivityManager;
 import com.gcs.fengkong.utils.AppOperator;
 import com.gcs.fengkong.utils.DialogUtil;
+import com.gcs.fengkong.utils.GetContactsUtil;
 import com.gcs.fengkong.utils.MyLog;
+import com.gcs.fengkong.utils.TDevice;
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.lang.reflect.Type;
+import java.util.List;
 
 import okhttp3.Call;
 
@@ -99,13 +110,8 @@ public class ResetPasswordFrament extends BaseFragment{
 
                                     }
                                 });
-                                DialogUtil.getConfirmDialog(getActivity(), "密码已修改需重新登录",false,new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        getActivity().finish();
-                                    }
-                                }).setCancelable(true).show();
 
+                                showAuthbookconfirm("提示","密码已修改需重新登录");
                                 // 注销操作
                                 // 清理所有缓存
 
@@ -129,6 +135,31 @@ public class ResetPasswordFrament extends BaseFragment{
             }
         }
 
+    }
+
+    private void showAuthbookconfirm(String title,String con) {
+        View dialogview = View.inflate(getActivity(),R.layout.custom_dialog,null);
+        TextView tv_title = dialogview.findViewById(R.id.dialog_tip);
+        TextView tv_link = dialogview.findViewById(R.id.read_authbook_link);
+        Button bt_cancle = dialogview.findViewById(R.id.btn_cancel);
+        tv_title.setText(title);
+        tv_link.setText(con);
+        final AlertDialog dlgShowBack = DialogUtil.getDialog(getContext()).setView(dialogview).setCancelable(true).create();
+
+        bt_cancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dlgShowBack.dismiss();
+                ShowUIHelper.showLoginActivity(getActivity());
+                getActivity().finish();
+            }
+        });
+        dlgShowBack.show();
+        dlgShowBack.getWindow().setBackgroundDrawableResource(R.drawable.rounded_search_text);
+        WindowManager.LayoutParams params = dlgShowBack.getWindow().getAttributes();
+        params.width = (int) TDevice.dp2px(270);
+        params.height = (int) TDevice.dp2px(122);
+        dlgShowBack.getWindow().setAttributes(params);
     }
 
 }

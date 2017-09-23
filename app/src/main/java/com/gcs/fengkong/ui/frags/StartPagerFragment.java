@@ -558,8 +558,11 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
     private void updateView(User userInfo) {
         MyLog.i("GCS","更新UI登录后的显示状态");
         MyLog.i("GCS","头像更新");
+
             if(userInfo.getName()!=null){
                 mTv_name.setText("hi,"+unAES(userInfo.getName()));
+            }else {
+                mTv_name.setText("该用户尚未进行身份认证");
             }
 
         /*    if(userInfo.getAuthstate().getAuth_identity()){
