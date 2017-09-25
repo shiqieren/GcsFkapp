@@ -180,7 +180,7 @@ public class SettingsFragment extends BaseFragment implements EasyPermissions.Pe
                         //getActivity().finish();
                         mTvCacheSize.setText("0KB");
                         SimplexToast.showMyToast(R.string.logout_success_hint,GlobalApplication.getContext());
-                        mCancel.setVisibility(View.INVISIBLE);
+                        mCancel.setVisibility(View.GONE);
                         mSettingLineTop.setVisibility(View.GONE);
                         mSettingLineBottom.setVisibility(View.INVISIBLE);
                     }
