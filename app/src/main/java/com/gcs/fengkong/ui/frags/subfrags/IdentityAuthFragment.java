@@ -293,9 +293,11 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
                                 break;
                             case 600://已经授权过,成功更新了用户芝麻数据
                                 SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
+                                getActivity().finish();
                                 break;
                             case 300://账户问题
                                 SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
+
                                 break;
                             case 500://失败
                                 SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
