@@ -283,7 +283,12 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                     ShowUIHelper.showLoginActivity(getActivity());
                     return;
                 }
-                ShowUIHelper.showIdentityAuth(getActivity());
+                if (mLlidentityiv.getVisibility() == View.VISIBLE){
+                    SimplexToast.showMyToast("身份信息已认证",GlobalApplication.getContext());
+                }else {
+                    ShowUIHelper.showIdentityAuth(getActivity());
+                }
+
                 break;
             case R.id.cv_bankcard:
                 if (!AccountHelper.isLogin()) {
@@ -299,7 +304,12 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                     return;
                 }
                 configBqsParams();
-                ShowUIHelper.showBankAuth(getActivity());
+                if (mLlbankcardiv.getVisibility() == View.VISIBLE){
+                    SimplexToast.showMyToast("银行卡已认证",GlobalApplication.getContext());
+                }else {
+                    ShowUIHelper.showBankAuth(getActivity());
+                }
+
                 break;
            /* case R.id.cv_zhima:
                 if (!AccountHelper.isLogin()) {
@@ -332,7 +342,12 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                 }
                 configBqsParams();
                 intent.putExtra(ViewLoginActivity.PARAMS_DATA_TYPE, ServiceId.ALIPAY_SERVICE_ID);
-                startActivity(intent);
+                if (mLlalipayiv.getVisibility() == View.VISIBLE){
+                    SimplexToast.showMyToast("支付宝已认证",GlobalApplication.getContext());
+                }else {
+                    startActivity(intent);
+                }
+
                 //ShowUIHelper.showAlipayAuth(getActivity());
                 break;
             case R.id.cv_taobao:
@@ -350,7 +365,11 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                 }
                 configBqsParams();
                 intent.putExtra(ViewLoginActivity.PARAMS_DATA_TYPE, ServiceId.TB_SERVICE_ID);
-                startActivity(intent);
+                if (mLltaobaoiv.getVisibility() == View.VISIBLE){
+                    SimplexToast.showMyToast("淘宝已认证",GlobalApplication.getContext());
+                }else {
+                    startActivity(intent);
+                }
                // ShowUIHelper.showTaobaoAuth(getActivity());
                 break;
             case R.id.cv_jd:
@@ -368,7 +387,11 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                 }
                 configBqsParams();
                 intent.putExtra(ViewLoginActivity.PARAMS_DATA_TYPE, ServiceId.JD_SERVICE_ID);
-                startActivity(intent);
+                if (mLljdiv.getVisibility() == View.VISIBLE){
+                    SimplexToast.showMyToast("京东已认证",GlobalApplication.getContext());
+                }else {
+                    startActivity(intent);
+                }
                // ShowUIHelper.showJdAuth(getActivity());
                 break;
             case R.id.cv_operator:
@@ -385,14 +408,24 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                     return;
                 }
                 configBqsParams();
-                ShowUIHelper.showOperatorAuth(getActivity());
+                if (mLloperatoriv.getVisibility() == View.VISIBLE){
+                    SimplexToast.showMyToast("运营商已认证",GlobalApplication.getContext());
+                }else {
+                    ShowUIHelper.showOperatorAuth(getActivity());
+                }
+
                 break;
             case R.id.cv_contact:
                 if (!AccountHelper.isLogin()) {
                     ShowUIHelper.showLoginActivity(getActivity());
                     return;
                 }
-                showAuthbookconfirm();
+                if (mLlcontactiv.getVisibility() == View.VISIBLE){
+                    SimplexToast.showMyToast("通讯录已认证",GlobalApplication.getContext());
+                }else {
+                    showAuthbookconfirm();
+                }
+
                 break;
             case R.id.iv_logo_setting:
                 if (!AccountHelper.isLogin()) {

@@ -102,7 +102,7 @@ public class ResetPasswordFrament extends BaseFragment{
                             ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
                             int code = resultBean.getCode();
                             if (code == 200) {
-                                SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
+                              //  SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
                                 ShowUIHelper.clearAppCache(false);
                                 AccountHelper.logoutauto(new Runnable() {
                                     @Override

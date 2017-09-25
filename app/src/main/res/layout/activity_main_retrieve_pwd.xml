@@ -55,6 +55,7 @@
             android:minLines="1"
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
+            android:maxLength="11"
             android:textColor="@color/white"
             android:textColorHint="@color/login_line_color"
             android:textCursorDrawable="@null"

@@ -71,6 +71,7 @@
                 android:lines="1"
                 android:maxLines="1"
                 android:minLines="1"
+                android:maxLength="11"
                 android:paddingLeft="4dp"
                 android:paddingRight="4dp"
                 android:textColor="@color/white"
