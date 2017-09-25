@@ -116,7 +116,7 @@ public class ViewLoginActivity extends BaseActivity implements OnLoginViewListen
         LoginView.LoginType defaultLoginType;
         if(serviceId == ServiceId.TB_SERVICE_ID || serviceId == ServiceId.JD_SERVICE_ID){
             tvLoginType.setVisibility(View.VISIBLE);
-            defaultLoginType = LoginView.LoginType.QR_CODE_LOGIN;
+            defaultLoginType = LoginView.LoginType.ONEKEY_LOGIN;
         } else {
             tvLoginType.setVisibility(View.GONE);
             defaultLoginType = LoginView.LoginType.WEBVIEW_LOGIN;
@@ -278,12 +278,12 @@ public class ViewLoginActivity extends BaseActivity implements OnLoginViewListen
             if(serviceId == ServiceId.JD_SERVICE_ID || serviceId == ServiceId.TB_SERVICE_ID){
                 LoginView.LoginType newType;
 
-                if (loginView.getLoginType() == LoginView.LoginType.QR_CODE_LOGIN) {
-                    tvLoginType.setText("二维码登录");
+                if (loginView.getLoginType() == LoginView.LoginType.ONEKEY_LOGIN) {
+                    tvLoginType.setText("一键登录");
                     newType = LoginView.LoginType.WEBVIEW_LOGIN;
                 } else {
                     tvLoginType.setText("账号登录");
-                    newType = LoginView.LoginType.QR_CODE_LOGIN;
+                    newType = LoginView.LoginType.ONEKEY_LOGIN;
                 }
 
                 loginView.setLoginType(newType, serviceId);

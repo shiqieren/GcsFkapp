@@ -453,7 +453,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                             mEtLoginUsername.clearFocus();
                             mEtLoginPwd.requestFocus();
                             mEtLoginPwd.setFocusableInTouchMode(true);
-                            message += "," + getResources().getString(R.string.message_pwd_error);
+                            //message += "," + getResources().getString(R.string.message_pwd_error);
                             mLlLoginPwd.setBackgroundResource(R.drawable.bg_login_input_error);
                         }
                         SimplexToast.showToastForKeyBord(message,GlobalApplication.getContext(),mKeyBoardIsActive);

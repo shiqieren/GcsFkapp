@@ -106,9 +106,8 @@
                 android:background="@color/gray"
                 android:layout_marginLeft="@dimen/lay_14"/>
         </FrameLayout>
-
         <FrameLayout
-            android:id="@+id/rl_about"
+            android:id="@+id/rl_reset_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
@@ -125,7 +124,7 @@
                     android:layout_marginRight="@dimen/space_4"
                     android:gravity="center_vertical"
                     android:clickable="false"
-                    android:text="@string/about"
+                    android:text="@string/setting_reset_password"
                     android:textColor="@color/main_black"
                     android:textSize="@dimen/text_size_16"/>
                 <View
@@ -142,12 +141,60 @@
 
         </FrameLayout>
 
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:background="@color/gray"
             android:visibility="gone"/>
 
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:alpha="0.6"
+            android:background="@color/gray"/>
+
+
+        <FrameLayout
+            android:id="@+id/rl_feedback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:padding="@dimen/space_12"
+            android:gravity="center_vertical"
+            android:orientation = "horizontal"
+            android:background="@drawable/ic_material">
+            <LinearLayout
+                android:clickable="false"
+                style="@style/option_item_rl">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/space_4"
+                    android:gravity="center_vertical"
+                    android:clickable="false"
+                    android:text="@string/setting_feedback"
+                    android:textColor="@color/main_black"
+                    android:textSize="@dimen/text_size_16"/>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="10dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:contentDescription="@null"
+                    android:src="@mipmap/ic_arrow_right" />
+            </LinearLayout>
+
+        </FrameLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:alpha="0.6"
+            android:background="@color/gray"/>
         <FrameLayout
             android:id="@+id/rl_check_version"
             android:layout_width="match_parent"
@@ -188,8 +235,10 @@
             android:alpha="0.6"
             android:background="@color/gray"/>
 
+
+
         <FrameLayout
-            android:id="@+id/rl_reset_password"
+            android:id="@+id/rl_about"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
@@ -206,48 +255,7 @@
                     android:layout_marginRight="@dimen/space_4"
                     android:gravity="center_vertical"
                     android:clickable="false"
-                    android:text="@string/setting_reset_password"
-                    android:textColor="@color/main_black"
-                    android:textSize="@dimen/text_size_16"/>
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="10dp"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:contentDescription="@null"
-                    android:src="@mipmap/ic_arrow_right" />
-            </LinearLayout>
-
-        </FrameLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:alpha="0.6"
-            android:background="@color/gray"/>
-
-        <FrameLayout
-            android:id="@+id/rl_feedback"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:padding="@dimen/space_12"
-            android:gravity="center_vertical"
-            android:orientation = "horizontal"
-            android:background="@drawable/ic_material">
-            <LinearLayout
-                android:clickable="false"
-                style="@style/option_item_rl">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/space_4"
-                    android:gravity="center_vertical"
-                    android:clickable="false"
-                    android:text="@string/setting_feedback"
+                    android:text="@string/about"
                     android:textColor="@color/main_black"
                     android:textSize="@dimen/text_size_16"/>
                 <View
