@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -40,6 +41,7 @@ import com.gcs.fengkong.utils.DialogUtil;
 import com.gcs.fengkong.utils.MyLog;
 import com.gcs.fengkong.ui.ShowUIHelper;
 import com.gcs.fengkong.utils.TDevice;
+import com.gcs.fengkong.utils.UIUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.ArrayList;
@@ -93,12 +95,14 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 
         MyLog.i("GCS","进入,Mainactivity首页如果未登录则跳转到登录页面");
         if (!AccountHelper.isLogin()) {
-            DialogUtil.getConfirmDialog(this, "您尚未登录，是否先进行登录操作", new DialogInterface.OnClickListener() {
+            AlertDialog dialog =DialogUtil.getConfirmDialog(this, "您尚未登录，是否先进行登录操作", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     ShowUIHelper.showLoginActivity(MainActivity.this);
                 }
             }).show();
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
+            dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
             return;
         }
     }
