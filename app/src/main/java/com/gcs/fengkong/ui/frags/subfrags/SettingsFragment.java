@@ -171,7 +171,7 @@ public class SettingsFragment extends BaseFragment implements EasyPermissions.Pe
             case R.id.rl_cancel:
                 // 清理所有缓存
                 ShowUIHelper.clearAppCache(false);
-                SimplexToast.showMyToast("清理缓存", GlobalApplication.getContext());
+               // SimplexToast.showMyToast("清理缓存", GlobalApplication.getContext());
                 // 注销操作
                 AccountHelper.logout(mCancel, new Runnable() {
                     @SuppressLint("SetTextI18n")
@@ -179,7 +179,7 @@ public class SettingsFragment extends BaseFragment implements EasyPermissions.Pe
                     public void run() {
                         //getActivity().finish();
                         mTvCacheSize.setText("0KB");
-                        SimplexToast.showMyToast(R.string.logout_success_hint,GlobalApplication.getContext());
+                        //SimplexToast.showMyToast(R.string.logout_success_hint,GlobalApplication.getContext());
                         mCancel.setVisibility(View.GONE);
                         mSettingLineTop.setVisibility(View.GONE);
                         mSettingLineBottom.setVisibility(View.INVISIBLE);

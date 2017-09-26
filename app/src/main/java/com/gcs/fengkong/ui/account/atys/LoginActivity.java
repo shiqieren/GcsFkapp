@@ -87,7 +87,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
             hideKeyBoard(view.getWindowToken());
         }
        // GlobalApplication.showToast(R.string.login_success_hint,0,0, Gravity.CENTER);
-        SimplexToast.showMyToast(R.string.login_success_hint,GlobalApplication.getContext());
+        SimplexToast.showMyToast(R.string.login_success_hint,this);
         setResult(RESULT_OK);
         //发送关闭登录界面的广播
         sendLocalReceiver();
@@ -510,7 +510,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
         } else {
             updateKeyBoardActiveStatus(false);
         }
-        if (keypadHeight > 0 && ivLogo.getTag() == null) {
+       /* if (keypadHeight > 0 && ivLogo.getTag() == null) {
             final int height = ivLogo.getHeight();
             final int width = ivLogo.getWidth();
             this.mLogoHeight = height;
@@ -559,7 +559,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
             }
             valueAnimator.start();
 
-        }
+        }*/
 
     }
 }

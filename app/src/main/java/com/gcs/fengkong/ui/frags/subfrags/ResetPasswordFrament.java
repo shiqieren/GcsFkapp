@@ -102,6 +102,7 @@ public class ResetPasswordFrament extends BaseFragment{
                             ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
                             int code = resultBean.getCode();
                             if (code == 200) {
+                                showAuthbookconfirm("提示","密码已修改需重新登录");
                               //  SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
                                 ShowUIHelper.clearAppCache(false);
                                 AccountHelper.logoutauto(new Runnable() {
@@ -110,12 +111,8 @@ public class ResetPasswordFrament extends BaseFragment{
 
                                     }
                                 });
-
-                                showAuthbookconfirm("提示","密码已修改需重新登录");
                                 // 注销操作
                                 // 清理所有缓存
-
-
                             } else {
 
                                 String message = resultBean.getMessage();

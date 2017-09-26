@@ -92,7 +92,7 @@ public class LoginSmscodeActivity extends AccountBaseActivity implements View.On
         if ((view = getCurrentFocus()) != null) {
             hideKeyBoard(view.getWindowToken());
         }
-        SimplexToast.showMyToast(R.string.login_success_hint,GlobalApplication.getContext());
+        SimplexToast.showMyToast(R.string.login_success_hint,this);
         setResult(RESULT_OK);
         //发送关闭登录界面的广播
         sendLocalReceiver();
@@ -670,7 +670,7 @@ public class LoginSmscodeActivity extends AccountBaseActivity implements View.On
         } else {
             updateKeyBoardActiveStatus(false);
         }
-        if (keypadHeight > 0 && ivLogo.getTag() == null) {
+        /*if (keypadHeight > 0 && ivLogo.getTag() == null) {
             final int height = ivLogo.getHeight();
             final int width = ivLogo.getWidth();
             this.mLogoHeight = height;
@@ -719,7 +719,7 @@ public class LoginSmscodeActivity extends AccountBaseActivity implements View.On
             }
             valueAnimator.start();
 
-        }
+        }*/
 
     }
 }

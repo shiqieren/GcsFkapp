@@ -579,7 +579,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
             updateKeyBoardActiveStatus(false);
         }
 
-        if (keypadHeight > 0 && ivLogo.getTag() == null) {
+        /*if (keypadHeight > 0 && ivLogo.getTag() == null) {
             final int height = ivLogo.getHeight();
             final int width = ivLogo.getWidth();
             this.mLogoHeight = height;
@@ -629,7 +629,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
             }
             valueAnimator.start();
 
-        }
+        }*/
 
     }
 }

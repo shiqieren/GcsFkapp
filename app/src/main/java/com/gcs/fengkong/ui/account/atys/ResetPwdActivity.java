@@ -576,7 +576,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
             updateKeyBoardActiveStatus(false);
         }
 
-        if (keypadHeight > 0 && layRetrieveTel.getTag() == null) {
+       /* if (keypadHeight > 0 && layRetrieveTel.getTag() == null) {
             final LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) layRetrieveTel.getLayoutParams();
             final int topMargin = layoutParams.topMargin;
             this.mTopMargin = topMargin;
@@ -616,6 +616,6 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
                 valueAnimator.cancel();
             }
             valueAnimator.start();
-        }
+        }*/
     }
 }

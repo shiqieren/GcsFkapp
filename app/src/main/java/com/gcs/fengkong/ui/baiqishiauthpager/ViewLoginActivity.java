@@ -116,10 +116,10 @@ public class ViewLoginActivity extends BaseActivity implements OnLoginViewListen
         LoginView.LoginType defaultLoginType;
         if(serviceId == ServiceId.TB_SERVICE_ID || serviceId == ServiceId.JD_SERVICE_ID){
             tvLoginType.setVisibility(View.VISIBLE);
-            defaultLoginType = LoginView.LoginType.ONEKEY_LOGIN;
+            defaultLoginType = LoginView.LoginType.WEBVIEW_LOGIN;
         } else {
             tvLoginType.setVisibility(View.GONE);
-            defaultLoginType = LoginView.LoginType.WEBVIEW_LOGIN;
+            defaultLoginType = LoginView.LoginType.ONEKEY_LOGIN;
         }
         loginView.setLoginType(defaultLoginType, serviceId);
     }
