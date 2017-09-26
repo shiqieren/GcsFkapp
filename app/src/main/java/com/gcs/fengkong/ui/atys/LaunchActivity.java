@@ -7,6 +7,7 @@ import android.util.Log;
 import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.Setting;
+import com.gcs.fengkong.ui.ShowUIHelper;
 import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.utils.AppOperator;
@@ -73,9 +74,14 @@ public class LaunchActivity extends BaseActivity {
     }
 
     private void redirectTo() {
-        MyLog.i("GCS","通常登录,非重新安装状态，先进入mainactivity再判断是否登录");
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
+        if(!AccountHelper.isLogin()){
+            ShowUIHelper.showLoginActivity(this);
+            finish();
+        }else {
+            MyLog.i("GCS","通常登录,非重新安装状态，先进入mainactivity再判断是否登录");
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+         }
     }
 }

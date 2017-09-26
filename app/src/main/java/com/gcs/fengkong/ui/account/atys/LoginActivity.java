@@ -443,6 +443,9 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                         user.setId(Long.valueOf(user.getUserid()));
                         if (AccountHelper.login(user,netcookie)) {
                             logSucceed();
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
                         } else {
                             SimplexToast.showToastForKeyBord("登录异常",GlobalApplication.getContext(),mKeyBoardIsActive);
                         }

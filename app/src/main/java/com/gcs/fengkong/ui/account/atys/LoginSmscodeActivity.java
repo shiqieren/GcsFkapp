@@ -34,6 +34,7 @@ import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.account.RichTextParser;
 import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.ui.api.MyApi;
+import com.gcs.fengkong.ui.atys.MainActivity;
 import com.gcs.fengkong.ui.bean.base.ResultBean;
 import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.utils.AppOperator;
@@ -599,6 +600,9 @@ public class LoginSmscodeActivity extends AccountBaseActivity implements View.On
                         if (AccountHelper.login(user,netcookie)) {
                            // MyLog.i("GCS","短信登录logsucced（）");
                             logSucceed();
+                            Intent intent = new Intent(LoginSmscodeActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
                         } else {
                             SimplexToast.showToastForKeyBord("登录异常",GlobalApplication.getContext(),mKeyBoardIsActive);
                         }

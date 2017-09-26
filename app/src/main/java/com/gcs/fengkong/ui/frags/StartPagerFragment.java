@@ -165,6 +165,14 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                             if (code == 500) {
 
                             }else if (code == 300){
+                                ShowUIHelper.clearAppCache(false);
+                                AccountHelper.logoutauto(new Runnable() {
+                                    @Override
+                                    public void run() {
+
+                                    }
+                                });
+
 
                             }
                             SimplexToast.showMyToast(message,GlobalApplication.getContext());
