@@ -684,4 +684,5 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
     }
 
 
+
 }
