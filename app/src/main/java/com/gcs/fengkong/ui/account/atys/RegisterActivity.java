@@ -4,8 +4,12 @@ import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.content.SharedPreferencesCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -30,6 +34,7 @@ import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.account.RichTextParser;
 import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.ui.api.MyApi;
+import com.gcs.fengkong.ui.atys.MainActivity;
 import com.gcs.fengkong.ui.bean.base.ResultBean;
 import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.utils.AppOperator;
@@ -52,7 +57,7 @@ import okhttp3.Request;
 
 public class RegisterActivity extends AccountBaseActivity implements View.OnClickListener, View.OnFocusChangeListener,
         ViewTreeObserver.OnGlobalLayoutListener {
-
+    public static final String HOLD_USERNAME_KEY = "holdUsernameKey";
     private LinearLayout mLayBackBar;
     private ImageButton mIb_navigation_back;
     private LinearLayout mRegister_one_container;
@@ -88,6 +93,33 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
      */
     protected void updateKeyBoardActiveStatus(boolean isActive) {
         this.mKeyBoardIsActive = isActive;
+    }
+
+    private void logSucceed() {
+        View view;
+        if ((view = getCurrentFocus()) != null) {
+            hideKeyBoard(view.getWindowToken());
+        }
+        setResult(RESULT_OK);
+        //发送关闭登录界面的广播
+        sendLocalReceiver();
+        //后台异步同步数据-同步认证状态信息
+        MyLog.i("GCS","同步认证状态");
+        //ContactsCacheManager.sync();
+        holdAccount();
+    }
+
+    /**
+     * hold account information
+     */
+    private void holdAccount() {
+        String username = mEtRegisterUsername.getText().toString().trim();
+        if (!TextUtils.isEmpty(username)) {
+            SharedPreferences sp = getSharedPreferences(AppConfig.HOLD_ACCOUNT, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString(HOLD_USERNAME_KEY, username);
+            SharedPreferencesCompat.EditorCompat.getInstance().apply(editor);
+        }
     }
     /**
      * show the register activity
@@ -395,31 +427,45 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
             @Override
             public void onResponse(String response, int id) {
                 MyLog.i("GCS","注册返回成功response："+response);
+                try {
+                    Type type = new TypeToken<ResultBean<User>>() {}.getType();
+                    ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
+                    int code = resultBean.getCode();
+                    switch (code) {
+                        case 200://注册成功,进行用户信息填写
 
-                Type type = new TypeToken<ResultBean>() {
-                }.getType();
-                ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
-                //注册结果返回该用户User
-                int code = resultBean.getCode();
-                switch (code) {
-                    case 200://注册成功,进行用户信息填写
-
-                        SimplexToast.showMyToast(R.string.register_success_hint,GlobalApplication.getContext());
+                            SimplexToast.showMyToast(R.string.register_success_hint,GlobalApplication.getContext());
                             //发送需要通知的成功广播
-                           // MyLog.i("GCS","注册成功后发送需要通知的成功广播");
-                           // sendLocalReceiver();
-                            MyLog.i("GCS","关闭注册窗口,跳转到登录");
-                            finish();
-                        break;
-                    case 500://注册失败,手机验证码错误
-                        mLlRegisterSmsCode.setBackgroundResource(R.drawable.bg_login_input_error);
-                        SimplexToast.showToastForKeyBord(resultBean.getMessage(),GlobalApplication.getContext(),mKeyBoardIsActive);
-                        break;
-                    case 400://用户已存在
-                        SimplexToast.showToastForKeyBord(resultBean.getMessage(),GlobalApplication.getContext(),mKeyBoardIsActive);
-                        break;
-                    default:
-                        break;
+                            // MyLog.i("GCS","注册成功后发送需要通知的成功广播");
+                            // sendLocalReceiver();
+                            MyLog.i("GCS","注册完直接登录");
+                            User user = (User) resultBean.getResult();
+                            //MyLog.i("GCS","登录成功返回User："+user.toString());
+                            //模拟用户登录cookie添加
+                            String netcookie = "gcs test login test add cookie"+System.currentTimeMillis();
+                            user.setId(Long.valueOf(user.getUserid()));
+                            if (AccountHelper.login(user,netcookie)) {
+                                logSucceed();
+                                SimplexToast.showMyToast(R.string.login_success_hint,RegisterActivity.this);
+                                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                SimplexToast.showToastForKeyBord("登录异常",GlobalApplication.getContext(),mKeyBoardIsActive);
+                            }
+                            break;
+                        case 500://注册失败,手机验证码错误
+                            mLlRegisterSmsCode.setBackgroundResource(R.drawable.bg_login_input_error);
+                            SimplexToast.showToastForKeyBord(resultBean.getMessage(),GlobalApplication.getContext(),mKeyBoardIsActive);
+                            break;
+                        case 400://用户已存在
+                            SimplexToast.showToastForKeyBord(resultBean.getMessage(),GlobalApplication.getContext(),mKeyBoardIsActive);
+                            break;
+                        default:
+                            break;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });

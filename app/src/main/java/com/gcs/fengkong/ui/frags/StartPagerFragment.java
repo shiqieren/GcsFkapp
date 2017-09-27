@@ -29,6 +29,7 @@ import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.account.bean.UploadContacts;
 import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.ui.account.bean.VerifyStatus;
+import com.gcs.fengkong.ui.api.ApiClientHelper;
 import com.gcs.fengkong.ui.api.MyApi;
 import com.gcs.fengkong.ui.baiqishiauthpager.ViewLoginActivity;
 import com.gcs.fengkong.ui.bean.ContactBean;
@@ -39,6 +40,7 @@ import com.gcs.fengkong.ui.widget.statusbar.StatusBarCompat;
 import com.gcs.fengkong.utils.AppOperator;
 import com.gcs.fengkong.utils.DialogUtil;
 import com.gcs.fengkong.ui.ShowUIHelper;
+import com.gcs.fengkong.utils.FastOneClick;
 import com.gcs.fengkong.utils.GetContactsUtil;
 import com.gcs.fengkong.utils.MyLog;
 import com.gcs.fengkong.utils.TDevice;
@@ -55,7 +57,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 /**
  * Created by lyw on 15/9/22.
  */
-public class StartPagerFragment extends BaseFragment implements View.OnClickListener{
+public class StartPagerFragment extends BaseFragment implements View.OnClickListener,EasyPermissions.PermissionCallbacks{
 
     private boolean isHide = false;
     private CardView mCv_alipay ;
@@ -288,38 +290,43 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
         Intent intent = new Intent(getActivity(), ViewLoginActivity.class);
         switch (id) {
             case R.id.cv_identity:
-                if (!AccountHelper.isLogin()) {
-                    ShowUIHelper.showLoginActivity(getActivity());
-                    return;
-                }
-                if (mLlidentityiv.getVisibility() == View.VISIBLE){
-                    SimplexToast.showMyToast("身份信息已认证",GlobalApplication.getContext());
-                }else {
-                    ShowUIHelper.showIdentityAuth(getActivity());
+                if (FastOneClick.isFastClick()){
+                    if (!AccountHelper.isLogin()) {
+                        ShowUIHelper.showLoginActivity(getActivity());
+                        return;
+                    }
+                    if (mLlidentityiv.getVisibility() == View.VISIBLE){
+                        SimplexToast.showMyToast("身份信息已认证",GlobalApplication.getContext());
+                    }else {
+                        ShowUIHelper.showIdentityAuth(getActivity());
+                    }
                 }
 
                 break;
             case R.id.cv_bankcard:
-                if (!AccountHelper.isLogin()) {
-                    ShowUIHelper.showLoginActivity(getActivity());
-                    return;
-                }else if (!AccountHelper.isAuth()){
-                    AlertDialog dialog = DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号身份进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            ShowUIHelper.showIdentityAuth(getActivity());
-                        }
-                    }).show();
-                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
-                    dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
-                    return;
+                if (FastOneClick.isFastClick()){
+                    if (!AccountHelper.isLogin()) {
+                        ShowUIHelper.showLoginActivity(getActivity());
+                        return;
+                    }else if (!AccountHelper.isAuth()){
+                        AlertDialog dialog = DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号身份进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                ShowUIHelper.showIdentityAuth(getActivity());
+                            }
+                        }).show();
+                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
+                        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
+                        return;
+                    }
+                    configBqsParams();
+                    if (mLlbankcardiv.getVisibility() == View.VISIBLE){
+                        SimplexToast.showMyToast("银行卡已认证",GlobalApplication.getContext());
+                    }else {
+                        ShowUIHelper.showBankAuth(getActivity());
+                    }
                 }
-                configBqsParams();
-                if (mLlbankcardiv.getVisibility() == View.VISIBLE){
-                    SimplexToast.showMyToast("银行卡已认证",GlobalApplication.getContext());
-                }else {
-                    ShowUIHelper.showBankAuth(getActivity());
-                }
+
 
                 break;
            /* case R.id.cv_zhima:
@@ -339,110 +346,125 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                 ShowUIHelper.showZhimaAuth(getActivity());
                 break;*/
             case R.id.cv_alipay:
-                if (!AccountHelper.isLogin()) {
-                    ShowUIHelper.showLoginActivity(getActivity());
-                    return;
-                }else if (!AccountHelper.isAuth()){
-                    AlertDialog dialog = DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号身份进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            ShowUIHelper.showIdentityAuth(getActivity());
-                        }
-                    }).show();
-                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
-                    dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
-                    return;
+                if (FastOneClick.isFastClick()){
+                    if (!AccountHelper.isLogin()) {
+                        ShowUIHelper.showLoginActivity(getActivity());
+                        return;
+                    }else if (!AccountHelper.isAuth()){
+                        AlertDialog dialog = DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号身份进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                ShowUIHelper.showIdentityAuth(getActivity());
+                            }
+                        }).show();
+                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
+                        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
+                        return;
+                    }
+                    configBqsParams();
+                    intent.putExtra(ViewLoginActivity.PARAMS_DATA_TYPE, ServiceId.ALIPAY_SERVICE_ID);
+                    if (mLlalipayiv.getVisibility() == View.VISIBLE){
+                        SimplexToast.showMyToast("支付宝已认证",GlobalApplication.getContext());
+                    }else {
+                        startActivity(intent);
+                    }
                 }
-                configBqsParams();
-                intent.putExtra(ViewLoginActivity.PARAMS_DATA_TYPE, ServiceId.ALIPAY_SERVICE_ID);
-                if (mLlalipayiv.getVisibility() == View.VISIBLE){
-                    SimplexToast.showMyToast("支付宝已认证",GlobalApplication.getContext());
-                }else {
-                    startActivity(intent);
-                }
+
 
                 //ShowUIHelper.showAlipayAuth(getActivity());
                 break;
             case R.id.cv_taobao:
-                if (!AccountHelper.isLogin()) {
-                    ShowUIHelper.showLoginActivity(getActivity());
-                    return;
-                }else if (!AccountHelper.isAuth()){
-                    AlertDialog dialog = DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号身份进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            ShowUIHelper.showIdentityAuth(getActivity());
-                        }
-                    }).show();
-                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
-                    dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
-                    return;
+                if (FastOneClick.isFastClick()){
+                    if (!AccountHelper.isLogin()) {
+                        ShowUIHelper.showLoginActivity(getActivity());
+                        return;
+                    }else if (!AccountHelper.isAuth()){
+                        AlertDialog dialog = DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号身份进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                ShowUIHelper.showIdentityAuth(getActivity());
+                            }
+                        }).show();
+                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
+                        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
+                        return;
+                    }
+                    configBqsParams();
+                    intent.putExtra(ViewLoginActivity.PARAMS_DATA_TYPE, ServiceId.TB_SERVICE_ID);
+                    if (mLltaobaoiv.getVisibility() == View.VISIBLE){
+                        SimplexToast.showMyToast("淘宝已认证",GlobalApplication.getContext());
+                    }else {
+                        startActivity(intent);
+                    }
                 }
-                configBqsParams();
-                intent.putExtra(ViewLoginActivity.PARAMS_DATA_TYPE, ServiceId.TB_SERVICE_ID);
-                if (mLltaobaoiv.getVisibility() == View.VISIBLE){
-                    SimplexToast.showMyToast("淘宝已认证",GlobalApplication.getContext());
-                }else {
-                    startActivity(intent);
-                }
+
                // ShowUIHelper.showTaobaoAuth(getActivity());
                 break;
             case R.id.cv_jd:
-                if (!AccountHelper.isLogin()) {
-                    ShowUIHelper.showLoginActivity(getActivity());
-                    return;
-                }else if (!AccountHelper.isAuth()){
-                    AlertDialog dialog = DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号身份进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            ShowUIHelper.showIdentityAuth(getActivity());
-                        }
-                    }).show();
-                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
-                    dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
-                    return;
+                if (FastOneClick.isFastClick()){
+                    if (!AccountHelper.isLogin()) {
+                        ShowUIHelper.showLoginActivity(getActivity());
+                        return;
+                    }else if (!AccountHelper.isAuth()){
+                        AlertDialog dialog = DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号身份进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                ShowUIHelper.showIdentityAuth(getActivity());
+                            }
+                        }).show();
+                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
+                        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
+                        return;
+                    }
+                    configBqsParams();
+                    intent.putExtra(ViewLoginActivity.PARAMS_DATA_TYPE, ServiceId.JD_SERVICE_ID);
+                    if (mLljdiv.getVisibility() == View.VISIBLE){
+                        SimplexToast.showMyToast("京东已认证",GlobalApplication.getContext());
+                    }else {
+                        startActivity(intent);
+                    }
                 }
-                configBqsParams();
-                intent.putExtra(ViewLoginActivity.PARAMS_DATA_TYPE, ServiceId.JD_SERVICE_ID);
-                if (mLljdiv.getVisibility() == View.VISIBLE){
-                    SimplexToast.showMyToast("京东已认证",GlobalApplication.getContext());
-                }else {
-                    startActivity(intent);
-                }
+
                // ShowUIHelper.showJdAuth(getActivity());
                 break;
             case R.id.cv_operator:
-                if (!AccountHelper.isLogin()) {
-                    ShowUIHelper.showLoginActivity(getActivity());
-                    return;
-                }else if (!AccountHelper.isAuth()){
-                    AlertDialog dialog = DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号身份进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            ShowUIHelper.showIdentityAuth(getActivity());
-                        }
-                    }).show();
-                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
-                    dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
-                    return;
-                }
-                configBqsParams();
-                if (mLloperatoriv.getVisibility() == View.VISIBLE){
-                    SimplexToast.showMyToast("运营商已认证",GlobalApplication.getContext());
-                }else {
-                    ShowUIHelper.showOperatorAuth(getActivity());
+                if (FastOneClick.isFastClick()){
+                    if (!AccountHelper.isLogin()) {
+                        ShowUIHelper.showLoginActivity(getActivity());
+                        return;
+                    }else if (!AccountHelper.isAuth()){
+                        AlertDialog dialog = DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号身份进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                ShowUIHelper.showIdentityAuth(getActivity());
+                            }
+                        }).show();
+                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
+                        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
+                        return;
+                    }
+                    configBqsParams();
+                    if (mLloperatoriv.getVisibility() == View.VISIBLE){
+                        SimplexToast.showMyToast("运营商已认证",GlobalApplication.getContext());
+                    }else {
+                        ShowUIHelper.showOperatorAuth(getActivity());
+                    }
+
                 }
 
                 break;
             case R.id.cv_contact:
-                if (!AccountHelper.isLogin()) {
-                    ShowUIHelper.showLoginActivity(getActivity());
-                    return;
-                }
-                if (mLlcontactiv.getVisibility() == View.VISIBLE){
-                    SimplexToast.showMyToast("通讯录已认证",GlobalApplication.getContext());
-                }else {
-                    showAuthbookconfirm();
+                if (FastOneClick.isFastClick()){
+                    if (!AccountHelper.isLogin()) {
+                        ShowUIHelper.showLoginActivity(getActivity());
+                        return;
+                    }
+                    if (mLlcontactiv.getVisibility() == View.VISIBLE){
+                        SimplexToast.showMyToast("通讯录已认证",GlobalApplication.getContext());
+                    }else {
+                        showAuthbookconfirm();
+                    }
+
                 }
 
                 break;
@@ -534,47 +556,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
             @Override
             public void onClick(View view) {
                 dlgShowBack.dismiss();
-                MyLog.i("GCS","上传通讯录");
-                List<ContactBean> contactlist = GetContactsUtil.getContactslist(getActivity());
-                MyLog.i("GCS",new Gson().toJson(contactlist));
-                if (AccountHelper.isLogin()) {
-                    final User user = AccountHelper.getUser();
-                    sendRequestData(user);
-                    updateView(user);
-                    MyLog.i("GCS","token="+user.getToken());
-                    MyApi.batchAdd(new UploadContacts(user.getToken(),contactlist), new StringCallback() {
-                        @Override
-                        public void onError(Call call, Exception e, int id) {
-                            MyLog.i("GCS","上传通讯录返回Exception："+e.toString());
-                        }
-
-                        @Override
-                        public void onResponse(String response, int id) {
-                            MyLog.i("GCS","上传通讯录返回成功response："+response);
-
-                            Type type = new TypeToken<ResultBean>() {}.getType();
-                            ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
-                            //注册结果返回该用户User
-                            int code = resultBean.getCode();
-                            String msg = resultBean.getMessage();
-                            switch (code) {
-                                case 200://
-                                    MyLog.i("GCS","通讯录上传结果"+msg);
-                                    break;
-                                case 300://
-                                    MyLog.i("GCS","通讯录上传结果"+msg);
-                                    break;
-                                case 500://
-                                    MyLog.i("GCS","通讯录上传结果"+msg);
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                    });
-                } else {
-                    hideView();
-                }
+                requestReadContacts();
 
             }
         });
@@ -684,5 +666,66 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
     }
 
 
+    public void requestReadContacts() {
+        if (EasyPermissions.hasPermissions(getActivity(), new String[]{Manifest.permission.READ_CONTACTS})) {
+            MyLog.i("GCS","上传通讯录");
+            List<ContactBean> contactlist = GetContactsUtil.getContactslist(getActivity());
+            MyLog.i("GCS",new Gson().toJson(contactlist));
+            if (AccountHelper.isLogin()) {
+                final User user = AccountHelper.getUser();
+                sendRequestData(user);
+                updateView(user);
+                MyLog.i("GCS","token="+user.getToken());
+                MyApi.batchAdd(new UploadContacts(user.getToken(),contactlist), new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        MyLog.i("GCS","上传通讯录返回Exception："+e.toString());
+                    }
 
+                    @Override
+                    public void onResponse(String response, int id) {
+                        MyLog.i("GCS","上传通讯录返回成功response："+response);
+
+                        Type type = new TypeToken<ResultBean>() {}.getType();
+                        ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
+                        //注册结果返回该用户User
+                        int code = resultBean.getCode();
+                        String msg = resultBean.getMessage();
+                        switch (code) {
+                            case 200://
+                                MyLog.i("GCS","通讯录上传结果"+msg);
+                                break;
+                            case 300://
+                                MyLog.i("GCS","通讯录上传结果"+msg);
+                                break;
+                            case 500://
+                                MyLog.i("GCS","通讯录上传结果"+msg);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                });
+            } else {
+                hideView();
+            }
+
+        } else {
+            EasyPermissions.requestPermissions(this, "获取通讯录权限", 0, Manifest.permission.READ_CONTACTS);
+        }
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
 }

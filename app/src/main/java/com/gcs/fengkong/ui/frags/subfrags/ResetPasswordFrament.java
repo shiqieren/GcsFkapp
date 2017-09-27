@@ -35,6 +35,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 import okhttp3.Call;
+import okhttp3.Request;
 
 
 public class ResetPasswordFrament extends BaseFragment{
@@ -90,7 +91,18 @@ public class ResetPasswordFrament extends BaseFragment{
             if (newpass.equals(querypass)){
                 MyApi.updatePasswd(token, getAES(oldpass), getAES(newpass), getAES(querypass), new StringCallback() {
                     @Override
+                    public void onBefore(Request request, int id) {
+                        super.onBefore(request, id);
+                        showFocusWaitDialog();
+                    }
+                    @Override
+                    public void onAfter(int id) {
+                        super.onAfter(id);
+                        hideWaitDialog();
+                    }
+                    @Override
                     public void onError(Call call, Exception e, int id) {
+                        hideWaitDialog();
                         MyLog.i("GCS","更新密码错误"+e.toString());
                     }
 
@@ -102,6 +114,7 @@ public class ResetPasswordFrament extends BaseFragment{
                             ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
                             int code = resultBean.getCode();
                             if (code == 200) {
+                                hideWaitDialog();
                                 showAuthbookconfirm("提示","密码已修改需重新登录");
                               //  SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
                                 ShowUIHelper.clearAppCache(false);

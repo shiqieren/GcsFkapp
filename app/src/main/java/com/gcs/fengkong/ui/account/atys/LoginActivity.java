@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.SharedPreferencesCompat;
 import android.text.Editable;
@@ -29,6 +31,7 @@ import com.gcs.fengkong.AppConfig;
 import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.account.AccountHelper;
+import com.gcs.fengkong.ui.account.RichTextParser;
 import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.ui.api.MyApi;
 import com.gcs.fengkong.ui.atys.MainActivity;
@@ -69,7 +72,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
     private TextView mTvLoginSmsCodePwd;
     private Button mBtLoginSubmit;
     private TextView mTvLoginRegister;
-
+    private boolean mMachPhoneNum;
     private boolean mKeyBoardIsActive;
     //第三方接入的handler登录接收器callback
     /**
@@ -86,7 +89,6 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
         if ((view = getCurrentFocus()) != null) {
             hideKeyBoard(view.getWindowToken());
         }
-       // GlobalApplication.showToast(R.string.login_success_hint,0,0, Gravity.CENTER);
         SimplexToast.showMyToast(R.string.login_success_hint,this);
         setResult(RESULT_OK);
         //发送关闭登录界面的广播
@@ -208,7 +210,9 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
             @SuppressWarnings("deprecation")
             @Override
             public void afterTextChanged(Editable s) {
+                int length = s.length();
                 String username = s.toString().trim();
+                mMachPhoneNum = RichTextParser.machPhoneNum(username);
                 if (username.length() > 0) {
                     mLlLoginUsername.setBackgroundResource(R.drawable.bg_login_input_ok);
                     mIvLoginUsernameDel.setVisibility(View.VISIBLE);
@@ -216,6 +220,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                     mLlLoginUsername.setBackgroundResource(R.drawable.bg_login_input_ok);
                     mIvLoginUsernameDel.setVisibility(View.INVISIBLE);
                 }
+                /*
 
                 String pwd = mEtLoginPwd.getText().toString().trim();
                 if (!TextUtils.isEmpty(pwd)) {
@@ -225,7 +230,36 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                     mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));
                 }
+*/
 
+                if (mMachPhoneNum) {
+                    String pwd = mEtLoginPwd.getText().toString().trim();
+                    if (!TextUtils.isEmpty(pwd)) {
+                        mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit);
+                        mBtLoginSubmit.setTextColor(getResources().getColor(R.color.white));
+                    } else {
+                        mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
+                        mBtLoginSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));
+                    }
+                } else {
+                    mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
+                    mBtLoginSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));
+                }
+
+                if (length > 0 && length < 11) {
+                    mLlLoginUsername.setBackgroundResource(R.drawable.bg_login_input_error);
+                } else if (length == 11) {
+                    if (mMachPhoneNum) {
+                        mLlLoginUsername.setBackgroundResource(R.drawable.bg_login_input_ok);
+
+                    } else {
+                        mLlLoginUsername.setBackgroundResource(R.drawable.bg_login_input_error);
+                    }
+                } else if (length > 11) {
+                    mLlLoginUsername.setBackgroundResource(R.drawable.bg_login_input_error);
+                } else if (length <= 0) {
+                    mLlLoginUsername.setBackgroundResource(R.drawable.bg_login_input_ok);
+                }
             }
         });
 
@@ -443,6 +477,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                         user.setId(Long.valueOf(user.getUserid()));
                         if (AccountHelper.login(user,netcookie)) {
                             logSucceed();
+                            SimplexToast.showMyToast(R.string.login_success_hint,LoginActivity.this);
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();
@@ -468,10 +503,6 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
             }
         });
     }
-
-
-
-
 
 
     @Override

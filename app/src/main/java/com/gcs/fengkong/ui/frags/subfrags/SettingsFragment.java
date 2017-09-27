@@ -179,12 +179,17 @@ public class SettingsFragment extends BaseFragment implements EasyPermissions.Pe
                     public void run() {
                         //getActivity().finish();
                         mTvCacheSize.setText("0KB");
-                        //SimplexToast.showMyToast(R.string.logout_success_hint,GlobalApplication.getContext());
+                        SimplexToast.showMyToast(R.string.logout_success_hint,GlobalApplication.getContext());
                         mCancel.setVisibility(View.GONE);
                         mSettingLineTop.setVisibility(View.GONE);
                         mSettingLineBottom.setVisibility(View.INVISIBLE);
                     }
                 });
+                getActivity().finish();
+                if (!AccountHelper.isLogin()) {
+                    LoginActivity.show(getContext());
+                    return;
+                }
                 break;
             default:
                 break;

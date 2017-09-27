@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.SharedPreferencesCompat;
 import android.text.Editable;
@@ -603,6 +605,7 @@ public class LoginSmscodeActivity extends AccountBaseActivity implements View.On
                             Intent intent = new Intent(LoginSmscodeActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();
+
                         } else {
                             SimplexToast.showToastForKeyBord("登录异常",GlobalApplication.getContext(),mKeyBoardIsActive);
                         }

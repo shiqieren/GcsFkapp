@@ -102,7 +102,7 @@
     <string name="personal_data">个人资料</string>
     <string name="submit_feedback_hint">提交反馈</string>
     <string name="setting_cancel">注销</string>
-    <string name="logout_success_hint">注销成功</string>
+    <string name="logout_success_hint">退出登录成功</string>
     <string name="grade">去评分</string>
 
     <string name="osc_site">官网</string>

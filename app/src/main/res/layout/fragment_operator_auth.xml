@@ -64,7 +64,7 @@
                 android:contentDescription="@null"
                 android:scaleType="fitCenter"
                 android:visibility="gone"
-                app:srcCompat="@mipmap/ic_clear" />
+                app:srcCompat="@mipmap/ic_close" />
 
 
         </LinearLayout>
@@ -126,7 +126,7 @@
                 android:contentDescription="@null"
                 android:scaleType="fitCenter"
                 android:visibility="gone"
-                app:srcCompat="@mipmap/ic_clear" />
+                app:srcCompat="@mipmap/ic_close" />
 
         </LinearLayout>
         <View
