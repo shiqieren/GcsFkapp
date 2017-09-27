@@ -19,6 +19,7 @@ import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.bean.SimpleBackPage;
 import com.gcs.fengkong.ui.frags.BaseFragment;
 import com.gcs.fengkong.ui.widget.statusbar.StatusBarCompat;
+import com.gcs.fengkong.utils.ActivityManager;
 import com.gcs.fengkong.utils.TDevice;
 import com.gcs.fengkong.utils.UIUtils;
 
@@ -38,6 +39,7 @@ public class SimpleBackActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityManager.getActivityManager().addActivity(this);
         if (getContentView() != 0) {
             setContentView(getContentView());
             initWindow();

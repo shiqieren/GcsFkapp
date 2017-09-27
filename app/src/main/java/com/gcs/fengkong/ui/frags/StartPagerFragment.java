@@ -26,6 +26,7 @@ import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.Setting;
 import com.gcs.fengkong.ui.account.AccountHelper;
+import com.gcs.fengkong.ui.account.atys.LoginActivity;
 import com.gcs.fengkong.ui.account.bean.UploadContacts;
 import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.ui.account.bean.VerifyStatus;
@@ -37,6 +38,7 @@ import com.gcs.fengkong.ui.bean.SimpleBackPage;
 import com.gcs.fengkong.ui.bean.base.ResultBean;
 import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.ui.widget.statusbar.StatusBarCompat;
+import com.gcs.fengkong.utils.ActivityManager;
 import com.gcs.fengkong.utils.AppOperator;
 import com.gcs.fengkong.utils.DialogUtil;
 import com.gcs.fengkong.ui.ShowUIHelper;
@@ -78,8 +80,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
     private LinearLayout mLljdiv;
     private LinearLayout mLloperatoriv;
     private LinearLayout mLlcontactiv;
-
-
+    private VerifyStatus status;
     @Override
     public void onResume() {
         super.onResume();
@@ -114,7 +115,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                         ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
                         int code = resultBean.getCode();
                         if (code == 200) {
-                            VerifyStatus status = (VerifyStatus) resultBean.getResult();
+                            status = (VerifyStatus) resultBean.getResult();
                             String loginid = user.getUserid();
                             String sendid = String.valueOf(status.getPhone_user_id());
                             if (loginid.equals(sendid)){
@@ -161,8 +162,6 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                                 }
 
                             }
-
-
                         } else {
                             String message = resultBean.getMessage();
                             if (code == 500) {
@@ -176,7 +175,8 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                                     }
                                 });
                                 SimplexToast.showMyToast(message,GlobalApplication.getContext());
-
+                                LoginActivity.show(getContext());
+                                ActivityManager.getActivityManager().finishAllActivity();
                             }
 
                             //更新失败应该是不进行任何的本地操作
@@ -295,7 +295,8 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                         ShowUIHelper.showLoginActivity(getActivity());
                         return;
                     }
-                    if (mLlidentityiv.getVisibility() == View.VISIBLE){
+
+                    if (AccountHelper.isAuth()){
                         SimplexToast.showMyToast("身份信息已认证",GlobalApplication.getContext());
                     }else {
                         ShowUIHelper.showIdentityAuth(getActivity());
@@ -320,10 +321,12 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                         return;
                     }
                     configBqsParams();
-                    if (mLlbankcardiv.getVisibility() == View.VISIBLE){
-                        SimplexToast.showMyToast("银行卡已认证",GlobalApplication.getContext());
-                    }else {
-                        ShowUIHelper.showBankAuth(getActivity());
+                    if (status!=null){
+                        if (status.getBankcard().equals("1")){
+                            SimplexToast.showMyToast("银行卡已认证",GlobalApplication.getContext());
+                        }else {
+                            ShowUIHelper.showBankAuth(getActivity());
+                        }
                     }
                 }
 
@@ -363,11 +366,14 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                     }
                     configBqsParams();
                     intent.putExtra(ViewLoginActivity.PARAMS_DATA_TYPE, ServiceId.ALIPAY_SERVICE_ID);
-                    if (mLlalipayiv.getVisibility() == View.VISIBLE){
-                        SimplexToast.showMyToast("支付宝已认证",GlobalApplication.getContext());
-                    }else {
-                        startActivity(intent);
+                    if (status!=null){
+                        if (status.getAlipay().equals("1")){
+                            SimplexToast.showMyToast("支付宝已认证",GlobalApplication.getContext());
+                        }else {
+                            startActivity(intent);
+                        }
                     }
+
                 }
 
 
@@ -391,11 +397,14 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                     }
                     configBqsParams();
                     intent.putExtra(ViewLoginActivity.PARAMS_DATA_TYPE, ServiceId.TB_SERVICE_ID);
-                    if (mLltaobaoiv.getVisibility() == View.VISIBLE){
-                        SimplexToast.showMyToast("淘宝已认证",GlobalApplication.getContext());
-                    }else {
-                        startActivity(intent);
+                    if (status!=null){
+                        if (status.getTaobao().equals("1")){
+                            SimplexToast.showMyToast("淘宝已认证",GlobalApplication.getContext());
+                        }else {
+                            startActivity(intent);
+                        }
                     }
+
                 }
 
                // ShowUIHelper.showTaobaoAuth(getActivity());
@@ -418,11 +427,14 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                     }
                     configBqsParams();
                     intent.putExtra(ViewLoginActivity.PARAMS_DATA_TYPE, ServiceId.JD_SERVICE_ID);
-                    if (mLljdiv.getVisibility() == View.VISIBLE){
-                        SimplexToast.showMyToast("京东已认证",GlobalApplication.getContext());
-                    }else {
-                        startActivity(intent);
+                    if (status!=null){
+                        if (status.getJd().equals("1")){
+                            SimplexToast.showMyToast("京东已认证",GlobalApplication.getContext());
+                        }else {
+                            startActivity(intent);
+                        }
                     }
+
                 }
 
                // ShowUIHelper.showJdAuth(getActivity());
@@ -444,11 +456,14 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                         return;
                     }
                     configBqsParams();
-                    if (mLloperatoriv.getVisibility() == View.VISIBLE){
-                        SimplexToast.showMyToast("运营商已认证",GlobalApplication.getContext());
-                    }else {
-                        ShowUIHelper.showOperatorAuth(getActivity());
+                    if (status!=null){
+                        if (status.getOperator().equals("1")){
+                            SimplexToast.showMyToast("运营商已认证",GlobalApplication.getContext());
+                        }else {
+                            ShowUIHelper.showOperatorAuth(getActivity());
+                        }
                     }
+
 
                 }
 

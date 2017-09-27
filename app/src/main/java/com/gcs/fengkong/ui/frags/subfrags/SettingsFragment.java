@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.account.AccountHelper;
 import com.gcs.fengkong.ui.account.atys.LoginActivity;
+import com.gcs.fengkong.ui.atys.MainActivity;
 import com.gcs.fengkong.ui.atys.SimpleBackActivity;
 import com.gcs.fengkong.ui.bean.Version;
 import com.gcs.fengkong.ui.frags.BaseFragment;
@@ -24,10 +26,12 @@ import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.ui.widget.togglebutton.ToggleButton;
 import com.gcs.fengkong.update.CheckUpdateManager;
 import com.gcs.fengkong.update.DownloadService;
+import com.gcs.fengkong.utils.ActivityManager;
 import com.gcs.fengkong.utils.DialogUtil;
 import com.gcs.fengkong.utils.FileUtil;
 import com.gcs.fengkong.utils.MethodsCompat;
 import com.gcs.fengkong.ui.ShowUIHelper;
+import com.gcs.fengkong.utils.UIUtils;
 
 import java.io.File;
 import java.util.List;
@@ -169,27 +173,34 @@ public class SettingsFragment extends BaseFragment implements EasyPermissions.Pe
                 getActivity().finish();
                 break;
             case R.id.rl_cancel:
-                // 清理所有缓存
-                ShowUIHelper.clearAppCache(false);
-               // SimplexToast.showMyToast("清理缓存", GlobalApplication.getContext());
-                // 注销操作
-                AccountHelper.logout(mCancel, new Runnable() {
-                    @SuppressLint("SetTextI18n")
+                AlertDialog dialog =DialogUtil.getConfirmDialog(getActivity(), "是否确认退出", new DialogInterface.OnClickListener() {
                     @Override
-                    public void run() {
-                        //getActivity().finish();
-                        mTvCacheSize.setText("0KB");
-                        SimplexToast.showMyToast(R.string.logout_success_hint,GlobalApplication.getContext());
-                        mCancel.setVisibility(View.GONE);
-                        mSettingLineTop.setVisibility(View.GONE);
-                        mSettingLineBottom.setVisibility(View.INVISIBLE);
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // 清理所有缓存
+                        ShowUIHelper.clearAppCache(false);
+                        // SimplexToast.showMyToast("清理缓存", GlobalApplication.getContext());
+                        // 注销操作
+                        AccountHelper.logout(mCancel, new Runnable() {
+                            @SuppressLint("SetTextI18n")
+                            @Override
+                            public void run() {
+                                //getActivity().finish();
+                                mTvCacheSize.setText("0KB");
+                               // SimplexToast.showMyToast(R.string.logout_success_hint,GlobalApplication.getContext());
+                                mCancel.setVisibility(View.GONE);
+                                mSettingLineTop.setVisibility(View.GONE);
+                                mSettingLineBottom.setVisibility(View.INVISIBLE);
+
+                            }
+                        });
+                        LoginActivity.show(getContext());
+                        ActivityManager.getActivityManager().finishAllActivity();
+
                     }
-                });
-                getActivity().finish();
-                if (!AccountHelper.isLogin()) {
-                    LoginActivity.show(getContext());
-                    return;
-                }
+                }).show();
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
+                dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
+
                 break;
             default:
                 break;

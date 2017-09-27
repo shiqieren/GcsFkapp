@@ -426,7 +426,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
 
             @Override
             public void onResponse(String response, int id) {
-                MyLog.i("GCS","注册返回成功response："+response);
+                MyLog.i("GCS",">>注册返回成功response："+response);
                 try {
                     Type type = new TypeToken<ResultBean<User>>() {}.getType();
                     ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
@@ -445,11 +445,20 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
                             String netcookie = "gcs test login test add cookie"+System.currentTimeMillis();
                             user.setId(Long.valueOf(user.getUserid()));
                             if (AccountHelper.login(user,netcookie)) {
-                                logSucceed();
-                                SimplexToast.showMyToast(R.string.login_success_hint,RegisterActivity.this);
-                                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                                startActivity(intent);
-                                finish();
+                                SimplexToast.showMyToast(R.string.register_success_hint,RegisterActivity.this);
+                                new Handler(new Handler.Callback() {
+                                    //处理接收到的消息的方法
+                                    @Override
+                                    public boolean handleMessage(Message arg0) {
+                                        //实现页面跳转
+
+                                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                        startActivity(intent);
+                                        logSucceed();
+                                        return false;
+                                    }
+                                }).sendEmptyMessageDelayed(0, 2000); //表示延时三秒进行任务的执行
+
                             } else {
                                 SimplexToast.showToastForKeyBord("登录异常",GlobalApplication.getContext(),mKeyBoardIsActive);
                             }

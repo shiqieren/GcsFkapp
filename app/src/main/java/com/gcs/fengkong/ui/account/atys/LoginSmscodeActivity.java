@@ -528,8 +528,6 @@ public class LoginSmscodeActivity extends AccountBaseActivity implements View.On
         String tempUsername = mEtLoginUsername.getText().toString().trim();
         String tempPwd = mEtLoginPwd.getText().toString().trim();
 
-
-
         if (!TextUtils.isEmpty(tempPwd) && !TextUtils.isEmpty(tempUsername)) {
 
             //登录成功,请求数据进入用户个人中心页面
@@ -601,10 +599,19 @@ public class LoginSmscodeActivity extends AccountBaseActivity implements View.On
                         MyLog.i("GCS","短信登录2");
                         if (AccountHelper.login(user,netcookie)) {
                            // MyLog.i("GCS","短信登录logsucced（）");
-                            logSucceed();
-                            Intent intent = new Intent(LoginSmscodeActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
+                            new Handler(new Handler.Callback() {
+                                //处理接收到的消息的方法
+                                @Override
+                                public boolean handleMessage(Message arg0) {
+                                    //实现页面跳转
+                                    Intent intent = new Intent(LoginSmscodeActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                    logSucceed();
+                                    return false;
+                                }
+                            }).sendEmptyMessageDelayed(0, 2000); //表示延时三秒进行任务的执行
+
+
 
                         } else {
                             SimplexToast.showToastForKeyBord("登录异常",GlobalApplication.getContext(),mKeyBoardIsActive);

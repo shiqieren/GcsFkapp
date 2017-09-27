@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
+import com.gcs.fengkong.utils.ActivityManager;
+
 
 /**
  * Created by lyw on 2017/7/23.
@@ -20,7 +22,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        ActivityManager.getActivityManager().addActivity(this);
         if (initBundle(getIntent().getExtras())) {
             setContentView(getContentView());
 

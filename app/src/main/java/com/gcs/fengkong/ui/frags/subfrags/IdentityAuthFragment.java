@@ -32,6 +32,7 @@ import com.gcs.fengkong.ui.widget.SimplexToast;
 import com.gcs.fengkong.utils.AppOperator;
 import com.gcs.fengkong.utils.IDCardUtil;
 import com.gcs.fengkong.utils.MyLog;
+import com.gcs.fengkong.utils.VibratorUtil;
 import com.google.gson.reflect.TypeToken;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -158,8 +159,8 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
             @SuppressWarnings("deprecation")
             @Override
             public void afterTextChanged(Editable s) {
-
-                int length = s.length();
+                mLlIdentityNumber.setBackgroundResource(R.drawable.bg_login_input_ok);
+                /*int length = s.length();
                 String input = s.toString();
                 if (length > 0) {
                     // mLlIdentityNumber.setBackgroundResource(R.drawable.bg_login_input_ok);
@@ -192,7 +193,7 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
                   //  mBtBankcardSubmit.setEnabled(false);
                     //  mBtBankcardSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
                     //  mBtBankcardSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));
-                }
+                }*/
 
             }
         });
@@ -259,6 +260,12 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
         String tempIdcard = mEtIdentityNumber.getText().toString().trim();
         if(!TextUtils.isEmpty(mEtIdentityName.getText().toString().trim())){
             if (!mIsIDcardnumber){
+                VibratorUtil.Vibrate(getActivity(), 100);
+                mEtIdentityName.setFocusableInTouchMode(false);
+                mEtIdentityName.clearFocus();
+                mEtIdentityNumber.requestFocus();
+                mEtIdentityNumber.setFocusableInTouchMode(true);
+                mLlIdentityNumber.setBackgroundResource(R.drawable.bg_login_input_error);
                 SimplexToast.showMyToast("身份证格式有误", GlobalApplication.getContext());
             }
         }else {

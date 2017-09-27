@@ -45,6 +45,8 @@ import com.google.gson.reflect.TypeToken;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.lang.reflect.Type;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import okhttp3.Call;
 import okhttp3.Request;
@@ -89,7 +91,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
         if ((view = getCurrentFocus()) != null) {
             hideKeyBoard(view.getWindowToken());
         }
-        SimplexToast.showMyToast(R.string.login_success_hint,this);
+     //   SimplexToast.showMyToast(R.string.login_success_hint,this);
         setResult(RESULT_OK);
         //发送关闭登录界面的广播
         sendLocalReceiver();
@@ -190,6 +192,8 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
         initViews();
         setListener();
         TextView tvLabel = (TextView) mLayBackBar.findViewById(R.id.tv_navigation_label);
+         mLayBackBar.findViewById(R.id.ib_navigation_back).setVisibility(View.INVISIBLE);
+
             tvLabel.setText(R.string.login_btn);
 
         /*隐藏
@@ -246,20 +250,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));
                 }
 
-                if (length > 0 && length < 11) {
-                    mLlLoginUsername.setBackgroundResource(R.drawable.bg_login_input_error);
-                } else if (length == 11) {
-                    if (mMachPhoneNum) {
-                        mLlLoginUsername.setBackgroundResource(R.drawable.bg_login_input_ok);
 
-                    } else {
-                        mLlLoginUsername.setBackgroundResource(R.drawable.bg_login_input_error);
-                    }
-                } else if (length > 11) {
-                    mLlLoginUsername.setBackgroundResource(R.drawable.bg_login_input_error);
-                } else if (length <= 0) {
-                    mLlLoginUsername.setBackgroundResource(R.drawable.bg_login_input_ok);
-                }
             }
         });
 
@@ -403,18 +394,32 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
 
         String tempUsername = mEtLoginUsername.getText().toString().trim();
         String tempPwd = mEtLoginPwd.getText().toString().trim();
-
+        int length = tempUsername.length();
 
 
         if (!TextUtils.isEmpty(tempPwd) && !TextUtils.isEmpty(tempUsername)) {
 
-            //登录成功,请求数据进入用户个人中心页面
 
-            if (TDevice.hasInternet()) {
-               requestLogin(tempUsername, tempPwd);
-            } else {
-                SimplexToast.showToastForKeyBord(R.string.footer_type_net_error,GlobalApplication.getContext(),mKeyBoardIsActive);
+            if (length > 0 && length < 11) {
+                checkPhonestate();
+            } else if (length == 11) {
+                if (mMachPhoneNum) {
+                    mLlLoginUsername.setBackgroundResource(R.drawable.bg_login_input_ok);
+                    //登录成功,请求数据进入用户个人中心页面
+                    if (TDevice.hasInternet()) {
+                        requestLogin(tempUsername, tempPwd);
+                    } else {
+                        SimplexToast.showToastForKeyBord(R.string.footer_type_net_error,GlobalApplication.getContext(),mKeyBoardIsActive);
+                    }
+                } else {
+                    checkPhonestate();
+                }
+            } else if (length > 11) {
+                checkPhonestate();
+            } else if (length <= 0) {
+                checkPhonestate();
             }
+
 
         } else {
             //手机震动
@@ -433,11 +438,24 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                 mEtLoginPwd.setFocusableInTouchMode(true);
                 mLlLoginPwd.setBackgroundResource(R.drawable.bg_login_input_error);
                 SimplexToast.showToastForKeyBord(R.string.login_password_hint,GlobalApplication.getContext(),mKeyBoardIsActive);
+
             }
 
         }
 
     }
+
+    private void checkPhonestate() {
+        //手机震动
+        VibratorUtil.Vibrate(this, 100);
+        mEtLoginPwd.setFocusableInTouchMode(false);
+        mEtLoginPwd.clearFocus();
+        mEtLoginUsername.requestFocus();
+        mEtLoginUsername.setFocusableInTouchMode(true);
+        mLlLoginUsername.setBackgroundResource(R.drawable.bg_login_input_error);
+        SimplexToast.showToastForKeyBord(R.string.login_input_username_hint_error,GlobalApplication.getContext(),mKeyBoardIsActive);
+    }
+
 
     private void requestLogin(String tempUsername, String tempPwd) {
         MyLog.i("GCS","加密前用户名："+tempUsername+",加密前密码："+tempPwd);
@@ -476,23 +494,48 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                         String netcookie = "gcs test login test add cookie"+System.currentTimeMillis();
                         user.setId(Long.valueOf(user.getUserid()));
                         if (AccountHelper.login(user,netcookie)) {
-                            logSucceed();
                             SimplexToast.showMyToast(R.string.login_success_hint,LoginActivity.this);
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
+                            new Handler(new Handler.Callback() {
+                                //处理接收到的消息的方法
+                                @Override
+                                public boolean handleMessage(Message arg0) {
+                                    //实现页面跳转
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                    logSucceed();
+                                    return false;
+                                }
+                            }).sendEmptyMessageDelayed(0, 2000); //表示延时三秒进行任务的执行
+                            /*AppOperator.runOnThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    MyLog.i("GCS","线程池开启线程，异步检查新版本的数据迁移工作");
+                                    // Delay...
+                                        try {
+                                            Thread.sleep(2000);
+                                             } catch (InterruptedException e) {
+                                                    e.printStackTrace();
+                                             }
+                                        }
+
+                            });
+
+                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                        startActivity(intent);
+                                        logSucceed();*/
                         } else {
                             SimplexToast.showToastForKeyBord("登录异常",GlobalApplication.getContext(),mKeyBoardIsActive);
                         }
                     } else {
                         String message = resultBean.getMessage();
                          if (code == 500) {
-                            mEtLoginUsername.setFocusableInTouchMode(false);
+
+                          /*  mEtLoginUsername.setFocusableInTouchMode(false);
                             mEtLoginUsername.clearFocus();
                             mEtLoginPwd.requestFocus();
                             mEtLoginPwd.setFocusableInTouchMode(true);
                             //message += "," + getResources().getString(R.string.message_pwd_error);
-                            mLlLoginPwd.setBackgroundResource(R.drawable.bg_login_input_error);
+                            mLlLoginPwd.setBackgroundResource(R.drawable.bg_login_input_error);*/
                         }
                         SimplexToast.showToastForKeyBord(message,GlobalApplication.getContext(),mKeyBoardIsActive);
                         //更新失败应该是不进行任何的本地操作
