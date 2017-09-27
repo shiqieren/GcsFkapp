@@ -259,7 +259,7 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
         String tempUsername = mEtIdentityName.getText().toString().trim();
         String tempIdcard = mEtIdentityNumber.getText().toString().trim();
         if(!TextUtils.isEmpty(mEtIdentityName.getText().toString().trim())){
-            if (!mIsIDcardnumber){
+            if (mIsIDcardnumber){
                 VibratorUtil.Vibrate(getActivity(), 100);
                 mEtIdentityName.setFocusableInTouchMode(false);
                 mEtIdentityName.clearFocus();

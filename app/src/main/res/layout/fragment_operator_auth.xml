@@ -157,28 +157,27 @@
                 />
         </LinearLayout>
         <!--android:visibility="gone"-->
-        <TextView
-            android:id="@+id/tv_smscode_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="短信验证码"
-            android:textColor="#A7A7A7"
-            android:textSize="14sp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="28dp"
-            android:layout_marginRight="28dp"
-            android:visibility="gone"/>
+
         <!--android:visibility="gone"-->
         <LinearLayout
             android:id="@+id/ll_smscode"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_marginTop="18dp"
             android:orientation="horizontal"
             android:layout_marginLeft="28dp"
             android:layout_marginRight="28dp"
             android:visibility="gone">
-
+            <TextView
+                android:id="@+id/tv_smscode_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/base_app_color"
+                android:text="短信验证码:"
+                android:layout_marginRight="@dimen/lay_10"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:visibility="gone"/>
             <EditText
                 android:id="@+id/et_smscode"
                 style="@style/EditStyleMini"
