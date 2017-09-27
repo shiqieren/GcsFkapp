@@ -267,9 +267,11 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
                 mEtIdentityNumber.setFocusableInTouchMode(true);
                 mLlIdentityNumber.setBackgroundResource(R.drawable.bg_login_input_error);
                 SimplexToast.showMyToast("身份证格式有误", GlobalApplication.getContext());
+                return;
             }
         }else {
             SimplexToast.showMyToast("姓名不能为空", GlobalApplication.getContext());
+            return;
         }
 
         if (!TextUtils.isEmpty(tempUsername)&&AccountHelper.isLogin()&&!TextUtils.isEmpty(tempIdcard)){
