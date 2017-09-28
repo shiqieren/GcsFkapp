@@ -577,7 +577,6 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
         int screenHeight = mLayBackBar.getRootView().getHeight();
 
         int keypadHeight = screenHeight - KeypadRect.bottom;
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+keypadHeight);
         if (keypadHeight > 0) {
             updateKeyBoardActiveStatus(true);
         } else {

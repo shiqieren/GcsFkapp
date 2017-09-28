@@ -2,11 +2,15 @@ package com.gcs.fengkong.ui.frags.subfrags;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,12 +27,17 @@ import android.webkit.WebSettings.PluginState;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.account.AccountHelper;
+import com.gcs.fengkong.ui.atys.MainActivity;
 import com.gcs.fengkong.ui.atys.SimpleBackActivity;
 import com.gcs.fengkong.ui.frags.BaseFragment;
+import com.gcs.fengkong.utils.ActivityManager;
 import com.gcs.fengkong.utils.MyLog;
 import com.gcs.fengkong.utils.TDevice;
+import com.gcs.fengkong.utils.UIUtils;
 
 
 /**
@@ -58,6 +67,7 @@ public class BrowserFragment extends BaseFragment {
 
     }
 
+
     @Override
     public void initView(View view) {
         mWebView = view.findViewById(R.id.webview);
@@ -67,7 +77,7 @@ public class BrowserFragment extends BaseFragment {
         initBarAnim();
         initData();
         mGestureDetector = new GestureDetector(aty, new MyGestureListener());
-        mWebView.addJavascriptInterface(new JsToJava(), "androidShare");
+        mWebView.addJavascriptInterface(new JsToJava(), "jscalljava");
         mWebView.loadUrl(mCurrentUrl);
         mWebView.setOnTouchListener(new OnTouchListener() {
             @Override
@@ -84,6 +94,35 @@ public class BrowserFragment extends BaseFragment {
         public void jsMethod(String paramFromJS){
             System.out.println("js返回结果:" + paramFromJS);//处理返回的结果
         }
+
+        @JavascriptInterface
+        public void auth_success() {
+          //  Toast.makeText(getActivity(), "授权成功", Toast.LENGTH_SHORT).show();
+            UIUtils.runOnUIThread(new Runnable() {
+
+                @Override
+                public void run() {
+                    Intent i =new Intent(getActivity(), MainActivity.class);
+                    startActivity(i);
+                    ActivityManager.getActivityManager().finishActivity(SimpleBackActivity.class);
+
+                }
+            });
+        }
+
+        @JavascriptInterface
+        public void auth_failure() {
+           // Toast.makeText(getActivity(), "授权失败", Toast.LENGTH_SHORT).show();
+            UIUtils.runOnUIThread(new Runnable() {
+
+                @Override
+                public void run() {
+                   // msgView.setText(msgView.getText() + "\njs调用了java函数");
+                    getActivity().finish();
+                }
+            });
+        }
+
     }
 
     @Override
@@ -313,5 +352,7 @@ public class BrowserFragment extends BaseFragment {
             return super.onDoubleTap(e);
         }
     }
+
+
 
 }

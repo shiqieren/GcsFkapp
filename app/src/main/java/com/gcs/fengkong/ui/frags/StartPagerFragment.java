@@ -124,7 +124,11 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                                 user.setName(status.getName());
 
                                 changeLocalUser(status);
-
+                                if(status.getName()!=null){
+                                    mTv_name.setText("hi,"+unAES(status.getName()));
+                                }else {
+                                    mTv_name.setText("该用户尚未进行身份认证");
+                                }
                                 if(status.getIdentity().equals("1")){
                                     mLlidentityiv.setVisibility(View.VISIBLE);
                                 }else {
