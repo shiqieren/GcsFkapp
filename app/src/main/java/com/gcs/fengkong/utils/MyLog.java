@@ -17,7 +17,7 @@ public class MyLog {
     //均不显示
     public static final int NOTHING = 6;
 
-    public static final int level = VERBOSE;
+    public static final int level = NOTHING;
 
 
     public static void v(String tag, String log) {
