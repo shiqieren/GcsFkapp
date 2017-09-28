@@ -46,7 +46,7 @@
     <string name="reset_pwd_hint">请输入至少六位新密码</string>
     <string name="register_username_error">用户名太长&#8230;</string>
     <string name="hint_password">密码</string>
-    <string name="register_pwd_hint">请输入至少六位数密码</string>
+    <string name="register_pwd_hint">请输入密码(6-12数字符号字母组合)</string>
     <string name="hint_username_ok">请输入您的手机号码</string>
     <string name="user_hint_login">点击头像登录</string>
     <string name="reset_pwd_label">重置密码</string>

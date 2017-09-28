@@ -560,7 +560,6 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
 
     @Override
     public void onGlobalLayout() {
-        final LinearLayout kayResetPwd = this.mLlResetPwd;
         final LinearLayout layRetrieveTel = this.mLlRetrieveTel;
         Rect KeypadRect = new Rect();
 
@@ -576,7 +575,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
             updateKeyBoardActiveStatus(false);
         }
 
-       /* if (keypadHeight > 0 && layRetrieveTel.getTag() == null) {
+        if (keypadHeight > 200 && layRetrieveTel.getTag() == null) {
             final LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) layRetrieveTel.getLayoutParams();
             final int topMargin = layoutParams.topMargin;
             this.mTopMargin = topMargin;
@@ -598,7 +597,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
             valueAnimator.start();
 
 
-        } else if (keypadHeight == 0 && layRetrieveTel.getTag() != null) {
+        } else if (keypadHeight <= 200 && layRetrieveTel.getTag() != null) {
             final int topMargin = mTopMargin;
             final LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) layRetrieveTel.getLayoutParams();
             layRetrieveTel.setTag(null);
@@ -616,6 +615,6 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
                 valueAnimator.cancel();
             }
             valueAnimator.start();
-        }*/
+        }
     }
 }

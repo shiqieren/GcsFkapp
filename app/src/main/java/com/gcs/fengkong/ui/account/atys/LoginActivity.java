@@ -363,7 +363,6 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
             case R.id.tv_login_smscode:
                 //验证码登录
                 LoginSmscodeActivity.show(LoginActivity.this);
-                finish();
                 break;
             case R.id.bt_login_submit:
                 loginRequest();
@@ -578,13 +577,13 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
         int screenHeight = mLayBackBar.getRootView().getHeight();
 
         int keypadHeight = screenHeight - KeypadRect.bottom;
-
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+keypadHeight);
         if (keypadHeight > 0) {
             updateKeyBoardActiveStatus(true);
         } else {
             updateKeyBoardActiveStatus(false);
         }
-       /* if (keypadHeight > 0 && ivLogo.getTag() == null) {
+        if (keypadHeight > 200 && ivLogo.getTag() == null) {
             final int height = ivLogo.getHeight();
             final int width = ivLogo.getWidth();
             this.mLogoHeight = height;
@@ -610,7 +609,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
             valueAnimator.start();
 
 
-        } else if (keypadHeight == 0 && ivLogo.getTag() != null) {
+        } else if (keypadHeight <= 200 && ivLogo.getTag() != null) {
             final int height = mLogoHeight;
             final int width = mLogoWidth;
             ivLogo.setTag(null);
@@ -633,7 +632,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
             }
             valueAnimator.start();
 
-        }*/
+        }
 
     }
 }

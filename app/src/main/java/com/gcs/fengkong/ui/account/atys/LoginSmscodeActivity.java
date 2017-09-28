@@ -680,7 +680,7 @@ public class LoginSmscodeActivity extends AccountBaseActivity implements View.On
         } else {
             updateKeyBoardActiveStatus(false);
         }
-        /*if (keypadHeight > 0 && ivLogo.getTag() == null) {
+        if (keypadHeight > 200 && ivLogo.getTag() == null) {
             final int height = ivLogo.getHeight();
             final int width = ivLogo.getWidth();
             this.mLogoHeight = height;
@@ -706,7 +706,7 @@ public class LoginSmscodeActivity extends AccountBaseActivity implements View.On
             valueAnimator.start();
 
 
-        } else if (keypadHeight == 0 && ivLogo.getTag() != null) {
+        } else if (keypadHeight <= 200 && ivLogo.getTag() != null) {
             final int height = mLogoHeight;
             final int width = mLogoWidth;
             ivLogo.setTag(null);
@@ -729,7 +729,7 @@ public class LoginSmscodeActivity extends AccountBaseActivity implements View.On
             }
             valueAnimator.start();
 
-        }*/
+        }
 
     }
 }

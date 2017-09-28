@@ -22,7 +22,7 @@
         android:layout_height="50dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/bg_login_input_ok"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -57,7 +57,7 @@
             android:paddingRight="4dp"
             android:maxLength="11"
             android:textColor="@color/white"
-            android:textColorHint="@color/login_line_color"
+            android:textColorHint="@color/hint_font_color"
             android:textCursorDrawable="@null"
             android:textSize="@dimen/font_16"/>
 
@@ -113,7 +113,7 @@
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
             android:textColor="@color/white"
-            android:textColorHint="@color/login_line_color"
+            android:textColorHint="@color/hint_font_color"
             android:textCursorDrawable="@null"
             android:textSize="@dimen/font_16"/>
 
@@ -176,9 +176,9 @@
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
             android:textColor="@color/white"
-            android:textColorHint="@color/login_line_color"
+            android:textColorHint="@color/hint_font_color"
             android:textCursorDrawable="@null"
-            android:textSize="@dimen/font_16"/>
+            android:textSize="@dimen/font_15"/>
 
         <ImageView
             android:id="@+id/iv_reset_pwd_del"

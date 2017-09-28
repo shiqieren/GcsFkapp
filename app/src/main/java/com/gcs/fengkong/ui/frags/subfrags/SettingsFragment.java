@@ -170,7 +170,6 @@ public class SettingsFragment extends BaseFragment implements EasyPermissions.Pe
                     return;
                 }
                  ShowUIHelper.showResetPassword(getActivity());
-                getActivity().finish();
                 break;
             case R.id.rl_cancel:
                 AlertDialog dialog =DialogUtil.getConfirmDialog(getActivity(), "是否确认退出", new DialogInterface.OnClickListener() {

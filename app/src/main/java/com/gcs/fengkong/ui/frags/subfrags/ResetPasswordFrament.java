@@ -1,5 +1,6 @@
 package com.gcs.fengkong.ui.frags.subfrags;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.gcs.fengkong.GlobalApplication;
 import com.gcs.fengkong.R;
 import com.gcs.fengkong.ui.ShowUIHelper;
 import com.gcs.fengkong.ui.account.AccountHelper;
+import com.gcs.fengkong.ui.account.atys.LoginActivity;
 import com.gcs.fengkong.ui.account.bean.UploadContacts;
 import com.gcs.fengkong.ui.account.bean.User;
 import com.gcs.fengkong.ui.api.MyApi;
@@ -160,8 +162,18 @@ public class ResetPasswordFrament extends BaseFragment{
             @Override
             public void onClick(View view) {
                 dlgShowBack.dismiss();
-                ShowUIHelper.showLoginActivity(getActivity());
-                getActivity().finish();
+                // 清理所有缓存
+                ShowUIHelper.clearAppCache(false);
+                // SimplexToast.showMyToast("清理缓存", GlobalApplication.getContext());
+                // 注销操作
+                AccountHelper.logoutauto(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                });
+                LoginActivity.show(getContext());
+                ActivityManager.getActivityManager().finishAllActivity();
             }
         });
         dlgShowBack.show();
