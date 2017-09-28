@@ -238,6 +238,7 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
 
     private void AuthRequest() {
        String username =  mEtAuthUsername.getText().toString();
+        String smscode = etSmscode.getText().toString();
         if (RichTextParser.machPhoneNum(username)){
             if(!mCbAgreeAuthbook.isChecked()){
                 SimplexToast.showMyToast("需勾选授权协议哦!",GlobalApplication.getContext());
@@ -249,9 +250,16 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
                     return;
                 }
 
+                if (llSmscode.getVisibility() == View.VISIBLE) {
+                    if (TextUtils.isEmpty(smscode)) {
+                        SimplexToast.showMyToast("请输入短信验证码", GlobalApplication.getContext());
+                       // Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
                 mDialog.show();
 
-                loginAction.login(servicePwd, this);
+                loginAction.login(servicePwd,smscode, this);
             }
         }else {
             SimplexToast.showMyToast("手机号码有误.请重新填写!",GlobalApplication.getContext());
