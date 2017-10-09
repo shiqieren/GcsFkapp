@@ -19,7 +19,7 @@
         />
 
 
-    <com.gcs.fengkong.ui.widget.FragmentTabHost
+    <com.gcs.jyfk.ui.widget.FragmentTabHost
         android:id="@android:id/tabhost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="0" />
-    </com.gcs.fengkong.ui.widget.FragmentTabHost>
+    </com.gcs.jyfk.ui.widget.FragmentTabHost>
 
 
 

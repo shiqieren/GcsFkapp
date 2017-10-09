@@ -17,7 +17,7 @@
         android:visibility="gone"
         tools:visibility="visible" />
 
-    <com.gcs.fengkong.ui.widget.load.Loading
+    <com.gcs.jyfk.ui.widget.load.Loading
         android:id="@+id/animProgress"
         android:layout_width="26dip"
         android:layout_height="26dip"

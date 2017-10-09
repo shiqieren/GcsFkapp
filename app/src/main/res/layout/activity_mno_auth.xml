@@ -49,7 +49,7 @@
             android:layout_weight="10"
             android:hint="短信验证码" />
 
-        <com.gcs.fengkong.ui.widget.TimerButton
+        <com.gcs.jyfk.ui.widget.TimerButton
             android:id="@+id/btn_timer"
             style="@style/ButtonStyle"
             android:layout_width="0dp"

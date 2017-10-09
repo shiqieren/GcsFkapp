@@ -59,7 +59,7 @@
             android:layout_weight="2"
             android:hint="短信验证码"/>
 
-        <com.gcs.fengkong.ui.widget.TimerButton
+        <com.gcs.jyfk.ui.widget.TimerButton
             android:id="@+id/btn_timer"
             android:layout_width="0dp"
             android:layout_height="match_parent"
