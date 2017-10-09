@@ -160,6 +160,12 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                                     mLloperatoriv.setVisibility(View.GONE);
                                 }
 
+                                if(status.getContact().equals("1")){
+                                    mLlcontactiv.setVisibility(View.VISIBLE);
+                                }else {
+                                    mLlcontactiv.setVisibility(View.GONE);
+                                }
+
                             }
                         } else {
                             String message = resultBean.getMessage();
@@ -198,6 +204,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
             user.getAuthstate().setAuth_taobao(status.getTaobao());
             user.getAuthstate().setAuth_jd(status.getJd());
             user.getAuthstate().setAuth_operator(status.getOperator());
+            user.getAuthstate().setAuth_contact(status.getContact());
             AccountHelper.updateUserCache(user);
         }
 
@@ -473,12 +480,18 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                         ShowUIHelper.showLoginActivity(getActivity());
                         return;
                     }
-                    if (mLlcontactiv.getVisibility() == View.VISIBLE){
+                    if (status!=null){
+                        if (status.getContact().equals("1")){
+                            SimplexToast.showMyToast("通讯录已授权",GlobalApplication.getContext());
+                        }else {
+                            showAuthbookconfirm();
+                        }
+                    }
+                   /* if (mLlcontactiv.getVisibility() == View.VISIBLE){
                         SimplexToast.showMyToast("通讯录已认证",GlobalApplication.getContext());
                     }else {
                         showAuthbookconfirm();
-                    }
-
+                    }*/
                 }
 
                 break;

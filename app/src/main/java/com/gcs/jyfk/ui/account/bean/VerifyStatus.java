@@ -29,6 +29,7 @@ public class VerifyStatus {
     private String taobao;
     private String jd;
     private String operator;
+    private String contact;
     private long createtime;
     private long updatetime;
     private int phone_user_id;
@@ -92,6 +93,13 @@ public class VerifyStatus {
         this.operator = operator;
     }
 
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
     public long getCreatetime() {
         return createtime;
     }
