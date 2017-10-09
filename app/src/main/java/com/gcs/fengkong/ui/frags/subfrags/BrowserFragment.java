@@ -243,6 +243,28 @@ public class BrowserFragment extends BaseFragment {
      * @param url  链接地址
      */
     protected void onUrlLoading(WebView view, String url) {
+
+        if (url != null && url.contains("auth_success")) {
+            UIUtils.runOnUIThread(new Runnable() {
+                //auth_success
+                @Override
+                public void run() {
+                    Intent i =new Intent(getActivity(), MainActivity.class);
+                    startActivity(i);
+                    ActivityManager.getActivityManager().finishActivity(SimpleBackActivity.class);
+
+                }
+            });
+        }else if (url != null && url.contains("auth_fail")){
+            UIUtils.runOnUIThread(new Runnable() {
+                //auth_failure
+                @Override
+                public void run() {
+                    // msgView.setText(msgView.getText() + "\njs调用了java函数");
+                    getActivity().finish();
+                }
+            });
+        }
         mProgress.setVisibility(View.VISIBLE);
         cookie.setCookie(url, AccountHelper.getCookie());
     }
