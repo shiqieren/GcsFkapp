@@ -139,7 +139,7 @@
                 android:layout_width="@dimen/lay_28"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/lay_15"
-                android:src="@mipmap/remobile_logo" />
+                android:src="@mipmap/cer_telphone" />
 
             <TextView
                 android:layout_width="@dimen/lay_84"

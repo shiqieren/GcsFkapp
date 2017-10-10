@@ -351,6 +351,40 @@ public class MyApi {
         OkHttpUtils.postString().url(getAbsoluteApiUrl("wind-phone/contactController/batchAdd.do")).content(new Gson().toJson(contactlist)).mediaType(MediaType.parse("application/json; charset=utf-8")).build().execute(callback);
         MyLog.i("GCS","更改状态url:"+getAbsoluteApiUrl("wind-phone/contactController/batchAdd.do"));
     }
+    /**
+     * bankcard-smscode
+     *
+     */
+    public static void bankCardSendMsg(String token,String id_holder,String id_card,String acc_no,String mobile, StringCallback callback) {
+        Map<String, String> params = new HashMap<>();
+        params.put("token",token);
+        params.put("id_holder", id_holder);
+        params.put("id_card", id_card);
+        params.put("acc_no", acc_no);
+        params.put("mobile", mobile);
+        //  params.put("intent", intent);
 
+        OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/bankCardSendMsg.do")).params(params).build().execute(callback);
+        MyLog.i("GCS","请求发送银行卡短信验证码url:"+getAbsoluteApiUrl("wind-phone/phone/bankCardSendMsg.do"));
+    }
+
+    /**
+     * bankcard-smscode
+     *
+     */
+    public static void bankCardVerifyMsg(String token,String id_holder,String id_card,String acc_no,String mobile, String trade_no_x,String sms_code,StringCallback callback) {
+        Map<String, String> params = new HashMap<>();
+        params.put("token",token);
+        params.put("id_holder", id_holder);
+        params.put("id_card", id_card);
+        params.put("acc_no", acc_no);
+        params.put("mobile", mobile);
+        params.put("trade_no_x", trade_no_x);
+        params.put("sms_code", sms_code);
+        //  params.put("intent", intent);
+
+        OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/bankCardVerifyMsg.do")).params(params).build().execute(callback);
+        MyLog.i("GCS","请求发送银行卡信息认证url:"+getAbsoluteApiUrl("wind-phone/phone/bankCardVerifyMsg.do"));
+    }
 
 }

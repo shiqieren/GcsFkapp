@@ -712,7 +712,8 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                     @Override
                     public void onResponse(String response, int id) {
                         MyLog.i("GCS","上传通讯录返回成功response："+response);
-
+                        mLlcontactiv.setVisibility(View.VISIBLE);
+                        user.getAuthstate().setAuth_contact("1");
                         Type type = new TypeToken<ResultBean>() {}.getType();
                         ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
                         //注册结果返回该用户User
@@ -721,6 +722,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                         switch (code) {
                             case 200://
                                 MyLog.i("GCS","通讯录上传结果"+msg);
+
                                 break;
                             case 300://
                                 MyLog.i("GCS","通讯录上传结果"+msg);

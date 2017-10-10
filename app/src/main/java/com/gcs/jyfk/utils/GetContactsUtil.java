@@ -114,8 +114,11 @@ public class GetContactsUtil {
                 mGetContact.setName(contactName);
                 MyLog.i("info", "contactName---" + contactName);
                 // Log.i("info","mContactsName111"+mContactsName);
+                //电话号码为null时不存入联系人集合
+                if (mContactsNumber !=null){
+                    mAllContact.add(mGetContact);
+                }
 
-                mAllContact.add(mGetContact);
             }
 
             phoneCursor.close();

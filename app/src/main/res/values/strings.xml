@@ -46,7 +46,7 @@
     <string name="reset_pwd_hint">请输入至少六位新密码</string>
     <string name="register_username_error">用户名太长&#8230;</string>
     <string name="hint_password">密码</string>
-    <string name="register_pwd_hint">请输入密码(6-12数字符号字母组合)</string>
+    <string name="register_pwd_hint">密码长度为6到12位</string>
     <string name="hint_username_ok">请输入您的手机号码</string>
     <string name="user_hint_login">点击头像登录</string>
     <string name="reset_pwd_label">重置密码</string>
@@ -151,6 +151,7 @@
     <string name="bt_beginauth_string">开始认证</string>
     <string name="bankcard_user_logo">持卡人</string>
     <string name="bankcard_number_tip">银行卡号</string>
+    <string name="error_bankcard_number_tip">请输入正确的银行卡号</string>
     <string name="re_mobile_tip">预留手机号</string>
     <string name="auth_message_tip">短信验证码</string>
     <string name="confirm_btn">确认</string>
