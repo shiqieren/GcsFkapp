@@ -323,10 +323,12 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
                 mEtBankcardPhone.requestFocus();
                 break;
             case R.id.tv_bankcard_sms_call:
-                requestSmsCode();
+               // requestSmsCode();
+                testrequesetsmscode();
                 break;
             case R.id.bt_bankcard_submit:
-                AuthBankcardRequest();
+                //AuthBankcardRequest();
+                testauthBankcardRequest();
                 break;
 
             case R.id.iv_bankcard_name_del:
@@ -341,6 +343,124 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
             default:
                 break;
         }
+    }
+
+    private void testauthBankcardRequest() {
+        MyLog.i("GCS","trade_no_x="+trade_no_x);
+        MyApi.bankCardVerifyMsg(AccountHelper.getUser().getToken(),"","","","" ,trade_no_x,"", new StringCallback() {
+            @Override
+            public void onBefore(Request request, int id) {
+                super.onBefore(request, id);
+                showFocusWaitDialog();
+            }
+
+            @Override
+            public void onAfter(int id) {
+                super.onAfter(id);
+                hideWaitDialog();
+            }
+
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                MyLog.i("GCS","注册返回Exception："+e.toString());
+                hideWaitDialog();
+                if (mTimer != null) {
+                    mTimer.onFinish();
+                    mTimer.cancel();
+                }
+            }
+
+            @Override
+            public void onResponse(String response, int id) {
+                MyLog.i("GCS",">>注册返回成功response："+response);
+                try {
+                    Type type = new TypeToken<ResultBean>() {}.getType();
+                    ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
+                    int code = resultBean.getCode();
+                    switch (code) {
+                        case 200://成功
+                            SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
+                            getActivity().finish();
+                            break;
+                        case 500://失败
+                            SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
+                            break;
+                        case 300://失败token验证失败
+                            SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
+                            break;
+                        default:
+                            break;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void testrequesetsmscode() {
+        MyApi.bankCardSendMsg(AccountHelper.getUser().getToken(),"","","","", new StringCallback() {
+            @Override
+            public void onBefore(Request request, int id) {
+                super.onBefore(request, id);
+            }
+
+            @Override
+            public void onAfter(int id) {
+                super.onAfter(id);
+            }
+
+
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                MyLog.i("GCS","发送银行卡短信验证码返回Exception："+e.toString());
+                if (mTimer != null) {
+                    mTimer.onFinish();
+                    mTimer.cancel();
+                }
+            }
+
+            @Override
+            public void onResponse(String response, int id) {
+                MyLog.i("GCS","发送银行卡短信验证码返回response："+response);
+                Type type = new TypeToken<ResultBean>() {
+                }.getType();
+                ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
+                if(resultBean.getResult()!= null){
+                    trade_no_x = resultBean.getResult().toString();
+                }
+
+                int code = resultBean.getCode();
+                switch (code) {
+                    case 200:
+                        //发送验证码成功,请求进入下一步
+                        //意味着我们可以进行第二次请求了,获取phoneToken
+                        //mRequestType = 2;
+                        SimplexToast.showMyToast(R.string.send_sms_code_success_hint,GlobalApplication.getContext());
+                        mEtBankcardSmsCode.setText(null);
+                        break;
+                    case 300:
+                        //失败token验证失败
+                        if (mTimer != null) {
+                            mTimer.onFinish();
+                            mTimer.cancel();
+                        }
+                        SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
+                        break;
+                    case 500:
+                        //异常错误，发送验证码失败,回收timer,需重新请求发送验证码
+                        if (mTimer != null) {
+                            mTimer.onFinish();
+                            mTimer.cancel();
+                        }
+                        SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
     }
 
     private void requestSmsCode() {

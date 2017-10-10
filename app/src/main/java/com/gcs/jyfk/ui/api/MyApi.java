@@ -358,14 +358,21 @@ public class MyApi {
     public static void bankCardSendMsg(String token,String id_holder,String id_card,String acc_no,String mobile, StringCallback callback) {
         Map<String, String> params = new HashMap<>();
         params.put("token",token);
-        params.put("id_holder", id_holder);
+       /* params.put("id_holder", id_holder);
         params.put("id_card", id_card);
         params.put("acc_no", acc_no);
-        params.put("mobile", mobile);
+        params.put("mobile", mobile);*/
+        params.put("id_holder", "岑连海");
+        params.put("id_card", "52232719831209201X");
+        params.put("acc_no", "6222024000011039977");
+        params.put("mobile", "15112503085");
         //  params.put("intent", intent);
-
-        OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/bankCardSendMsg.do")).params(params).build().execute(callback);
-        MyLog.i("GCS","请求发送银行卡短信验证码url:"+getAbsoluteApiUrl("wind-phone/phone/bankCardSendMsg.do"));
+        MyLog.i("GCS","id_holder=岑连海");
+        MyLog.i("GCS","id_card=52232719831209201X");
+        MyLog.i("GCS","acc_no=6222024000011039977");
+        MyLog.i("GCS","mobile=15112503085");
+        OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phoneBank/bankCardSendMsg.do")).params(params).build().execute(callback);
+        MyLog.i("GCS","请求发送银行卡短信验证码url:"+getAbsoluteApiUrl("wind-phone/phoneBank/bankCardSendMsg.do"));
     }
 
     /**
@@ -375,16 +382,28 @@ public class MyApi {
     public static void bankCardVerifyMsg(String token,String id_holder,String id_card,String acc_no,String mobile, String trade_no_x,String sms_code,StringCallback callback) {
         Map<String, String> params = new HashMap<>();
         params.put("token",token);
-        params.put("id_holder", id_holder);
+        /*params.put("id_holder", id_holder);
         params.put("id_card", id_card);
         params.put("acc_no", acc_no);
         params.put("mobile", mobile);
         params.put("trade_no_x", trade_no_x);
-        params.put("sms_code", sms_code);
+        params.put("sms_code", sms_code);*/
+        params.put("id_holder", "岑连海");
+        params.put("id_card", "52232719831209201X");
+        params.put("acc_no", "6222024000011039977");
+        params.put("mobile", "15112503085");
+        params.put("trade_no_x", trade_no_x);
+        params.put("sms_code", "123456");
         //  params.put("intent", intent);
+        MyLog.i("GCS","id_holder=岑连海");
+        MyLog.i("GCS","id_card=52232719831209201X");
+        MyLog.i("GCS","acc_no=6222024000011039977");
+        MyLog.i("GCS","mobile=15112503085");
+        MyLog.i("GCS","trade_no_x="+trade_no_x);
+        MyLog.i("GCS","sms_code=123456");
 
-        OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/bankCardVerifyMsg.do")).params(params).build().execute(callback);
-        MyLog.i("GCS","请求发送银行卡信息认证url:"+getAbsoluteApiUrl("wind-phone/phone/bankCardVerifyMsg.do"));
+        OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phoneBank/bankCardVerifyMsg.do")).params(params).build().execute(callback);
+        MyLog.i("GCS","请求发送银行卡信息认证url:"+getAbsoluteApiUrl("wind-phone/phoneBank/bankCardVerifyMsg.do"));
     }
 
 }
