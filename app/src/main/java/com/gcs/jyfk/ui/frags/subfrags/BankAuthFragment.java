@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -13,6 +14,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +25,7 @@ import android.widget.TextView;
 import com.gcs.jyfk.AppConfig;
 import com.gcs.jyfk.GlobalApplication;
 import com.gcs.jyfk.R;
+import com.gcs.jyfk.ui.ShowUIHelper;
 import com.gcs.jyfk.ui.account.AccountHelper;
 import com.gcs.jyfk.ui.account.RichTextParser;
 import com.gcs.jyfk.ui.account.atys.RegisterActivity;
@@ -34,6 +37,7 @@ import com.gcs.jyfk.ui.bean.base.ResultBean;
 import com.gcs.jyfk.ui.frags.BaseFragment;
 import com.gcs.jyfk.ui.widget.SimplexToast;
 import com.gcs.jyfk.utils.AppOperator;
+import com.gcs.jyfk.utils.DialogUtil;
 import com.gcs.jyfk.utils.MyLog;
 import com.gcs.jyfk.utils.RegexUtils;
 import com.gcs.jyfk.utils.TDevice;
@@ -323,10 +327,12 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
                 mEtBankcardPhone.requestFocus();
                 break;
             case R.id.tv_bankcard_sms_call:
+                showAuthbookconfirm("认证失败");
                // requestSmsCode();
                 testrequesetsmscode();
                 break;
             case R.id.bt_bankcard_submit:
+                showAuthbookconfirm("认证成功");
                 //AuthBankcardRequest();
                 testauthBankcardRequest();
                 break;
@@ -662,6 +668,43 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
         });
     }
 
+    private void showAuthbookconfirm(String tip) {
+       /* TextView title = new TextView(getContext());
+        title.setText("通讯录授权");
+        title.setPadding(0, 0, 0, 0);
+        title.setGravity(Gravity.CENTER);
+        // title.setTextColor(getResources().getColor(R.color.greenBG));
+        title.setTextSize(18);*/
+
+        View dialogview = View.inflate(getActivity(),R.layout.custom_dialog,null);
+        TextView tv_title = dialogview.findViewById(R.id.dialog_tip);
+        tv_title.setText(tip);
+        TextView tv_link = dialogview.findViewById(R.id.read_authbook_link);
+        tv_link.setVisibility(View.VISIBLE);
+        Button bt_cancle = dialogview.findViewById(R.id.btn_cancel);
+
+        /*final AlertDialog dlgShowBack = DialogUtil.getDialog(getContext()).setView(dialogview).setPositiveButton("确认", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = new Intent(getActivity(), PhoneAdressActivity.class);
+                startActivity(intent);
+            }
+        }).create();*/
+        final AlertDialog dlgShowBack = DialogUtil.getDialog(getContext()).setView(dialogview).setCancelable(true).create();
+
+        bt_cancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dlgShowBack.dismiss();
+            }
+        });
+        dlgShowBack.show();
+        dlgShowBack.getWindow().setBackgroundDrawableResource(R.drawable.rounded_search_text);
+        WindowManager.LayoutParams params = dlgShowBack.getWindow().getAttributes();
+        params.width = (int) TDevice.dp2px(270);
+        params.height = (int) TDevice.dp2px(122);
+        dlgShowBack.getWindow().setAttributes(params);
+    }
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         int id = v.getId();
