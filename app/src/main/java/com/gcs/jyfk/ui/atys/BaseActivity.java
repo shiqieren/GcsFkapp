@@ -72,7 +72,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         return true;
     }
 
-    protected void initWindow() {
+    protected void initWindow()     {
     }
 
     protected void initWidget() {

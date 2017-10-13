@@ -75,10 +75,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     @Override
     protected void initWindow() {
         super.initWindow();
-
-
         initTab();
-
     }
 
     @Override
