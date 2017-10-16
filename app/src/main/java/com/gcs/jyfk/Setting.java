@@ -64,7 +64,7 @@ public final class Setting {
             if (urls.length > 0) {
                 url = urls[0];
             } else {
-                url = "http://1z8339d726.iask.in/";
+                url = "http://www.jinyanfk.com/";
             }
             updateServerUrl(context, url);
         }

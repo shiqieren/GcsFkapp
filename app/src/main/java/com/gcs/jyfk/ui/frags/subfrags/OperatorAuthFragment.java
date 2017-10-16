@@ -226,7 +226,7 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
                 mEtAuthPassword.setText(null);
                 break;
             case R.id.tv_authbook:
-                ShowUIHelper.openInternalBrowser(getActivity(), "http://1z8339d726.iask.in/wind-phone/authOperatorAgreement.jsp");
+                ShowUIHelper.openInternalBrowser(getActivity(), "http://www.jinyanfk.com/wind-phone/authOperatorAgreement.jsp");
                 break;
             default:
                 break;
