@@ -575,7 +575,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
             @Override
             public void onClick(View view) {
                 MyLog.i("GCS","模拟通讯录授权成功");
-                ShowUIHelper.openInternalBrowser(getActivity(), "http://www.jinyanfk.com/wind-phone/authAgreement.jsp");
+                ShowUIHelper.openInternalBrowser(getActivity(), "http://www.guanyunsz.com/wind-phone/authAgreement.jsp");
 
             }
         });

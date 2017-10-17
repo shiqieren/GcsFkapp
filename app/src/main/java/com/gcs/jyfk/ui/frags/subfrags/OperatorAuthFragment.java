@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bqs.crawler.cloud.sdk.BqsCrawlerCloudSDK;
+import com.bqs.crawler.cloud.sdk.BqsParams;
 import com.bqs.crawler.cloud.sdk.mno.MnoLoginAction;
 import com.bqs.crawler.cloud.sdk.mno.OnMnoLoginListener;
 import com.bqs.crawler.cloud.sdk.mno.OnMnoSendSmsListener;
@@ -171,6 +173,7 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
         btnTimer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                configBqsParams();
                 onSendSmsClick();
             }
         });
@@ -216,6 +219,7 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
                 break;
 
             case R.id.bt_auth_submit:
+                configBqsParams();
                 AuthRequest();
                 break;
 
@@ -226,7 +230,7 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
                 mEtAuthPassword.setText(null);
                 break;
             case R.id.tv_authbook:
-                ShowUIHelper.openInternalBrowser(getActivity(), "http://www.jinyanfk.com/wind-phone/authOperatorAgreement.jsp");
+                ShowUIHelper.openInternalBrowser(getActivity(), "http://www.guanyunsz.com/wind-phone/authOperatorAgreement.jsp");
                 break;
             default:
                 break;
@@ -234,14 +238,46 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
 
     }
 
+    /*设置该登录用户的身份认证信息*/
+    private void configBqsParams() {
+        User user = AccountHelper.getUser();
+        BqsParams params = new BqsParams();
+        params.setPartnerId("guanchesuo");
+        if(user.getName()!=null){
+            params.setName(unAES(user.getName()));
+        }else {
+            MyLog.i("GCS","白骑士姓名参数为空");
+            SimplexToast.showMyToast("身份认证信息不完整或者有误，请重新认证",GlobalApplication.getContext());
+            return;
+        }
+        if(user.getCertno()!=null){
+            params.setCertNo(unAES(user.getCertno()));
+        }
+        else {
+            MyLog.i("GCS","白骑士姓名参数为空");
+            SimplexToast.showMyToast("身份认证信息不完整或者有误，请重新认证",GlobalApplication.getContext());
+            return;
+        }
+        params.setMobile(mEtAuthUsername.getText().toString());
+
+
+        MyLog.i("GCS","guanchesuo");
+        MyLog.i("GCS","李全朴");
+        MyLog.i("GCS","410927199307065033");
+        MyLog.i("GCS","18018746184");
+
+        BqsCrawlerCloudSDK.setParams(params);
+
+        Setting.bqsParams = params;
+    }
     private void AuthRequest() {
-       String username =  mEtAuthUsername.getText().toString();
-        String smscode = etSmscode.getText().toString();
+       String username =  mEtAuthUsername.getText().toString().trim();
+        String smscode = etSmscode.getText().toString().trim();
         if (RichTextParser.machPhoneNum(username)){
             if(!mCbAgreeAuthbook.isChecked()){
                 SimplexToast.showMyToast("需勾选授权协议哦!",GlobalApplication.getContext());
             }else {
-                String servicePwd = mEtAuthPassword.getText().toString();
+                String servicePwd = mEtAuthPassword.getText().toString().trim();
                 if (TextUtils.isEmpty(servicePwd) || servicePwd.length() < 6||servicePwd.length() > 18) {
 
                     SimplexToast.showMyToast("请输入有效的服务密码", GlobalApplication.getContext());
@@ -258,6 +294,7 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
                 mDialog.show();
 
                 loginAction.login(servicePwd,smscode, this);
+
             }
         }else {
             SimplexToast.showMyToast("手机号码有误.请重新填写!",GlobalApplication.getContext());
