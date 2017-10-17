@@ -406,4 +406,12 @@ public class MyApi {
         MyLog.i("GCS","请求发送银行卡信息认证url:"+getAbsoluteApiUrl("wind-phone/phoneBank/bankCardVerifyMsg.do"));
     }
 
+    /**
+     * bank—select
+     *
+     */
+    public static void bankCodeList(StringCallback callback) {
+        OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phoneBank/bankCodeList.do")).build().execute(callback);
+        MyLog.i("GCS","银行卡列表选择url:"+getAbsoluteApiUrl("wind-phone/phoneBank/bankCodeList.do"));
+    }
 }

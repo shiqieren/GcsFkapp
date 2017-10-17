@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.gcs.jyfk.AppConfig;
@@ -33,6 +34,7 @@ import com.gcs.jyfk.ui.account.bean.User;
 import com.gcs.jyfk.ui.api.MyApi;
 import com.gcs.jyfk.ui.atys.MainActivity;
 import com.gcs.jyfk.ui.atys.SimpleBackActivity;
+import com.gcs.jyfk.ui.bean.BankType;
 import com.gcs.jyfk.ui.bean.base.ResultBean;
 import com.gcs.jyfk.ui.frags.BaseFragment;
 import com.gcs.jyfk.ui.widget.SimplexToast;
@@ -45,6 +47,7 @@ import com.google.gson.reflect.TypeToken;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.lang.reflect.Type;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Request;
@@ -58,6 +61,7 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
     private LinearLayout mLlBankcardName;
     private LinearLayout mLlBankcardNumber;
     private LinearLayout mLlBankcardPhone;
+    private LinearLayout mLlBanktype;
     private EditText mEtBankcardName;
     private EditText mEtBankcardNumber;
     private EditText mEtBankcardPhone;
@@ -68,9 +72,11 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
     private LinearLayout mLlBankcardSmsCode;
     private EditText mEtBankcardSmsCode;
     private Button mBtBankcardSubmit;
+    private Spinner mSpBanktype;
     private String trade_no_x;
     private boolean mMachPhoneNum;
     private boolean mBankcardNum;
+    private List<BankType> mOptions;
     private CountDownTimer mTimer;
     @Override
     protected int getLayoutId() {
@@ -84,10 +90,12 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
         mLlBankcardName  = view.findViewById(R.id.ll_bankcard_name);
         mLlBankcardNumber  = view.findViewById(R.id.ll_bankcard_number);
         mLlBankcardPhone  = view.findViewById(R.id.ll_bankcard_phone);
+        mLlBanktype  = view.findViewById(R.id.ll_banktype_select);
 
         mEtBankcardName =  view.findViewById(R.id.et_bankcard_name);
         mEtBankcardNumber =  view.findViewById(R.id.et_bankcard_number);
         mEtBankcardPhone =  view.findViewById(R.id.et_bankcard_phone);
+        mSpBanktype = view.findViewById(R.id.sp_banktype_select);
 
         mIvBankcardNameDel =  view.findViewById(R.id.iv_bankcard_name_del);
         mIvBankcardNumberDel =  view.findViewById(R.id.iv_bankcard_number_del);
@@ -98,6 +106,7 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
         mTvBankcardSmsCall= view.findViewById(R.id.tv_bankcard_sms_call);
         mLlBankcardSmsCode= view.findViewById(R.id.ll_bankcard_sms_code);
         mEtBankcardSmsCode=  view.findViewById(R.id.et_bankcard_sms_code);
+
 
         setListener();
         mEtBankcardName.setOnFocusChangeListener(this);
@@ -283,6 +292,37 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
             User user = AccountHelper.getUser();
             if(user.getName()!=null){ mEtBankcardName.setText(unAES(user.getName()));}
         }
+        //获取银行选择列表
+        spGetBanktype();
+    }
+
+    private void spGetBanktype() {
+        MyLog.i("GCS","获取银行下拉选择列表");
+        MyApi.bankCodeList(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                MyLog.i("GCS","银行下拉选择列表返回Exception："+e.toString());
+            }
+
+            @Override
+            public void onResponse(String response, int id) {
+                MyLog.i("GCS","银行下拉选择列表返回response："+response);
+                try {
+                    Type type = new TypeToken<ResultBean<List<BankType>>>() {
+                    }.getType();
+                    ResultBean<List<BankType>> resultBean = AppOperator.createGson().fromJson(response, type);
+                    if (resultBean.isSuccess()) {
+                        mOptions = resultBean.getResult();
+
+
+                    } else {
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     private void setListener() {
