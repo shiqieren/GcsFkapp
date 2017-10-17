@@ -22,7 +22,7 @@
             android:background="@color/white_color_disable"></View>
         <ImageView
             android:id="@+id/iv_login_logo"
-            android:layout_width="130dp"
+            android:layout_width="100dp"
             android:layout_height="150dp"
             android:layout_gravity="center_horizontal"
             android:contentDescription="@null"

@@ -575,7 +575,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
             @Override
             public void onClick(View view) {
                 MyLog.i("GCS","模拟通讯录授权成功");
-                ShowUIHelper.openInternalBrowser(getActivity(), "http://www.guanyunsz.com/wind-phone/authAgreement.jsp");
+                ShowUIHelper.openInternalBrowser(getActivity(), Setting.getServerUrl(GlobalApplication.getContext())+"wind-phone/authAgreement.jsp");
 
             }
         });
@@ -697,47 +697,52 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
         if (EasyPermissions.hasPermissions(getActivity(), new String[]{Manifest.permission.READ_CONTACTS})) {
             MyLog.i("GCS","上传通讯录");
             List<ContactBean> contactlist = GetContactsUtil.getContactslist(getActivity());
-            MyLog.i("GCS",new Gson().toJson(contactlist));
-            if (AccountHelper.isLogin()) {
-                final User user = AccountHelper.getUser();
-                sendRequestData(user);
-                updateView(user);
-                MyLog.i("GCS","token="+user.getToken());
-                MyApi.batchAdd(new UploadContacts(user.getToken(),contactlist), new StringCallback() {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
-                        MyLog.i("GCS","上传通讯录返回Exception："+e.toString());
-                    }
-
-                    @Override
-                    public void onResponse(String response, int id) {
-                        MyLog.i("GCS","上传通讯录返回成功response："+response);
-                        mLlcontactiv.setVisibility(View.VISIBLE);
-                        user.getAuthstate().setAuth_contact("1");
-                        Type type = new TypeToken<ResultBean>() {}.getType();
-                        ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
-                        //注册结果返回该用户User
-                        int code = resultBean.getCode();
-                        String msg = resultBean.getMessage();
-                        switch (code) {
-                            case 200://
-                                MyLog.i("GCS","通讯录上传结果"+msg);
-
-                                break;
-                            case 300://
-                                MyLog.i("GCS","通讯录上传结果"+msg);
-                                break;
-                            case 500://
-                                MyLog.i("GCS","通讯录上传结果"+msg);
-                                break;
-                            default:
-                                break;
+            if (contactlist !=null){
+                MyLog.i("GCS",new Gson().toJson(contactlist));
+                if (AccountHelper.isLogin()) {
+                    final User user = AccountHelper.getUser();
+                    sendRequestData(user);
+                    updateView(user);
+                    MyLog.i("GCS","token="+user.getToken());
+                    MyApi.batchAdd(new UploadContacts(user.getToken(),contactlist), new StringCallback() {
+                        @Override
+                        public void onError(Call call, Exception e, int id) {
+                            MyLog.i("GCS","上传通讯录返回Exception："+e.toString());
                         }
-                    }
-                });
-            } else {
-                hideView();
+
+                        @Override
+                        public void onResponse(String response, int id) {
+                            MyLog.i("GCS","上传通讯录返回成功response："+response);
+                            mLlcontactiv.setVisibility(View.VISIBLE);
+                            user.getAuthstate().setAuth_contact("1");
+                            Type type = new TypeToken<ResultBean>() {}.getType();
+                            ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
+                            //注册结果返回该用户User
+                            int code = resultBean.getCode();
+                            String msg = resultBean.getMessage();
+                            switch (code) {
+                                case 200://
+                                    MyLog.i("GCS","通讯录上传结果"+msg);
+
+                                    break;
+                                case 300://
+                                    MyLog.i("GCS","通讯录上传结果"+msg);
+                                    break;
+                                case 500://
+                                    MyLog.i("GCS","通讯录上传结果"+msg);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    });
+                } else {
+                    hideView();
+                }
+            }else {
+                SimplexToast.showMyToast("当前通讯录为空",GlobalApplication.getContext());
             }
+
 
         } else {
             EasyPermissions.requestPermissions(this, "获取通讯录权限", 0, Manifest.permission.READ_CONTACTS);

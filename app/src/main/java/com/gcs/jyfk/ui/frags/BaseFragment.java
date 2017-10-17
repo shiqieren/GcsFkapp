@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 
 import com.gcs.jyfk.GlobalApplication;
@@ -94,6 +95,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         super.onDestroy();
         mBundle = null;
     }
+
 
 
 
