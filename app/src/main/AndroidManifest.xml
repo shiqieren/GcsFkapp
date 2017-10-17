@@ -126,6 +126,10 @@
             android:configChanges="keyboardHidden|orientation"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:windowSoftInputMode="stateHidden|stateUnchanged"/>
+        <activity
+            android:name=".ui.baiqishiauthpager.MnoAuthActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <service
             android:name="com.gcs.jyfk.update.DownloadService"
             android:exported="false" />

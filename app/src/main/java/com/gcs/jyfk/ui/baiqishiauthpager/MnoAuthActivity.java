@@ -12,12 +12,24 @@ import com.bqs.crawler.cloud.sdk.mno.OnMnoAuthListener;
 import com.bqs.crawler.cloud.sdk.mno.OnMnoSendSmsListener;
 import com.gcs.jyfk.GlobalApplication;
 import com.gcs.jyfk.R;
+import com.gcs.jyfk.ui.account.AccountHelper;
+import com.gcs.jyfk.ui.account.bean.User;
+import com.gcs.jyfk.ui.api.MyApi;
 import com.gcs.jyfk.ui.atys.BaseActivity;
 import com.gcs.jyfk.ui.atys.SimpleBackActivity;
+import com.gcs.jyfk.ui.bean.base.ResultBean;
 import com.gcs.jyfk.ui.widget.SimplexToast;
 import com.gcs.jyfk.ui.widget.TimerButton;
 import com.gcs.jyfk.utils.ActivityManager;
+import com.gcs.jyfk.utils.AppOperator;
 import com.gcs.jyfk.utils.DialogUtil;
+import com.gcs.jyfk.utils.MyLog;
+import com.google.gson.reflect.TypeToken;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import java.lang.reflect.Type;
+
+import okhttp3.Call;
 
 /**
  * Created by lyw on 2016/11/16.
@@ -92,10 +104,51 @@ public class MnoAuthActivity extends BaseActivity implements OnMnoAuthListener,O
     @Override
     public void onAuthSuccess() {
         SimplexToast.showMyToast("运营商授权成功", GlobalApplication.getContext());
-        mDialog.hide();
-        ActivityManager.getActivityManager().finishActivity(this);
-        //此处可能关闭不必要的activity，后期优化改为结果启动和结果返回来辨别
-        ActivityManager.getActivityManager().finishActivity(SimpleBackActivity.class);
+        if (AccountHelper.isLogin()){
+            //登录成功
+            User user = AccountHelper.getUser();
+            //设置该用户运营商授权状态
+            user.getAuthstate().setAuth_operator("1");
+            MyApi.changestatus(user.getToken(), "operator", "1", new StringCallback() {
+                @Override
+                public void onError(Call call, Exception e, int id) {
+
+                }
+
+                @Override
+                public void onResponse(String response, int id) {
+                    try {
+                        Type type = new TypeToken<ResultBean>() {}.getType();
+                        ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
+                        //注册结果返回该用户User
+                        int code = resultBean.getCode();
+                        String msg = resultBean.getMessage();
+                        SimplexToast.showMyToast(msg,GlobalApplication.getContext());
+                        switch (code) {
+                            case 200://
+                                SimplexToast.showMyToast("运营商成功登录"+msg,GlobalApplication.getContext());
+                                break;
+                            case 500://
+                                SimplexToast.showMyToast("运营商已经登录成功,,但是服务器状态值未上传成功，失败信息："+msg,GlobalApplication.getContext());
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+            AccountHelper.updateUserCache(user);
+            MyLog.i("GCS","更新sp中user的认证状态值");
+            mDialog.hide();
+            ActivityManager.getActivityManager().finishActivity(this);
+            //此处可能关闭不必要的activity，后期优化改为结果启动和结果返回来辨别
+            ActivityManager.getActivityManager().finishActivity(SimpleBackActivity.class);
+        }
+
     }
 
     @Override
