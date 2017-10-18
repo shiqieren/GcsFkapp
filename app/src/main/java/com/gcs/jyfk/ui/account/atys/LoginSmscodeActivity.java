@@ -332,7 +332,7 @@ public class LoginSmscodeActivity extends AccountBaseActivity implements View.On
         //String holdPwd = sp.getString(HOLD_PWD_KEY, null);
         //int holdStatus = sp.getInt(HOLD_PWD_STATUS_KEY, 0);//0第一次默认/1用户设置保存/2用户设置未保存
 
-        mEtLoginUsername.setText(holdUsername);
+       // mEtLoginUsername.setText(holdUsername);
 
     }
 
