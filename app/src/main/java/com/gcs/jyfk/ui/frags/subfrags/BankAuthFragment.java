@@ -398,8 +398,13 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
 
                 }
                 String webtitileName = "请选择银行";
-                MyWebListPopuAdapter mWebAdapter = new MyWebListPopuAdapter(mOptions);
-                setPopuWindow(mOptions,webtitileName,mTvBanktype,mWebAdapter);
+                if (mOptions.size() != 0){
+                    MyWebListPopuAdapter mWebAdapter = new MyWebListPopuAdapter(mOptions);
+                    setPopuWindow(mOptions,webtitileName,mTvBanktype,mWebAdapter);
+                }else {
+                    SimplexToast.showMyToast("为获取到银行列表",GlobalApplication.getContext());
+                }
+
                 break;
             default:
                 break;
