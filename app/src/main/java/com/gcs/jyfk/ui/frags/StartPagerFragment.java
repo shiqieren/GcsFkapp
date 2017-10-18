@@ -726,7 +726,14 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                             switch (code) {
                                 case 200://
                                     MyLog.i("GCS","通讯录上传结果"+msg);
-
+                                    if (AccountHelper.isLogin()) {
+                                        User user = AccountHelper.getUser();
+                                        sendRequestData(user);
+                                        MyLog.i("GCS", "网络实时的User，目前先用本地获取的User");
+                                        updateView(user);
+                                    } else {
+                                        hideView();
+                                    }
                                     break;
                                 case 300://
                                     MyLog.i("GCS","通讯录上传结果"+msg);
