@@ -117,6 +117,7 @@ public class MnoAuthActivity extends BaseActivity implements OnMnoAuthListener,O
 
                 @Override
                 public void onResponse(String response, int id) {
+                    MyLog.i("GCS","运营商授权状态修改response"+response);
                     try {
                         Type type = new TypeToken<ResultBean>() {}.getType();
                         ResultBean resultBean = AppOperator.createGson().fromJson(response, type);

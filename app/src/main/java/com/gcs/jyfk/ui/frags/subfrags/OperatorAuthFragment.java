@@ -331,6 +331,7 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
 
                 @Override
                 public void onResponse(String response, int id) {
+                    MyLog.i("GCS","运营商授权状态修改response"+response);
                     try {
                         Type type = new TypeToken<ResultBean>() {}.getType();
                         ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
@@ -345,7 +346,6 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
                             case 500://
                                 SimplexToast.showMyToast("运营商已经登录成功,,但是服务器状态值未上传成功，失败信息："+msg,GlobalApplication.getContext());
                                 break;
-
                             default:
                                 break;
                         }
