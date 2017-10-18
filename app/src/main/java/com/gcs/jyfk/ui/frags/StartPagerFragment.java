@@ -696,8 +696,11 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
     public void requestReadContacts() {
         if (EasyPermissions.hasPermissions(getActivity(), new String[]{Manifest.permission.READ_CONTACTS})) {
             MyLog.i("GCS","上传通讯录");
-            List<ContactBean> contactlist = GetContactsUtil.getContactslist(getActivity());
-            if (contactlist !=null){
+                List<ContactBean> contactlist = GetContactsUtil.getContactslist(getActivity());
+                if (contactlist.size()==0){
+                    SimplexToast.showMyToast("当前通讯录为空",GlobalApplication.getContext());
+                    return;
+                }
                 MyLog.i("GCS",new Gson().toJson(contactlist));
                 if (AccountHelper.isLogin()) {
                     final User user = AccountHelper.getUser();
@@ -739,9 +742,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                 } else {
                     hideView();
                 }
-            }else {
-                SimplexToast.showMyToast("当前通讯录为空",GlobalApplication.getContext());
-            }
+
 
 
         } else {
