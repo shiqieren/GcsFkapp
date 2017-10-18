@@ -66,7 +66,7 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
     private LinearLayout mLlBankcardNumber;
     private LinearLayout mLlBankcardPhone;
     private LinearLayout mLlBanktype;
-    private EditText mEtBankcardName;
+    private TextView mEtBankcardName;
     private EditText mEtBankcardNumber;
     private EditText mEtBankcardPhone;
     private ImageView mIvBankcardNameDel;
@@ -115,7 +115,7 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
 
 
         setListener();
-        mEtBankcardName.setOnFocusChangeListener(this);
+      //  mEtBankcardName.setOnFocusChangeListener(this);
         InputFilter filter = new InputFilter() {
             public CharSequence filter(CharSequence source, int start, int end,
                                        Spanned dest, int dstart, int dend) {
@@ -334,7 +334,7 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
 
     private void setListener() {
         mLlBankcardName.setOnClickListener(this);
-        mEtBankcardName.setOnClickListener(this);
+      //  mEtBankcardName.setOnClickListener(this);
         mIvBankcardNameDel.setOnClickListener(this);
         mLlBankcardPhone.setOnClickListener(this);
         mEtBankcardPhone.setOnClickListener(this);
@@ -359,8 +359,8 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
             case R.id.et_bankcard_name:
                 mEtBankcardNumber.clearFocus();
                 mEtBankcardPhone.clearFocus();
-                mEtBankcardName.setFocusableInTouchMode(true);
-                mEtBankcardName.requestFocus();
+            //    mEtBankcardName.setFocusableInTouchMode(true);
+            //    mEtBankcardName.requestFocus();
                 break;
             case R.id.et_bankcard_number:
                 mEtBankcardName.clearFocus();
