@@ -321,7 +321,6 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
                     if (code == 200) {
                         mOptions = resultBean.getResult();
 
-
                     } else {
 
                     }
