@@ -52,8 +52,8 @@
                 android:lines="1"
                 android:maxLines="1"
                 android:minLines="1"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black_alpha_80"
+                android:textColor="@color/defaultTextColor"
+                android:textColorHint="@color/defaulthintTextColor"
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/font_16" />
             <ImageView
@@ -114,8 +114,8 @@
                 android:lines="1"
                 android:maxLines="1"
                 android:minLines="1"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black_alpha_80"
+                android:textColor="@color/defaultTextColor"
+                android:textColorHint="@color/defaulthintTextColor"
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/font_16" />
             <ImageView

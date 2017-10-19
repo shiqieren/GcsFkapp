@@ -39,7 +39,8 @@
         android:background="@drawable/edit_bg"
         android:hint="@string/feedback_hint"
         android:gravity="top"
-        android:textColor="@color/darker_gray2"
+        android:textColor="@color/defaultTextColor"
+        android:textColorHint="@color/defaulthintTextColor"
         android:padding="@dimen/lay_8"
         android:textSize="@dimen/font_14"/>
 

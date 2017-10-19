@@ -304,8 +304,8 @@
 
     <color name="detail_bgColor">#f5f5f5</color>
 
-    <color name="defaultTextColor">#666</color>
-
+    <color name="defaultTextColor">#666666</color>
+    <color name="defaulthintTextColor">#cccccc</color>
     <!-- start zxing -->
     <color name="viewfinder_frame">#2477ab</color>
     <color name="viewfinder_mask">#60000000</color>
