@@ -116,7 +116,7 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
 
         setListener();
       //  mEtBankcardName.setOnFocusChangeListener(this);
-        InputFilter filter = new InputFilter() {
+       /* InputFilter filter = new InputFilter() {
             public CharSequence filter(CharSequence source, int start, int end,
                                        Spanned dest, int dstart, int dend) {
                 for (int i = start; i < end; i++) {
@@ -156,16 +156,16 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
                 String pwd = mEtBankcardNumber.getText().toString().trim();
                 if (!TextUtils.isEmpty(identitynumber)&&!TextUtils.isEmpty(pwd)&&!TextUtils.isEmpty(phone)) {
                    // mBtBankcardSubmit.setEnabled(true);
-                   /* mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit);
-                    mBtLoginSubmit.setTextColor(getResources().getColor(R.color.white));*/
+                   *//* mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit);
+                    mBtLoginSubmit.setTextColor(getResources().getColor(R.color.white));*//*
                 } else {
                   //  mBtBankcardSubmit.setEnabled(false);
-                  /*  mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                    mBtLoginSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));*/
+                  *//*  mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
+                    mBtLoginSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));*//*
                 }
 
             }
-        });
+        });*/
 
         mEtBankcardNumber.setOnFocusChangeListener(this);
 
