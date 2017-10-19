@@ -478,13 +478,13 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                 if (FastOneClick.isFastClick()){
                     if (!AccountHelper.isLogin()) {
                         ShowUIHelper.showLoginActivity(getActivity());
-                        return;
-                    }
-                    if (status!=null){
-                        if (status.getContact().equals("1")){
-                            SimplexToast.showMyToast("通讯录已授权",GlobalApplication.getContext());
-                        }else {
-                            showAuthbookconfirm();
+                    }else {
+                        if (status!=null){
+                            if (status.getContact().equals("1")){
+                                SimplexToast.showMyToast("通讯录已授权",GlobalApplication.getContext());
+                            }else {
+                                showAuthbookconfirm();
+                            }
                         }
                     }
                    /* if (mLlcontactiv.getVisibility() == View.VISIBLE){
