@@ -49,18 +49,7 @@
                 tools:text="13M"/>
         </LinearLayout>
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:visibility="gone">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/gray"
-                android:layout_marginLeft="@dimen/lay_14"/>
-        </FrameLayout>
 
         <LinearLayout
             android:id="@+id/rl_double_click_exit"
@@ -93,19 +82,6 @@
 
 
 
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:visibility="gone">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/gray"
-                android:layout_marginLeft="@dimen/lay_14"/>
-        </FrameLayout>
         <FrameLayout
             android:id="@+id/rl_reset_password"
             android:layout_width="match_parent"
@@ -142,11 +118,6 @@
         </FrameLayout>
 
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/gray"
-            android:visibility="gone"/>
 
 
         <View
@@ -229,11 +200,7 @@
             </LinearLayout>
 
         </FrameLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:alpha="0.6"
-            android:background="@color/gray"/>
+
 
 
 
