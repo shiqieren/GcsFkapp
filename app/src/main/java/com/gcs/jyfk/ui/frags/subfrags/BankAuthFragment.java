@@ -605,7 +605,7 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
                     int code = resultBean.getCode();
                     switch (code) {
                         case 200://成功
-                            SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
+                         //   SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
                             if (mTimer != null) {
                                 mTimer.onFinish();
                                 mTimer.cancel();

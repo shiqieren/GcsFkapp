@@ -44,11 +44,7 @@
         <activity android:name="com.gcs.jyfk.ui.atys.LaunchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/App.Theme.Launch">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name="com.gcs.jyfk.ui.atys.MainActivity"
             android:launchMode="singleTop"
@@ -80,7 +76,13 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/Account_Base.App.Theme.NoTitle"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:windowSoftInputMode="stateHidden|adjustResize" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            </activity>
         <activity
             android:name="com.gcs.jyfk.ui.account.atys.LoginSmscodeActivity"
             android:configChanges="keyboardHidden|orientation"
