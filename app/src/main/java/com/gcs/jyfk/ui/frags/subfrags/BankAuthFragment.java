@@ -358,8 +358,8 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
             case R.id.et_bankcard_name:
                 mEtBankcardNumber.clearFocus();
                 mEtBankcardPhone.clearFocus();
-            //    mEtBankcardName.setFocusableInTouchMode(true);
-            //    mEtBankcardName.requestFocus();
+                mEtBankcardName.setFocusableInTouchMode(true);
+                mEtBankcardName.requestFocus();
                 break;
             case R.id.et_bankcard_number:
                 mEtBankcardName.clearFocus();
