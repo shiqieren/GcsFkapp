@@ -66,7 +66,7 @@ public class LaunchActivity extends BaseActivity {
 
         // Delay...
         try {
-            Thread.sleep(400);
+            Thread.sleep(800);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
