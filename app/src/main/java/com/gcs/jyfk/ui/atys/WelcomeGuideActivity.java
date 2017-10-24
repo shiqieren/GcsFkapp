@@ -2,6 +2,7 @@ package com.gcs.jyfk.ui.atys;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -13,7 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gcs.jyfk.R;
+import com.gcs.jyfk.ui.ShowUIHelper;
+import com.gcs.jyfk.ui.account.AccountHelper;
 import com.gcs.jyfk.ui.widget.PointView;
+import com.gcs.jyfk.utils.MyLog;
 
 import java.util.ArrayList;
 
@@ -231,7 +235,8 @@ public class WelcomeGuideActivity extends Activity
      */
     private void enterMainActivity()
     {
-        finish();
+            ShowUIHelper.showLoginActivity(this);
+            finish();
     }
 
     /**

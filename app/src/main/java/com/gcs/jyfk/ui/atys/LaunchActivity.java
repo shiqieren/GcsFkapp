@@ -66,7 +66,7 @@ public class LaunchActivity extends BaseActivity {
 
         // Delay...
         try {
-            Thread.sleep(800);
+            Thread.sleep(400);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -78,15 +78,22 @@ public class LaunchActivity extends BaseActivity {
 
 
     private void redirectTo() {
-        if(!AccountHelper.isLogin()){
-            ShowUIHelper.showLoginActivity(this);
+        if (Setting.needShowGuide(this))
+        {
+            startActivity(new Intent(this, WelcomeGuideActivity.class));
             finish();
         }else {
+            if(!AccountHelper.isLogin()){
+                ShowUIHelper.showLoginActivity(this);
+                finish();
+            }else {
 
-            MyLog.i("GCS","通常登录,非重新安装状态，先进入mainactivity再判断是否登录");
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            finish();
+                MyLog.i("GCS","通常登录,非重新安装状态，先进入mainactivity再判断是否登录");
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
+
     }
 }

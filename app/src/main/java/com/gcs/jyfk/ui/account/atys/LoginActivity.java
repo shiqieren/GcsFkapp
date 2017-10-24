@@ -152,10 +152,6 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
     @Override
     protected void initWindow() {
         super.initWindow();
-        if (Setting.needShowGuide(this))
-        {
-            startActivity(new Intent(this, WelcomeGuideActivity.class));
-        }
     }
 
     private  void initViews(){
