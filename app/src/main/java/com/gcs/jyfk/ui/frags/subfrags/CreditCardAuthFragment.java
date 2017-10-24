@@ -74,7 +74,7 @@ public class CreditCardAuthFragment extends BaseFragment implements View.OnClick
             mDialog = DialogUtil.getProgressDialog(getActivity(), message, false);//DialogHelp.getWaitDialog(this, message);
         }
 
-        ((SimpleBackActivity)getActivity()).setToolBarTitle(R.string.operator_string);
+        ((SimpleBackActivity)getActivity()).setToolBarTitle(R.string.credit_card);
         view.findViewById(R.id.traceroute_rootview).setOnClickListener(this);
         mLlAuthUsername = view.findViewById(R.id.ll_auth_username);
         mLlAuthPassword = view.findViewById(R.id.ll_auth_password);

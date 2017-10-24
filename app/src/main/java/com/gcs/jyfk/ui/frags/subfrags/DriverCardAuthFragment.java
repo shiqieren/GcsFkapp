@@ -71,7 +71,7 @@ public class DriverCardAuthFragment extends BaseFragment implements View.OnClick
     @Override
     protected void initView(View view) {
         super.initView(view);
-        ((SimpleBackActivity)getActivity()).setToolBarTitle(R.string.identity_string);
+        ((SimpleBackActivity)getActivity()).setToolBarTitle(R.string.driver_card);
         view.findViewById(R.id.traceroute_rootview).setOnClickListener(this);
         mLlIdentityName = view.findViewById(R.id.ll_identity_name);
         mLlIdentityNumber = view.findViewById(R.id.ll_identity_number);
