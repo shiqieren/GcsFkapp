@@ -1,6 +1,9 @@
 package com.gcs.jyfk.ui.atys;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import com.gcs.jyfk.GlobalApplication;
@@ -72,15 +75,18 @@ public class LaunchActivity extends BaseActivity {
         redirectTo();
     }
 
+
+
     private void redirectTo() {
         if(!AccountHelper.isLogin()){
             ShowUIHelper.showLoginActivity(this);
             finish();
         }else {
+
             MyLog.i("GCS","通常登录,非重新安装状态，先进入mainactivity再判断是否登录");
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
-         }
+        }
     }
 }

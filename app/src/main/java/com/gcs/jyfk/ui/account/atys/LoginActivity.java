@@ -27,11 +27,13 @@ import android.widget.TextView;
 import com.gcs.jyfk.AppConfig;
 import com.gcs.jyfk.GlobalApplication;
 import com.gcs.jyfk.R;
+import com.gcs.jyfk.Setting;
 import com.gcs.jyfk.ui.account.AccountHelper;
 import com.gcs.jyfk.ui.account.RichTextParser;
 import com.gcs.jyfk.ui.account.bean.User;
 import com.gcs.jyfk.ui.api.MyApi;
 import com.gcs.jyfk.ui.atys.MainActivity;
+import com.gcs.jyfk.ui.atys.WelcomeGuideActivity;
 import com.gcs.jyfk.ui.bean.base.ResultBean;
 import com.gcs.jyfk.ui.widget.SimplexToast;
 import com.gcs.jyfk.utils.AppOperator;
@@ -147,6 +149,14 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
         return R.layout.activity_main_login;
     }
 
+    @Override
+    protected void initWindow() {
+        super.initWindow();
+        if (Setting.needShowGuide(this))
+        {
+            startActivity(new Intent(this, WelcomeGuideActivity.class));
+        }
+    }
 
     private  void initViews(){
 

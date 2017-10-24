@@ -3,6 +3,7 @@ package com.gcs.jyfk;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.preference.PreferenceManager;
 import android.support.v4.content.SharedPreferencesCompat;
 import android.text.TextUtils;
 
@@ -16,7 +17,10 @@ import com.gcs.jyfk.utils.VersionUtil;
  */
 
 public final class Setting {
+    // 引导图更换后，这里要升级一下引导图的版本后，这样，用户就能看到新的引导图了
+    private static final int GUIDE_VERSION = 1;
 
+    private static final String WELCOME_GUIDE = "welcome_guide";
     //服务url地址
     private static final String KEY_SEVER_URL = "serverUrl";
     //版本号
@@ -113,6 +117,26 @@ public final class Setting {
         return sp.getInt(KEY_LOCATION_APP_CODE, 0);
     }
 
+    /**
+     * 是否显示启动引导图
+     *
+     * @return
+     */
+    public static boolean needShowGuide(Context context)
+    {
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        int version = sharedPrefs.getInt(WELCOME_GUIDE, 0);
 
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        editor.putInt(WELCOME_GUIDE, GUIDE_VERSION);
+        editor.commit();
+
+        if (version != GUIDE_VERSION)
+        {
+            return true;
+        }
+
+        return false;
+    }
 }
 
