@@ -117,8 +117,24 @@ public class ShowUIHelper {
      *
      * @param context
      */
-    public static void showBankAuth(Context context) {
+        public static void showBankAuth(Context context) {
         showSimpleBack(context, SimpleBackPage.BANK_AUTH);
+    }
+    /**
+     * 显示驾驶证输入
+     *
+     * @param context
+     */
+    public static void showDrivercardAuth(Context context) {
+        showSimpleBack(context, SimpleBackPage.DRIVERCARD_AUTH);
+    }
+    /**
+     * 显示信用卡输入
+     *
+     * @param context
+     */
+    public static void showCreditcardAuth(Context context) {
+        showSimpleBack(context, SimpleBackPage.CREDITCARD_AUTH);
     }
 
     /**

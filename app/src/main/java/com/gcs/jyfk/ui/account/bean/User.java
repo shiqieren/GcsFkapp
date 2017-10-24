@@ -223,7 +223,7 @@ public class User implements Serializable {
         public AuthState() {
         }
 
-        public AuthState(String auth_identity, String auth_bankcard, String auth_zhima, String auth_alipay, String auth_taobao, String auth_jd, String auth_operator, String auth_contact) {
+        public AuthState(String auth_identity, String auth_bankcard, String auth_zhima, String auth_alipay, String auth_taobao, String auth_jd, String auth_operator, String auth_contact, String auth_drivercard, String auth_creditcard) {
             this.auth_identity = auth_identity;
             this.auth_bankcard = auth_bankcard;
             this.auth_zhima = auth_zhima;
@@ -232,6 +232,8 @@ public class User implements Serializable {
             this.auth_jd = auth_jd;
             this.auth_operator = auth_operator;
             this.auth_contact = auth_contact;
+            this.auth_drivercard = auth_drivercard;
+            this.auth_creditcard = auth_creditcard;
         }
 
         private String auth_identity;
@@ -242,7 +244,8 @@ public class User implements Serializable {
         private String auth_jd;
         private String auth_operator;
         private String auth_contact;
-
+        private String auth_drivercard;
+        private String auth_creditcard;
 
 
         public String getAuth_identity() {
@@ -302,7 +305,20 @@ public class User implements Serializable {
         public void setAuth_contact(String contact) {
             this.auth_contact = contact;
         }
+        public String getAuth_drivercard() {
+            return auth_drivercard;
+        }
 
+        public void setAuth_drivercard(String auth_drivercard) {
+            this.auth_drivercard = auth_drivercard;
+        }
+        public String getAuth_creditcard() {
+            return auth_creditcard;
+        }
+
+        public void setAuth_creditcard(String auth_creditcard) {
+            this.auth_creditcard = auth_creditcard;
+        }
     }
 
 

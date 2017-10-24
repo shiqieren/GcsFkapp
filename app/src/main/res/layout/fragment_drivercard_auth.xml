@@ -6,21 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--<TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="正在开发，敬请期待......"/>-->
     <LinearLayout
         android:id="@+id/traceroute_rootview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusable="true"
-        android:focusableInTouchMode="true"
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/ll_bankcard_name"
+            android:id="@+id/ll_identity_name"
             android:layout_width="match_parent"
             android:layout_height="@dimen/lay_60"
             android:gravity="center_vertical"
@@ -35,39 +29,21 @@
             <TextView
                 android:layout_width="@dimen/lay_84"
                 android:layout_height="wrap_content"
-                android:text="@string/bankcard_user_logo"
+                android:text="@string/name"
                 android:textColor="@color/base_app_color"
                 android:textSize="@dimen/font_16" />
 
-            <!--<EditText
-                android:id="@+id/et_bankcard_name"
+            <EditText
+                android:id="@+id/et_identity_name"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_weight="1"
                 android:background="@null"
-                android:gravity="right|center_vertical"
                 android:ems="15"
                 android:focusable="true"
-                android:imeOptions="actionDone"
-                android:inputType="textPersonName"
-                android:lines="1"
-                android:maxLines="1"
-                android:minLines="1"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black_alpha_80"
-                android:textCursorDrawable="@null"
-                android:textSize="@dimen/font_16" />-->
-            <TextView
-                android:id="@+id/et_bankcard_name"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginRight="16dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:ems="15"
-                android:focusable="true"
+                android:hint="@string/hint_et_name"
                 android:gravity="right|center_vertical"
                 android:imeOptions="actionDone"
                 android:inputType="textPersonName"
@@ -78,9 +54,8 @@
                 android:textColorHint="@color/defaulthintTextColor"
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/font_16" />
-
             <ImageView
-                android:id="@+id/iv_bankcard_name_del"
+                android:id="@+id/iv_identity_name_del"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:layout_marginRight="5dp"
@@ -89,7 +64,6 @@
                 android:visibility="gone"
                 app:srcCompat="@mipmap/ic_close" />
         </LinearLayout>
-
         <View
             android:layout_width="match_parent"
             android:layout_height="1dip"
@@ -98,7 +72,7 @@
             android:alpha="0.6"
             android:background="@color/darker_gray2" />
         <LinearLayout
-            android:id="@+id/ll_banktype_select"
+            android:id="@+id/ll_identity_number"
             android:layout_width="match_parent"
             android:layout_height="@dimen/lay_60"
             android:gravity="center_vertical"
@@ -108,81 +82,41 @@
                 android:layout_width="@dimen/lay_28"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/lay_15"
-                android:src="@mipmap/banktype" />
+                android:src="@mipmap/idcard_numbe" />
 
             <TextView
                 android:layout_width="@dimen/lay_84"
                 android:layout_height="wrap_content"
-                android:text="@string/banktype"
-                android:textColor="@color/base_app_color"
-                android:textSize="@dimen/font_16" />
-            <TextView
-                android:id="@+id/tv_banktype"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginRight="16dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:gravity="right|center_vertical"
-                android:textColor="@color/defaultTextColor"
-                android:textColorHint="@color/defaulthintTextColor"
-                android:textCursorDrawable="@null"
-                android:textSize="@dimen/font_16" />
-            <TextView
-                android:id="@+id/tv_banktype_code"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"/>
-
-        </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:layout_marginLeft="@dimen/lay_15"
-            android:layout_marginRight="@dimen/lay_15"
-            android:alpha="0.6"
-            android:background="@color/darker_gray2" />
-        <LinearLayout
-            android:id="@+id/ll_bankcard_number"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/lay_60"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="@dimen/lay_28"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/lay_15"
-                android:src="@mipmap/sub_bankcard_logo" />
-
-            <TextView
-                android:layout_width="@dimen/lay_84"
-                android:layout_height="wrap_content"
-                android:text="@string/bankcard_number_tip"
+                android:text="@string/idcard_num"
                 android:textColor="@color/base_app_color"
                 android:textSize="@dimen/font_16" />
 
             <EditText
-                android:id="@+id/et_bankcard_number"
+                android:id="@+id/et_identity_number"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_weight="1"
                 android:background="@null"
-                android:ems="15"
+                android:ems="18"
                 android:focusable="true"
-                android:imeOptions="actionDone"
+                android:hint="@string/hint_et_idnumber"
                 android:gravity="right|center_vertical"
-                android:inputType="phone|number"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:digits="0123456789xX"
                 android:lines="1"
                 android:maxLines="1"
                 android:minLines="1"
+                android:maxLength="18"
+                android:singleLine="true"
                 android:textColor="@color/defaultTextColor"
                 android:textColorHint="@color/defaulthintTextColor"
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/font_16" />
             <ImageView
-                android:id="@+id/iv_bankcard_number_del"
+                android:id="@+id/iv_identity_number_del"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:layout_marginRight="5dp"
@@ -191,7 +125,6 @@
                 android:visibility="gone"
                 app:srcCompat="@mipmap/ic_close" />
         </LinearLayout>
-
         <View
             android:layout_width="match_parent"
             android:layout_height="1dip"
@@ -200,7 +133,7 @@
             android:alpha="0.6"
             android:background="@color/darker_gray2" />
         <LinearLayout
-            android:id="@+id/ll_bankcard_phone"
+            android:id="@+id/ll_drivercard_number"
             android:layout_width="match_parent"
             android:layout_height="@dimen/lay_60"
             android:gravity="center_vertical"
@@ -210,36 +143,40 @@
                 android:layout_width="@dimen/lay_28"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/lay_15"
-                android:src="@mipmap/cer_telphone" />
+                android:src="@mipmap/sub_drivercard" />
 
             <TextView
                 android:layout_width="@dimen/lay_84"
                 android:layout_height="wrap_content"
-                android:text="@string/re_mobile_tip"
+                android:text="@string/driver_card_num"
                 android:textColor="@color/base_app_color"
                 android:textSize="@dimen/font_16" />
 
             <EditText
-                android:id="@+id/et_bankcard_phone"
+                android:id="@+id/et_drivercard_number"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:gravity="right|center_vertical"
                 android:layout_weight="1"
                 android:background="@null"
-                android:ems="15"
+                android:ems="18"
                 android:focusable="true"
+                android:hint="@string/hint_et_drivercard"
+                android:gravity="right|center_vertical"
                 android:imeOptions="actionDone"
-                android:inputType="phone|number"
+                android:inputType="text"
                 android:lines="1"
                 android:maxLines="1"
                 android:minLines="1"
+                android:maxLength="18"
+                android:singleLine="true"
                 android:textColor="@color/defaultTextColor"
                 android:textColorHint="@color/defaulthintTextColor"
                 android:textCursorDrawable="@null"
                 android:textSize="@dimen/font_16" />
             <ImageView
-                android:id="@+id/iv_bankcard_phone_del"
+                android:id="@+id/iv_drivercard_number_del"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:layout_marginRight="5dp"
@@ -248,73 +185,6 @@
                 android:visibility="gone"
                 app:srcCompat="@mipmap/ic_close" />
         </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:layout_marginLeft="@dimen/lay_15"
-            android:layout_marginRight="@dimen/lay_15"
-            android:alpha="0.6"
-            android:background="@color/darker_gray2" />
-
-        <LinearLayout
-            android:id="@+id/ll_bankcard_sms_code"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/lay_60"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="@dimen/lay_28"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/lay_15"
-                android:src="@mipmap/auth_message_logo" />
-
-            <TextView
-                android:layout_width="@dimen/lay_84"
-                android:layout_height="wrap_content"
-                android:text="@string/auth_message_tip"
-                android:textColor="@color/base_app_color"
-                android:textSize="@dimen/font_16" />
-
-            <EditText
-                android:id="@+id/et_bankcard_sms_code"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="6dp"
-                android:layout_marginRight="16dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:hint="@string/register_sms_auth_code"
-                android:inputType="phone|number"
-                android:maxLines="1"
-                android:minLines="1"
-                android:paddingLeft="4dp"
-                android:paddingRight="4dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/black_alpha_80"
-                android:textCursorDrawable="@null"
-                android:textSize="@dimen/font_16" />
-
-            <TextView
-                android:id="@+id/tv_bankcard_sms_call"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
-                android:alpha="0.4"
-                android:background="@drawable/bg_register_call_sms_black"
-                android:gravity="center_vertical"
-                android:paddingBottom="4dp"
-                android:paddingLeft="6dp"
-                android:paddingRight="6dp"
-                android:paddingTop="4dp"
-                android:text="@string/register_sms_hint"
-
-                android:textColor="@color/black_alpha_80"
-                android:textSize="12sp"
-                tools:ignore="RtlHardcoded" />
-
-        </LinearLayout>
-
         <View
             android:layout_width="match_parent"
             android:layout_height="1dip"
@@ -324,14 +194,14 @@
             android:background="@color/darker_gray2" />
 
         <Button
-            android:id="@+id/bt_bankcard_submit"
+            android:id="@+id/bt_identity_submit"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="25dp"
             android:background="@drawable/bg_login_submit"
-            android:text="@string/login_btn"
+            android:text="@string/bt_beginauth_string"
             android:textColor="@color/white"
             android:textSize="@dimen/font_18"
             tools:targetApi="lollipop"/>

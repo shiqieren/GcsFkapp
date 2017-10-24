@@ -187,6 +187,53 @@
                         android:layout_height="match_parent"
                         android:background="@color/darker_gray2" />
                     <android.support.v7.widget.CardView
+                        android:id="@+id/cv_drivercard"
+                        android:layout_width="0dip"
+                        android:layout_weight="1"
+                        android:clickable="false"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="0dp"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:clickable="false"
+                            android:gravity="center">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@mipmap/drivercard"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingTop="10dip"
+                                android:textSize="@dimen/font_14"
+                                android:text="@string/driver_card"/>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/ll_suauth_driver_iv"
+                            android:layout_width="@dimen/lay_36"
+                            android:layout_height="@dimen/lay_64"
+                            android:gravity="right|top"
+                            android:layout_gravity="center"
+                            android:visibility="gone">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@mipmap/auth_success"
+                                android:alpha="1"/>
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+                    <View
+                        android:layout_width="0.5dp"
+                        android:layout_marginTop="10dip"
+                        android:layout_marginBottom="10dip"
+                        android:layout_height="match_parent"
+                        android:background="@color/darker_gray2" />
+                    <android.support.v7.widget.CardView
                         android:id="@+id/cv_zhima"
                         android:layout_width="0dip"
                         android:layout_weight="1"
@@ -201,16 +248,16 @@
                             android:orientation="vertical"
                             android:clickable="false"
                             android:gravity="center">
-                          <!--  <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@mipmap/zhima_logo"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingTop="10dip"
-                                android:textSize="@dimen/font_14"
-                                android:text="@string/zhima_string"/>-->
+                            <!--  <ImageView
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:src="@mipmap/zhima_logo"/>
+                              <TextView
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:paddingTop="10dip"
+                                  android:textSize="@dimen/font_14"
+                                  android:text="@string/zhima_string"/>-->
 
                         </LinearLayout>
                         <LinearLayout
@@ -227,7 +274,6 @@
                                 android:alpha="1"/>
                         </LinearLayout>
                     </android.support.v7.widget.CardView>
-
                 </LinearLayout>
             </LinearLayout>
             <View
@@ -390,6 +436,51 @@
                                 android:alpha="1"/>
                         </LinearLayout>
                     </android.support.v7.widget.CardView>
+                    <View
+                        android:layout_width="0.5dp"
+                        android:layout_marginTop="10dip"
+                        android:layout_marginBottom="10dip"
+                        android:layout_height="match_parent"
+                        android:background="@color/darker_gray2" />
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/cv_credit_card"
+                        android:layout_width="0dip"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="0dp"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@mipmap/creditcard"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingTop="10dip"
+                                android:textSize="@dimen/font_14"
+                                android:text="@string/credit_card"/>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/ll_suauth_creditcard_iv"
+                            android:layout_width="@dimen/lay_40"
+                            android:layout_height="@dimen/lay_64"
+                            android:gravity="right|top"
+                            android:layout_gravity="center"
+                            android:visibility="gone">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@mipmap/auth_success"
+                                android:alpha="1"/>
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
 
                 </LinearLayout>
             </LinearLayout>
@@ -520,7 +611,20 @@
                         android:layout_height="match_parent">
 
                     </android.support.v7.widget.CardView>
+                   <!-- <View
+                        android:layout_width="0.5dp"
+                        android:layout_marginTop="10dip"
+                        android:layout_marginBottom="10dip"
+                        android:layout_height="match_parent"
+                        android:background="@color/darker_gray2" />-->
+                    <android.support.v7.widget.CardView
+                        android:layout_width="0dip"
+                        android:layout_weight="1"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="0dp"
+                        android:layout_height="match_parent">
 
+                    </android.support.v7.widget.CardView>
                 </LinearLayout>
             </LinearLayout>
 

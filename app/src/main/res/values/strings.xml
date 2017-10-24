@@ -127,14 +127,18 @@
     <string name="identity_string">身份信息</string>
     <string name="bank_string">银行卡</string>
     <string name="zhima_string">芝麻信用</string>
+    <string name="driver_card">驾驶证</string>
+    <string name="driver_card_num">驾驶证号</string>
     <string name="alipay_string">支付宝</string>
     <string name="taobao_string">淘宝</string>
     <string name="jd_string">京东</string>
+    <string name="credit_card">信用卡</string>
     <string name="operator_string">运营商</string>
     <string name="contact_string">通讯录授权</string>
     <string name="name">姓名</string>
     <string name="hint_et_name">请输入您的姓名</string>
     <string name="hint_et_idnumber">请输入您的身份证号</string>
+    <string name="hint_et_drivercard">请输入您的驾驶证号</string>
     <string name="idcard_num">身份证</string>
     <string name="auth_taobao_tip">请登入淘宝账号进行授权</string>
     <string name="check_text_taobao">同意《淘宝数据采集服务协议》</string>
@@ -164,6 +168,7 @@
     <string name="feedback_hint">请输入反馈意见</string>
     <string name="operator_authpassword_hint">请输入服务密码</string>
     <string name="operator_auth_hint">请输入您的手机号</string>
+    <string name="credituser_auth_hint">信用卡绑定邮箱</string>
     <string name="unlogin_string">未登录</string>
     <string name="suprisece_hint">敬请期待！</string>
     <string name="banktype">银行名称</string>

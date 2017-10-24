@@ -41,7 +41,13 @@ public final class RegexUtils {
      * 不匹配: foo@bar 或 $$$@bar.com
      */
     public static final String EMAIL_REGEXP = "^([a-zA-Z0-9]*[-_]?[a-zA-Z0-9]+)*@([a-zA-Z0-9]*[-_]?[a-zA-Z0-9]+)+[\\.][A-Za-z]{2,3}([\\.][A-Za-z]{2})?$";
+    public static final boolean isEmail(String email) {
+        Pattern p = Pattern
+                .compile(EMAIL_REGEXP);
+        Matcher m = p.matcher(email);
 
+        return m.matches();
+    }
     /**
      * 匹配并提取url
      * <p/>

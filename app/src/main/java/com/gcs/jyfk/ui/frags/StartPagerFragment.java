@@ -65,11 +65,15 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
     private CardView mCv_operator;
     private CardView mCv_taobao;
     private CardView mCv_zhima;
+    private CardView mCv_drivercard;
+    private CardView mCv_creditcard;
     private ImageView mIvLogoSetting;
     private TextView mTv_name;
     private LinearLayout mLlidentityiv;
     private LinearLayout mLlbankcardiv;
     private LinearLayout mLlzhimaiv;
+    private LinearLayout mLldrivercardiv;
+    private LinearLayout mLlcreditcardiv;
     private LinearLayout mLlalipayiv;
     private LinearLayout mLltaobaoiv;
     private LinearLayout mLljdiv;
@@ -165,6 +169,16 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                                 }else {
                                     mLlcontactiv.setVisibility(View.GONE);
                                 }
+                                if(status.getDrivercard().equals("1")){
+                                    mLldrivercardiv.setVisibility(View.VISIBLE);
+                                }else {
+                                    mLldrivercardiv.setVisibility(View.GONE);
+                                }
+                                if(status.getCreditcard().equals("1")){
+                                    mLlcreditcardiv.setVisibility(View.VISIBLE);
+                                }else {
+                                    mLlcreditcardiv.setVisibility(View.GONE);
+                                }
 
                             }
                         } else {
@@ -205,6 +219,8 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
             user.getAuthstate().setAuth_jd(status.getJd());
             user.getAuthstate().setAuth_operator(status.getOperator());
             user.getAuthstate().setAuth_contact(status.getContact());
+            user.getAuthstate().setAuth_drivercard(status.getDrivercard());
+            user.getAuthstate().setAuth_creditcard(status.getCreditcard());
             AccountHelper.updateUserCache(user);
         }
 
@@ -239,6 +255,8 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
         mCv_operator  = view.findViewById(R.id.cv_operator);
         mCv_taobao  = view.findViewById(R.id.cv_taobao);
         mCv_zhima  = view.findViewById(R.id.cv_zhima);
+        mCv_drivercard  = view.findViewById(R.id.cv_drivercard);
+        mCv_creditcard = view.findViewById(R.id.cv_credit_card);
         mIvLogoSetting = view.findViewById(R.id.iv_logo_setting);
 
         //状态勾选
@@ -250,7 +268,8 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
         mLljdiv = view.findViewById(R.id.ll_suauth_jd_iv);
         mLloperatoriv = view.findViewById(R.id.ll_suauth_operator_iv);
         mLlcontactiv = view.findViewById(R.id.ll_suauth_contact_iv);
-
+        mLldrivercardiv = view.findViewById(R.id.ll_suauth_driver_iv);
+        mLlcreditcardiv = view.findViewById(R.id.ll_suauth_creditcard_iv);
         view.findViewById(R.id.iv_avatar).setOnClickListener(this);
     }
     @Override
@@ -279,6 +298,8 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
         mCv_jd.setOnClickListener(this);
         mCv_operator.setOnClickListener(this);
         mCv_taobao.setOnClickListener(this);
+        mCv_drivercard.setOnClickListener(this);
+        mCv_creditcard.setOnClickListener(this);
      //   mCv_zhima.setOnClickListener(this);
         mIvLogoSetting.setOnClickListener(this);
 
@@ -332,6 +353,60 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                             SimplexToast.showMyToast("银行卡已认证",GlobalApplication.getContext());
                         }else {
                             ShowUIHelper.showBankAuth(getActivity());
+                        }
+                    }
+                }
+
+
+                break;
+            case R.id.cv_drivercard:
+                if (FastOneClick.isFastClick()){
+                    if (!AccountHelper.isLogin()) {
+                        ShowUIHelper.showLoginActivity(getActivity());
+                        return;
+                    }else if (!AccountHelper.isAuth()){
+                        AlertDialog dialog = DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号身份进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                ShowUIHelper.showIdentityAuth(getActivity());
+                            }
+                        }).show();
+                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
+                        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
+                        return;
+                    }
+                    if (status!=null){
+                        if (status.getBankcard().equals("1")){
+                            SimplexToast.showMyToast("驾驶证已认证",GlobalApplication.getContext());
+                        }else {
+                            ShowUIHelper.showDrivercardAuth(getActivity());
+                        }
+                    }
+                }
+
+
+                break;
+            case R.id.cv_credit_card:
+                if (FastOneClick.isFastClick()){
+                    if (!AccountHelper.isLogin()) {
+                        ShowUIHelper.showLoginActivity(getActivity());
+                        return;
+                    }else if (!AccountHelper.isAuth()){
+                        AlertDialog dialog = DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号身份进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                ShowUIHelper.showIdentityAuth(getActivity());
+                            }
+                        }).show();
+                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
+                        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
+                        return;
+                    }
+                    if (status!=null){
+                        if (status.getBankcard().equals("1")){
+                            SimplexToast.showMyToast("信用卡已认证",GlobalApplication.getContext());
+                        }else {
+                            ShowUIHelper.showCreditcardAuth(getActivity());
                         }
                     }
                 }
@@ -627,54 +702,6 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                 mTv_name.setText("该用户尚未进行身份认证");
             }
 
-        /*    if(userInfo.getAuthstate().getAuth_identity()){
-                mLlidentityiv.setVisibility(View.VISIBLE);
-            }else {
-                mLlidentityiv.setVisibility(View.GONE);
-            }
-
-            if(userInfo.getAuthstate().getAuth_bankcard()){
-                mLlbankcardiv.setVisibility(View.VISIBLE);
-            }else {
-                mLlbankcardiv.setVisibility(View.GONE);
-            }
-
-            if(userInfo.getAuthstate().getAuth_zhima()){
-                mLlzhimaiv.setVisibility(View.VISIBLE);
-            }else {
-                mLlzhimaiv.setVisibility(View.GONE);
-            }
-
-            if(userInfo.getAuthstate().getAuth_alipay()){
-                mLlalipayiv.setVisibility(View.VISIBLE);
-            }else {
-                mLlalipayiv.setVisibility(View.GONE);
-            }
-
-            if(userInfo.getAuthstate().getAuth_taobao()){
-                mLltaobaoiv.setVisibility(View.VISIBLE);
-            }else {
-                mLltaobaoiv.setVisibility(View.GONE);
-            }
-
-            if(userInfo.getAuthstate().getAuth_jd()){
-                mLljdiv.setVisibility(View.VISIBLE);
-            }else {
-                mLljdiv.setVisibility(View.GONE);
-            }
-
-            if(userInfo.getAuthstate().getAuth_operator()){
-                mLloperatoriv.setVisibility(View.VISIBLE);
-            }else {
-                mLloperatoriv.setVisibility(View.GONE);
-            }
-
-            if(userInfo.getAuthstate().getAuth_contact()){
-                mLlcontactiv.setVisibility(View.VISIBLE);
-            }else {
-                mLlcontactiv.setVisibility(View.GONE);
-            }*/
-
     }
     /**
      *退出登录后清除信息，
@@ -690,6 +717,8 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
         mLljdiv.setVisibility(View.GONE);
         mLloperatoriv.setVisibility(View.GONE);
         mLlcontactiv.setVisibility(View.GONE);
+        mLldrivercardiv.setVisibility(View.GONE);
+        mLlcreditcardiv.setVisibility(View.GONE);
     }
 
 

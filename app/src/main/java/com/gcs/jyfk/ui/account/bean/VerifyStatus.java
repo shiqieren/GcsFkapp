@@ -30,6 +30,8 @@ public class VerifyStatus {
     private String jd;
     private String operator;
     private String contact;
+    private String drivercard;
+    private String creditcard;
     private long createtime;
     private long updatetime;
     private int phone_user_id;
@@ -99,6 +101,20 @@ public class VerifyStatus {
 
     public void setContact(String contact) {
         this.contact = contact;
+    }
+    public String getDrivercard() {
+        return drivercard;
+    }
+
+    public void setDrivercard(String drivercard) {
+        this.drivercard = drivercard;
+    }
+    public String getCreditcard() {
+        return creditcard;
+    }
+
+    public void setCreditcard(String creditcard) {
+        this.creditcard = creditcard;
     }
     public long getCreatetime() {
         return createtime;

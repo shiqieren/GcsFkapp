@@ -78,8 +78,8 @@ public class ResetPasswordFrament extends BaseFragment{
         if (AccountHelper.isLogin()){
             User user = AccountHelper.getUser();
             String token = user.getToken();
-            if (newpass.length()<6 || newpass.length()>18){
-                SimplexToast.showMyToast("请输入至少6-18位新密码！", GlobalApplication.getContext());
+            if (newpass.length()<6 || newpass.length()>12){
+                SimplexToast.showMyToast("请输入至少6-12位新密码！", GlobalApplication.getContext());
                 return;
             }
             if (newpass.equals(querypass)){
