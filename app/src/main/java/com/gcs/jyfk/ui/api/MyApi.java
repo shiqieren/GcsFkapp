@@ -395,4 +395,17 @@ public class MyApi {
         OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phoneBank/bankCodeList.do")).build().execute(callback);
         MyLog.i("GCS","银行卡列表选择url:"+getAbsoluteApiUrl("wind-phone/phoneBank/bankCodeList.do"));
     }
+    /**
+     * drivercard
+     *
+     */
+    public static void driverCard(String token,String name,String certno,String licenseid,StringCallback callback) {
+        Map<String, String> params = new HashMap<>();
+        params.put("token",token);
+        params.put("name", name);
+        params.put("certno", certno);
+        params.put("licenseid", licenseid);
+        OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/driver/save.do")).params(params).build().execute(callback);
+        MyLog.i("GCS","驾驶证请求url:"+getAbsoluteApiUrl("wind-phone/phone/driver/save.do"));
+    }
 }

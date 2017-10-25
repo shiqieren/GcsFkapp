@@ -169,7 +169,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                                 }else {
                                     mLlcontactiv.setVisibility(View.GONE);
                                 }
-                                if(status.getDrivercard().equals("1")){
+                                if(status.getDriver().equals("1")){
                                     mLldrivercardiv.setVisibility(View.VISIBLE);
                                 }else {
                                     mLldrivercardiv.setVisibility(View.GONE);
@@ -219,7 +219,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
             user.getAuthstate().setAuth_jd(status.getJd());
             user.getAuthstate().setAuth_operator(status.getOperator());
             user.getAuthstate().setAuth_contact(status.getContact());
-            user.getAuthstate().setAuth_drivercard(status.getDrivercard());
+            user.getAuthstate().setAuth_drivercard(status.getDriver());
             user.getAuthstate().setAuth_creditcard(status.getCreditcard());
             AccountHelper.updateUserCache(user);
         }
@@ -376,7 +376,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                         return;
                     }
                     if (status!=null){
-                        if (status.getBankcard().equals("1")){
+                        if (status.getDriver().equals("1")){
                             SimplexToast.showMyToast("驾驶证已认证",GlobalApplication.getContext());
                         }else {
                             ShowUIHelper.showDrivercardAuth(getActivity());
@@ -403,7 +403,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                         return;
                     }
                     if (status!=null){
-                        if (status.getBankcard().equals("1")){
+                        if (status.getCreditcard().equals("1")){
                             SimplexToast.showMyToast("信用卡已认证",GlobalApplication.getContext());
                         }else {
                             ShowUIHelper.showCreditcardAuth(getActivity());

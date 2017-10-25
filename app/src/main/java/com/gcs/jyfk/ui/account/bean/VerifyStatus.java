@@ -30,7 +30,7 @@ public class VerifyStatus {
     private String jd;
     private String operator;
     private String contact;
-    private String drivercard;
+    private String driver;
     private String creditcard;
     private long createtime;
     private long updatetime;
@@ -102,12 +102,12 @@ public class VerifyStatus {
     public void setContact(String contact) {
         this.contact = contact;
     }
-    public String getDrivercard() {
-        return drivercard;
+    public String getDriver() {
+        return driver;
     }
 
-    public void setDrivercard(String drivercard) {
-        this.drivercard = drivercard;
+    public void setDriver(String driver) {
+        this.driver = driver;
     }
     public String getCreditcard() {
         return creditcard;

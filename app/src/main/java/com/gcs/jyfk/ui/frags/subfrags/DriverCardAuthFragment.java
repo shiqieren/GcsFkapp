@@ -3,6 +3,7 @@ package com.gcs.jyfk.ui.frags.subfrags;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -11,6 +12,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.NumberKeyListener;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -35,6 +37,7 @@ import com.gcs.jyfk.utils.AppOperator;
 import com.gcs.jyfk.utils.DialogUtil;
 import com.gcs.jyfk.utils.MyLog;
 import com.gcs.jyfk.utils.RegexUtils;
+import com.gcs.jyfk.utils.TDevice;
 import com.gcs.jyfk.utils.VibratorUtil;
 import com.google.gson.reflect.TypeToken;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -367,7 +370,7 @@ public class DriverCardAuthFragment extends BaseFragment implements View.OnClick
             User user = AccountHelper.getUser();
             String token =  user.getToken();
             String phone = user.getPhone();
-            MyApi.authzhima(token, getAES(phone), getAES(tempIdcard), tempUsername, "", new StringCallback() {
+            MyApi.driverCard(token, tempUsername, getAES(tempIdcard), tempDrivercard, new StringCallback() {
                 @Override
                 public void onBefore(Request request, int id) {
                     super.onBefore(request, id);
@@ -382,13 +385,13 @@ public class DriverCardAuthFragment extends BaseFragment implements View.OnClick
                 @Override
                 public void onError(Call call, Exception e, int id) {
                     hideWaitDialog();
-                    MyLog.i("GCS","身份认证返回Exception："+e);
+                    MyLog.i("GCS","驾驶证Exception："+e);
                 }
 
                 @Override
                 public void onResponse(String response, int id) {
                     hideWaitDialog();
-                    MyLog.i("GCS","登录返回response："+response);
+                    MyLog.i("GCS","驾驶证response："+response);
                     try {
                         Type type = new TypeToken<ResultBean>() {}.getType();
                         ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
@@ -397,14 +400,8 @@ public class DriverCardAuthFragment extends BaseFragment implements View.OnClick
 
                             case 200://授权url获取成功
                                 MyLog.i("GCS","跳转到回调url："+response);
-                                String url =  resultBean.getResult().toString();
-                                MyLog.i("GCS","授权按钮点击，打开webview："+url);
-                                ShowUIHelper.openInternalBrowser(getActivity(), url);
 
-                                break;
-                            case 600://已经授权过,成功更新了用户芝麻数据
-                                SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
-                                getActivity().finish();
+                                showAuthbookconfirm("认证成功","确认");
                                 break;
                             case 300://账户问题
                                 SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
@@ -426,6 +423,47 @@ public class DriverCardAuthFragment extends BaseFragment implements View.OnClick
 
     }
 
+    private void showAuthbookconfirm(String tip, final String btnstr) {
+       /* TextView title = new TextView(getContext());
+        title.setText("通讯录授权");
+        title.setPadding(0, 0, 0, 0);
+        title.setGravity(Gravity.CENTER);
+        // title.setTextColor(getResources().getColor(R.color.greenBG));
+        title.setTextSize(18);*/
+
+        View dialogview = View.inflate(getActivity(),R.layout.custom_dialog,null);
+        TextView tv_title = dialogview.findViewById(R.id.dialog_tip);
+        tv_title.setText(tip);
+        TextView tv_link = dialogview.findViewById(R.id.read_authbook_link);
+        tv_link.setVisibility(View.INVISIBLE);
+        Button bt_cancle = dialogview.findViewById(R.id.btn_cancel);
+        bt_cancle.setText(btnstr);
+        /*final AlertDialog dlgShowBack = DialogUtil.getDialog(getContext()).setView(dialogview).setPositiveButton("确认", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = new Intent(getActivity(), PhoneAdressActivity.class);
+                startActivity(intent);
+            }
+        }).create();*/
+        final AlertDialog dlgShowBack = DialogUtil.getDialog(getContext()).setView(dialogview).setCancelable(true).create();
+
+        bt_cancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dlgShowBack.dismiss();
+                if (btnstr.equals("确认")){
+                    getActivity().finish();
+                }
+
+            }
+        });
+        dlgShowBack.show();
+        dlgShowBack.getWindow().setBackgroundDrawableResource(R.drawable.rounded_search_text);
+        WindowManager.LayoutParams params = dlgShowBack.getWindow().getAttributes();
+        params.width = (int) TDevice.dp2px(270);
+        params.height = (int) TDevice.dp2px(122);
+        dlgShowBack.getWindow().setAttributes(params);
+    }
     @Override
     public void onFocusChange(View view, boolean hasFocus) {
         int id = view.getId();
