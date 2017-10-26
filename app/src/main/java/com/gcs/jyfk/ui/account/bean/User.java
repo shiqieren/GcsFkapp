@@ -223,7 +223,7 @@ public class User implements Serializable {
         public AuthState() {
         }
 
-        public AuthState(String auth_identity, String auth_bankcard, String auth_zhima, String auth_alipay, String auth_taobao, String auth_jd, String auth_operator, String auth_contact, String auth_drivercard, String auth_creditcard) {
+        public AuthState(String auth_identity, String auth_bankcard, String auth_zhima, String auth_alipay, String auth_taobao, String auth_jd, String auth_operator, String auth_contact, String auth_drivercard, String auth_creditcard, String auth_email) {
             this.auth_identity = auth_identity;
             this.auth_bankcard = auth_bankcard;
             this.auth_zhima = auth_zhima;
@@ -246,6 +246,7 @@ public class User implements Serializable {
         private String auth_contact;
         private String auth_drivercard;
         private String auth_creditcard;
+        private String auth_email;
 
 
         public String getAuth_identity() {
@@ -304,6 +305,14 @@ public class User implements Serializable {
 
         public void setAuth_contact(String contact) {
             this.auth_contact = contact;
+        }
+
+        public String getAuth_email() {
+            return auth_email;
+        }
+
+        public void setAuth_email(String auth_email) {
+            this.auth_email = auth_email;
         }
         public String getAuth_drivercard() {
             return auth_drivercard;

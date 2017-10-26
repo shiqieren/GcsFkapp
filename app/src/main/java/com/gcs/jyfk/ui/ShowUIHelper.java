@@ -136,7 +136,14 @@ public class ShowUIHelper {
     public static void showCreditcardAuth(Context context) {
         showSimpleBack(context, SimpleBackPage.CREDITCARD_AUTH);
     }
-
+    /**
+     * 显示邮箱输入
+     *
+     * @param context
+     */
+    public static void showEmailAuth(Context context) {
+        showSimpleBack(context, SimpleBackPage.EMAIL_AUTH);
+    }
     /**
      * 显示芝麻信用授权
      *

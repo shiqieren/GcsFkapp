@@ -10,6 +10,7 @@ import com.gcs.jyfk.ui.frags.subfrags.BankAuthFragment;
 import com.gcs.jyfk.ui.frags.subfrags.BrowserFragment;
 import com.gcs.jyfk.ui.frags.subfrags.CreditCardAuthFragment;
 import com.gcs.jyfk.ui.frags.subfrags.DriverCardAuthFragment;
+import com.gcs.jyfk.ui.frags.subfrags.EmailAuthFragment;
 import com.gcs.jyfk.ui.frags.subfrags.FeedbackFragment;
 import com.gcs.jyfk.ui.frags.subfrags.IdentityAuthFragment;
 import com.gcs.jyfk.ui.frags.subfrags.JdAuthFragment;
@@ -32,6 +33,7 @@ public enum SimpleBackPage {
     OPERATOR_AUTH(7, R.string.operator_string, OperatorAuthFragment.class),
     DRIVERCARD_AUTH(8, R.string.driver_card, DriverCardAuthFragment.class),
     CREDITCARD_AUTH(9, R.string.credit_card, CreditCardAuthFragment.class),
+    EMAIL_AUTH(10, R.string.email_string, EmailAuthFragment.class),
     PERSONAL_DATA(14, R.string.personal_data, PersonalDataFragment.class),
     SETTING(15, R.string.actionbar_title_setting, SettingsFragment.class),
 

@@ -32,6 +32,7 @@ public class VerifyStatus {
     private String contact;
     private String driver;
     private String creditcard;
+    private String email;
     private long createtime;
     private long updatetime;
     private int phone_user_id;
@@ -101,6 +102,13 @@ public class VerifyStatus {
 
     public void setContact(String contact) {
         this.contact = contact;
+    }
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
     public String getDriver() {
         return driver;

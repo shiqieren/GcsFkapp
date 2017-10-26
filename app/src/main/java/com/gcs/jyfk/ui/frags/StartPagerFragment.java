@@ -67,6 +67,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
     private CardView mCv_zhima;
     private CardView mCv_drivercard;
     private CardView mCv_creditcard;
+    private CardView mCv_email;
     private ImageView mIvLogoSetting;
     private TextView mTv_name;
     private LinearLayout mLlidentityiv;
@@ -79,6 +80,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
     private LinearLayout mLljdiv;
     private LinearLayout mLloperatoriv;
     private LinearLayout mLlcontactiv;
+    private LinearLayout mLlemailiv;
     private VerifyStatus status;
     @Override
     public void onResume() {
@@ -179,6 +181,11 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                                 }else {
                                     mLlcreditcardiv.setVisibility(View.GONE);
                                 }
+                                if(status.getEmail().equals("1")){
+                                    mLlemailiv.setVisibility(View.VISIBLE);
+                                }else {
+                                    mLlemailiv.setVisibility(View.GONE);
+                                }
 
                             }
                         } else {
@@ -221,6 +228,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
             user.getAuthstate().setAuth_contact(status.getContact());
             user.getAuthstate().setAuth_drivercard(status.getDriver());
             user.getAuthstate().setAuth_creditcard(status.getCreditcard());
+            user.getAuthstate().setAuth_email(status.getEmail());
             AccountHelper.updateUserCache(user);
         }
 
@@ -257,6 +265,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
         mCv_zhima  = view.findViewById(R.id.cv_zhima);
         mCv_drivercard  = view.findViewById(R.id.cv_drivercard);
         mCv_creditcard = view.findViewById(R.id.cv_credit_card);
+        mCv_email = view.findViewById(R.id.cv_email);
         mIvLogoSetting = view.findViewById(R.id.iv_logo_setting);
 
         //状态勾选
@@ -270,6 +279,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
         mLlcontactiv = view.findViewById(R.id.ll_suauth_contact_iv);
         mLldrivercardiv = view.findViewById(R.id.ll_suauth_driver_iv);
         mLlcreditcardiv = view.findViewById(R.id.ll_suauth_creditcard_iv);
+        mLlcreditcardiv = view.findViewById(R.id.ll_suauth_email_iv);
         view.findViewById(R.id.iv_avatar).setOnClickListener(this);
     }
     @Override
@@ -300,6 +310,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
         mCv_taobao.setOnClickListener(this);
         mCv_drivercard.setOnClickListener(this);
         mCv_creditcard.setOnClickListener(this);
+        mCv_email.setOnClickListener(this);
      //   mCv_zhima.setOnClickListener(this);
         mIvLogoSetting.setOnClickListener(this);
 
@@ -409,6 +420,34 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                             ShowUIHelper.showCreditcardAuth(getActivity());
                         }
                     }
+                }
+
+
+                break;
+            case R.id.cv_email:
+                if (FastOneClick.isFastClick()){
+                    if (!AccountHelper.isLogin()) {
+                        ShowUIHelper.showLoginActivity(getActivity());
+                        return;
+                    }else if (!AccountHelper.isAuth()){
+                        AlertDialog dialog = DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号身份进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                ShowUIHelper.showIdentityAuth(getActivity());
+                            }
+                        }).show();
+                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
+                        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
+                        return;
+                    }
+                    ShowUIHelper.showEmailAuth(getActivity());
+                    /*if (status!=null){
+                        if (status.getEmail().equals("1")){
+                            SimplexToast.showMyToast("邮箱已认证",GlobalApplication.getContext());
+                        }else {
+                            ShowUIHelper.showEmailAuth(getActivity());
+                        }
+                    }*/
                 }
 
 
@@ -719,6 +758,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
         mLlcontactiv.setVisibility(View.GONE);
         mLldrivercardiv.setVisibility(View.GONE);
         mLlcreditcardiv.setVisibility(View.GONE);
+        mLlemailiv.setVisibility(View.GONE);
     }
 
 
