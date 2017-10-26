@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GcsFkapp.iml" filepath="$PROJECT_DIR$/GcsFkapp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/IDCardLib/IDCardLib.iml" filepath="$PROJECT_DIR$/IDCardLib/IDCardLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/OptionFrameLibrary/OptionFrameLibrary.iml" filepath="$PROJECT_DIR$/OptionFrameLibrary/OptionFrameLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>

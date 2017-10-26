@@ -130,12 +130,16 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                                 }else {
                                     mTv_name.setText("该用户尚未进行身份认证");
                                 }
-                                if(status.getIdentity().equals("1")){
+                                /*if(status.getIdentity().equals("1")){
                                     mLlidentityiv.setVisibility(View.VISIBLE);
                                 }else {
                                     mLlidentityiv.setVisibility(View.GONE);
+                                }*/
+                                if(status.getIdentity().equals("1")){
+                                    mLlzhimaiv.setVisibility(View.VISIBLE);
+                                }else {
+                                    mLlzhimaiv.setVisibility(View.GONE);
                                 }
-
                                 if(status.getBankcard().equals("1")){
                                     mLlbankcardiv.setVisibility(View.VISIBLE);
                                 }else {
@@ -311,7 +315,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
         mCv_drivercard.setOnClickListener(this);
         mCv_creditcard.setOnClickListener(this);
         mCv_email.setOnClickListener(this);
-     //   mCv_zhima.setOnClickListener(this);
+        mCv_zhima.setOnClickListener(this);
         mIvLogoSetting.setOnClickListener(this);
 
     }
@@ -333,14 +337,36 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                         ShowUIHelper.showLoginActivity(getActivity());
                         return;
                     }
-
-                    if (AccountHelper.isAuth()){
+                    ShowUIHelper.showIdentityAuth(getActivity());
+                    /*if (AccountHelper.isAuth()){
                         SimplexToast.showMyToast("身份信息已认证",GlobalApplication.getContext());
                     }else {
                         ShowUIHelper.showIdentityAuth(getActivity());
-                    }
+                    }*/
                 }
 
+                break;
+            case R.id.cv_zhima:
+                if (FastOneClick.isFastClick()){
+                    if (!AccountHelper.isLogin()) {
+                        ShowUIHelper.showLoginActivity(getActivity());
+                        return;
+                    }else if (!AccountHelper.isAuth()){
+                        DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                ShowUIHelper.showIdentityAuth(getActivity());
+                            }
+                        }).show();
+                        return;
+                    }
+                    if (AccountHelper.isAuth()){
+                        SimplexToast.showMyToast("身份信息已认证",GlobalApplication.getContext());
+                    }else {
+                        ShowUIHelper.showZhimaAuth(getActivity());
+                    }
+
+                 }
                 break;
             case R.id.cv_bankcard:
                 if (FastOneClick.isFastClick()){
@@ -452,22 +478,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
 
 
                 break;
-           /* case R.id.cv_zhima:
-                if (!AccountHelper.isLogin()) {
-                    ShowUIHelper.showLoginActivity(getActivity());
-                    return;
-                }else if (!AccountHelper.isAuth()){
-                    DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            ShowUIHelper.showIdentityAuth(getActivity());
-                        }
-                    }).show();
-                    return;
-                }
-                configBqsParams();
-                ShowUIHelper.showZhimaAuth(getActivity());
-                break;*/
+
             case R.id.cv_alipay:
                 if (FastOneClick.isFastClick()){
                     if (!AccountHelper.isLogin()) {

@@ -1,1 +1,1 @@
-include ':app', ':OptionFrameLibrary'
+include ':app', ':OptionFrameLibrary', ':IDCardLib'

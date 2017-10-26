@@ -46,12 +46,12 @@
                 android:layout_width="@dimen/lay_28"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/lay_15"
-                android:src="@mipmap/gcs_username_logo" />
+                android:src="@mipmap/identity_name" />
 
             <TextView
                 android:layout_width="@dimen/lay_52"
                 android:layout_height="wrap_content"
-                android:text="@string/auth_username"
+                android:text="@string/name"
                 android:textColor="@color/base_app_color"
                 android:textSize="@dimen/font_16" />
 
@@ -65,7 +65,7 @@
                 android:background="@null"
                 android:ems="15"
                 android:focusable="true"
-                android:hint="@string/username_hinttip_string"
+                android:hint="@string/hint_et_name"
                 android:gravity="right|center_vertical"
                 android:imeOptions="actionDone"
                 android:inputType="text"
@@ -84,7 +84,7 @@
                 android:contentDescription="@null"
                 android:scaleType="fitCenter"
                 android:visibility="gone"
-                app:srcCompat="@mipmap/ic_clear" />
+                app:srcCompat="@mipmap/ic_close" />
 
         </LinearLayout>
         <View
@@ -105,12 +105,12 @@
                 android:layout_width="@dimen/lay_28"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/lay_15"
-                android:src="@mipmap/gcs_password_logo" />
+                android:src="@mipmap/idcard_numbe" />
 
             <TextView
                 android:layout_width="@dimen/lay_52"
                 android:layout_height="wrap_content"
-                android:text="@string/hint_password"
+                android:text="@string/idcard_num"
                 android:textColor="@color/base_app_color"
                 android:textSize="@dimen/font_16" />
 
@@ -124,7 +124,7 @@
                 android:background="@null"
                 android:ems="15"
                 android:focusable="true"
-                android:hint="@string/hint_input_passstring"
+                android:hint="@string/hint_et_idnumber"
                 android:gravity="right|center_vertical"
                 android:imeOptions="actionDone"
                 android:inputType="text"
@@ -143,7 +143,7 @@
                 android:contentDescription="@null"
                 android:scaleType="fitCenter"
                 android:visibility="gone"
-                app:srcCompat="@mipmap/ic_clear" />
+                app:srcCompat="@mipmap/ic_close" />
         </LinearLayout>
         <View
             android:layout_width="match_parent"
