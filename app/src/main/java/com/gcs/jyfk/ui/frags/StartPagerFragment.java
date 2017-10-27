@@ -337,8 +337,8 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                         ShowUIHelper.showLoginActivity(getActivity());
                         return;
                     }
-                    //Intent i = new Intent(getActivity(), IdentityAuthActivity.class);
-                   // startActivity(i);
+                    //Intent i = new Intent(getActivity(), LoadingActivity.class);
+                    //startActivity(i);
                    // ShowUIHelper.showIdentityAuth(getActivity());
                     /*if (AccountHelper.isAuth()){
                         SimplexToast.showMyToast("身份信息已认证",GlobalApplication.getContext());
