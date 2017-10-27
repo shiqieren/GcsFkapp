@@ -137,7 +137,16 @@
             android:name=".ui.baiqishiauthpager.MnoAuthActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".ui.faceidcard.faceppidcard.LoadingActivity">
 
+        </activity>
+
+        <activity android:name=".ui.faceidcard.faceppidcardui.IDCardActionActivity">
+        </activity>
+        <activity android:name=".ui.faceidcard.faceppidcardui.IDCardScanActivity">
+        </activity>
+        <activity android:name=".ui.faceidcard.faceppidcardui.IDCardResultActivity">
+        </activity>
         <service
             android:name="com.gcs.jyfk.update.DownloadService"
             android:exported="false" />
