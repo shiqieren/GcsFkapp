@@ -32,24 +32,30 @@ import com.gcs.jyfk.ui.account.AccountHelper;
 import com.gcs.jyfk.ui.account.RichTextParser;
 import com.gcs.jyfk.ui.account.bean.User;
 import com.gcs.jyfk.ui.api.MyApi;
+import com.gcs.jyfk.ui.atys.ResultActivity;
 import com.gcs.jyfk.ui.atys.SimpleBackActivity;
 import com.gcs.jyfk.ui.bean.base.ResultBean;
 import com.gcs.jyfk.ui.frags.BaseFragment;
 import com.gcs.jyfk.ui.widget.SimplexToast;
 import com.gcs.jyfk.utils.AppOperator;
 import com.gcs.jyfk.utils.MyLog;
+import com.gcs.jyfk.utils.UIUtils;
 import com.gcs.jyfk.utils.VibratorUtil;
 import com.google.gson.reflect.TypeToken;
 import com.megvii.idcardlib.IDCardScanActivity;
+import com.megvii.idcardlib.util.Util;
 import com.megvii.idcardquality.IDCardQualityLicenseManager;
 import com.megvii.licensemanager.Manager;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.lang.reflect.Type;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Request;
+import pub.devrel.easypermissions.EasyPermissions;
 
+import static android.app.Activity.RESULT_OK;
 import static android.os.Build.VERSION_CODES.M;
 
 /**
@@ -271,9 +277,11 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Manager manager = new Manager(LoadingActivity.this);
+               // Manager manager = new Manager(LoadingActivity.this);
+                Manager manager = new Manager(getActivity());
+                //IDCardQualityLicenseManager idCardLicenseManager = new IDCardQualityLicenseManager(LoadingActivity.this);
                 IDCardQualityLicenseManager idCardLicenseManager = new IDCardQualityLicenseManager(
-                        LoadingActivity.this);
+                        getActivity());
                 manager.registerLicenseManager(idCardLicenseManager);
                 String uuid = "13213214321424";
                 manager.takeLicenseFromNetwork(uuid);
@@ -291,7 +299,7 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
     }
 
     private void UIAuthState(final boolean isSuccess) {
-        runOnUiThread(new Runnable() {
+        UIUtils.runOnUIThread(new Runnable() {
             public void run() {
                 authState(isSuccess);
             }
@@ -368,11 +376,11 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
     private void requestCameraPerm(int side) {
         mSide = side;
         if (android.os.Build.VERSION.SDK_INT >= M) {
-            if (ContextCompat.checkSelfPermission(this,
+            if (ContextCompat.checkSelfPermission(getActivity(),
                     Manifest.permission.CAMERA)
                     != PackageManager.PERMISSION_GRANTED) {
                 //进行权限请求
-                ActivityCompat.requestPermissions(this,
+                ActivityCompat.requestPermissions(getActivity(),
                         new String[]{Manifest.permission.CAMERA},
                         EXTERNAL_STORAGE_REQ_CAMERA_CODE);
             } else {
@@ -383,7 +391,12 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
         }
     }
 
-
+    private void enterNextPage(int side){
+        Intent intent = new Intent(getActivity(), IDCardScanActivity.class);
+        intent.putExtra("side", side);
+        intent.putExtra("isvertical", isVertical);
+        startActivityForResult(intent, INTO_IDCARDSCAN_PAGE);
+    }
 
     public static final int EXTERNAL_STORAGE_REQ_CAMERA_CODE = 10;
     private void AuthIdentityRequest() {
@@ -492,4 +505,33 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
             }
         }
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        if (requestCode == EXTERNAL_STORAGE_REQ_CAMERA_CODE) {
+            if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {// Permission Granted
+
+                Util.showToast(getActivity(), "获取相机权限失败");
+            } else
+                enterNextPage(mSide);
+        }
+    }
+
+
+    private static final int INTO_IDCARDSCAN_PAGE = 100;
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == INTO_IDCARDSCAN_PAGE && resultCode == RESULT_OK) {
+            Intent intent = new Intent(getActivity(), ResultActivity.class);
+            intent.putExtra("side", data.getIntExtra("side", 0));
+            intent.putExtra("idcardImg", data.getByteArrayExtra("idcardImg"));
+            if (data.getIntExtra("side", 0) == 0) {
+                intent.putExtra("portraitImg", data.getByteArrayExtra("portraitImg"));
+            }
+            startActivity(intent);
+        }
+    }
+
 }

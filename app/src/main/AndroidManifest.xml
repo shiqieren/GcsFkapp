@@ -137,6 +137,11 @@
             android:name=".ui.baiqishiauthpager.MnoAuthActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity
+            android:name="com.gcs.jyfk.ui.atys.ResultActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
         <service
             android:name="com.gcs.jyfk.update.DownloadService"
             android:exported="false" />
