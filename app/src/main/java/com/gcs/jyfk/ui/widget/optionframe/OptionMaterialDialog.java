@@ -1,4 +1,4 @@
-package com.longsh.optionframelibrary;
+package com.gcs.jyfk.ui.widget.optionframe;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -23,6 +23,8 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.gcs.jyfk.R;
 
 
 public class OptionMaterialDialog {
@@ -658,14 +660,14 @@ public class OptionMaterialDialog {
 
         public void setBackground(Drawable drawable) {
             LinearLayout linearLayout = (LinearLayout) mAlertDialogWindow.findViewById(
-                    R.id.material_background);
+                   R.id.material_background);
             linearLayout.setBackground(drawable);
         }
 
 
         public void setBackgroundResource(int resId) {
             LinearLayout linearLayout = (LinearLayout) mAlertDialogWindow.findViewById(
-                    R.id.material_background);
+                   R.id.material_background);
             linearLayout.setBackgroundResource(resId);
         }
 

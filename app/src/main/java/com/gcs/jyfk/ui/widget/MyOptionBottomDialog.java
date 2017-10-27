@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
+import com.gcs.jyfk.R;
 import com.gcs.jyfk.ui.adapter.MyBaseAdapter;
 
 import java.util.List;
@@ -31,11 +32,11 @@ public class MyOptionBottomDialog<T> extends PopupWindow {
         super(context);
         final Activity activity = (Activity) context;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(com.longsh.optionframelibrary.R.layout.pupview, null);
+        View view = inflater.inflate(R.layout.pupview, null);
         this.setContentView(view);
         this.setHeight(LinearLayout.LayoutParams.MATCH_PARENT);
         this.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
-        RelativeLayout review = (RelativeLayout) view.findViewById(com.longsh.optionframelibrary.R.id.review);
+        RelativeLayout review = (RelativeLayout) view.findViewById(R.id.review);
         review.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,10 +44,10 @@ public class MyOptionBottomDialog<T> extends PopupWindow {
             }
         });
 
-        TextView title_bar = (TextView) view.findViewById(com.longsh.optionframelibrary.R.id.title);
+        TextView title_bar = (TextView) view.findViewById(R.id.title);
         title_bar.setText(title);
 
-        listView = (ListView) view.findViewById(com.longsh.optionframelibrary.R.id.list);
+        listView = (ListView) view.findViewById(R.id.list);
        // final MyCustomerListPopuAdapter popuSFAdapter = new MyCustomerListPopuAdapter(listData);
         listView.setAdapter(adapter);
 
@@ -56,7 +57,7 @@ public class MyOptionBottomDialog<T> extends PopupWindow {
 //        ColorDrawable dw = new ColorDrawable(Color.parseColor("#90000000"));
         this.setBackgroundDrawable(new BitmapDrawable());
 
-        this.setAnimationStyle(com.longsh.optionframelibrary.R.style.Animation);
+        this.setAnimationStyle(R.style.Animation);
 
         this.showAtLocation(activity.getWindow().getDecorView(), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
         backgroundAlpha(0.65f,activity);

@@ -1,4 +1,4 @@
-package com.longsh.optionframelibrary.adapter;
+package com.gcs.jyfk.ui.widget.optionframe.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,7 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.longsh.optionframelibrary.R;
+
+import com.gcs.jyfk.R;
 
 import java.util.List;
 

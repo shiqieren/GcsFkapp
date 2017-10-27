@@ -1,12 +1,7 @@
 package com.gcs.jyfk.ui.frags.subfrags;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -14,16 +9,12 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.NumberKeyListener;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.gcs.jyfk.GlobalApplication;
 import com.gcs.jyfk.R;
@@ -32,31 +23,20 @@ import com.gcs.jyfk.ui.account.AccountHelper;
 import com.gcs.jyfk.ui.account.RichTextParser;
 import com.gcs.jyfk.ui.account.bean.User;
 import com.gcs.jyfk.ui.api.MyApi;
-import com.gcs.jyfk.ui.atys.ResultActivity;
 import com.gcs.jyfk.ui.atys.SimpleBackActivity;
 import com.gcs.jyfk.ui.bean.base.ResultBean;
 import com.gcs.jyfk.ui.frags.BaseFragment;
 import com.gcs.jyfk.ui.widget.SimplexToast;
 import com.gcs.jyfk.utils.AppOperator;
 import com.gcs.jyfk.utils.MyLog;
-import com.gcs.jyfk.utils.UIUtils;
 import com.gcs.jyfk.utils.VibratorUtil;
 import com.google.gson.reflect.TypeToken;
-import com.megvii.idcardlib.IDCardScanActivity;
-import com.megvii.idcardlib.util.Util;
-import com.megvii.idcardquality.IDCardQualityLicenseManager;
-import com.megvii.licensemanager.Manager;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.lang.reflect.Type;
-import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Request;
-import pub.devrel.easypermissions.EasyPermissions;
-
-import static android.app.Activity.RESULT_OK;
-import static android.os.Build.VERSION_CODES.M;
 
 /**
  * Created by Administrator on 0029 8-29.
@@ -70,17 +50,8 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
     private ImageView mIvIdentityNumberDel;
     private EditText mEtIdentityName;
     private EditText mEtIdentityNumber;
-    private ImageView mIvidcardfront;
-    private ImageView mIvidcardreverse;
     private Button mBtIdentitySubmit;
-
-    private Button selectBtn;
-    boolean isVertical;
     private LinearLayout contentRel;
-    private LinearLayout barLinear;
-    private TextView WarrantyText;
-    private ProgressBar WarrantyBar;
-    private Button againWarrantyBtn;
 
     private Boolean mIsZHname = false;
     private Boolean mIsIDcardnumber = false;
@@ -96,11 +67,6 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
         ((SimpleBackActivity)getActivity()).setToolBarTitle(R.string.identity_string);
 
         contentRel = view.findViewById(R.id.traceroute_rootview);
-        barLinear = view.findViewById(R.id.loading_layout_barLinear);
-        WarrantyText = view.findViewById(R.id.loading_layout_WarrantyText);
-        WarrantyBar = view.findViewById(R.id.loading_layout_WarrantyBar);
-        againWarrantyBtn = view.findViewById(R.id.loading_layout_againWarrantyBtn);
-        selectBtn = view.findViewById(R.id.loading_layout_isVerticalBtn);
 
         mLlIdentityName = view.findViewById(R.id.ll_identity_name);
         mLlIdentityNumber = view.findViewById(R.id.ll_identity_number);
@@ -109,12 +75,7 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
         mEtIdentityName = view.findViewById(R.id.et_identity_name);
         mEtIdentityNumber = view.findViewById(R.id.et_identity_number);
         mBtIdentitySubmit = view.findViewById(R.id.bt_identity_submit);
-        mIvidcardfront = view.findViewById(R.id.iv_idcard_front);
-        mIvidcardreverse = view.findViewById(R.id.iv_idcard_reverse);
-        if (isVertical)
-            selectBtn.setText("vertical");
-        else
-            selectBtn.setText("horizontal");
+
         setListener();
         mEtIdentityName.setOnFocusChangeListener(this);
 
@@ -259,67 +220,11 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
         mLlIdentityNumber.setOnClickListener(this);
         mEtIdentityNumber.setOnClickListener(this);
         mIvIdentityNumberDel.setOnClickListener(this);
-        mIvidcardfront.setOnClickListener(this);
-        mIvidcardreverse.setOnClickListener(this);
-        mBtIdentitySubmit.setOnClickListener(this);
-        selectBtn.setOnClickListener(this);
+
     }
 
-    /**
-     * 上传图片
-     */
-    private void network() {
-        contentRel.setVisibility(View.GONE);
-        barLinear.setVisibility(View.VISIBLE);
-        againWarrantyBtn.setVisibility(View.GONE);
-        WarrantyText.setText("正在联网授权中...");
-        WarrantyBar.setVisibility(View.VISIBLE);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-               // Manager manager = new Manager(LoadingActivity.this);
-                Manager manager = new Manager(getActivity());
-                //IDCardQualityLicenseManager idCardLicenseManager = new IDCardQualityLicenseManager(LoadingActivity.this);
-                IDCardQualityLicenseManager idCardLicenseManager = new IDCardQualityLicenseManager(
-                        getActivity());
-                manager.registerLicenseManager(idCardLicenseManager);
-                String uuid = "13213214321424";
-                manager.takeLicenseFromNetwork(uuid);
-                String contextStr = manager.getContext(uuid);
-                Log.w("ceshi", "contextStr====" + contextStr);
 
-                Log.w("ceshi",
-                        "idCardLicenseManager.checkCachedLicense()===" + idCardLicenseManager.checkCachedLicense());
-                if (idCardLicenseManager.checkCachedLicense() > 0)
-                    UIAuthState(true);
-                else
-                    UIAuthState(false);
-            }
-        }).start();
-    }
 
-    private void UIAuthState(final boolean isSuccess) {
-        UIUtils.runOnUIThread(new Runnable() {
-            public void run() {
-                authState(isSuccess);
-            }
-        });
-    }
-
-    private void authState(boolean isSuccess) {
-        if (isSuccess) {
-            barLinear.setVisibility(View.GONE);
-            WarrantyBar.setVisibility(View.GONE);
-            againWarrantyBtn.setVisibility(View.GONE);
-            contentRel.setVisibility(View.VISIBLE);
-        } else {
-            barLinear.setVisibility(View.VISIBLE);
-            WarrantyBar.setVisibility(View.GONE);
-            againWarrantyBtn.setVisibility(View.VISIBLE);
-            contentRel.setVisibility(View.GONE);
-            WarrantyText.setText("联网授权失败！请检查网络或找服务商");
-        }
-    }
 
     @SuppressWarnings("ConstantConditions")
     @Override
@@ -350,55 +255,13 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
             case R.id.iv_identity_number_del:
                 mEtIdentityNumber.setText(null);
                 break;
-            case R.id.loading_layout_againWarrantyBtn:
-                network();
-                break;
-            case R.id.loading_layout_isVerticalBtn:
-                isVertical = !isVertical;
-                initData();
-                break;
-            case R.id.iv_idcard_front: {
-                SimplexToast.showMyToast("正面",GlobalApplication.getContext());
-                requestCameraPerm(0);
-            }
-            break;
-            case R.id.iv_idcard_reverse: {
-                SimplexToast.showMyToast("反面",GlobalApplication.getContext());
-                requestCameraPerm(1);
-                break;
-            }
+
             default:
                 break;
         }
     }
 
-    int mSide = 0;
-    private void requestCameraPerm(int side) {
-        mSide = side;
-        if (android.os.Build.VERSION.SDK_INT >= M) {
-            if (ContextCompat.checkSelfPermission(getActivity(),
-                    Manifest.permission.CAMERA)
-                    != PackageManager.PERMISSION_GRANTED) {
-                //进行权限请求
-                ActivityCompat.requestPermissions(getActivity(),
-                        new String[]{Manifest.permission.CAMERA},
-                        EXTERNAL_STORAGE_REQ_CAMERA_CODE);
-            } else {
-                enterNextPage(side);
-            }
-        } else {
-            enterNextPage(side);
-        }
-    }
 
-    private void enterNextPage(int side){
-        Intent intent = new Intent(getActivity(), IDCardScanActivity.class);
-        intent.putExtra("side", side);
-        intent.putExtra("isvertical", isVertical);
-        startActivityForResult(intent, INTO_IDCARDSCAN_PAGE);
-    }
-
-    public static final int EXTERNAL_STORAGE_REQ_CAMERA_CODE = 10;
     private void AuthIdentityRequest() {
         String tempUsername = mEtIdentityName.getText().toString().trim();
         String tempIdcard = mEtIdentityNumber.getText().toString().trim();
@@ -505,33 +368,6 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
             }
         }
     }
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        if (requestCode == EXTERNAL_STORAGE_REQ_CAMERA_CODE) {
-            if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {// Permission Granted
 
-                Util.showToast(getActivity(), "获取相机权限失败");
-            } else
-                enterNextPage(mSide);
-        }
-    }
-
-
-    private static final int INTO_IDCARDSCAN_PAGE = 100;
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == INTO_IDCARDSCAN_PAGE && resultCode == RESULT_OK) {
-            Intent intent = new Intent(getActivity(), ResultActivity.class);
-            intent.putExtra("side", data.getIntExtra("side", 0));
-            intent.putExtra("idcardImg", data.getByteArrayExtra("idcardImg"));
-            if (data.getIntExtra("side", 0) == 0) {
-                intent.putExtra("portraitImg", data.getByteArrayExtra("portraitImg"));
-            }
-            startActivity(intent);
-        }
-    }
 
 }

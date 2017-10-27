@@ -1,4 +1,4 @@
-package com.longsh.optionframelibrary;
+package com.gcs.jyfk.ui.widget.optionframe;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -8,7 +8,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.longsh.optionframelibrary.adapter.CenterDialogAdapter;
+import com.gcs.jyfk.R;
+import com.gcs.jyfk.ui.widget.optionframe.adapter.CenterDialogAdapter;
 
 import java.util.ArrayList;
 

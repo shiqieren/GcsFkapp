@@ -1,4 +1,4 @@
-package com.longsh.optionframelibrary;
+package com.gcs.jyfk.ui.widget.optionframe;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,7 +15,8 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.longsh.optionframelibrary.adapter.BottomPopuAdapter;
+import com.gcs.jyfk.R;
+import com.gcs.jyfk.ui.widget.optionframe.adapter.BottomPopuAdapter;
 
 import java.util.List;
 
