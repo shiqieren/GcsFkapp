@@ -12,6 +12,7 @@ import com.zhy.http.okhttp.callback.StringCallback;
 import com.zhy.http.okhttp.cookie.CookieJarImpl;
 import com.zhy.http.okhttp.cookie.store.PersistentCookieStore;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -107,7 +108,17 @@ public class MyApi {
 
         OkHttpUtils.initClient(okHttpClient);
     }
-
+    /**
+     * faceid
+     *
+     */
+    public static void faceidcard(String api_key, String api_secret, File imgfile , StringCallback callback) {
+        Map<String, String> params = new HashMap<>();
+        params.put("api_key",api_key);
+        params.put("api_secret", api_secret);
+        OkHttpUtils.post().url("https://api.faceid.com/faceid/v1/ocridcard").addFile("image","",imgfile).params(params).build().execute(callback);
+        MyLog.i("GCS","身份证识别:https://api.faceid.com/faceid/v1/ocridcard");
+    }
     /**
      * 销毁当前AsyncHttpClient 并重新初始化网络参数，初始化Cookie等信息
      *
@@ -408,4 +419,6 @@ public class MyApi {
         OkHttpUtils.post().url(getAbsoluteApiUrl("wind-phone/phone/driver/save.do")).params(params).build().execute(callback);
         MyLog.i("GCS","驾驶证请求url:"+getAbsoluteApiUrl("wind-phone/phone/driver/save.do"));
     }
+
+
 }

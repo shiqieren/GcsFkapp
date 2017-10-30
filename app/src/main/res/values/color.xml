@@ -40,4 +40,6 @@
     <color name="lite_blue">#ff359ff2</color>
     <color name="window_background">#00000000</color>
     <color name="black_de">#DE000000</color>
+
+    <color name="identity_img_bg">#f9f9f9</color>
 </resources>

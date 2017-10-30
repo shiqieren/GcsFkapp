@@ -142,20 +142,29 @@
             android:name=".ui.baiqishiauthpager.MnoAuthActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar"/>
-        <activity android:name=".ui.faceidcard.faceppidcard.LoadingActivity">
-
-        </activity>
-
-        <activity android:name=".ui.faceidcard.faceppidcardui.IDCardActionActivity">
-        </activity>
-        <activity android:name=".ui.faceidcard.faceppidcardui.IDCardScanActivity"
+        <activity android:name=".ui.faceid.LoadingActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
             android:configChanges="keyboardHidden|orientation"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:windowSoftInputMode="stateHidden|stateUnchanged">
+
         </activity>
-        <activity android:name=".ui.faceidcard.faceppidcardui.IDCardResultActivity">
+        <activity
+            android:name=".ui.faceid.ResultActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:configChanges="keyboardHidden|orientation"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" >
+        </activity>
+        <activity
+            android:name=".ui.faceid.ResultNewActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:configChanges="keyboardHidden|orientation"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" >
         </activity>
         <service
             android:name="com.gcs.jyfk.update.DownloadService"
