@@ -120,6 +120,17 @@ public class MyApi {
         MyLog.i("GCS","身份证识别:https://api.faceid.com/faceid/v1/ocridcard");
     }
     /**
+     * facelive
+     *
+     */
+    public static void facelive(Map<String, String> params,File idimg,File bestfile,File envfile,StringCallback callback) {
+      //  Map<String, String> params = new HashMap<>();
+        //params.put("api_key",api_key);
+        //params.put("api_secret", api_secret);
+        OkHttpUtils.post().url("https://api.megvii.com/faceid/v2/verify").params(params).addFile("image_ref1","",idimg).addFile("image_best","",bestfile).addFile("image_env","",envfile).build().execute(callback);
+        MyLog.i("GCS","人脸识别:https://api.megvii.com/faceid/v2/verify");
+    }
+    /**
      * 销毁当前AsyncHttpClient 并重新初始化网络参数，初始化Cookie等信息
      *
      * @param appContext AppContext

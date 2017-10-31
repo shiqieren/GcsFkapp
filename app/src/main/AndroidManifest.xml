@@ -150,6 +150,14 @@
             android:windowSoftInputMode="stateHidden|stateUnchanged">
 
         </activity>
+        <activity android:name=".ui.faceid.view.LivenessActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:configChanges="keyboardHidden|orientation"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:windowSoftInputMode="stateHidden|stateUnchanged">
+
+        </activity>
         <activity
             android:name=".ui.faceid.ResultActivity"
             android:screenOrientation="portrait"
