@@ -2,8 +2,10 @@ package com.gcs.jyfk.ui.atys;
 
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -425,5 +427,42 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         //撤销网络请求
         OkHttpUtils.getInstance().cancelTag(this);
         releaseLbs();
+    }
+
+    private String mUserId = "guanchesuo_test";                                  //合作方系统中的客户ID
+    private String mApiKey = "8e14693714c64ab5bb4a95c0ced7efc2";      //获取任务状态时使用
+
+    private String mBannerColor = "#000000"; //标题栏背景色
+    private String mTextColor = "#ffffff";  //标题栏字体颜色
+    private String mThemeColor = "#ff9500"; //页面主色调
+    private String mAgreementUrl = "https://api.51datakey.com/h5/agreement.html"; //协议URL
+    //摩羯数据
+    public String getSharedPreferValue(String key) {
+        String defValue = "";
+        switch (key){
+            case "userId":
+                defValue = mUserId;
+                break;
+            case "apiKey":
+                defValue = mApiKey;
+                break;
+            case "bannerBgColor":
+                defValue = mBannerColor;
+                break;
+            case "bannerTxtColor":
+                defValue = mTextColor;
+                break;
+            case "themeColor":
+                defValue = mThemeColor;
+                break;
+            case "agreementUrl":
+                defValue = mAgreementUrl;
+                break;
+        }
+        return getSharedPreferValue(key, defValue);
+    }
+    private String getSharedPreferValue(String key, String defValue) {
+        SharedPreferences sp = this.getSharedPreferences("apikey_and_token", Context.MODE_PRIVATE);
+        return sp.getString(key, defValue);
     }
 }
