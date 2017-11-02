@@ -297,7 +297,7 @@ public class LoadingActivity extends BaseActivity implements View.OnClickListene
 				IDCardQualityLicenseManager idCardLicenseManager = new IDCardQualityLicenseManager(
 						LoadingActivity.this);
 				manager.registerLicenseManager(idCardLicenseManager);
-				String uuid = "13213214321424";
+				//String uuid = "13213214321424";
 				manager.takeLicenseFromNetwork(uuid);
 				String contextStr = manager.getContext(uuid);
 				Log.w("ceshi", "contextStr====" + contextStr);
