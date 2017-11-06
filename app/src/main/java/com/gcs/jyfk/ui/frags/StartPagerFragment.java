@@ -36,7 +36,6 @@ import com.gcs.jyfk.ui.bean.ContactBean;
 import com.gcs.jyfk.ui.bean.SimpleBackPage;
 import com.gcs.jyfk.ui.bean.base.ResultBean;
 import com.gcs.jyfk.ui.faceid.LoadingActivity;
-import com.gcs.jyfk.ui.mojie.MojieActivity;
 import com.gcs.jyfk.ui.widget.SimplexToast;
 import com.gcs.jyfk.ui.widget.statusbar.StatusBarCompat;
 import com.gcs.jyfk.utils.ActivityManager;
