@@ -484,7 +484,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                     try{
                         MxParam mxParam = new MxParam();
                         mxParam.setThemeColor("#0f81c7");
-                        mxParam.setUserId(AccountHelper.getUser().getName());
+                        mxParam.setUserId(unAES(AccountHelper.getUser().getName()));
                         mxParam.setApiKey("8e14693714c64ab5bb4a95c0ced7efc2");
                         TitleParams titleParams = new TitleParams.Builder().immersedEnable(true).backgroundColor(getContext().getResources().getColor(R.color.base_app_color)).build();
                         mxParam.setTitleParams(titleParams);
