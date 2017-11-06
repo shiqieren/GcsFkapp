@@ -54,6 +54,7 @@ import com.moxie.client.manager.MoxieCallBackData;
 import com.moxie.client.manager.MoxieContext;
 import com.moxie.client.manager.MoxieSDK;
 import com.moxie.client.model.MxParam;
+import com.moxie.client.model.TitleParams;
 import com.zhy.http.okhttp.callback.StringCallback;
 import java.lang.reflect.Type;
 import java.util.List;
@@ -482,9 +483,11 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                     MyLog.i("GCS","邮箱点击1");
                     try{
                         MxParam mxParam = new MxParam();
-
+                        mxParam.setThemeColor("#0f81c7");
                         mxParam.setUserId(AccountHelper.getUser().getName());
                         mxParam.setApiKey("8e14693714c64ab5bb4a95c0ced7efc2");
+                        TitleParams titleParams = new TitleParams.Builder().immersedEnable(true).backgroundColor(getContext().getResources().getColor(R.color.base_app_color)).build();
+                        mxParam.setTitleParams(titleParams);
                         mxParam.setFunction(MxParam.PARAM_FUNCTION_EMAIL);
                         MoxieSDK.getInstance().start(getActivity(), mxParam, new MoxieCallBack() {
                             /**
