@@ -28,7 +28,7 @@
     <!--描边首页边框-->
     <color name="darker_gray2">#cccccc</color>
     <color name="darker_gray3">#999999</color>
-
+    <color name="darker_gray4"> #F5F5F5</color>
     <color name="base_app_color">#0f81c7</color>
     <color name="hint_font_color">#78ccff</color>
    <color name="login_border_colors">#52ffffff</color>

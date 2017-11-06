@@ -70,7 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dip"
                 android:alpha="0.6"
-                android:background="@color/darker_gray2" />
+                android:background="@color/darker_gray4" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -262,9 +262,9 @@
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
-                android:layout_height="5dip"
+                android:layout_height="10dip"
                 android:alpha="0.6"
-                android:background="@color/darker_gray2" />
+                android:background="@color/darker_gray4" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -456,9 +456,9 @@
             </LinearLayout>
             <View
                 android:layout_width="match_parent"
-                android:layout_height="5dip"
+                android:layout_height="10dip"
                 android:alpha="0.6"
-                android:background="@color/darker_gray2" />
+                android:background="@color/darker_gray4" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -577,7 +577,7 @@
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@mipmap/email_logo"/>
+                                android:src="@mipmap/emaillogo"/>
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
