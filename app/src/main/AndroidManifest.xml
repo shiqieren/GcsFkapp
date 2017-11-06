@@ -181,6 +181,9 @@
             android:windowSoftInputMode="stateHidden|stateUnchanged">
 
         </activity>
+        <activity
+            android:name="com.moxie.client.MainActivity">
+        </activity>
         <service
             android:name="com.gcs.jyfk.update.DownloadService"
             android:exported="false" />

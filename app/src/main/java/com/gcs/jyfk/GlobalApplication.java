@@ -12,6 +12,7 @@ import com.gcs.jyfk.cache.DataCleanManager;
 import com.gcs.jyfk.ui.account.AccountHelper;
 import com.gcs.jyfk.ui.api.MyApi;
 import com.gcs.jyfk.utils.MethodsCompat;
+import com.gcs.jyfk.utils.MyLog;
 import com.moxie.client.manager.MoxieSDK;
 
 import java.util.Properties;
@@ -134,6 +135,7 @@ public class GlobalApplication extends Application {
         //初始化其他相关，框架，sdk，数据库,百度地图....
         //初始化百度地图
         SDKInitializer.initialize(this);
+        MyLog.i("GCS","moxie初始化");
         MoxieSDK.init(this);
         MyApi.init(this);
 
