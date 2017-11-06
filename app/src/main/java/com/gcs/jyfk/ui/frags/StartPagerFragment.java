@@ -482,7 +482,8 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                     MyLog.i("GCS","邮箱点击1");
                     try{
                         MxParam mxParam = new MxParam();
-                        mxParam.setUserId("guanchesuo");
+
+                        mxParam.setUserId(AccountHelper.getUser().getName());
                         mxParam.setApiKey("8e14693714c64ab5bb4a95c0ced7efc2");
                         mxParam.setFunction(MxParam.PARAM_FUNCTION_EMAIL);
                         MoxieSDK.getInstance().start(getActivity(), mxParam, new MoxieCallBack() {
