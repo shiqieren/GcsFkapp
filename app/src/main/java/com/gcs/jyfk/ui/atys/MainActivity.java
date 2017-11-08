@@ -31,6 +31,7 @@ import com.gcs.jyfk.ui.api.ApiClientHelper;
 import com.gcs.jyfk.ui.bean.Tab;
 import com.gcs.jyfk.ui.bean.Version;
 import com.gcs.jyfk.ui.frags.StartPagerFragment;
+import com.gcs.jyfk.ui.frags.UserInfoFragment;
 import com.gcs.jyfk.ui.location.BDLocationAdapter;
 import com.gcs.jyfk.ui.notice.NoticeManager;
 import com.gcs.jyfk.ui.widget.FragmentTabHost;
@@ -66,7 +67,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     private FragmentTabHost mTabhost;
     //定位
     private LocationClient mLocationClient;
-    private List<Tab> mTabs = new ArrayList<>(1);
+    private List<Tab> mTabs = new ArrayList<>(2);
 
 
     @Override
@@ -106,10 +107,10 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 
     private void initTab() {
         Tab tab_mine1 = new Tab(StartPagerFragment.class, R.string.tab1, R.drawable.selector_icon_mine);
-        //  Tab tab_mine2 = new Tab( UserInfoFragment.class,R.string.tab2,R.drawable.selector_icon_mine);
+        Tab tab_mine2 = new Tab( UserInfoFragment.class,R.string.tab2,R.drawable.selector_icon_mine);
 
         mTabs.add(tab_mine1);
-        // mTabs.add(tab_mine2);
+         mTabs.add(tab_mine2);
 
         mInflater = LayoutInflater.from(this);
         mTabhost = (FragmentTabHost) this.findViewById(android.R.id.tabhost);
