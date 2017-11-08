@@ -373,12 +373,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                         ShowUIHelper.showLoginActivity(getActivity());
                         return;
                     } else if (!AccountHelper.isAuth()) {
-                        DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                ShowUIHelper.showIdentityAuth(getActivity());
-                            }
-                        }).show();
+                        showAuthIdentitydialog();
                         return;
                     }
                     if (AccountHelper.isAuth()) {
@@ -395,14 +390,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                         ShowUIHelper.showLoginActivity(getActivity());
                         return;
                     } else if (!AccountHelper.isAuth()) {
-                        AlertDialog dialog = DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号身份进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                ShowUIHelper.showIdentityAuth(getActivity());
-                            }
-                        }).show();
-                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
-                        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
+                        showAuthIdentitydialog();
                         return;
                     }
                     configBqsParams();
@@ -423,14 +411,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                         ShowUIHelper.showLoginActivity(getActivity());
                         return;
                     } else if (!AccountHelper.isAuth()) {
-                        AlertDialog dialog = DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号身份进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                ShowUIHelper.showIdentityAuth(getActivity());
-                            }
-                        }).show();
-                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
-                        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
+                        showAuthIdentitydialog();
                         return;
                     }
                     if (status != null) {
@@ -450,14 +431,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                         ShowUIHelper.showLoginActivity(getActivity());
                         return;
                     } else if (!AccountHelper.isAuth()) {
-                        AlertDialog dialog = DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号身份进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                ShowUIHelper.showIdentityAuth(getActivity());
-                            }
-                        }).show();
-                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
-                        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
+                        showAuthIdentitydialog();
                         return;
                     }
                     if (status != null) {
@@ -477,14 +451,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                         ShowUIHelper.showLoginActivity(getActivity());
                         return;
                     } else if (!AccountHelper.isAuth()) {
-                        AlertDialog dialog = DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号身份进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                ShowUIHelper.showIdentityAuth(getActivity());
-                            }
-                        }).show();
-                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
-                        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
+                        showAuthIdentitydialog();
                         return;
                     }
                     MyLog.i("GCS", "邮箱点击1");
@@ -638,14 +605,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                         ShowUIHelper.showLoginActivity(getActivity());
                         return;
                     } else if (!AccountHelper.isAuth()) {
-                        AlertDialog dialog = DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号身份进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                ShowUIHelper.showIdentityAuth(getActivity());
-                            }
-                        }).show();
-                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
-                        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
+                        showAuthIdentitydialog();
                         return;
                     }
                     configBqsParams();
@@ -669,14 +629,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                         ShowUIHelper.showLoginActivity(getActivity());
                         return;
                     } else if (!AccountHelper.isAuth()) {
-                        AlertDialog dialog = DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号身份进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                ShowUIHelper.showIdentityAuth(getActivity());
-                            }
-                        }).show();
-                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
-                        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
+                        showAuthIdentitydialog();
                         return;
                     }
                     configBqsParams();
@@ -699,14 +652,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                         ShowUIHelper.showLoginActivity(getActivity());
                         return;
                     } else if (!AccountHelper.isAuth()) {
-                        AlertDialog dialog = DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号身份进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                ShowUIHelper.showIdentityAuth(getActivity());
-                            }
-                        }).show();
-                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
-                        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
+                        showAuthIdentitydialog();
                         return;
                     }
                     configBqsParams();
@@ -729,14 +675,7 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
                         ShowUIHelper.showLoginActivity(getActivity());
                         return;
                     } else if (!AccountHelper.isAuth()) {
-                        AlertDialog dialog = DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号身份进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                ShowUIHelper.showIdentityAuth(getActivity());
-                            }
-                        }).show();
-                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
-                        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
+                        showAuthIdentitydialog();
                         return;
                     }
                     configBqsParams();
@@ -872,6 +811,16 @@ public class StartPagerFragment extends BaseFragment implements View.OnClickList
         dlgShowBack.getWindow().setAttributes(params);
     }
 
+    private void showAuthIdentitydialog() {
+        AlertDialog dialog = DialogUtil.getConfirmDialog(getActivity(), "您尚未对帐号身份进行认证，是否立即进行认证？", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                ShowUIHelper.showIdentityAuth(getActivity());
+            }
+        }).show();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
+        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(UIUtils.getColor(R.color.base_app_color));
+    }
 
     @Override
     public void onHiddenChanged(boolean hidden) {

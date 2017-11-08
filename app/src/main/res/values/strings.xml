@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">金眼风控</string>
-    <string name="tab1">1</string>
-    <string name="tab2">2</string>
+    <string name="tab1">首页</string>
+    <string name="tab2">我的报告</string>
     <string name="tab3">3</string>
     <string name="tab4">4</string>
     <string name="mine">我的</string>
