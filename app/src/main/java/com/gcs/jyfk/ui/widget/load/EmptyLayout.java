@@ -122,8 +122,6 @@ public class EmptyLayout extends LinearLayout implements
     }
 
 
-
-
     /**
      * 新添设置背景
      *

@@ -18,8 +18,7 @@ import com.gcs.jyfk.utils.MyLog;
 
 /**
  * @author lyw
- * 欢迎界面，版本检测
- *
+ *         欢迎界面，版本检测
  */
 public class LaunchActivity extends BaseActivity {
 
@@ -27,6 +26,7 @@ public class LaunchActivity extends BaseActivity {
     protected int getContentView() {
         return R.layout.app_start;
     }
+
     @Override
     protected void initData() {
 
@@ -37,7 +37,7 @@ public class LaunchActivity extends BaseActivity {
         AppOperator.runOnThread(new Runnable() {
             @Override
             public void run() {
-                MyLog.i("GCS","线程池开启线程，异步检查新版本的数据迁移工作");
+                MyLog.i("GCS", "线程池开启线程，异步检查新版本的数据迁移工作");
                 doMerge();
             }
         });
@@ -49,15 +49,15 @@ public class LaunchActivity extends BaseActivity {
 
         // 判断是否是新版本
         if (Setting.checkIsNewVersion(this)) {
-            MyLog.i("GCS","新版本更新后进行cookie搬移操作,全局中app_config中获取cookie赋值给user");
+            MyLog.i("GCS", "新版本更新后进行cookie搬移操作,全局中app_config中获取cookie赋值给user");
             String cookie = GlobalApplication.getInstance().getContextAppConfigValue("cookie");
             //判断是否为空cookie
             if (!TextUtils.isEmpty(cookie)) {
                 GlobalApplication.getInstance().removeContextAppConfigValue("cookie");
-                if (AccountHelper.isLogin()){
+                if (AccountHelper.isLogin()) {
                     User user = AccountHelper.getUser();
                     user.setCookie(cookie);
-                    MyLog.i("GCS","app更新后自动登录和更新缓存");
+                    MyLog.i("GCS", "app更新后自动登录和更新缓存");
                     AccountHelper.updateUserCache(user);
                 }
                 GlobalApplication.reInit();
@@ -76,19 +76,17 @@ public class LaunchActivity extends BaseActivity {
     }
 
 
-
     private void redirectTo() {
-        if (Setting.needShowGuide(this))
-        {
+        if (Setting.needShowGuide(this)) {
             startActivity(new Intent(this, WelcomeGuideActivity.class));
             finish();
-        }else {
-            if(!AccountHelper.isLogin()){
+        } else {
+            if (!AccountHelper.isLogin()) {
                 ShowUIHelper.showLoginActivity(this);
                 finish();
-            }else {
+            } else {
 
-                MyLog.i("GCS","通常登录,非重新安装状态，先进入mainactivity再判断是否登录");
+                MyLog.i("GCS", "通常登录,非重新安装状态，先进入mainactivity再判断是否登录");
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 finish();

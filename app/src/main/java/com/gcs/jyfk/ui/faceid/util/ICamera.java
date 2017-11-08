@@ -36,9 +36,9 @@ public class ICamera {
     /**
      * 打开相机
      */
-    public Camera openCamera(Activity activity,int cameraId) {
+    public Camera openCamera(Activity activity, int cameraId) {
         try {
-            this.cameraId=cameraId;
+            this.cameraId = cameraId;
             mCamera = Camera.open(cameraId);
             CameraInfo cameraInfo = new CameraInfo();
             Camera.getCameraInfo(cameraId, cameraInfo);

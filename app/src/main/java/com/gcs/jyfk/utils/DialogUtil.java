@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import android.view.View;
 
 
-
 /**
  * 通用的对话框
  * Created by lyw

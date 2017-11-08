@@ -54,7 +54,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * Created by lyw on 2017/7/25.
  */
 
-public class MainActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks, CheckUpdateManager.RequestPermissions{
+public class MainActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks, CheckUpdateManager.RequestPermissions {
     public static final int LOCATION_PERMISSION = 0x0100;//定位权限
     private static final int RC_EXTERNAL_STORAGE = 0x04;//存储权限
     public static final String CHARSET = "UTF-8";
@@ -90,9 +90,9 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
             }
         */
 
-        MyLog.i("GCS","进入,Mainactivity首页如果未登录则跳转到登录页面");
+        MyLog.i("GCS", "进入,Mainactivity首页如果未登录则跳转到登录页面");
         if (!AccountHelper.isLogin()) {
-            AlertDialog dialog =DialogUtil.getConfirmDialog(this, "您尚未登录，是否先进行登录操作", new DialogInterface.OnClickListener() {
+            AlertDialog dialog = DialogUtil.getConfirmDialog(this, "您尚未登录，是否先进行登录操作", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     ShowUIHelper.showLoginActivity(MainActivity.this);
@@ -105,23 +105,23 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     }
 
     private void initTab() {
-        Tab tab_mine1 = new Tab(StartPagerFragment.class,R.string.tab1,R.drawable.selector_icon_mine);
-      //  Tab tab_mine2 = new Tab( UserInfoFragment.class,R.string.tab2,R.drawable.selector_icon_mine);
+        Tab tab_mine1 = new Tab(StartPagerFragment.class, R.string.tab1, R.drawable.selector_icon_mine);
+        //  Tab tab_mine2 = new Tab( UserInfoFragment.class,R.string.tab2,R.drawable.selector_icon_mine);
 
         mTabs.add(tab_mine1);
-       // mTabs.add(tab_mine2);
+        // mTabs.add(tab_mine2);
 
         mInflater = LayoutInflater.from(this);
         mTabhost = (FragmentTabHost) this.findViewById(android.R.id.tabhost);
-        mTabhost.setup(this,getSupportFragmentManager(),R.id.realtabcontent);
+        mTabhost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
-        for (Tab tab : mTabs){
+        for (Tab tab : mTabs) {
 
             TabHost.TabSpec tabSpec = mTabhost.newTabSpec(getString(tab.getTitle()));
 
             tabSpec.setIndicator(buildIndicator(tab));
 
-            mTabhost.addTab(tabSpec,tab.getFragment(),null);
+            mTabhost.addTab(tabSpec, tab.getFragment(), null);
 
         }
 
@@ -133,20 +133,17 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     }
 
 
+    private View buildIndicator(Tab tab) {
 
 
-
-    private View buildIndicator(Tab tab){
-
-
-        View view =mInflater.inflate(R.layout.tab_indicator,null);
+        View view = mInflater.inflate(R.layout.tab_indicator, null);
         ImageView img = (ImageView) view.findViewById(R.id.icon_tab);
         TextView text = (TextView) view.findViewById(R.id.txt_indicator);
 
         img.setBackgroundResource(tab.getIcon());
         text.setText(tab.getTitle());
 
-        return  view;
+        return view;
     }
 
     @Override
@@ -157,11 +154,9 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         checkLocation();
         checkPhoneState();
         //app_config文件创建
-        AppConfig.getAppConfig(this).set("cookie", "模拟版本更新后cookie迁移"+String.valueOf(System.currentTimeMillis()));
+        AppConfig.getAppConfig(this).set("cookie", "模拟版本更新后cookie迁移" + String.valueOf(System.currentTimeMillis()));
 
     }
-
-
 
 
     private void checkUpdate() {
@@ -172,32 +167,34 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
         manager.setCaller(this);
         manager.checkUpdate();
     }
+
     private void checkLocation() {
-        MyLog.i("GCS","开始定位");
+        MyLog.i("GCS", "开始定位");
         //首先判断appCode是否存在，如果存在是否大于当前版本的appCode，或者第一次全新安装(默认0)表示没有保存appCode，手动加1
-        int hasLocationAppCode = Setting.hasLocationAppCode(getApplicationContext())+2;
-        int versionCode = TDevice.getVersionCode()+1;
-        MyLog.i("GCS","hasLocationAppCode:"+hasLocationAppCode+"///"+"versionCode:"+versionCode);
-         if ((hasLocationAppCode <= 0) || (hasLocationAppCode > versionCode)) {
+        int hasLocationAppCode = Setting.hasLocationAppCode(getApplicationContext()) + 2;
+        int versionCode = TDevice.getVersionCode() + 1;
+        MyLog.i("GCS", "hasLocationAppCode:" + hasLocationAppCode + "///" + "versionCode:" + versionCode);
+        if ((hasLocationAppCode <= 0) || (hasLocationAppCode > versionCode)) {
             //如果是登陆状态
             if (AccountHelper.isLogin()) {
-            MyLog.i("GCS","hasLocationAppCode:"+hasLocationAppCode+"///"+"versionCode:"+versionCode);
+                MyLog.i("GCS", "hasLocationAppCode:" + hasLocationAppCode + "///" + "versionCode:" + versionCode);
                 //当app第一次被安装时，不管是覆盖安装（不管是否有定位权限）还是全新安装都必须进行定位请求
                 Setting.updateLocationAppCode(getApplicationContext(), versionCode);
                 requestLocationPermission();
             }
             return;
-         }
+        }
 
         //如果有账户登陆，并且有主动上传过位置信息。那么准备请求定位
-       if (AccountHelper.isLogin() && Setting.hasLocation(getApplicationContext())) {
-        MyLog.i("GCS","请求定位授权");
+        if (AccountHelper.isLogin() && Setting.hasLocation(getApplicationContext())) {
+            MyLog.i("GCS", "请求定位授权");
             //1.有主动授权过，直接进行定位，否则不进行操作任何操作
             if (Setting.hasLocationPermission(getApplicationContext())) {
                 requestLocationPermission();
             }
         }
     }
+
     private void checkPhoneState() {
         if (AccountHelper.isLogin()) {
             requestReadPhoneState();
@@ -221,13 +218,14 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 
     public void requestReadPhoneState() {
         if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_PHONE_STATE)) {
-            MyLog.i("GCS","请求手机状态信息");
+            MyLog.i("GCS", "请求手机状态信息");
             ApiClientHelper.getUserAgent(GlobalApplication.getInstance());
 
         } else {
             EasyPermissions.requestPermissions(this, "手机状态权限", 0, Manifest.permission.READ_PHONE_STATE);
         }
     }
+
     /**
      * proxy request permission
      */
@@ -235,7 +233,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     private void requestLocationPermission() {
         if (EasyPermissions.hasPermissions(this, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.READ_PHONE_STATE)) {
-            MyLog.i("GCS","开始定位");
+            MyLog.i("GCS", "开始定位");
             startLbs();
 
         } else {
@@ -243,7 +241,6 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                     Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.READ_PHONE_STATE);
         }
     }
-
 
 
     @Override
@@ -264,18 +261,18 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                     }
                 }, null).show();
 
-            }else {
+            } else {
                 Setting.updateLocationPermission(getApplicationContext(), false);
             }
         }
 
 
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
-
 
 
     @Override
@@ -287,7 +284,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                 finish();
             } else {
                 mBackPressedTime = curTime;
-                SimplexToast.showMyToast(R.string.tip_double_click_exit,GlobalApplication.getContext());
+                SimplexToast.showMyToast(R.string.tip_double_click_exit, GlobalApplication.getContext());
             }
         } else {
             finish();
@@ -299,8 +296,8 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
      * start auto lbs service
      */
     private void startLbs() {
-        MyLog.i("GCS","启动定位start（）");
-        if ( mLocationClient == null) {
+        MyLog.i("GCS", "启动定位start（）");
+        if (mLocationClient == null) {
             initLbs();
         }
         //进行定位
@@ -311,7 +308,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
      * init lbs service
      */
     private void initLbs() {
-        MyLog.i("GCS","初始化定位服务");
+        MyLog.i("GCS", "初始化定位服务");
 
 
         if (mLocationClient == null) {
@@ -321,7 +318,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
                 public void onReceiveLocation(BDLocation bdLocation) {
                     super.onReceiveLocation(bdLocation);
                     //处理返回的定位信息，进行用户位置信息上传
-                    MyLog.i("GCS","位置信息回调处理");
+                    MyLog.i("GCS", "位置信息回调处理");
                     ReceiveLocation(bdLocation);
                 }
             });
@@ -361,7 +358,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
     private void ReceiveLocation(BDLocation location) {
 
         final int code = location.getLocType();
-        MyLog.i("GCS","code:"+code);
+        MyLog.i("GCS", "code:" + code);
         switch (code) {
             case BDLocation.TypeCriteriaException://62
                 releaseLbs();
@@ -395,19 +392,19 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 
             LatLng userLatLng = new LatLng(location.getLatitude(), location.getLongitude());
 
-            MyLog.i("GCS","经度："+location.getLatitude()+"纬度："+location.getLongitude()+"位置："+location.getAddrStr());
+            MyLog.i("GCS", "经度：" + location.getLatitude() + "纬度：" + location.getLongitude() + "位置：" + location.getAddrStr());
 
             Setting.updateLocationPermission(getApplicationContext(), true);
             if (AccountHelper.isLogin()) {
                 User user = AccountHelper.getUser();
-                MyLog.i("GCS","位置信息经纬度存放在User"+location.getAddrStr());
+                MyLog.i("GCS", "位置信息经纬度存放在User" + location.getAddrStr());
                 user.getMore().setAddress(location.getAddrStr());
                 AccountHelper.updateUserCache(user);
-                }
-            } else {
-                //返回的位置信息异常或网络有问题，即定位失败，停止定位功能，并释放lbs资源
-                releaseLbs();
             }
+        } else {
+            //返回的位置信息异常或网络有问题，即定位失败，停止定位功能，并释放lbs资源
+            releaseLbs();
+        }
     }
 
     /**

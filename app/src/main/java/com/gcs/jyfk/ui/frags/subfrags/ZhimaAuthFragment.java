@@ -37,10 +37,10 @@ import okhttp3.Request;
  * Created by Administrator on 0029 8-29.
  */
 @SuppressLint("NewApi")
-public class ZhimaAuthFragment extends BaseFragment implements View.OnClickListener, View.OnFocusChangeListener{
+public class ZhimaAuthFragment extends BaseFragment implements View.OnClickListener, View.OnFocusChangeListener {
 
     private LinearLayout mLlAuthUsername;
-     private LinearLayout mLlAuthPassword;
+    private LinearLayout mLlAuthPassword;
     private EditText mEtAuthUsername;
     private EditText mEtAuthPassword;
     private ImageView mIvAuthUsernaneDel;
@@ -48,14 +48,16 @@ public class ZhimaAuthFragment extends BaseFragment implements View.OnClickListe
     private Button mBtAuthSubmit;
     private Boolean mIsZHname = false;
     private Boolean mIsIDcardnumber = false;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_zhima_auth;
     }
+
     @Override
     protected void initView(View view) {
         super.initView(view);
-        ((SimpleBackActivity)getActivity()).setToolBarTitle(R.string.zhima_string);
+        ((SimpleBackActivity) getActivity()).setToolBarTitle(R.string.zhima_string);
         view.findViewById(R.id.traceroute_rootview).setOnClickListener(this);
         mLlAuthUsername = view.findViewById(R.id.ll_auth_username);
         mLlAuthPassword = view.findViewById(R.id.ll_auth_password);
@@ -92,7 +94,7 @@ public class ZhimaAuthFragment extends BaseFragment implements View.OnClickListe
 
                 String name = mEtAuthUsername.getText().toString().trim();
                 String pwd = mEtAuthPassword.getText().toString().trim();
-                if (!TextUtils.isEmpty(name)&&!TextUtils.isEmpty(pwd)) {
+                if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(pwd)) {
                    /* mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.white));*/
                 } else {
@@ -129,10 +131,10 @@ public class ZhimaAuthFragment extends BaseFragment implements View.OnClickListe
 
                 String pwd = mEtAuthPassword.getText().toString().trim();
                 String name = mEtAuthUsername.getText().toString().trim();
-                if (!TextUtils.isEmpty(pwd)&&!TextUtils.isEmpty(name)) {
+                if (!TextUtils.isEmpty(pwd) && !TextUtils.isEmpty(name)) {
                    /* mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.white));*/
-                }else {
+                } else {
                    /* mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));*/
                 }
@@ -145,10 +147,14 @@ public class ZhimaAuthFragment extends BaseFragment implements View.OnClickListe
     @Override
     protected void initData() {
         super.initData();
-        if (AccountHelper.isLogin()){
+        if (AccountHelper.isLogin()) {
             User user = AccountHelper.getUser();
-            if(user.getName()!=null){ mEtAuthUsername.setText(unAES(user.getName()));}
-            if (user.getCertno()!=null){ mEtAuthPassword.setText(unAES(user.getCertno()));}
+            if (user.getName() != null) {
+                mEtAuthUsername.setText(unAES(user.getName()));
+            }
+            if (user.getCertno() != null) {
+                mEtAuthPassword.setText(unAES(user.getCertno()));
+            }
         }
     }
 
@@ -200,8 +206,8 @@ public class ZhimaAuthFragment extends BaseFragment implements View.OnClickListe
     private void AuthIdentityRequest() {
         String tempUsername = mEtAuthUsername.getText().toString().trim();
         String tempIdcard = mEtAuthPassword.getText().toString().trim();
-        if(!TextUtils.isEmpty(tempUsername)){
-            if (mIsIDcardnumber){
+        if (!TextUtils.isEmpty(tempUsername)) {
+            if (mIsIDcardnumber) {
                 VibratorUtil.Vibrate(getActivity(), 100);
                 mEtAuthUsername.setFocusableInTouchMode(false);
                 mEtAuthUsername.clearFocus();
@@ -211,16 +217,16 @@ public class ZhimaAuthFragment extends BaseFragment implements View.OnClickListe
                 SimplexToast.showMyToast("身份证格式有误", GlobalApplication.getContext());
                 return;
             }
-        }else {
+        } else {
             SimplexToast.showMyToast("姓名不能为空", GlobalApplication.getContext());
             return;
         }
 
-        if (!TextUtils.isEmpty(tempUsername)&&AccountHelper.isLogin()&&!TextUtils.isEmpty(tempIdcard)){
+        if (!TextUtils.isEmpty(tempUsername) && AccountHelper.isLogin() && !TextUtils.isEmpty(tempIdcard)) {
 
             //登录成功,请求数据进入用户个人中心页面
             User user = AccountHelper.getUser();
-            String token =  user.getToken();
+            String token = user.getToken();
             String phone = user.getPhone();
             MyApi.authzhima(token, getAES(phone), getAES(tempIdcard), tempUsername, "", new StringCallback() {
                 @Override
@@ -234,39 +240,41 @@ public class ZhimaAuthFragment extends BaseFragment implements View.OnClickListe
                     super.onAfter(id);
                     hideWaitDialog();
                 }
+
                 @Override
                 public void onError(Call call, Exception e, int id) {
                     hideWaitDialog();
-                    MyLog.i("GCS","身份认证返回Exception："+e);
+                    MyLog.i("GCS", "身份认证返回Exception：" + e);
                 }
 
                 @Override
                 public void onResponse(String response, int id) {
                     hideWaitDialog();
-                    MyLog.i("GCS","登录返回response："+response);
+                    MyLog.i("GCS", "登录返回response：" + response);
                     try {
-                        Type type = new TypeToken<ResultBean>() {}.getType();
+                        Type type = new TypeToken<ResultBean>() {
+                        }.getType();
                         ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
                         int code = resultBean.getCode();
                         switch (code) {
 
                             case 200://授权url获取成功
-                                MyLog.i("GCS","跳转到回调url："+response);
-                                String url =  resultBean.getResult().toString();
-                                MyLog.i("GCS","授权按钮点击，打开webview："+url);
+                                MyLog.i("GCS", "跳转到回调url：" + response);
+                                String url = resultBean.getResult().toString();
+                                MyLog.i("GCS", "授权按钮点击，打开webview：" + url);
                                 ShowUIHelper.openInternalBrowser(getActivity(), url);
 
                                 break;
                             case 600://已经授权过,成功更新了用户芝麻数据
-                                SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
+                                SimplexToast.showMyToast(resultBean.getMessage(), GlobalApplication.getContext());
                                 getActivity().finish();
                                 break;
                             case 300://账户问题
-                                SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
+                                SimplexToast.showMyToast(resultBean.getMessage(), GlobalApplication.getContext());
 
                                 break;
                             case 500://失败
-                                SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
+                                SimplexToast.showMyToast(resultBean.getMessage(), GlobalApplication.getContext());
                                 break;
                             default:
                                 break;

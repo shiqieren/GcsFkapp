@@ -50,7 +50,7 @@ public abstract class BaseGeneralRecyclerAdapter<T> extends BaseRecyclerAdapter<
 
     @SuppressWarnings("unused")
     public interface Callback {
-       //图片请求加载器回调方法 RequestManager getImgLoader();
+        //图片请求加载器回调方法 RequestManager getImgLoader();
 
         Context getContext();
 

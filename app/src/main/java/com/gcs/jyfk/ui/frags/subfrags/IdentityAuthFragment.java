@@ -42,7 +42,7 @@ import okhttp3.Request;
  * Created by Administrator on 0029 8-29.
  */
 @SuppressLint("NewApi")
-public class IdentityAuthFragment extends BaseFragment implements View.OnClickListener, View.OnFocusChangeListener{
+public class IdentityAuthFragment extends BaseFragment implements View.OnClickListener, View.OnFocusChangeListener {
 
     private LinearLayout mLlIdentityName;
     private LinearLayout mLlIdentityNumber;
@@ -55,6 +55,7 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
 
     private Boolean mIsZHname = false;
     private Boolean mIsIDcardnumber = false;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_identity_auth;
@@ -64,7 +65,7 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
     @Override
     protected void initView(View view) {
         super.initView(view);
-        ((SimpleBackActivity)getActivity()).setToolBarTitle(R.string.identity_string);
+        ((SimpleBackActivity) getActivity()).setToolBarTitle(R.string.identity_string);
 
         contentRel = view.findViewById(R.id.traceroute_rootview);
 
@@ -108,20 +109,20 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
             public void afterTextChanged(Editable s) {
                 String username = s.toString().trim();
                 mIsZHname = RichTextParser.checkIsZH(username);
-                if(mIsZHname){
+                if (mIsZHname) {
 
                 }
                 if (username.length() > 0) {
-                 //   mLlIdentityName.setBackgroundResource(R.drawable.bg_login_input_ok);
+                    //   mLlIdentityName.setBackgroundResource(R.drawable.bg_login_input_ok);
                     mIvIdentityNameDel.setVisibility(View.VISIBLE);
                 } else {
-                 //   mLlIdentityName.setBackgroundResource(R.drawable.bg_login_input_ok);
+                    //   mLlIdentityName.setBackgroundResource(R.drawable.bg_login_input_ok);
                     mIvIdentityNameDel.setVisibility(View.GONE);
                 }
 
                 String identitynumber = mEtIdentityName.getText().toString().trim();
                 String pwd = mEtIdentityNumber.getText().toString().trim();
-                if (!TextUtils.isEmpty(identitynumber)&&!TextUtils.isEmpty(pwd)) {
+                if (!TextUtils.isEmpty(identitynumber) && !TextUtils.isEmpty(pwd)) {
                    /* mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.white));*/
                 } else {
@@ -142,7 +143,7 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
 
             @Override
             protected char[] getAcceptedChars() {
-                char[] numberChars = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'X','Y','Z' };
+                char[] numberChars = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'X', 'Y', 'Z'};
                 return numberChars;
             }
         });
@@ -205,10 +206,14 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
     @Override
     protected void initData() {
         super.initData();
-        if (AccountHelper.isLogin()){
+        if (AccountHelper.isLogin()) {
             User user = AccountHelper.getUser();
-            if(user.getName()!=null){ mEtIdentityName.setText(unAES(user.getName()));}
-            if (user.getCertno()!=null){ mEtIdentityNumber.setText(unAES(user.getCertno()));}
+            if (user.getName() != null) {
+                mEtIdentityName.setText(unAES(user.getName()));
+            }
+            if (user.getCertno() != null) {
+                mEtIdentityNumber.setText(unAES(user.getCertno()));
+            }
         }
     }
 
@@ -222,8 +227,6 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
         mIvIdentityNumberDel.setOnClickListener(this);
 
     }
-
-
 
 
     @SuppressWarnings("ConstantConditions")
@@ -247,7 +250,7 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
                 break;
 
             case R.id.bt_identity_submit:
-                    AuthIdentityRequest();
+                AuthIdentityRequest();
                 break;
             case R.id.iv_identity_name_del:
                 mEtIdentityName.setText(null);
@@ -265,8 +268,8 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
     private void AuthIdentityRequest() {
         String tempUsername = mEtIdentityName.getText().toString().trim();
         String tempIdcard = mEtIdentityNumber.getText().toString().trim();
-        if(!TextUtils.isEmpty(mEtIdentityName.getText().toString().trim())){
-            if (mIsIDcardnumber){
+        if (!TextUtils.isEmpty(mEtIdentityName.getText().toString().trim())) {
+            if (mIsIDcardnumber) {
                 VibratorUtil.Vibrate(getActivity(), 100);
                 mEtIdentityName.setFocusableInTouchMode(false);
                 mEtIdentityName.clearFocus();
@@ -276,16 +279,16 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
                 SimplexToast.showMyToast("身份证格式有误", GlobalApplication.getContext());
                 return;
             }
-        }else {
+        } else {
             SimplexToast.showMyToast("姓名不能为空", GlobalApplication.getContext());
             return;
         }
 
-        if (!TextUtils.isEmpty(tempUsername)&&AccountHelper.isLogin()&&!TextUtils.isEmpty(tempIdcard)){
+        if (!TextUtils.isEmpty(tempUsername) && AccountHelper.isLogin() && !TextUtils.isEmpty(tempIdcard)) {
 
             //登录成功,请求数据进入用户个人中心页面
             User user = AccountHelper.getUser();
-            String token =  user.getToken();
+            String token = user.getToken();
             String phone = user.getPhone();
             MyApi.authzhima(token, getAES(phone), getAES(tempIdcard), tempUsername, "", new StringCallback() {
                 @Override
@@ -299,39 +302,41 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
                     super.onAfter(id);
                     hideWaitDialog();
                 }
+
                 @Override
                 public void onError(Call call, Exception e, int id) {
                     hideWaitDialog();
-                    MyLog.i("GCS","身份认证返回Exception："+e);
+                    MyLog.i("GCS", "身份认证返回Exception：" + e);
                 }
 
                 @Override
                 public void onResponse(String response, int id) {
                     hideWaitDialog();
-                    MyLog.i("GCS","登录返回response："+response);
+                    MyLog.i("GCS", "登录返回response：" + response);
                     try {
-                        Type type = new TypeToken<ResultBean>() {}.getType();
+                        Type type = new TypeToken<ResultBean>() {
+                        }.getType();
                         ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
                         int code = resultBean.getCode();
                         switch (code) {
 
                             case 200://授权url获取成功
-                                MyLog.i("GCS","跳转到回调url："+response);
-                                String url =  resultBean.getResult().toString();
-                                MyLog.i("GCS","授权按钮点击，打开webview："+url);
+                                MyLog.i("GCS", "跳转到回调url：" + response);
+                                String url = resultBean.getResult().toString();
+                                MyLog.i("GCS", "授权按钮点击，打开webview：" + url);
                                 ShowUIHelper.openInternalBrowser(getActivity(), url);
 
                                 break;
                             case 600://已经授权过,成功更新了用户芝麻数据
-                                SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
+                                SimplexToast.showMyToast(resultBean.getMessage(), GlobalApplication.getContext());
                                 getActivity().finish();
                                 break;
                             case 300://账户问题
-                                SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
+                                SimplexToast.showMyToast(resultBean.getMessage(), GlobalApplication.getContext());
 
                                 break;
                             case 500://失败
-                                SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
+                                SimplexToast.showMyToast(resultBean.getMessage(), GlobalApplication.getContext());
                                 break;
                             default:
                                 break;
@@ -345,7 +350,6 @@ public class IdentityAuthFragment extends BaseFragment implements View.OnClickLi
         }
 
     }
-
 
 
     @Override

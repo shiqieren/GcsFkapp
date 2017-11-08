@@ -32,7 +32,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  */
 
 public class UpdateActivity extends BaseActivity implements View.OnClickListener,
-       EasyPermissions.PermissionCallbacks{
+        EasyPermissions.PermissionCallbacks {
 
     private TextView mTextUpdateInfo;
     private Button mBtn_update;
@@ -66,10 +66,11 @@ public class UpdateActivity extends BaseActivity implements View.OnClickListener
         mTextUpdateInfo.setText(Html.fromHtml(mVersion.getMessage()));
     }
 
-    private void setListener(){
+    private void setListener() {
         mBtn_update.setOnClickListener(this);
         mBtn_close.setOnClickListener(this);
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -78,12 +79,12 @@ public class UpdateActivity extends BaseActivity implements View.OnClickListener
                     DialogUtil.getConfirmDialog(this, "当前非wifi环境，是否升级？", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                           requestExternalStorage();
+                            requestExternalStorage();
                             finish();
                         }
                     }).show();
                 } else {
-                     requestExternalStorage();
+                    requestExternalStorage();
                     finish();
                 }
                 break;
@@ -93,6 +94,7 @@ public class UpdateActivity extends BaseActivity implements View.OnClickListener
         }
 
     }
+
     @AfterPermissionGranted(RC_EXTERNAL_STORAGE)
     public void requestExternalStorage() {
         if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {

@@ -59,7 +59,7 @@ public class AppCrashHandler implements Thread.UncaughtExceptionHandler {
             @Override
             public void run() {
                 Looper.prepare();
-                SimplexToast.showMyToast("OSC异常；正准备重启！！",GlobalApplication.getContext());
+                SimplexToast.showMyToast("OSC异常；正准备重启！！", GlobalApplication.getContext());
                 Looper.loop();
             }
         }.start();

@@ -16,7 +16,7 @@ import com.gcs.jyfk.R;
 
 
 /**
- *画倒计时圆通过传递 Progress和max来画
+ * 画倒计时圆通过传递 Progress和max来画
  */
 public class CircleProgressBar extends View {
 
@@ -54,8 +54,8 @@ public class CircleProgressBar extends View {
         int height = MeasureSpec.getSize(heightMeasureSpec);
         int use = width > height ? height : width;
         int sum = Width + Radius;
-        Width = use / 2 * Width/ sum;
-        Radius = use / 2 * Radius/ sum;
+        Width = use / 2 * Width / sum;
+        Radius = use / 2 * Radius / sum;
         setMeasuredDimension(use, use);
     }
 
@@ -64,9 +64,9 @@ public class CircleProgressBar extends View {
         paint = new Paint();
         oval = new RectF();
         textPaint = new TextPaint();
-        bit =BitmapFactory.decodeResource(getResources(), R.drawable.circle);
-        sweepGradient = new SweepGradient(getWidth()/2, getHeight()/2, new int[]{0xfffe9a8e, 0xff3fd1e4
-                ,0xffdc968e},null);
+        bit = BitmapFactory.decodeResource(getResources(), R.drawable.circle);
+        sweepGradient = new SweepGradient(getWidth() / 2, getHeight() / 2, new int[]{0xfffe9a8e, 0xff3fd1e4
+                , 0xffdc968e}, null);
     }
 
     @Override
@@ -82,7 +82,6 @@ public class CircleProgressBar extends View {
         paint.setStrokeWidth(Width);// 设置画笔宽度
         paint.setStyle(Paint.Style.STROKE);// 设置中空的样式
         canvas.drawCircle(Radius + Width, Radius + Width, Radius, paint);// 在中心为（100,100）的地方画个半径为55的圆，宽度为setStrokeWidth：10，也就是灰色的底边
-
 
 
 //        paint.setShader(sweepGradient);

@@ -19,6 +19,7 @@ import java.util.concurrent.Executors;
 public class AppOperator {
     private static ExecutorService EXECUTORS_INSTANCE;
     private static Gson GSON_INSTANCE;
+
     public static Executor getExecutor() {
         if (EXECUTORS_INSTANCE == null) {
             synchronized (AppOperator.class) {
@@ -29,10 +30,10 @@ public class AppOperator {
         }
         return EXECUTORS_INSTANCE;
     }
+
     public static void runOnThread(Runnable runnable) {
         getExecutor().execute(runnable);
     }
-
 
 
     public static Gson createGson() {

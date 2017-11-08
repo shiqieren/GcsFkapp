@@ -18,7 +18,6 @@ import java.io.Serializable;
 
 
 /**
- *
  * 缓存复用管理类，保存，读取，有效失效时间
  * Created by lyw on 2017/7/23.
  */

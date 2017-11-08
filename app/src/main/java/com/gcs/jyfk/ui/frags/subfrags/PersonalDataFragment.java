@@ -27,7 +27,7 @@ public class PersonalDataFragment extends BaseFragment {
 
     @Override
     public void initView(View view) {
-        ((SimpleBackActivity)getActivity()).setToolBarTitle(R.string.personal_data);
+        ((SimpleBackActivity) getActivity()).setToolBarTitle(R.string.personal_data);
     }
 
     @Override

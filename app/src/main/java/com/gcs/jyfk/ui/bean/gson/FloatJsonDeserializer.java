@@ -18,7 +18,7 @@ public class FloatJsonDeserializer implements JsonDeserializer<Float> {
         try {
             return json.getAsFloat();
         } catch (Exception e) {
-            MyLog.i("json_info","FloatJsonDeserializer-deserialize-error:" + (json != null ? json.toString() : ""));
+            MyLog.i("json_info", "FloatJsonDeserializer-deserialize-error:" + (json != null ? json.toString() : ""));
             return 0F;
         }
     }

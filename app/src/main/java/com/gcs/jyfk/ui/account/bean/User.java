@@ -119,8 +119,6 @@ public class User implements Serializable {
     }
 
 
-
-
     public String getCookie() {
         return cookie;
     }
@@ -182,6 +180,7 @@ public class User implements Serializable {
         public void setImei(String imei) {
             this.imei = imei;
         }
+
         public String getImsi() {
             return address;
         }
@@ -189,6 +188,7 @@ public class User implements Serializable {
         public void setImsi(String imsi) {
             this.imsi = imsi;
         }
+
         public String getIpnum() {
             return ip;
         }
@@ -196,6 +196,7 @@ public class User implements Serializable {
         public void setIpnum(String ip) {
             this.ip = ip;
         }
+
         public String getMac() {
             return mac;
         }
@@ -203,6 +204,7 @@ public class User implements Serializable {
         public void setMac(String mac) {
             this.mac = mac;
         }
+
         public String getAddress() {
             return address;
         }
@@ -210,6 +212,7 @@ public class User implements Serializable {
         public void setAddress(String address) {
             this.address = address;
         }
+
         public String getPlatform() {
             return platform;
         }
@@ -264,6 +267,7 @@ public class User implements Serializable {
         public void setAuth_bankcard(String setAuth_bankcard) {
             this.auth_bankcard = setAuth_bankcard;
         }
+
         public String getAuth_zhima() {
             return auth_zhima;
         }
@@ -271,6 +275,7 @@ public class User implements Serializable {
         public void setAuth_zhima(String zhima) {
             this.auth_zhima = zhima;
         }
+
         public String getAuth_alipay() {
             return auth_alipay;
         }
@@ -278,6 +283,7 @@ public class User implements Serializable {
         public void setAuth_alipay(String alipay) {
             this.auth_alipay = alipay;
         }
+
         public String getAuth_taobao() {
             return auth_taobao;
         }
@@ -285,6 +291,7 @@ public class User implements Serializable {
         public void setAuth_taobao(String taobao) {
             this.auth_taobao = taobao;
         }
+
         public String getAuth_jd() {
             return auth_jd;
         }
@@ -292,6 +299,7 @@ public class User implements Serializable {
         public void setAuth_jd(String jd) {
             this.auth_jd = jd;
         }
+
         public String getAuth_operator() {
             return auth_operator;
         }
@@ -299,6 +307,7 @@ public class User implements Serializable {
         public void setAuth_operator(String operator) {
             this.auth_operator = operator;
         }
+
         public String getAuth_contact() {
             return auth_contact;
         }
@@ -314,6 +323,7 @@ public class User implements Serializable {
         public void setAuth_email(String auth_email) {
             this.auth_email = auth_email;
         }
+
         public String getAuth_drivercard() {
             return auth_drivercard;
         }
@@ -321,6 +331,7 @@ public class User implements Serializable {
         public void setAuth_drivercard(String auth_drivercard) {
             this.auth_drivercard = auth_drivercard;
         }
+
         public String getAuth_creditcard() {
             return auth_creditcard;
         }
@@ -337,7 +348,7 @@ public class User implements Serializable {
                 "id=" + id +
                 ", name='" + name +
                 ", token='" + token +
-                ", cookie='" + cookie  + '\'' +
+                ", cookie='" + cookie + '\'' +
                 '}';
     }
 

@@ -32,13 +32,14 @@ import okhttp3.Call;
 import okhttp3.Request;
 
 
-public class ResetPasswordFrament extends BaseFragment{
+public class ResetPasswordFrament extends BaseFragment {
 
 
     private EditText mEtoldpassword;
     private EditText mEtnewpassword;
     private EditText mEtquerypassword;
     private Button mBtnchange;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_resetpassword;
@@ -47,7 +48,7 @@ public class ResetPasswordFrament extends BaseFragment{
 
     @Override
     public void initView(View view) {
-        ((SimpleBackActivity)getActivity()).setToolBarTitle(R.string.setting_reset_password);
+        ((SimpleBackActivity) getActivity()).setToolBarTitle(R.string.setting_reset_password);
         mEtoldpassword = view.findViewById(R.id.et_oldpassword);
         mEtnewpassword = view.findViewById(R.id.et_newpassword);
         mEtquerypassword = view.findViewById(R.id.et_querypassword);
@@ -75,42 +76,45 @@ public class ResetPasswordFrament extends BaseFragment{
         String newpass = mEtnewpassword.getText().toString().trim();
         String querypass = mEtquerypassword.getText().toString().trim();
 
-        if (AccountHelper.isLogin()){
+        if (AccountHelper.isLogin()) {
             User user = AccountHelper.getUser();
             String token = user.getToken();
-            if (newpass.length()<6 || newpass.length()>12){
+            if (newpass.length() < 6 || newpass.length() > 12) {
                 SimplexToast.showMyToast("请输入至少6-12位新密码！", GlobalApplication.getContext());
                 return;
             }
-            if (newpass.equals(querypass)){
+            if (newpass.equals(querypass)) {
                 MyApi.updatePasswd(token, getAES(oldpass), getAES(newpass), getAES(querypass), new StringCallback() {
                     @Override
                     public void onBefore(Request request, int id) {
                         super.onBefore(request, id);
                         showFocusWaitDialog();
                     }
+
                     @Override
                     public void onAfter(int id) {
                         super.onAfter(id);
                         hideWaitDialog();
                     }
+
                     @Override
                     public void onError(Call call, Exception e, int id) {
                         hideWaitDialog();
-                        MyLog.i("GCS","更新密码错误"+e.toString());
+                        MyLog.i("GCS", "更新密码错误" + e.toString());
                     }
 
                     @Override
                     public void onResponse(String response, int id) {
-                        MyLog.i("GCS","登录返回response："+response);
+                        MyLog.i("GCS", "登录返回response：" + response);
                         try {
-                            Type type = new TypeToken<ResultBean>() {}.getType();
+                            Type type = new TypeToken<ResultBean>() {
+                            }.getType();
                             ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
                             int code = resultBean.getCode();
                             if (code == 200) {
                                 hideWaitDialog();
-                                showAuthbookconfirm("提示","密码已修改需重新登录");
-                              //  SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
+                                showAuthbookconfirm("提示", "密码已修改需重新登录");
+                                //  SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
                                 ShowUIHelper.clearAppCache(false);
                                 AccountHelper.logoutauto(new Runnable() {
                                     @Override
@@ -126,7 +130,7 @@ public class ResetPasswordFrament extends BaseFragment{
                                 if (code == 500) {
 
                                 }
-                                SimplexToast.showMyToast(message,GlobalApplication.getContext());
+                                SimplexToast.showMyToast(message, GlobalApplication.getContext());
                                 //更新失败应该是不进行任何的本地操作
                             }
                         } catch (Exception e) {
@@ -134,15 +138,15 @@ public class ResetPasswordFrament extends BaseFragment{
                         }
                     }
                 });
-            }else {
+            } else {
                 SimplexToast.showMyToast("确认密码输入不一致", GlobalApplication.getContext());
             }
         }
 
     }
 
-    private void showAuthbookconfirm(String title,String con) {
-        View dialogview = View.inflate(getActivity(),R.layout.custom_dialog,null);
+    private void showAuthbookconfirm(String title, String con) {
+        View dialogview = View.inflate(getActivity(), R.layout.custom_dialog, null);
         TextView tv_title = dialogview.findViewById(R.id.dialog_tip);
         TextView tv_link = dialogview.findViewById(R.id.read_authbook_link);
         Button bt_cancle = dialogview.findViewById(R.id.btn_cancel);

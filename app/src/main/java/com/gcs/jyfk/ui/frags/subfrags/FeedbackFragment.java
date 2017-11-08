@@ -24,11 +24,12 @@ import okhttp3.Call;
 import okhttp3.Request;
 
 
-public class FeedbackFragment extends BaseFragment implements View.OnClickListener{
+public class FeedbackFragment extends BaseFragment implements View.OnClickListener {
 
 
     private Button mBtncommit;
     private EditText mEtnmessage;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_feed_back;
@@ -37,7 +38,7 @@ public class FeedbackFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void initView(View view) {
-        ((SimpleBackActivity)getActivity()).setToolBarTitle(R.string.feedback);
+        ((SimpleBackActivity) getActivity()).setToolBarTitle(R.string.feedback);
         mBtncommit = view.findViewById(R.id.btn_commit);
         mEtnmessage = view.findViewById(R.id.et_feed_back);
     }
@@ -51,7 +52,7 @@ public class FeedbackFragment extends BaseFragment implements View.OnClickListen
         final int id = v.getId();
         switch (id) {
             case R.id.btn_commit:
-                if (FastOneClick.isFastClick()){
+                if (FastOneClick.isFastClick()) {
                     feedBackRequest();
                 }
                 break;
@@ -61,13 +62,12 @@ public class FeedbackFragment extends BaseFragment implements View.OnClickListen
     }
 
 
-
     private void feedBackRequest() {
         String msg = mEtnmessage.getText().toString().trim();
         String token = AccountHelper.getUser().getToken();
-        if (msg.equals("")){
+        if (msg.equals("")) {
             SimplexToast.showMyToast("您还未填写意见", GlobalApplication.getContext());
-        }else {
+        } else {
             MyApi.feedBack(token, msg, new StringCallback() {
                 @Override
                 public void onBefore(Request request, int id) {
@@ -77,23 +77,24 @@ public class FeedbackFragment extends BaseFragment implements View.OnClickListen
 
                 @Override
                 public void onError(Call call, Exception e, int id) {
-                    MyLog.i("GCS","意见反馈返回Exception"+e.toString());
+                    MyLog.i("GCS", "意见反馈返回Exception" + e.toString());
                     hideWaitDialog();
                 }
 
                 @Override
                 public void onResponse(String response, int id) {
-                    MyLog.i("GCS","意见反馈返回response"+response);
+                    MyLog.i("GCS", "意见反馈返回response" + response);
                     try {
-                        Type type = new TypeToken<ResultBean>() {}.getType();
+                        Type type = new TypeToken<ResultBean>() {
+                        }.getType();
                         ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
                         int code = resultBean.getCode();
                         if (code == 200) {
-                            SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
+                            SimplexToast.showMyToast(resultBean.getMessage(), GlobalApplication.getContext());
                             hideWaitDialog();
                         } else {
                             if (code == 500) {
-                                SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
+                                SimplexToast.showMyToast(resultBean.getMessage(), GlobalApplication.getContext());
                                 hideWaitDialog();
                             }
 

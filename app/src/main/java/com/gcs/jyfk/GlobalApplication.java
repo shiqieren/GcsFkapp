@@ -20,10 +20,9 @@ import java.util.Properties;
 
 /**
  * @author lyw
- * 全局应用程序类
- * 用于保存和调用全局应用配置及访问网络数据
- * 全局application初始化
- *
+ *         全局应用程序类
+ *         用于保存和调用全局应用配置及访问网络数据
+ *         全局application初始化
  */
 public class GlobalApplication extends Application {
     //sp设立的文件名字-基础application
@@ -33,7 +32,8 @@ public class GlobalApplication extends Application {
     //上下文对象
     private static Context _context;
     private static Handler handler;
-    private static  int mainThreadId;
+    private static int mainThreadId;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -47,21 +47,23 @@ public class GlobalApplication extends Application {
     }
 
 
-
     //全局单例
-    public static GlobalApplication getInstance(){
+    public static GlobalApplication getInstance() {
         return instance;
     }
+
     //当前运行的全局上下文
-    public static Context getContext(){
+    public static Context getContext() {
         return _context;
     }
+
     //主线程handler
-    public static Handler getHandler(){
+    public static Handler getHandler() {
         return handler;
     }
+
     //主线程id
-    public static int getMainThreadId(){
+    public static int getMainThreadId() {
         return mainThreadId;
     }
 
@@ -70,14 +72,17 @@ public class GlobalApplication extends Application {
     public Properties getContextAppConfig() {
         return AppConfig.getAppConfig(this).get();
     }
+
     //设置键值对
     public void setContextAppConfig(String key, String value) {
         AppConfig.getAppConfig(this).set(key, value);
     }
+
     //获取键对应值
     public String getContextAppConfigValue(String key) {
         return AppConfig.getAppConfig(this).get(key);
     }
+
     //移除对应键
     public void removeContextAppConfigValue(String... key) {
         AppConfig.getAppConfig(this).remove(key);
@@ -125,17 +130,18 @@ public class GlobalApplication extends Application {
     public static void reInit() {
         ((GlobalApplication) GlobalApplication.getInstance()).init();
     }
+
     private void init() {
         // 初始化异常捕获类
         AppCrashHandler.getInstance().init(this);
         // 初始化账户基础信息
         AccountHelper.init(this);
         // 初始化网络请求
-      //  OkHttpClient.init(this);
+        //  OkHttpClient.init(this);
         //初始化其他相关，框架，sdk，数据库,百度地图....
         //初始化百度地图
         SDKInitializer.initialize(this);
-        MyLog.i("GCS","moxie初始化");
+        MyLog.i("GCS", "moxie初始化");
         MoxieSDK.init(this);
         MyApi.init(this);
 
@@ -185,7 +191,6 @@ public class GlobalApplication extends Application {
     public static float get(String key, float defValue) {
         return getPreferences().getFloat(key, defValue);
     }
-
 
 
 }

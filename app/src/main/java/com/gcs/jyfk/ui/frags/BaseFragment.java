@@ -20,12 +20,13 @@ import com.gcs.jyfk.utils.MyLog;
 import java.io.Serializable;
 
 
-public abstract class BaseFragment extends Fragment implements View.OnClickListener{
+public abstract class BaseFragment extends Fragment implements View.OnClickListener {
     private ProgressDialog mDialog;
     protected Context mContext;
     protected View mView;
     protected Bundle mBundle;
     protected LayoutInflater mInflater;
+
     public GlobalApplication getApplication() {
         return (GlobalApplication) getActivity().getApplication();
     }
@@ -41,6 +42,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         super.onDetach();
         mContext = null;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +53,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
 
 
         if (mView != null) {
@@ -97,14 +98,13 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     }
 
 
-
-
     //获取布局id
     protected abstract int getLayoutId();
 
     protected void initBundle(Bundle bundle) {
 
     }
+
     protected void initView(View view) {
 
     }
@@ -131,7 +131,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     }
 
 
-
     @Override
     public void onClick(View v) {
 
@@ -140,11 +139,13 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     protected void onRestartInstance(Bundle bundle) {
 
     }
+
     @Override
     public void onStop() {
         super.onStop();
         hideWaitDialog();
     }
+
     /**
      * show FocusWaitDialog
      *
@@ -160,6 +161,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
         return mDialog;
     }
+
     /**
      * hide waitDialog
      */
@@ -175,6 +177,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
             }
         }
     }
+
     /**
      * 加密
      * AES
@@ -193,7 +196,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
             e.printStackTrace();
         }
         String enString = mAes.encrypt(mBytes);
-        MyLog.i("GCS","加密后："+enString);
+        MyLog.i("GCS", "加密后：" + enString);
         return enString;
     }
 
@@ -208,7 +211,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     protected String unAES(String tempPwd) {
         AES mAes = new AES();
         String deString = mAes.decrypt(tempPwd);
-        MyLog.i("GCS","解密后："+deString);
+        MyLog.i("GCS", "解密后：" + deString);
         return deString;
     }
 }

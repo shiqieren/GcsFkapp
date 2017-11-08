@@ -5,8 +5,8 @@ package com.gcs.jyfk.ui.bean;
  */
 public class Tab {
 
-    private  int title;
-    private  int icon;
+    private int title;
+    private int icon;
     private Class fragment;
 
     public Tab(Class fragment, int title, int icon) {

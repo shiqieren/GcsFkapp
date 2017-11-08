@@ -11,34 +11,34 @@ import com.megvii.livenessdetection.Detector;
 public class IMediaPlayer {
     public MediaPlayer mMediaPlayer;
     private Context mContext;
-    
+
     public IMediaPlayer(Context mContext) {
         this.mContext = mContext;
         mMediaPlayer = new MediaPlayer();
     }
 
-    public void close(){
-    	mContext = null;
+    public void close() {
+        mContext = null;
         if (mMediaPlayer != null) {
             mMediaPlayer.reset();
             mMediaPlayer.release();
             mMediaPlayer = null;
         }
     }
-    
+
     /**
-     *重置 （重新设置播放器引擎）
+     * 重置 （重新设置播放器引擎）
      */
-    public void reset(){
+    public void reset() {
         if (mMediaPlayer != null) {
             mMediaPlayer.reset();
         }
     }
-    
+
     /**
-     *播放成功回调接口 
+     * 播放成功回调接口
      */
-    public void setOnCompletionListener(final Detector.DetectionType detectiontype){
+    public void setOnCompletionListener(final Detector.DetectionType detectiontype) {
         mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
@@ -47,7 +47,7 @@ public class IMediaPlayer {
             }
         });
     }
-    
+
     /**
      * 多媒体播放
      */
@@ -72,7 +72,7 @@ public class IMediaPlayer {
             localIOException.printStackTrace();
         }
     }
-    
+
     public int getSoundRes(Detector.DetectionType detectionType) {
         int resID = -1;
         switch (detectionType) {

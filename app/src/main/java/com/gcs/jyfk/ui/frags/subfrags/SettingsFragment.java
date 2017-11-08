@@ -56,13 +56,13 @@ public class SettingsFragment extends BaseFragment implements EasyPermissions.Pe
 
     @Override
     public void initView(View view) {
-        ((SimpleBackActivity)getActivity()).setToolBarTitle(R.string.actionbar_title_setting);
+        ((SimpleBackActivity) getActivity()).setToolBarTitle(R.string.actionbar_title_setting);
         mTvCacheSize = view.findViewById(R.id.tv_cache_size);
-        mRlCheck_version= view.findViewById(R.id.rl_check_version);
-        mTbDoubleClickExit= view.findViewById(R.id.tb_double_click_exit);
-        mSettingLineTop= view.findViewById(R.id.setting_line_top);
-        mSettingLineBottom= view.findViewById(R.id.setting_line_bottom);
-        mCancel= view.findViewById(R.id.rl_cancel);
+        mRlCheck_version = view.findViewById(R.id.rl_check_version);
+        mTbDoubleClickExit = view.findViewById(R.id.tb_double_click_exit);
+        mSettingLineTop = view.findViewById(R.id.setting_line_top);
+        mSettingLineBottom = view.findViewById(R.id.setting_line_bottom);
+        mCancel = view.findViewById(R.id.rl_cancel);
 
 
         mTbDoubleClickExit.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
@@ -166,10 +166,10 @@ public class SettingsFragment extends BaseFragment implements EasyPermissions.Pe
                     LoginActivity.show(getContext());
                     return;
                 }
-                 ShowUIHelper.showResetPassword(getActivity());
+                ShowUIHelper.showResetPassword(getActivity());
                 break;
             case R.id.rl_cancel:
-                AlertDialog dialog =DialogUtil.getConfirmDialog(getActivity(), "是否确认退出", new DialogInterface.OnClickListener() {
+                AlertDialog dialog = DialogUtil.getConfirmDialog(getActivity(), "是否确认退出", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // 清理所有缓存
@@ -182,7 +182,7 @@ public class SettingsFragment extends BaseFragment implements EasyPermissions.Pe
                             public void run() {
                                 //getActivity().finish();
                                 mTvCacheSize.setText("0KB");
-                               // SimplexToast.showMyToast(R.string.logout_success_hint,GlobalApplication.getContext());
+                                // SimplexToast.showMyToast(R.string.logout_success_hint,GlobalApplication.getContext());
                                 mCancel.setVisibility(View.GONE);
                                 mSettingLineTop.setVisibility(View.GONE);
                                 mSettingLineBottom.setVisibility(View.INVISIBLE);

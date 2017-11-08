@@ -72,7 +72,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         return true;
     }
 
-    protected void initWindow()     {
+    protected void initWindow() {
     }
 
     protected void initWidget() {
@@ -83,7 +83,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void init(Bundle savedInstanceState) {
     }
-   //异步图片加载
+
+    //异步图片加载
    /* public synchronized RequestManager getImageLoader() {
         if (mImageLoader == null)
            // mImageLoader = Glide.with(this);

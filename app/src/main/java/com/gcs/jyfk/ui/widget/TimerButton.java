@@ -24,7 +24,7 @@ public class TimerButton extends Button {
 
     public TimerButton(Context context, AttributeSet attrs) {
 
-        this(context, attrs,0);
+        this(context, attrs, 0);
 
     }
 
@@ -36,26 +36,26 @@ public class TimerButton extends Button {
 
         afterText = typedArray.getString(R.styleable.timerbutton_afterText);
 
-        ms = typedArray.getInt(R.styleable.timerbutton_ms,10000);
+        ms = typedArray.getInt(R.styleable.timerbutton_ms, 10000);
 
         typedArray.recycle();
     }
 
-    public void init(String afterText, int ms){
+    public void init(String afterText, int ms) {
         this.afterText = afterText;
         this.ms = ms;
 
     }
 
-    public void startTimer(){
+    public void startTimer() {
 
         TimerButton.this.setEnabled(false);
 
-        new CountDownTimer(ms+1000,1000){
+        new CountDownTimer(ms + 1000, 1000) {
 
             @Override
             public void onTick(long finish) {
-                TimerButton.this.setText(finish/1000+" s");
+                TimerButton.this.setText(finish / 1000 + " s");
             }
 
             @Override

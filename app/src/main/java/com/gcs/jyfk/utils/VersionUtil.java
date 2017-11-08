@@ -27,6 +27,7 @@ public class VersionUtil {
         NetworkInfo info = cm.getActiveNetworkInfo();
         return info != null && info.isAvailable() && info.isConnected();
     }
+
     //是否打开wifi
     public static boolean isWifiOpen() {
         ConnectivityManager cm = (ConnectivityManager) GlobalApplication
@@ -37,10 +38,12 @@ public class VersionUtil {
         if (info.getType() != ConnectivityManager.TYPE_WIFI) return false;
         return true;
     }
+
     //获得版本号
     public static int getVersionCode() {
         return getVersionCode(GlobalApplication.getContext().getPackageName());
     }
+
     //根据包名获得版本号
     public static int getVersionCode(String packageName) {
         try {
@@ -52,6 +55,7 @@ public class VersionUtil {
             return 0;
         }
     }
+
     //获得版本名称
     public static String getVersionName() {
         try {
@@ -63,6 +67,7 @@ public class VersionUtil {
             return "undefined version name";
         }
     }
+
     //安装app
     public static void installAPK(Context context, File file) {
         if (file == null || !file.exists())

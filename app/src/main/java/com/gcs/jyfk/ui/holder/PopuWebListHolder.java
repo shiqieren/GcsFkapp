@@ -14,7 +14,6 @@ import com.gcs.jyfk.utils.UIUtils;
 public class PopuWebListHolder extends BaseHolder<BankType> {
 
 
-
     private TextView tvName;
     private TextView tvVisiblecode;
 
@@ -25,7 +24,6 @@ public class PopuWebListHolder extends BaseHolder<BankType> {
         // 2. 初始化控件
         tvVisiblecode = (TextView) view.findViewById(R.id.tvVisible_code);
         tvName = (TextView) view.findViewById(R.id.visit_name);
-
 
 
         return view;

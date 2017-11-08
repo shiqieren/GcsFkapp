@@ -13,15 +13,16 @@ import com.gcs.jyfk.ui.frags.BaseFragment;
  * Created by Administrator on 0029 8-29.
  */
 @SuppressLint("NewApi")
-public class ContactsAuthFragment extends BaseFragment{
+public class ContactsAuthFragment extends BaseFragment {
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_contacts_auth;
     }
+
     @Override
     protected void initView(View view) {
         super.initView(view);
-        ((SimpleBackActivity)getActivity()).setToolBarTitle(R.string.contact_string);
+        ((SimpleBackActivity) getActivity()).setToolBarTitle(R.string.contact_string);
         view.findViewById(R.id.traceroute_rootview).setOnClickListener(this);
     }
 

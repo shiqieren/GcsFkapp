@@ -77,7 +77,6 @@ public class AccountBaseActivity extends BaseActivity {
     }
 
 
-
     protected boolean sendLocalReceiver() {
         if (mManager != null) {
             Intent intent = new Intent();
@@ -98,12 +97,12 @@ public class AccountBaseActivity extends BaseActivity {
         IntentFilter filter = new IntentFilter();
         filter.addAction(ACTION_ACCOUNT_FINISH_ALL);
         if (mReceiver == null)
-            mReceiver =  new BroadcastReceiver() {
+            mReceiver = new BroadcastReceiver() {
                 @Override
                 public void onReceive(Context context, Intent intent) {
                     String action = intent.getAction();
                     if (ACTION_ACCOUNT_FINISH_ALL.equals(action)) {
-                        MyLog.i("GCS","广播通信finish()窗口");
+                        MyLog.i("GCS", "广播通信finish()窗口");
                         finish();
                     }
                 }
@@ -222,7 +221,7 @@ public class AccountBaseActivity extends BaseActivity {
             e.printStackTrace();
         }
         String enString = mAes.encrypt(mBytes);
-        MyLog.i("GCS","加密后："+enString);
+        MyLog.i("GCS", "加密后：" + enString);
         return enString;
     }
 
@@ -237,7 +236,7 @@ public class AccountBaseActivity extends BaseActivity {
     protected String unAES(String tempPwd) {
         AES mAes = new AES();
         String deString = mAes.decrypt(tempPwd);
-        MyLog.i("GCS","解密后："+deString);
+        MyLog.i("GCS", "解密后：" + deString);
         return deString;
     }
 

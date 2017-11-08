@@ -23,7 +23,7 @@ import com.gcs.jyfk.ui.widget.SimplexToast;
  * Created by Administrator on 0029 8-29.
  */
 @SuppressLint("NewApi")
-public class TaobaoAuthFragment extends BaseFragment implements View.OnClickListener,OnLoginViewListener, View.OnFocusChangeListener{
+public class TaobaoAuthFragment extends BaseFragment implements View.OnClickListener, OnLoginViewListener, View.OnFocusChangeListener {
 
     private CheckBox mCbAgreeAuthbook;
     private LinearLayout mLlAuthUsername;
@@ -31,14 +31,16 @@ public class TaobaoAuthFragment extends BaseFragment implements View.OnClickList
     private EditText mEtAuthUsername;
     private EditText mEtAuthPassword;
     private Button mBtAuthSubmit;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_taobao_auth;
     }
+
     @Override
     protected void initView(View view) {
         super.initView(view);
-        ((SimpleBackActivity)getActivity()).setToolBarTitle(R.string.taobao_string);
+        ((SimpleBackActivity) getActivity()).setToolBarTitle(R.string.taobao_string);
         view.findViewById(R.id.traceroute_rootview).setOnClickListener(this);
         mCbAgreeAuthbook = view.findViewById(R.id.cb_agree_authbook);
         mLlAuthUsername = view.findViewById(R.id.ll_auth_username);
@@ -69,7 +71,7 @@ public class TaobaoAuthFragment extends BaseFragment implements View.OnClickList
 
                 String name = mEtAuthUsername.getText().toString().trim();
                 String pwd = mEtAuthPassword.getText().toString().trim();
-                if (!TextUtils.isEmpty(name)&&!TextUtils.isEmpty(pwd)) {
+                if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(pwd)) {
                     mBtAuthSubmit.setEnabled(true);
                    /* mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.white));*/
@@ -103,11 +105,11 @@ public class TaobaoAuthFragment extends BaseFragment implements View.OnClickList
 
                 String pwd = mEtAuthPassword.getText().toString().trim();
                 String name = mEtAuthUsername.getText().toString().trim();
-                if (!TextUtils.isEmpty(pwd)&&!TextUtils.isEmpty(name)&& mCbAgreeAuthbook.isChecked()) {
+                if (!TextUtils.isEmpty(pwd) && !TextUtils.isEmpty(name) && mCbAgreeAuthbook.isChecked()) {
                     mBtAuthSubmit.setEnabled(true);
                    /* mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.white));*/
-                }else {
+                } else {
                     mBtAuthSubmit.setEnabled(false);
                    /* mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));*/
@@ -128,6 +130,7 @@ public class TaobaoAuthFragment extends BaseFragment implements View.OnClickList
     protected void initData() {
         super.initData();
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -163,9 +166,9 @@ public class TaobaoAuthFragment extends BaseFragment implements View.OnClickList
     }
 
     private void AuthRequest() {
-        if(!mCbAgreeAuthbook.isChecked()){
+        if (!mCbAgreeAuthbook.isChecked()) {
             SimplexToast.showMyToast("尚未勾选授权协议书", GlobalApplication.getContext());
-        }else {
+        } else {
 
         }
     }

@@ -50,7 +50,7 @@ import okhttp3.Call;
  * Created by Administrator on 0029 8-29.
  */
 @SuppressLint("NewApi")
-public class OperatorAuthFragment extends BaseFragment implements View.OnClickListener, View.OnFocusChangeListener,OnMnoLoginListener, OnMnoSendSmsListener {
+public class OperatorAuthFragment extends BaseFragment implements View.OnClickListener, View.OnFocusChangeListener, OnMnoLoginListener, OnMnoSendSmsListener {
 
     private CheckBox mCbAgreeAuthbook;
     private LinearLayout mLlAuthUsername;
@@ -69,10 +69,12 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
     MnoLoginAction loginAction = new MnoLoginAction();
 
     private ProgressDialog mDialog;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_operator_auth;
     }
+
     @Override
     protected void initView(View view) {
         super.initView(view);
@@ -81,7 +83,7 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
             mDialog = DialogUtil.getProgressDialog(getActivity(), message, false);//DialogHelp.getWaitDialog(this, message);
         }
 
-        ((SimpleBackActivity)getActivity()).setToolBarTitle(R.string.operator_string);
+        ((SimpleBackActivity) getActivity()).setToolBarTitle(R.string.operator_string);
         view.findViewById(R.id.traceroute_rootview).setOnClickListener(this);
         mCbAgreeAuthbook = view.findViewById(R.id.cb_agree_authbook);
         mLlAuthUsername = view.findViewById(R.id.ll_auth_username);
@@ -92,7 +94,7 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
         mBtAuthSubmit = view.findViewById(R.id.bt_auth_submit);
         mIvAuthUsernaneDel = view.findViewById(R.id.iv_auth_username_del);
         mIvAuthPasswordDel = view.findViewById(R.id.iv_auth_password_del);
-        mTvResetPwd= view.findViewById(R.id.tv_ResetPwd);
+        mTvResetPwd = view.findViewById(R.id.tv_ResetPwd);
         //自动获取当前手机号码值
         mEtAuthUsername.setText(Setting.bqsParams.getMobile());
         setListener();
@@ -123,7 +125,7 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
                 }
                 String name = mEtAuthUsername.getText().toString().trim();
                 String pwd = mEtAuthPassword.getText().toString().trim();
-                if (!TextUtils.isEmpty(name)&&!TextUtils.isEmpty(pwd)) {
+                if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(pwd)) {
                    /* mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.white));*/
                 } else {
@@ -159,17 +161,17 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
                 }
                 String pwd = mEtAuthPassword.getText().toString().trim();
                 String name = mEtAuthUsername.getText().toString().trim();
-                if (!TextUtils.isEmpty(pwd)&&!TextUtils.isEmpty(name)&& mCbAgreeAuthbook.isChecked()) {
+                if (!TextUtils.isEmpty(pwd) && !TextUtils.isEmpty(name) && mCbAgreeAuthbook.isChecked()) {
                    /* mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.white));*/
-                }else {
+                } else {
                    /* mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));*/
                 }
             }
         });
 
-        btnTimer = (TimerButton)view.findViewById(R.id.btn_timer);
+        btnTimer = (TimerButton) view.findViewById(R.id.btn_timer);
         btnTimer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -177,8 +179,8 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
                 onSendSmsClick();
             }
         });
-        llSmscode = (LinearLayout)view.findViewById(R.id.ll_smscode);
-        etSmscode = (EditText)view.findViewById(R.id.et_smscode);
+        llSmscode = (LinearLayout) view.findViewById(R.id.ll_smscode);
+        etSmscode = (EditText) view.findViewById(R.id.et_smscode);
 
     }
 
@@ -230,7 +232,7 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
                 mEtAuthPassword.setText(null);
                 break;
             case R.id.tv_authbook:
-                ShowUIHelper.openInternalBrowser(getActivity(), Setting.getServerUrl(GlobalApplication.getContext())+"wind-phone/authOperatorAgreement.jsp");
+                ShowUIHelper.openInternalBrowser(getActivity(), Setting.getServerUrl(GlobalApplication.getContext()) + "wind-phone/authOperatorAgreement.jsp");
                 break;
             default:
                 break;
@@ -243,42 +245,42 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
         User user = AccountHelper.getUser();
         BqsParams params = new BqsParams();
         params.setPartnerId("guanchesuo");
-        if(user.getName()!=null){
+        if (user.getName() != null) {
             params.setName(unAES(user.getName()));
-        }else {
-            MyLog.i("GCS","白骑士姓名参数为空");
-            SimplexToast.showMyToast("身份认证信息不完整或者有误，请重新认证",GlobalApplication.getContext());
+        } else {
+            MyLog.i("GCS", "白骑士姓名参数为空");
+            SimplexToast.showMyToast("身份认证信息不完整或者有误，请重新认证", GlobalApplication.getContext());
             return;
         }
-        if(user.getCertno()!=null){
+        if (user.getCertno() != null) {
             params.setCertNo(unAES(user.getCertno()));
-        }
-        else {
-            MyLog.i("GCS","白骑士姓名参数为空");
-            SimplexToast.showMyToast("身份认证信息不完整或者有误，请重新认证",GlobalApplication.getContext());
+        } else {
+            MyLog.i("GCS", "白骑士姓名参数为空");
+            SimplexToast.showMyToast("身份认证信息不完整或者有误，请重新认证", GlobalApplication.getContext());
             return;
         }
         params.setMobile(mEtAuthUsername.getText().toString());
 
 
-        MyLog.i("GCS","guanchesuo");
-        MyLog.i("GCS","李全朴");
-        MyLog.i("GCS","410927199307065033");
-        MyLog.i("GCS","18018746184");
+        MyLog.i("GCS", "guanchesuo");
+        MyLog.i("GCS", "李全朴");
+        MyLog.i("GCS", "410927199307065033");
+        MyLog.i("GCS", "18018746184");
 
         BqsCrawlerCloudSDK.setParams(params);
 
         Setting.bqsParams = params;
     }
+
     private void AuthRequest() {
-       String username =  mEtAuthUsername.getText().toString().trim();
+        String username = mEtAuthUsername.getText().toString().trim();
         String smscode = etSmscode.getText().toString().trim();
-        if (RichTextParser.machPhoneNum(username)){
-            if(!mCbAgreeAuthbook.isChecked()){
-                SimplexToast.showMyToast("需勾选授权协议哦!",GlobalApplication.getContext());
-            }else {
+        if (RichTextParser.machPhoneNum(username)) {
+            if (!mCbAgreeAuthbook.isChecked()) {
+                SimplexToast.showMyToast("需勾选授权协议哦!", GlobalApplication.getContext());
+            } else {
                 String servicePwd = mEtAuthPassword.getText().toString().trim();
-                if (TextUtils.isEmpty(servicePwd) || servicePwd.length() < 6||servicePwd.length() > 18) {
+                if (TextUtils.isEmpty(servicePwd) || servicePwd.length() < 6 || servicePwd.length() > 18) {
 
                     SimplexToast.showMyToast("请输入有效的服务密码", GlobalApplication.getContext());
                     return;
@@ -287,19 +289,18 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
                 if (llSmscode.getVisibility() == View.VISIBLE) {
                     if (TextUtils.isEmpty(smscode)) {
                         SimplexToast.showMyToast("请输入短信验证码", GlobalApplication.getContext());
-                       // Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }
                 mDialog.show();
 
-                loginAction.login(servicePwd,smscode, this);
+                loginAction.login(servicePwd, smscode, this);
 
             }
-        }else {
-            SimplexToast.showMyToast("手机号码有误.请重新填写!",GlobalApplication.getContext());
+        } else {
+            SimplexToast.showMyToast("手机号码有误.请重新填写!", GlobalApplication.getContext());
         }
-
 
 
     }
@@ -311,14 +312,14 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
 
     @Override
     public void onLoginFailure(String s, String s1) {
-            SimplexToast.showMyToast("认证失败："+s1,GlobalApplication.getContext());
-            mDialog.hide();
+        SimplexToast.showMyToast("认证失败：" + s1, GlobalApplication.getContext());
+        mDialog.hide();
     }
 
     @Override
     public void onLoginSuccess() {
 
-        if (AccountHelper.isLogin()){
+        if (AccountHelper.isLogin()) {
             //登录成功
             User user = AccountHelper.getUser();
             //设置该用户运营商授权状态
@@ -331,45 +332,47 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
 
                 @Override
                 public void onResponse(String response, int id) {
-                    MyLog.i("GCS","运营商授权状态修改response"+response);
+                    MyLog.i("GCS", "运营商授权状态修改response" + response);
                     try {
-                        Type type = new TypeToken<ResultBean>() {}.getType();
+                        Type type = new TypeToken<ResultBean>() {
+                        }.getType();
                         ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
                         //注册结果返回该用户User
                         int code = resultBean.getCode();
                         String msg = resultBean.getMessage();
-                        SimplexToast.showMyToast(msg,GlobalApplication.getContext());
+                        SimplexToast.showMyToast(msg, GlobalApplication.getContext());
                         switch (code) {
                             case 200://
-                                SimplexToast.showMyToast("运营商成功登录"+msg,GlobalApplication.getContext());
+                                SimplexToast.showMyToast("运营商成功登录" + msg, GlobalApplication.getContext());
                                 break;
                             case 500://
-                                SimplexToast.showMyToast("运营商已经登录成功,,但是服务器状态值未上传成功，失败信息："+msg,GlobalApplication.getContext());
+                                SimplexToast.showMyToast("运营商已经登录成功,,但是服务器状态值未上传成功，失败信息：" + msg, GlobalApplication.getContext());
                                 break;
                             default:
                                 break;
                         }
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
                 }
             });
             AccountHelper.updateUserCache(user);
-            MyLog.i("GCS","更新sp中user的认证状态值");
+            MyLog.i("GCS", "更新sp中user的认证状态值");
             getActivity().finish();
             mDialog.hide();
         }
 
 
     }
+
     @Override
     public void onInputAuthSmsCode() {
         mDialog.hide();
         //可使用带结果返回的启动方式，便于关闭相对的simplebackactivity
         Intent intent = new Intent(getActivity(), MnoAuthActivity.class);
         startActivity(intent);
-        MyLog.i("GCS","");
+        MyLog.i("GCS", "");
     }
 
     @Override
@@ -378,9 +381,8 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
         llSmscode.setVisibility(View.VISIBLE);
         btnTimer.startTimer();
         SimplexToast.showMyToast("请输入登录短信验证码", GlobalApplication.getContext());
-        MyLog.i("GCS","请输入登录短信验证码");
+        MyLog.i("GCS", "请输入登录短信验证码");
     }
-
 
 
     @Override
@@ -388,14 +390,14 @@ public class OperatorAuthFragment extends BaseFragment implements View.OnClickLi
         mDialog.hide();
         btnTimer.startTimer();
         SimplexToast.showMyToast("动态码发送成功", GlobalApplication.getContext());
-        MyLog.i("GCS","动态码发送成功");
+        MyLog.i("GCS", "动态码发送成功");
     }
 
     @Override
     public void onSendSmsFailure(String s, String resultDesc) {
         mDialog.hide();
         SimplexToast.showMyToast(resultDesc, GlobalApplication.getContext());
-        MyLog.i("GCS",resultDesc);
+        MyLog.i("GCS", resultDesc);
     }
 
 

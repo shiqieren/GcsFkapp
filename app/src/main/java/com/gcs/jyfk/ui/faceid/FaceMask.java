@@ -38,8 +38,7 @@ public class FaceMask extends View {
         postInvalidate();
     }
 
-    public void setFrontal(boolean isFrontal)
-    {
+    public void setFrontal(boolean isFrontal) {
         this.isFraontalCamera = isFrontal;
     }
 
@@ -50,7 +49,7 @@ public class FaceMask extends View {
             return;
         if (isFraontalCamera) {
             mDrawRect.set(getWidth() * (1 - mFaceRect.right), getHeight()
-                    * mFaceRect.top, getWidth() * (1 - mFaceRect.left),
+                            * mFaceRect.top, getWidth() * (1 - mFaceRect.left),
                     getHeight()
                             * mFaceRect.bottom);
         } else {

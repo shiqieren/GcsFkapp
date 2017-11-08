@@ -22,24 +22,24 @@ public class MyLog {
 
     public static void v(String tag, String log) {
 
-        if (!TextUtils.isEmpty(tag) && !TextUtils.isEmpty(log) && level<=VERBOSE) Log.v(tag, log);
+        if (!TextUtils.isEmpty(tag) && !TextUtils.isEmpty(log) && level <= VERBOSE) Log.v(tag, log);
     }
 
     public static void d(String tag, String log) {
-        if (!TextUtils.isEmpty(tag) && !TextUtils.isEmpty(log)&& level<=DEBUG) Log.d(tag, log);
+        if (!TextUtils.isEmpty(tag) && !TextUtils.isEmpty(log) && level <= DEBUG) Log.d(tag, log);
     }
 
     public static void i(String tag, String log) {
 
-        if (!TextUtils.isEmpty(tag) && !TextUtils.isEmpty(log) && level<=INFO) Log.i(tag, log);
+        if (!TextUtils.isEmpty(tag) && !TextUtils.isEmpty(log) && level <= INFO) Log.i(tag, log);
     }
 
     public static void w(String tag, String log) {
-        if (!TextUtils.isEmpty(tag) && !TextUtils.isEmpty(log) && level<=WARN) Log.w(tag, log);
+        if (!TextUtils.isEmpty(tag) && !TextUtils.isEmpty(log) && level <= WARN) Log.w(tag, log);
     }
 
     public static void e(String tag, String log) {
-        if (!TextUtils.isEmpty(tag) && !TextUtils.isEmpty(log) && level<=ERROR) Log.e(tag, log);
+        if (!TextUtils.isEmpty(tag) && !TextUtils.isEmpty(log) && level <= ERROR) Log.e(tag, log);
     }
 
 

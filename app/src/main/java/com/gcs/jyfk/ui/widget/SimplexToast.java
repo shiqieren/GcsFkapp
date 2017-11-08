@@ -74,7 +74,7 @@ public class SimplexToast {
     }
 
     @SuppressLint("InflateParams")
-    public static void showMyToast(String text,Context context) {
+    public static void showMyToast(String text, Context context) {
         if (mToast == null) init(context.getApplicationContext());
         View rootView = LayoutInflater.from(context).inflate(R.layout.view_toast, null, false);
         TextView textView = (TextView) rootView.findViewById(R.id.title_tv);
@@ -90,7 +90,7 @@ public class SimplexToast {
      * @param id id
      */
     @SuppressLint("InflateParams")
-    public static void showMyToast(@StringRes int id,Context context) {
+    public static void showMyToast(@StringRes int id, Context context) {
         if (mToast == null) init(context.getApplicationContext());
         View rootView = LayoutInflater.from(context).inflate(R.layout.view_toast, null, false);
         TextView textView = (TextView) rootView.findViewById(R.id.title_tv);
@@ -100,13 +100,13 @@ public class SimplexToast {
     }
 
     @SuppressLint("InflateParams")
-    public static void showMyToast(String text,Context context,Boolean openKeyBord) {
+    public static void showMyToast(String text, Context context, Boolean openKeyBord) {
         if (mToast == null) init(context.getApplicationContext());
         View rootView = LayoutInflater.from(context).inflate(R.layout.view_toast, null, false);
         TextView textView = (TextView) rootView.findViewById(R.id.title_tv);
         textView.setText(text);
         mToast.setView(rootView);
-        initToastGravity(mToast,openKeyBord);
+        initToastGravity(mToast, openKeyBord);
         mToast.show();
     }
 
@@ -116,24 +116,24 @@ public class SimplexToast {
      * @param id id
      */
     @SuppressLint("InflateParams")
-    public static void showMyToast(@StringRes int id,Context context,Boolean openKeyBord) {
+    public static void showMyToast(@StringRes int id, Context context, Boolean openKeyBord) {
         if (mToast == null) init(context.getApplicationContext());
         View rootView = LayoutInflater.from(context).inflate(R.layout.view_toast, null, false);
         TextView textView = (TextView) rootView.findViewById(R.id.title_tv);
         textView.setText(id);
         mToast.setView(rootView);
-        initToastGravity(mToast,openKeyBord);
+        initToastGravity(mToast, openKeyBord);
         mToast.show();
     }
 
 
-   /*键盘是否弹起的标志位
-   private boolean mKeyBoardIsActive;
+    /*键盘是否弹起的标志位
+    private boolean mKeyBoardIsActive;
 
-    protected void updateKeyBoardActiveStatus(boolean isActive) {
-        this.mKeyBoardIsActive = isActive;
-    }*/
-    public static void initToastGravity(Toast toast,Boolean openKeyBord) {
+     protected void updateKeyBoardActiveStatus(boolean isActive) {
+         this.mKeyBoardIsActive = isActive;
+     }*/
+    public static void initToastGravity(Toast toast, Boolean openKeyBord) {
         boolean isCenter = openKeyBord;
         if (isCenter) {
             toast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
@@ -141,7 +141,6 @@ public class SimplexToast {
             toast.setGravity(Gravity.CENTER, 0, UIUtils.getDimen(R.dimen.toast_y_offset));
         }
     }
-
 
 
     /**
@@ -153,23 +152,24 @@ public class SimplexToast {
         }
     }
 
-    public static void showToastForKeyBord(@StringRes int id,Context context,Boolean openKeyBord) {
-        showMyToast(id,context,openKeyBord);
+    public static void showToastForKeyBord(@StringRes int id, Context context, Boolean openKeyBord) {
+        showMyToast(id, context, openKeyBord);
     }
 
-    public static void showToastForKeyBord(String message,Context context,Boolean openKeyBord) {
-        showMyToast(message,context,openKeyBord);
+    public static void showToastForKeyBord(String message, Context context, Boolean openKeyBord) {
+        showMyToast(message, context, openKeyBord);
     }
 
     /**
      * request network error
-     *异常吐司
+     * 异常吐司
+     *
      * @param throwable throwable
      */
-    public static void requestFailureHint(Throwable throwable,Context context) {
+    public static void requestFailureHint(Throwable throwable, Context context) {
         if (throwable != null) {
             throwable.printStackTrace();
         }
-        showMyToast(R.string.request_error_hint,context);
+        showMyToast(R.string.request_error_hint, context);
     }
 }

@@ -24,7 +24,7 @@ import com.gcs.jyfk.ui.ShowUIHelper;
  * 用户个人界面
  */
 
-public class UserInfoFragment extends BaseFragment implements View.OnClickListener, OnTabReselectListener,NoticeManager.NoticeNotify {
+public class UserInfoFragment extends BaseFragment implements View.OnClickListener, OnTabReselectListener, NoticeManager.NoticeNotify {
 
     private ImageView mIvLogoSetting;
     private LinearLayout mRl_message;
@@ -106,7 +106,7 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void initView(View view) {
         super.initView(view);
-        mIvLogoSetting =(ImageView) view.findViewById(R.id.iv_logo_setting);
+        mIvLogoSetting = (ImageView) view.findViewById(R.id.iv_logo_setting);
         mRl_message = (LinearLayout) view.findViewById(R.id.rl_message);
         setListener();
     }
@@ -146,16 +146,16 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
      * requestData
      */
     private void sendRequestData() {
-       //111 if (TDevice.hasInternet() && AccountHelper.isLogin()) OSChinaApi.getUserInfo(requestUserInfoHandler);
+        //111 if (TDevice.hasInternet() && AccountHelper.isLogin()) OSChinaApi.getUserInfo(requestUserInfoHandler);
     }
-
 
 
     @SuppressWarnings("deprecation")
-    private void setListener(){
+    private void setListener() {
         mIvLogoSetting.setOnClickListener(this);
         mRl_message.setOnClickListener(this);
     }
+
     @Override
     public void onClick(View v) {
 
@@ -202,6 +202,7 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
     public void onNoticeArrived(NoticeBean bean) {
 
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();

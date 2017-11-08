@@ -51,7 +51,6 @@ public class UIUtils {
     }
 
 
-
     public static View inflate(int id) {
         return View.inflate(getContext(), id, null);
     }
@@ -74,5 +73,4 @@ public class UIUtils {
     }
 
 
-   
 }

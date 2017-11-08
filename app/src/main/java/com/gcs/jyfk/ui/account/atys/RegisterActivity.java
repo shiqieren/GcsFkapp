@@ -82,6 +82,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
 
     private boolean mKeyBoardIsActive;
     //第三方接入的handler登录接收器callback
+
     /**
      * update keyBord active status
      *
@@ -100,7 +101,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
         //发送关闭登录界面的广播
         sendLocalReceiver();
         //后台异步同步数据-同步认证状态信息
-        MyLog.i("GCS","同步认证状态");
+        MyLog.i("GCS", "同步认证状态");
         //ContactsCacheManager.sync();
         holdAccount();
     }
@@ -117,6 +118,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
             SharedPreferencesCompat.EditorCompat.getInstance().apply(editor);
         }
     }
+
     /**
      * show the register activity
      *
@@ -167,7 +169,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
                         if (mMachPhoneNum) {
                             String smsCode = mEtRegisterAuthCode.getText().toString().trim();
                             String pwd = mEtRegisterPwd.getText().toString().trim();
-                            if (!TextUtils.isEmpty(smsCode)&&!TextUtils.isEmpty(pwd)) {
+                            if (!TextUtils.isEmpty(smsCode) && !TextUtils.isEmpty(pwd)) {
                                 mBtRegisterSubmit.setBackgroundResource(R.drawable.bg_login_submit);
                                 mBtRegisterSubmit.setTextColor(getResources().getColor(R.color.white));
                             } else {
@@ -256,14 +258,14 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
                 } else {
                     mIvRegisterPwdDel.setVisibility(View.INVISIBLE);
                 }
-                if (length < 6||length>18) {
+                if (length < 6 || length > 18) {
                     mLlRegisterTwoPwd.setBackgroundResource(R.drawable.bg_login_input_error);
                 } else {
                     mLlRegisterTwoPwd.setBackgroundResource(R.drawable.bg_login_input_ok);
                 }
                 String username = mEtRegisterUsername.getText().toString().trim();
                 String authcode = mEtRegisterAuthCode.getText().toString().trim();
-                if (!TextUtils.isEmpty(username)&&!TextUtils.isEmpty(authcode)) {
+                if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(authcode)) {
                     mBtRegisterSubmit.setBackgroundResource(R.drawable.bg_login_submit);
                     mBtRegisterSubmit.setTextColor(getResources().getColor(R.color.white));
                 } else {
@@ -278,18 +280,18 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
     private void initViews() {
         mLayBackBar = (LinearLayout) findViewById(R.id.ly_retrieve_bar);
         mIb_navigation_back = (ImageButton) findViewById(R.id.ib_navigation_back);
-        mRegister_one_container= (LinearLayout) findViewById(R.id.lay_register_one_container);
-        mIvLogo= (ImageView) findViewById(R.id.iv_login_logo);
-        mLlRegisterTwoPwd= (LinearLayout) findViewById(R.id.ll_register_two_pwd);
-        mEtRegisterPwd= (EditText) findViewById(R.id.et_register_pwd_input);
-        mLlRegisterPhone= (LinearLayout) findViewById(R.id.ll_register_phone);
-        mEtRegisterUsername= (EditText) findViewById(R.id.et_register_username);
-        mIvRegisterDel= (ImageView) findViewById(R.id.iv_register_username_del);
-        mIvRegisterPwdDel= (ImageView) findViewById(R.id.iv_register_pwd_del);
-        mLlRegisterSmsCode= (LinearLayout) findViewById(R.id.ll_register_sms_code);
-        mEtRegisterAuthCode= (EditText) findViewById(R.id.et_register_auth_code);
-        mTvRegisterSmsCall= (TextView) findViewById(R.id.tv_register_sms_call);
-        mBtRegisterSubmit= (Button) findViewById(R.id.bt_register_submit);
+        mRegister_one_container = (LinearLayout) findViewById(R.id.lay_register_one_container);
+        mIvLogo = (ImageView) findViewById(R.id.iv_login_logo);
+        mLlRegisterTwoPwd = (LinearLayout) findViewById(R.id.ll_register_two_pwd);
+        mEtRegisterPwd = (EditText) findViewById(R.id.et_register_pwd_input);
+        mLlRegisterPhone = (LinearLayout) findViewById(R.id.ll_register_phone);
+        mEtRegisterUsername = (EditText) findViewById(R.id.et_register_username);
+        mIvRegisterDel = (ImageView) findViewById(R.id.iv_register_username_del);
+        mIvRegisterPwdDel = (ImageView) findViewById(R.id.iv_register_pwd_del);
+        mLlRegisterSmsCode = (LinearLayout) findViewById(R.id.ll_register_sms_code);
+        mEtRegisterAuthCode = (EditText) findViewById(R.id.et_register_auth_code);
+        mTvRegisterSmsCall = (TextView) findViewById(R.id.tv_register_sms_call);
+        mBtRegisterSubmit = (Button) findViewById(R.id.bt_register_submit);
     }
 
 
@@ -313,7 +315,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
     }
 
     @SuppressWarnings("ConstantConditions")
-    private void setListener(){
+    private void setListener() {
         mLayBackBar.setOnClickListener(this);
         mIb_navigation_back.setOnClickListener(this);
         mIvLogo.setOnClickListener(this);
@@ -327,6 +329,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
         mBtRegisterSubmit.setOnClickListener(this);
         mRegister_one_container.setOnClickListener(this);
     }
+
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -362,8 +365,8 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
                 requestSmsCode();
                 break;
             case R.id.bt_register_submit:
-               requestRegister();
-           //111     RegisterStepTwoActivity.show(this,null);
+                requestRegister();
+                //111     RegisterStepTwoActivity.show(this,null);
 
                 break;
             case R.id.lay_register_one_container:
@@ -380,21 +383,21 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
         String smsCode = mEtRegisterAuthCode.getText().toString().trim();
         String pwd = mEtRegisterPwd.getText().toString().trim();
 
-        if (!mMachPhoneNum || TextUtils.isEmpty(smsCode)|| TextUtils.isEmpty(pwd)) {
+        if (!mMachPhoneNum || TextUtils.isEmpty(smsCode) || TextUtils.isEmpty(pwd)) {
             //showToastForKeyBord(R.string.hint_username_ok);
             return;
         }
 
         if (!TDevice.hasInternet()) {
-            SimplexToast.showToastForKeyBord(R.string.tip_network_error,GlobalApplication.getContext(),mKeyBoardIsActive);
+            SimplexToast.showToastForKeyBord(R.string.tip_network_error, GlobalApplication.getContext(), mKeyBoardIsActive);
             return;
         }
 
         mRequestType = 2;
         String phoneNumber = mEtRegisterUsername.getText().toString().trim();
-       //111 OSChinaApi.validateRegisterInfo(phoneNumber, smsCode, mHandler);注册信息提交的api
-        MyLog.i("GCS","加密前密码pwd："+pwd);
-        MyApi.register(getAES(phoneNumber), smsCode, getAES(pwd),Jsessionid, new StringCallback() {
+        //111 OSChinaApi.validateRegisterInfo(phoneNumber, smsCode, mHandler);注册信息提交的api
+        MyLog.i("GCS", "加密前密码pwd：" + pwd);
+        MyApi.register(getAES(phoneNumber), smsCode, getAES(pwd), Jsessionid, new StringCallback() {
             @Override
             public void onBefore(Request request, int id) {
                 super.onBefore(request, id);
@@ -410,38 +413,39 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
 
             @Override
             public void onError(Call call, Exception e, int id) {
-                MyLog.i("GCS","注册返回Exception："+e.toString());
+                MyLog.i("GCS", "注册返回Exception：" + e.toString());
                 if (mRequestType == 1) {
                     if (mTimer != null) {
                         mTimer.onFinish();
                         mTimer.cancel();
                     }
                 }
-                SimplexToast.requestFailureHint(e,RegisterActivity.this);
+                SimplexToast.requestFailureHint(e, RegisterActivity.this);
             }
 
             @Override
             public void onResponse(String response, int id) {
-                MyLog.i("GCS",">>注册返回成功response："+response);
+                MyLog.i("GCS", ">>注册返回成功response：" + response);
                 try {
-                    Type type = new TypeToken<ResultBean<User>>() {}.getType();
+                    Type type = new TypeToken<ResultBean<User>>() {
+                    }.getType();
                     ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
                     int code = resultBean.getCode();
                     switch (code) {
                         case 200://注册成功,进行用户信息填写
 
-                            SimplexToast.showMyToast(R.string.register_success_hint,GlobalApplication.getContext());
+                            SimplexToast.showMyToast(R.string.register_success_hint, GlobalApplication.getContext());
                             //发送需要通知的成功广播
                             // MyLog.i("GCS","注册成功后发送需要通知的成功广播");
                             // sendLocalReceiver();
-                            MyLog.i("GCS","注册完直接登录");
+                            MyLog.i("GCS", "注册完直接登录");
                             User user = (User) resultBean.getResult();
                             //MyLog.i("GCS","登录成功返回User："+user.toString());
                             //模拟用户登录cookie添加
-                            String netcookie = "gcs test login test add cookie"+System.currentTimeMillis();
+                            String netcookie = "gcs test login test add cookie" + System.currentTimeMillis();
                             user.setId(Long.valueOf(user.getUserid()));
-                            if (AccountHelper.login(user,netcookie)) {
-                                SimplexToast.showMyToast(R.string.register_success_hint,RegisterActivity.this);
+                            if (AccountHelper.login(user, netcookie)) {
+                                SimplexToast.showMyToast(R.string.register_success_hint, RegisterActivity.this);
                                 new Handler(new Handler.Callback() {
                                     //处理接收到的消息的方法
                                     @Override
@@ -456,15 +460,15 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
                                 }).sendEmptyMessageDelayed(0, 2000); //表示延时三秒进行任务的执行
 
                             } else {
-                                SimplexToast.showToastForKeyBord("登录异常",GlobalApplication.getContext(),mKeyBoardIsActive);
+                                SimplexToast.showToastForKeyBord("登录异常", GlobalApplication.getContext(), mKeyBoardIsActive);
                             }
                             break;
                         case 500://注册失败,手机验证码错误
                             mLlRegisterSmsCode.setBackgroundResource(R.drawable.bg_login_input_error);
-                            SimplexToast.showToastForKeyBord(resultBean.getMessage(),GlobalApplication.getContext(),mKeyBoardIsActive);
+                            SimplexToast.showToastForKeyBord(resultBean.getMessage(), GlobalApplication.getContext(), mKeyBoardIsActive);
                             break;
                         case 400://用户已存在
-                            SimplexToast.showToastForKeyBord(resultBean.getMessage(),GlobalApplication.getContext(),mKeyBoardIsActive);
+                            SimplexToast.showToastForKeyBord(resultBean.getMessage(), GlobalApplication.getContext(), mKeyBoardIsActive);
                             break;
                         default:
                             break;
@@ -483,7 +487,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
             return;
         }
         if (!TDevice.hasInternet()) {
-            SimplexToast.showToastForKeyBord(R.string.tip_network_error,GlobalApplication.getContext(),mKeyBoardIsActive);
+            SimplexToast.showToastForKeyBord(R.string.tip_network_error, GlobalApplication.getContext(), mKeyBoardIsActive);
             return;
         }
 
@@ -510,8 +514,8 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
             //加密
             String phoneNumber = mEtRegisterUsername.getText().toString().trim();
 
-            MyLog.i("GCS","加密前的手机:"+phoneNumber);
-          //1111  OSChinaApi.sendRegisterSmsCode(phoneNumber, OSChinaApi.REGISTER_INTENT, mHandler);发送短信的api
+            MyLog.i("GCS", "加密前的手机:" + phoneNumber);
+            //1111  OSChinaApi.sendRegisterSmsCode(phoneNumber, OSChinaApi.REGISTER_INTENT, mHandler);发送短信的api
             MyApi.sendRegisterSmsCode(getAES(phoneNumber), new StringCallback() {
                 @Override
                 public void onBefore(Request request, int id) {
@@ -526,23 +530,23 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
 
                 @Override
                 public void onError(Call call, Exception e, int id) {
-                    MyLog.i("GCS","发送注册短信验证码返回Exception："+e.toString());
+                    MyLog.i("GCS", "发送注册短信验证码返回Exception：" + e.toString());
                     if (mRequestType == 1) {
                         if (mTimer != null) {
                             mTimer.onFinish();
                             mTimer.cancel();
                         }
                     }
-                    SimplexToast.requestFailureHint(e,RegisterActivity.this);
+                    SimplexToast.requestFailureHint(e, RegisterActivity.this);
                 }
 
                 @Override
                 public void onResponse(String response, int id) {
-                    MyLog.i("GCS","发送注册短信验证码返回response："+response);
+                    MyLog.i("GCS", "发送注册短信验证码返回response：" + response);
                     Type type = new TypeToken<ResultBean>() {
                     }.getType();
                     ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
-                    if(resultBean.getResult()!= null){
+                    if (resultBean.getResult() != null) {
                         Jsessionid = resultBean.getResult().toString();
                     }
 
@@ -552,7 +556,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
                             //发送验证码成功,请求进入下一步
                             //意味着我们可以进行第二次请求了,获取phoneToken
                             //mRequestType = 2;
-                            SimplexToast.showToastForKeyBord(R.string.send_sms_code_success_hint,GlobalApplication.getContext(),mKeyBoardIsActive);
+                            SimplexToast.showToastForKeyBord(R.string.send_sms_code_success_hint, GlobalApplication.getContext(), mKeyBoardIsActive);
                             mEtRegisterAuthCode.setText(null);
                             break;
                         case 400:
@@ -561,7 +565,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
                                 mTimer.onFinish();
                                 mTimer.cancel();
                             }
-                            SimplexToast.showToastForKeyBord(resultBean.getMessage(),GlobalApplication.getContext(),mKeyBoardIsActive);
+                            SimplexToast.showToastForKeyBord(resultBean.getMessage(), GlobalApplication.getContext(), mKeyBoardIsActive);
                             break;
                         case 500:
                             //异常错误，发送验证码失败,回收timer,需重新请求发送验证码
@@ -569,7 +573,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
                                 mTimer.onFinish();
                                 mTimer.cancel();
                             }
-                            SimplexToast.showToastForKeyBord(resultBean.getMessage(),GlobalApplication.getContext(),mKeyBoardIsActive);
+                            SimplexToast.showToastForKeyBord(resultBean.getMessage(), GlobalApplication.getContext(), mKeyBoardIsActive);
                             break;
                         default:
                             break;
@@ -578,7 +582,7 @@ public class RegisterActivity extends AccountBaseActivity implements View.OnClic
             });
 
         } else {
-            SimplexToast.showMyToast(R.string.register_sms_wait_hint,GlobalApplication.getContext());
+            SimplexToast.showMyToast(R.string.register_sms_wait_hint, GlobalApplication.getContext());
         }
     }
 

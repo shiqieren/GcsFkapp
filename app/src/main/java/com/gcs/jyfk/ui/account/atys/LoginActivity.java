@@ -74,6 +74,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
     private boolean mMachPhoneNum;
     private boolean mKeyBoardIsActive;
     //第三方接入的handler登录接收器callback
+
     /**
      * update keyBord active status
      *
@@ -88,12 +89,12 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
         if ((view = getCurrentFocus()) != null) {
             hideKeyBoard(view.getWindowToken());
         }
-     //   SimplexToast.showMyToast(R.string.login_success_hint,this);
+        //   SimplexToast.showMyToast(R.string.login_success_hint,this);
         setResult(RESULT_OK);
         //发送关闭登录界面的广播
         sendLocalReceiver();
         //后台异步同步数据-同步认证状态信息
-        MyLog.i("GCS","同步认证状态");
+        MyLog.i("GCS", "同步认证状态");
         //ContactsCacheManager.sync();
         holdAccount();
     }
@@ -154,12 +155,12 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
         super.initWindow();
     }
 
-    private  void initViews(){
+    private void initViews() {
 
         mLayBackBar = (LinearLayout) findViewById(R.id.ly_retrieve_bar);
         mIb_navigation_back = (ImageButton) findViewById(R.id.ib_navigation_back);
 
-        mLayLoginContains= (LinearLayout) findViewById(R.id.lay_login_container);
+        mLayLoginContains = (LinearLayout) findViewById(R.id.lay_login_container);
 
         mIvLoginLogo = (ImageView) findViewById(R.id.iv_login_logo);
 
@@ -186,6 +187,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
 
         mTvLoginRegister = (TextView) findViewById(R.id.tv_login_register);
     }
+
     @Override
     protected void initWidget() {
         super.initWidget();
@@ -193,9 +195,9 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
         initViews();
         setListener();
         TextView tvLabel = (TextView) mLayBackBar.findViewById(R.id.tv_navigation_label);
-         mLayBackBar.findViewById(R.id.ib_navigation_back).setVisibility(View.INVISIBLE);
+        mLayBackBar.findViewById(R.id.ib_navigation_back).setVisibility(View.INVISIBLE);
 
-            tvLabel.setText(R.string.login_btn);
+        tvLabel.setText(R.string.login_btn);
 
         /*隐藏
         TextView label = (TextView) mLayBackBar.findViewById(R.id.tv_navigation_label);
@@ -283,7 +285,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
 
                     mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.white));
-                }else {
+                } else {
                     mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));
                 }
@@ -303,7 +305,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
         //String holdPwd = sp.getString(HOLD_PWD_KEY, null);
         //int holdStatus = sp.getInt(HOLD_PWD_STATUS_KEY, 0);//0第一次默认/1用户设置保存/2用户设置未保存
 
-       // mEtLoginUsername.setText(holdUsername);
+        // mEtLoginUsername.setText(holdUsername);
 
     }
 
@@ -320,7 +322,8 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
         hideKeyBoard(getCurrentFocus().getWindowToken());
         mLayBackBar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
     }
-    private void setListener(){
+
+    private void setListener() {
         mLayBackBar.setOnClickListener(this);
         mIb_navigation_back.setOnClickListener(this);
         mIvLoginLogo.setOnClickListener(this);
@@ -409,7 +412,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                     if (TDevice.hasInternet()) {
                         requestLogin(tempUsername, tempPwd);
                     } else {
-                        SimplexToast.showToastForKeyBord(R.string.footer_type_net_error,GlobalApplication.getContext(),mKeyBoardIsActive);
+                        SimplexToast.showToastForKeyBord(R.string.footer_type_net_error, GlobalApplication.getContext(), mKeyBoardIsActive);
                     }
                 } else {
                     checkPhonestate();
@@ -424,20 +427,20 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
         } else {
             //手机震动
             VibratorUtil.Vibrate(this, 100);
-            if (TextUtils.isEmpty(tempUsername)){
+            if (TextUtils.isEmpty(tempUsername)) {
                 mEtLoginPwd.setFocusableInTouchMode(false);
                 mEtLoginPwd.clearFocus();
                 mEtLoginUsername.requestFocus();
                 mEtLoginUsername.setFocusableInTouchMode(true);
                 mLlLoginUsername.setBackgroundResource(R.drawable.bg_login_input_error);
-                SimplexToast.showToastForKeyBord(R.string.login_input_username_hint_error,GlobalApplication.getContext(),mKeyBoardIsActive);
-            }else if (TextUtils.isEmpty(tempPwd)){
+                SimplexToast.showToastForKeyBord(R.string.login_input_username_hint_error, GlobalApplication.getContext(), mKeyBoardIsActive);
+            } else if (TextUtils.isEmpty(tempPwd)) {
                 mEtLoginUsername.setFocusableInTouchMode(false);
                 mEtLoginUsername.clearFocus();
                 mEtLoginPwd.requestFocus();
                 mEtLoginPwd.setFocusableInTouchMode(true);
                 mLlLoginPwd.setBackgroundResource(R.drawable.bg_login_input_error);
-                SimplexToast.showToastForKeyBord(R.string.login_password_hint,GlobalApplication.getContext(),mKeyBoardIsActive);
+                SimplexToast.showToastForKeyBord(R.string.login_password_hint, GlobalApplication.getContext(), mKeyBoardIsActive);
 
             }
 
@@ -453,12 +456,12 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
         mEtLoginUsername.requestFocus();
         mEtLoginUsername.setFocusableInTouchMode(true);
         mLlLoginUsername.setBackgroundResource(R.drawable.bg_login_input_error);
-        SimplexToast.showToastForKeyBord(R.string.login_input_username_hint_error,GlobalApplication.getContext(),mKeyBoardIsActive);
+        SimplexToast.showToastForKeyBord(R.string.login_input_username_hint_error, GlobalApplication.getContext(), mKeyBoardIsActive);
     }
 
 
     private void requestLogin(String tempUsername, String tempPwd) {
-        MyLog.i("GCS","加密前用户名："+tempUsername+",加密前密码："+tempPwd);
+        MyLog.i("GCS", "加密前用户名：" + tempUsername + ",加密前密码：" + tempPwd);
         MyApi.login(getAES(tempUsername), getAES(tempPwd), new StringCallback() {
             @Override
             public void onBefore(Request request, int id) {
@@ -475,26 +478,27 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
             @Override
             public void onError(Call call, Exception e, int id) {
                 hideWaitDialog();
-                MyLog.i("GCS","登录返回Exception："+e.toString());
-                SimplexToast.requestFailureHint(e,LoginActivity.this);
+                MyLog.i("GCS", "登录返回Exception：" + e.toString());
+                SimplexToast.requestFailureHint(e, LoginActivity.this);
             }
 
             @Override
             public void onResponse(String response, int id) {
-                MyLog.i("GCS","登录成功返回response："+response);
+                MyLog.i("GCS", "登录成功返回response：" + response);
                 try {
-                    Type type = new TypeToken<ResultBean<User>>() {}.getType();
+                    Type type = new TypeToken<ResultBean<User>>() {
+                    }.getType();
                     ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
                     int code = resultBean.getCode();
                     if (code == 200) {
-                        MyLog.i("GCS","登录");
+                        MyLog.i("GCS", "登录");
                         User user = (User) resultBean.getResult();
                         //MyLog.i("GCS","登录成功返回User："+user.toString());
                         //模拟用户登录cookie添加
-                        String netcookie = "gcs test login test add cookie"+System.currentTimeMillis();
+                        String netcookie = "gcs test login test add cookie" + System.currentTimeMillis();
                         user.setId(Long.valueOf(user.getUserid()));
-                        if (AccountHelper.login(user,netcookie)) {
-                            SimplexToast.showMyToast(R.string.login_success_hint,LoginActivity.this);
+                        if (AccountHelper.login(user, netcookie)) {
+                            SimplexToast.showMyToast(R.string.login_success_hint, LoginActivity.this);
                             new Handler(new Handler.Callback() {
                                 //处理接收到的消息的方法
                                 @Override
@@ -524,11 +528,11 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                                         startActivity(intent);
                                         logSucceed();*/
                         } else {
-                            SimplexToast.showToastForKeyBord("登录异常",GlobalApplication.getContext(),mKeyBoardIsActive);
+                            SimplexToast.showToastForKeyBord("登录异常", GlobalApplication.getContext(), mKeyBoardIsActive);
                         }
                     } else {
                         String message = resultBean.getMessage();
-                         if (code == 500) {
+                        if (code == 500) {
 
                           /*  mEtLoginUsername.setFocusableInTouchMode(false);
                             mEtLoginUsername.clearFocus();
@@ -537,7 +541,7 @@ public class LoginActivity extends AccountBaseActivity implements View.OnClickLi
                             //message += "," + getResources().getString(R.string.message_pwd_error);
                             mLlLoginPwd.setBackgroundResource(R.drawable.bg_login_input_error);*/
                         }
-                        SimplexToast.showToastForKeyBord(message,GlobalApplication.getContext(),mKeyBoardIsActive);
+                        SimplexToast.showToastForKeyBord(message, GlobalApplication.getContext(), mKeyBoardIsActive);
                         //更新失败应该是不进行任何的本地操作
                     }
                 } catch (Exception e) {

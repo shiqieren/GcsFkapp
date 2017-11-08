@@ -51,7 +51,7 @@ import okhttp3.Request;
  * Created by Administrator on 0024 10-24.
  */
 @SuppressLint("NewApi")
-public class DriverCardAuthFragment extends BaseFragment implements View.OnClickListener, View.OnFocusChangeListener{
+public class DriverCardAuthFragment extends BaseFragment implements View.OnClickListener, View.OnFocusChangeListener {
 
 
     private LinearLayout mLlIdentityName;
@@ -67,14 +67,16 @@ public class DriverCardAuthFragment extends BaseFragment implements View.OnClick
 
     private Boolean mIsZHname = false;
     private Boolean mIsIDcardnumber = false;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_drivercard_auth;
     }
+
     @Override
     protected void initView(View view) {
         super.initView(view);
-        ((SimpleBackActivity)getActivity()).setToolBarTitle(R.string.driver_card);
+        ((SimpleBackActivity) getActivity()).setToolBarTitle(R.string.driver_card);
         view.findViewById(R.id.traceroute_rootview).setOnClickListener(this);
         mLlIdentityName = view.findViewById(R.id.ll_identity_name);
         mLlIdentityNumber = view.findViewById(R.id.ll_identity_number);
@@ -118,7 +120,7 @@ public class DriverCardAuthFragment extends BaseFragment implements View.OnClick
             public void afterTextChanged(Editable s) {
                 String username = s.toString().trim();
                 mIsZHname = RichTextParser.checkIsZH(username);
-                if(mIsZHname){
+                if (mIsZHname) {
 
                 }
                 if (username.length() > 0) {
@@ -131,7 +133,7 @@ public class DriverCardAuthFragment extends BaseFragment implements View.OnClick
 
                 String identitynumber = mEtIdentityName.getText().toString().trim();
                 String pwd = mEtIdentityNumber.getText().toString().trim();
-                if (!TextUtils.isEmpty(identitynumber)&&!TextUtils.isEmpty(pwd)) {
+                if (!TextUtils.isEmpty(identitynumber) && !TextUtils.isEmpty(pwd)) {
                    /* mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.white));*/
                 } else {
@@ -152,7 +154,7 @@ public class DriverCardAuthFragment extends BaseFragment implements View.OnClick
 
             @Override
             protected char[] getAcceptedChars() {
-                char[] numberChars = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'X','Y','Z' };
+                char[] numberChars = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'X', 'Y', 'Z'};
                 return numberChars;
             }
         });
@@ -218,7 +220,7 @@ public class DriverCardAuthFragment extends BaseFragment implements View.OnClick
 
             @Override
             protected char[] getAcceptedChars() {
-                char[] numberChars = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'X','Y','Z' };
+                char[] numberChars = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'X', 'Y', 'Z'};
                 return numberChars;
             }
         });
@@ -277,15 +279,21 @@ public class DriverCardAuthFragment extends BaseFragment implements View.OnClick
 
 
     }
+
     @Override
     protected void initData() {
         super.initData();
-        if (AccountHelper.isLogin()){
+        if (AccountHelper.isLogin()) {
             User user = AccountHelper.getUser();
-            if(user.getName()!=null){ mEtIdentityName.setText(unAES(user.getName()));}
-            if (user.getCertno()!=null){ mEtIdentityNumber.setText(unAES(user.getCertno()));}
+            if (user.getName() != null) {
+                mEtIdentityName.setText(unAES(user.getName()));
+            }
+            if (user.getCertno() != null) {
+                mEtIdentityNumber.setText(unAES(user.getCertno()));
+            }
         }
     }
+
     private void setListener() {
         mLlIdentityName.setOnClickListener(this);
         mEtIdentityName.setOnClickListener(this);
@@ -298,6 +306,7 @@ public class DriverCardAuthFragment extends BaseFragment implements View.OnClick
         mEtDrivercardnumber.setOnClickListener(this);
         mBtIdentitySubmit.setOnClickListener(this);
     }
+
     @SuppressWarnings("ConstantConditions")
     @Override
     public void onClick(View v) {
@@ -348,8 +357,8 @@ public class DriverCardAuthFragment extends BaseFragment implements View.OnClick
         String tempUsername = mEtIdentityName.getText().toString().trim();
         String tempIdcard = mEtIdentityNumber.getText().toString().trim();
         String tempDrivercard = mEtDrivercardnumber.getText().toString().trim();
-        if(!TextUtils.isEmpty(mEtIdentityName.getText().toString().trim())){
-            if (mIsIDcardnumber){
+        if (!TextUtils.isEmpty(mEtIdentityName.getText().toString().trim())) {
+            if (mIsIDcardnumber) {
                 VibratorUtil.Vibrate(getActivity(), 100);
                 mEtIdentityName.setFocusableInTouchMode(false);
                 mEtIdentityName.clearFocus();
@@ -359,16 +368,16 @@ public class DriverCardAuthFragment extends BaseFragment implements View.OnClick
                 SimplexToast.showMyToast("身份证格式有误", GlobalApplication.getContext());
                 return;
             }
-        }else {
+        } else {
             SimplexToast.showMyToast("姓名不能为空", GlobalApplication.getContext());
             return;
         }
 
-        if (!TextUtils.isEmpty(tempUsername)&&AccountHelper.isLogin()&&!TextUtils.isEmpty(tempIdcard)){
+        if (!TextUtils.isEmpty(tempUsername) && AccountHelper.isLogin() && !TextUtils.isEmpty(tempIdcard)) {
 
             //登录成功,请求数据进入用户个人中心页面
             User user = AccountHelper.getUser();
-            String token =  user.getToken();
+            String token = user.getToken();
             String phone = user.getPhone();
             MyApi.driverCard(token, tempUsername, getAES(tempIdcard), tempDrivercard, new StringCallback() {
                 @Override
@@ -382,33 +391,35 @@ public class DriverCardAuthFragment extends BaseFragment implements View.OnClick
                     super.onAfter(id);
                     hideWaitDialog();
                 }
+
                 @Override
                 public void onError(Call call, Exception e, int id) {
                     hideWaitDialog();
-                    MyLog.i("GCS","驾驶证Exception："+e);
+                    MyLog.i("GCS", "驾驶证Exception：" + e);
                 }
 
                 @Override
                 public void onResponse(String response, int id) {
                     hideWaitDialog();
-                    MyLog.i("GCS","驾驶证response："+response);
+                    MyLog.i("GCS", "驾驶证response：" + response);
                     try {
-                        Type type = new TypeToken<ResultBean>() {}.getType();
+                        Type type = new TypeToken<ResultBean>() {
+                        }.getType();
                         ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
                         int code = resultBean.getCode();
                         switch (code) {
 
                             case 200://授权url获取成功
-                                MyLog.i("GCS","跳转到回调url："+response);
+                                MyLog.i("GCS", "跳转到回调url：" + response);
 
-                                showAuthbookconfirm("认证成功","确认");
+                                showAuthbookconfirm("认证成功", "确认");
                                 break;
                             case 300://账户问题
-                                SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
+                                SimplexToast.showMyToast(resultBean.getMessage(), GlobalApplication.getContext());
 
                                 break;
                             case 500://失败
-                                SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
+                                SimplexToast.showMyToast(resultBean.getMessage(), GlobalApplication.getContext());
                                 break;
                             default:
                                 break;
@@ -431,7 +442,7 @@ public class DriverCardAuthFragment extends BaseFragment implements View.OnClick
         // title.setTextColor(getResources().getColor(R.color.greenBG));
         title.setTextSize(18);*/
 
-        View dialogview = View.inflate(getActivity(),R.layout.custom_dialog,null);
+        View dialogview = View.inflate(getActivity(), R.layout.custom_dialog, null);
         TextView tv_title = dialogview.findViewById(R.id.dialog_tip);
         tv_title.setText(tip);
         TextView tv_link = dialogview.findViewById(R.id.read_authbook_link);
@@ -451,7 +462,7 @@ public class DriverCardAuthFragment extends BaseFragment implements View.OnClick
             @Override
             public void onClick(View view) {
                 dlgShowBack.dismiss();
-                if (btnstr.equals("确认")){
+                if (btnstr.equals("确认")) {
                     getActivity().finish();
                 }
 
@@ -464,10 +475,11 @@ public class DriverCardAuthFragment extends BaseFragment implements View.OnClick
         params.height = (int) TDevice.dp2px(122);
         dlgShowBack.getWindow().setAttributes(params);
     }
+
     @Override
     public void onFocusChange(View view, boolean hasFocus) {
         int id = view.getId();
-        switch (id){
+        switch (id) {
             case R.id.et_identity_name:
                 if (hasFocus) {
                     mLlIdentityName.setActivated(true);

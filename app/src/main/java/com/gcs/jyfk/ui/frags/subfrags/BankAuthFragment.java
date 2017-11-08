@@ -60,7 +60,7 @@ import okhttp3.Request;
  * Created by Administrator on 0029 8-29.
  */
 @SuppressLint("NewApi")
-public class BankAuthFragment extends BaseFragment implements View.OnClickListener, View.OnFocusChangeListener{
+public class BankAuthFragment extends BaseFragment implements View.OnClickListener, View.OnFocusChangeListener {
 
     private LinearLayout mLlBankcardName;
     private LinearLayout mLlBankcardNumber;
@@ -83,39 +83,41 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
     private boolean mBankcardNum;
     private List<BankType> mOptions;
     private CountDownTimer mTimer;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_bankcard_auth;
     }
+
     @Override
     protected void initView(View view) {
         super.initView(view);
-        ((SimpleBackActivity)getActivity()).setToolBarTitle(R.string.bank_string);
+        ((SimpleBackActivity) getActivity()).setToolBarTitle(R.string.bank_string);
         view.findViewById(R.id.traceroute_rootview).setOnClickListener(this);
-        mLlBankcardName  = view.findViewById(R.id.ll_bankcard_name);
-        mLlBankcardNumber  = view.findViewById(R.id.ll_bankcard_number);
-        mLlBankcardPhone  = view.findViewById(R.id.ll_bankcard_phone);
-        mLlBanktype  = view.findViewById(R.id.ll_banktype_select);
+        mLlBankcardName = view.findViewById(R.id.ll_bankcard_name);
+        mLlBankcardNumber = view.findViewById(R.id.ll_bankcard_number);
+        mLlBankcardPhone = view.findViewById(R.id.ll_bankcard_phone);
+        mLlBanktype = view.findViewById(R.id.ll_banktype_select);
 
-        mEtBankcardName =  view.findViewById(R.id.et_bankcard_name);
-        mEtBankcardNumber =  view.findViewById(R.id.et_bankcard_number);
-        mEtBankcardPhone =  view.findViewById(R.id.et_bankcard_phone);
+        mEtBankcardName = view.findViewById(R.id.et_bankcard_name);
+        mEtBankcardNumber = view.findViewById(R.id.et_bankcard_number);
+        mEtBankcardPhone = view.findViewById(R.id.et_bankcard_phone);
         mTvBanktype = view.findViewById(R.id.tv_banktype);
         mTvBankcode = view.findViewById(R.id.tv_banktype_code);
 
-        mIvBankcardNameDel =  view.findViewById(R.id.iv_bankcard_name_del);
-        mIvBankcardNumberDel =  view.findViewById(R.id.iv_bankcard_number_del);
-        mIvBankcardPhoneDel =  view.findViewById(R.id.iv_bankcard_phone_del);
+        mIvBankcardNameDel = view.findViewById(R.id.iv_bankcard_name_del);
+        mIvBankcardNumberDel = view.findViewById(R.id.iv_bankcard_number_del);
+        mIvBankcardPhoneDel = view.findViewById(R.id.iv_bankcard_phone_del);
 
-        mBtBankcardSubmit =  view.findViewById(R.id.bt_bankcard_submit);
+        mBtBankcardSubmit = view.findViewById(R.id.bt_bankcard_submit);
 
-        mTvBankcardSmsCall= view.findViewById(R.id.tv_bankcard_sms_call);
-        mLlBankcardSmsCode= view.findViewById(R.id.ll_bankcard_sms_code);
-        mEtBankcardSmsCode=  view.findViewById(R.id.et_bankcard_sms_code);
+        mTvBankcardSmsCall = view.findViewById(R.id.tv_bankcard_sms_call);
+        mLlBankcardSmsCode = view.findViewById(R.id.ll_bankcard_sms_code);
+        mEtBankcardSmsCode = view.findViewById(R.id.et_bankcard_sms_code);
 
 
         setListener();
-      //  mEtBankcardName.setOnFocusChangeListener(this);
+        //  mEtBankcardName.setOnFocusChangeListener(this);
        /* InputFilter filter = new InputFilter() {
             public CharSequence filter(CharSequence source, int start, int end,
                                        Spanned dest, int dstart, int dend) {
@@ -200,20 +202,20 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
                     mLlBankcardNumber.setBackgroundResource(0);
                     String name = mEtBankcardName.getText().toString().trim();
                     String phone = mEtBankcardPhone.getText().toString().trim();
-                    if (!TextUtils.isEmpty(name)&&!TextUtils.isEmpty(phone)) {
-                      //  mBtBankcardSubmit.setEnabled(true);
-                      //  mBtBankcardSubmit.setBackgroundResource(R.drawable.bg_login_submit);
-                      //  mBtBankcardSubmit.setTextColor(getResources().getColor(R.color.white));
+                    if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(phone)) {
+                        //  mBtBankcardSubmit.setEnabled(true);
+                        //  mBtBankcardSubmit.setBackgroundResource(R.drawable.bg_login_submit);
+                        //  mBtBankcardSubmit.setTextColor(getResources().getColor(R.color.white));
                     } else {
-                      //  mBtBankcardSubmit.setEnabled(false);
-                      //  mBtBankcardSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                      //  mBtBankcardSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));
+                        //  mBtBankcardSubmit.setEnabled(false);
+                        //  mBtBankcardSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
+                        //  mBtBankcardSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));
                     }
                 } else {
-                  //  mLlBankcardNumber.setBackgroundResource(R.drawable.bg_login_input_error);
-                  //  mBtBankcardSubmit.setEnabled(false);
-                  //  mBtBankcardSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                  //  mBtBankcardSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));
+                    //  mLlBankcardNumber.setBackgroundResource(R.drawable.bg_login_input_error);
+                    //  mBtBankcardSubmit.setEnabled(false);
+                    //  mBtBankcardSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
+                    //  mBtBankcardSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));
                 }
 
             }
@@ -248,24 +250,24 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
                 if (mMachPhoneNum) {
                     String smsCode = mEtBankcardSmsCode.getText().toString().trim();
                     String pwd = mEtBankcardNumber.getText().toString().trim();
-                    if (!TextUtils.isEmpty(smsCode)&&!TextUtils.isEmpty(pwd)) {
-                       // mBtBankcardSubmit.setEnabled(true);
+                    if (!TextUtils.isEmpty(smsCode) && !TextUtils.isEmpty(pwd)) {
+                        // mBtBankcardSubmit.setEnabled(true);
                         /*mBtBankcardSubmit.setBackgroundResource(R.drawable.bg_login_submit);
                         mBtBankcardSubmit.setTextColor(getResources().getColor(R.color.white));*/
                     } else {
-                      //  mBtBankcardSubmit.setEnabled(false);
+                        //  mBtBankcardSubmit.setEnabled(false);
                       /*  mBtBankcardSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
                         mBtBankcardSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));*/
                     }
                 } else {
-                   // mBtBankcardSubmit.setEnabled(false);
+                    // mBtBankcardSubmit.setEnabled(false);
                     /*mBtBankcardSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
                     mBtBankcardSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));*/
                 }
 
                 if (length > 0 && length < 11) {
                     mLlBankcardPhone.setBackgroundResource(0);
-                  //  mLlBankcardPhone.setBackgroundResource(R.drawable.bg_login_input_error);
+                    //  mLlBankcardPhone.setBackgroundResource(R.drawable.bg_login_input_error);
                     mTvBankcardSmsCall.setAlpha(0.4f);
                 } else if (length == 11) {
                     if (mMachPhoneNum) {
@@ -276,13 +278,13 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
                             mTvBankcardSmsCall.setAlpha(0.4f);
                         }
                     } else {
-                       // mLlBankcardPhone.setBackgroundResource(R.drawable.bg_login_input_error);
+                        // mLlBankcardPhone.setBackgroundResource(R.drawable.bg_login_input_error);
                         //showToastForKeyBord(R.string.hint_username_ok);
                         mTvBankcardSmsCall.setAlpha(0.4f);
                     }
                 } else if (length > 11) {
                     mTvBankcardSmsCall.setAlpha(0.4f);
-                  //  mLlBankcardPhone.setBackgroundResource(R.drawable.bg_login_input_error);
+                    //  mLlBankcardPhone.setBackgroundResource(R.drawable.bg_login_input_error);
                 } else if (length <= 0) {
                     mTvBankcardSmsCall.setAlpha(0.4f);
                     mLlBankcardPhone.setBackgroundResource(0);
@@ -294,25 +296,27 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
     @Override
     protected void initData() {
         super.initData();
-        if (AccountHelper.isLogin()){
+        if (AccountHelper.isLogin()) {
             User user = AccountHelper.getUser();
-            if(user.getName()!=null){ mEtBankcardName.setText(unAES(user.getName()));}
+            if (user.getName() != null) {
+                mEtBankcardName.setText(unAES(user.getName()));
+            }
         }
         //获取银行选择列表
         spGetBanktype();
     }
 
     private void spGetBanktype() {
-        MyLog.i("GCS","获取银行下拉选择列表");
+        MyLog.i("GCS", "获取银行下拉选择列表");
         MyApi.bankCodeList(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
-                MyLog.i("GCS","银行下拉选择列表返回Exception："+e.toString());
+                MyLog.i("GCS", "银行下拉选择列表返回Exception：" + e.toString());
             }
 
             @Override
             public void onResponse(String response, int id) {
-                MyLog.i("GCS","银行下拉选择列表返回response："+response);
+                MyLog.i("GCS", "银行下拉选择列表返回response：" + response);
                 try {
                     Type type = new TypeToken<ResultBean<List<BankType>>>() {
                     }.getType();
@@ -333,7 +337,7 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
 
     private void setListener() {
         mLlBankcardName.setOnClickListener(this);
-      //  mEtBankcardName.setOnClickListener(this);
+        //  mEtBankcardName.setOnClickListener(this);
         mIvBankcardNameDel.setOnClickListener(this);
         mLlBankcardPhone.setOnClickListener(this);
         mEtBankcardPhone.setOnClickListener(this);
@@ -377,7 +381,7 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
                 requestSmsCode();
                 break;
             case R.id.bt_bankcard_submit:
-               // showAuthbookconfirm("认证成功");
+                // showAuthbookconfirm("认证成功");
                 AuthBankcardRequest();
                 break;
 
@@ -391,17 +395,17 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
                 mEtBankcardPhone.setText(null);
                 break;
             case R.id.tv_banktype:
-                InputMethodManager imms = (InputMethodManager) GlobalApplication.getContext( ).getSystemService( Context.INPUT_METHOD_SERVICE );
-                if ( imms.isActive( ) ) {
-                    imms.hideSoftInputFromWindow( v.getApplicationWindowToken( ) , 0 );
+                InputMethodManager imms = (InputMethodManager) GlobalApplication.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imms.isActive()) {
+                    imms.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
 
                 }
                 String webtitileName = "请选择银行";
-                if (mOptions.size() != 0){
+                if (mOptions.size() != 0) {
                     MyWebListPopuAdapter mWebAdapter = new MyWebListPopuAdapter(mOptions);
-                    setPopuWindow(mOptions,webtitileName,mTvBanktype,mWebAdapter);
-                }else {
-                    SimplexToast.showMyToast("为获取到银行列表",GlobalApplication.getContext());
+                    setPopuWindow(mOptions, webtitileName, mTvBanktype, mWebAdapter);
+                } else {
+                    SimplexToast.showMyToast("为获取到银行列表", GlobalApplication.getContext());
                 }
 
                 break;
@@ -413,8 +417,8 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
 
     //银行弹出框
     private void setPopuWindow(List<BankType> stringList, String
-            titileName, final TextView tv, MyWebListPopuAdapter adapter){
-        final MyOptionBottomDialog optionBottomDialog = new MyOptionBottomDialog(getContext(), stringList,titileName,adapter);
+            titileName, final TextView tv, MyWebListPopuAdapter adapter) {
+        final MyOptionBottomDialog optionBottomDialog = new MyOptionBottomDialog(getContext(), stringList, titileName, adapter);
         optionBottomDialog.setItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -429,55 +433,54 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
     }
 
 
-
     private void requestSmsCode() {
-            if (!mMachPhoneNum) {
-                mLlBankcardPhone.setActivated(true);
-                mLlBankcardPhone.setBackgroundResource(R.drawable.bg_login_input_error);
-                SimplexToast.showMyToast(R.string.login_input_username_hint_error, GlobalApplication.getContext());
-                return;
-            }
-            if (!TDevice.hasInternet()) {
-                SimplexToast.showMyToast(R.string.tip_network_error, GlobalApplication.getContext());
-                return;
-            }
+        if (!mMachPhoneNum) {
+            mLlBankcardPhone.setActivated(true);
+            mLlBankcardPhone.setBackgroundResource(R.drawable.bg_login_input_error);
+            SimplexToast.showMyToast(R.string.login_input_username_hint_error, GlobalApplication.getContext());
+            return;
+        }
+        if (!TDevice.hasInternet()) {
+            SimplexToast.showMyToast(R.string.tip_network_error, GlobalApplication.getContext());
+            return;
+        }
 
-             if (mTvBankcardSmsCall.getTag() == null) {
-                mTvBankcardSmsCall.setAlpha(0.6f);
-                mTvBankcardSmsCall.setTag(true);
-                mTimer = new CountDownTimer(AppConfig.SMSCODE_TIME_OUT * 1000, 1000) {
+        if (mTvBankcardSmsCall.getTag() == null) {
+            mTvBankcardSmsCall.setAlpha(0.6f);
+            mTvBankcardSmsCall.setTag(true);
+            mTimer = new CountDownTimer(AppConfig.SMSCODE_TIME_OUT * 1000, 1000) {
 
-                    @SuppressLint("DefaultLocale")
-                    @Override
-                    public void onTick(long millisUntilFinished) {
-                        mTvBankcardSmsCall.setText(String.format("%s%s%d%s",
-                                getResources().getString(R.string.register_sms_hint), "(", millisUntilFinished / 1000, ")"));
-                    }
+                @SuppressLint("DefaultLocale")
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    mTvBankcardSmsCall.setText(String.format("%s%s%d%s",
+                            getResources().getString(R.string.register_sms_hint), "(", millisUntilFinished / 1000, ")"));
+                }
 
-                    @Override
-                    public void onFinish() {
-                        mTvBankcardSmsCall.setTag(null);
-                        mTvBankcardSmsCall.setText(getResources().getString(R.string.register_sms_hint));
-                        mTvBankcardSmsCall.setAlpha(1.0f);
-                    }
-                }.start();
-                //加密
-                 String bankcardName = mEtBankcardName.getText().toString().trim();
-                 String bankcardNumber = mEtBankcardNumber.getText().toString().trim();
-                 String phoneNumber = mEtBankcardPhone.getText().toString().trim();
-                 String pay_code = mTvBankcode.getText().toString();
-                 String token = AccountHelper.getUser().getToken();
-                 String identitynumber = unAES(AccountHelper.getUser().getCertno());
-                 MyLog.i("GCS","name="+bankcardName);
-                 MyLog.i("GCS","bankcard="+bankcardNumber);
-                 MyLog.i("GCS","phone="+phoneNumber);
-                 MyLog.i("GCS","idcard="+identitynumber);
-                 MyLog.i("GCS","pay_code="+pay_code);
-                if (TextUtils.isEmpty(pay_code)){
-                    SimplexToast.showMyToast("请选择银行",GlobalApplication.getContext());
-                }else {
+                @Override
+                public void onFinish() {
+                    mTvBankcardSmsCall.setTag(null);
+                    mTvBankcardSmsCall.setText(getResources().getString(R.string.register_sms_hint));
+                    mTvBankcardSmsCall.setAlpha(1.0f);
+                }
+            }.start();
+            //加密
+            String bankcardName = mEtBankcardName.getText().toString().trim();
+            String bankcardNumber = mEtBankcardNumber.getText().toString().trim();
+            String phoneNumber = mEtBankcardPhone.getText().toString().trim();
+            String pay_code = mTvBankcode.getText().toString();
+            String token = AccountHelper.getUser().getToken();
+            String identitynumber = unAES(AccountHelper.getUser().getCertno());
+            MyLog.i("GCS", "name=" + bankcardName);
+            MyLog.i("GCS", "bankcard=" + bankcardNumber);
+            MyLog.i("GCS", "phone=" + phoneNumber);
+            MyLog.i("GCS", "idcard=" + identitynumber);
+            MyLog.i("GCS", "pay_code=" + pay_code);
+            if (TextUtils.isEmpty(pay_code)) {
+                SimplexToast.showMyToast("请选择银行", GlobalApplication.getContext());
+            } else {
                 //1111  OSChinaApi.sendRegisterSmsCode(phoneNumber, OSChinaApi.REGISTER_INTENT, mHandler);发送短信的api
-                MyApi.bankCardSendMsg(token,pay_code,bankcardName,identitynumber,bankcardNumber,phoneNumber, new StringCallback() {
+                MyApi.bankCardSendMsg(token, pay_code, bankcardName, identitynumber, bankcardNumber, phoneNumber, new StringCallback() {
                     @Override
                     public void onBefore(Request request, int id) {
                         super.onBefore(request, id);
@@ -490,7 +493,7 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
 
                     @Override
                     public void onError(Call call, Exception e, int id) {
-                        MyLog.i("GCS","发送银行卡短信验证码返回Exception："+e.toString());
+                        MyLog.i("GCS", "发送银行卡短信验证码返回Exception：" + e.toString());
                         if (mTimer != null) {
                             mTimer.onFinish();
                             mTimer.cancel();
@@ -499,10 +502,11 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
 
                     @Override
                     public void onResponse(String response, int id) {
-                        MyLog.i("GCS","发送银行卡短信验证码返回response："+response);
-                        Type type = new TypeToken<ResultBean>() {}.getType();
+                        MyLog.i("GCS", "发送银行卡短信验证码返回response：" + response);
+                        Type type = new TypeToken<ResultBean>() {
+                        }.getType();
                         ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
-                        if(resultBean.getResult()!= null){
+                        if (resultBean.getResult() != null) {
                             trade_no_x = resultBean.getResult().toString();
                         }
 
@@ -512,7 +516,7 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
                                 //发送验证码成功,请求进入下一步
                                 //意味着我们可以进行第二次请求了,获取phoneToken
                                 //mRequestType = 2;
-                                SimplexToast.showMyToast(R.string.send_sms_code_success_hint,GlobalApplication.getContext());
+                                SimplexToast.showMyToast(R.string.send_sms_code_success_hint, GlobalApplication.getContext());
                                 mEtBankcardSmsCode.setText(null);
                                 break;
                             case 300:
@@ -521,7 +525,7 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
                                     mTimer.onFinish();
                                     mTimer.cancel();
                                 }
-                                SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
+                                SimplexToast.showMyToast(resultBean.getMessage(), GlobalApplication.getContext());
                                 break;
                             case 500:
                                 //异常错误，发送验证码失败,回收timer,需重新请求发送验证码
@@ -529,7 +533,7 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
                                     mTimer.onFinish();
                                     mTimer.cancel();
                                 }
-                                SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
+                                SimplexToast.showMyToast(resultBean.getMessage(), GlobalApplication.getContext());
                                 break;
                             default:
                                 break;
@@ -539,7 +543,7 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
             }
 
         } else {
-            SimplexToast.showMyToast(R.string.register_sms_wait_hint,GlobalApplication.getContext());
+            SimplexToast.showMyToast(R.string.register_sms_wait_hint, GlobalApplication.getContext());
         }
     }
 
@@ -551,27 +555,27 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
         String smscode = mEtBankcardSmsCode.getText().toString().trim();
         String token = AccountHelper.getUser().getToken();
         String identitynumber = AccountHelper.getUser().getCertno();
-        if (TextUtils.isEmpty(trade_no_x)){
-            SimplexToast.showMyToast("请先进行手机短信验证",GlobalApplication.getContext());
+        if (TextUtils.isEmpty(trade_no_x)) {
+            SimplexToast.showMyToast("请先进行手机短信验证", GlobalApplication.getContext());
             return;
         }
-        if (TextUtils.isEmpty(smscode)){
-            SimplexToast.showMyToast("请输入手机短信验证码",GlobalApplication.getContext());
+        if (TextUtils.isEmpty(smscode)) {
+            SimplexToast.showMyToast("请输入手机短信验证码", GlobalApplication.getContext());
             return;
         }
-        if (TextUtils.isEmpty(bankcardName)&&!mBankcardNum&&!mMachPhoneNum) {
+        if (TextUtils.isEmpty(bankcardName) && !mBankcardNum && !mMachPhoneNum) {
             //showToastForKeyBord(R.string.hint_username_ok);
-            SimplexToast.showMyToast("身份输入信息有误",GlobalApplication.getContext());
+            SimplexToast.showMyToast("身份输入信息有误", GlobalApplication.getContext());
             return;
         }
 
         if (!TDevice.hasInternet()) {
-            SimplexToast.showMyToast(R.string.tip_network_error,GlobalApplication.getContext());
+            SimplexToast.showMyToast(R.string.tip_network_error, GlobalApplication.getContext());
             return;
         }
 
         //111 OSChinaApi.validateRegisterInfo(phoneNumber, smsCode, mHandler);注册信息提交的api
-        MyApi.bankCardVerifyMsg(token,bankcardName,identitynumber,bankcardNumber,phoneNumber ,trade_no_x,smscode, new StringCallback() {
+        MyApi.bankCardVerifyMsg(token, bankcardName, identitynumber, bankcardNumber, phoneNumber, trade_no_x, smscode, new StringCallback() {
             @Override
             public void onBefore(Request request, int id) {
                 super.onBefore(request, id);
@@ -587,36 +591,37 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
 
             @Override
             public void onError(Call call, Exception e, int id) {
-                MyLog.i("GCS","注册返回Exception："+e.toString());
+                MyLog.i("GCS", "注册返回Exception：" + e.toString());
                 hideWaitDialog();
-                    if (mTimer != null) {
-                        mTimer.onFinish();
-                        mTimer.cancel();
-                    }
-                showAuthbookconfirm("认证失败","重新认证");
+                if (mTimer != null) {
+                    mTimer.onFinish();
+                    mTimer.cancel();
+                }
+                showAuthbookconfirm("认证失败", "重新认证");
             }
 
             @Override
             public void onResponse(String response, int id) {
-                MyLog.i("GCS",">>注册返回成功response："+response);
+                MyLog.i("GCS", ">>注册返回成功response：" + response);
                 try {
-                    Type type = new TypeToken<ResultBean>() {}.getType();
+                    Type type = new TypeToken<ResultBean>() {
+                    }.getType();
                     ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
                     int code = resultBean.getCode();
                     switch (code) {
                         case 200://成功
-                         //   SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
+                            //   SimplexToast.showMyToast(resultBean.getMessage(),GlobalApplication.getContext());
                             if (mTimer != null) {
                                 mTimer.onFinish();
                                 mTimer.cancel();
                             }
-                            showAuthbookconfirm("认证成功","确认");
+                            showAuthbookconfirm("认证成功", "确认");
                             break;
                         case 500://失败
-                            showAuthbookconfirm("认证失败","重新认证");
+                            showAuthbookconfirm("认证失败", "重新认证");
                             break;
                         case 300://失败token验证失败
-                            showAuthbookconfirm("认证失败","重新认证");
+                            showAuthbookconfirm("认证失败", "重新认证");
                             break;
                         default:
                             break;
@@ -636,7 +641,7 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
         // title.setTextColor(getResources().getColor(R.color.greenBG));
         title.setTextSize(18);*/
 
-        View dialogview = View.inflate(getActivity(),R.layout.custom_dialog,null);
+        View dialogview = View.inflate(getActivity(), R.layout.custom_dialog, null);
         TextView tv_title = dialogview.findViewById(R.id.dialog_tip);
         tv_title.setText(tip);
         TextView tv_link = dialogview.findViewById(R.id.read_authbook_link);
@@ -656,7 +661,7 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
             @Override
             public void onClick(View view) {
                 dlgShowBack.dismiss();
-                if (btnstr.equals("确认")){
+                if (btnstr.equals("确认")) {
                     getActivity().finish();
                 }
 
@@ -669,10 +674,11 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
         params.height = (int) TDevice.dp2px(122);
         dlgShowBack.getWindow().setAttributes(params);
     }
+
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         int id = v.getId();
-        switch (id){
+        switch (id) {
             case R.id.et_bankcard_name:
                 if (hasFocus) {
                     mLlBankcardName.setActivated(true);
@@ -683,7 +689,7 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
                     mIvBankcardPhoneDel.setVisibility(View.GONE);
                 }
                 break;
-            case  R.id.et_bankcard_number:
+            case R.id.et_bankcard_number:
                 if (hasFocus) {
                     mLlBankcardNumber.setActivated(true);
                     mLlBankcardName.setActivated(false);
@@ -693,7 +699,7 @@ public class BankAuthFragment extends BaseFragment implements View.OnClickListen
                     mIvBankcardPhoneDel.setVisibility(View.GONE);
                 }
                 break;
-            case  R.id.et_bankcard_phone:
+            case R.id.et_bankcard_phone:
                 if (hasFocus) {
                     mLlBankcardNumber.setActivated(false);
                     mLlBankcardName.setActivated(false);

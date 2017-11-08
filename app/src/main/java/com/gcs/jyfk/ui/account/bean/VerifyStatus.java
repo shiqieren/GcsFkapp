@@ -103,6 +103,7 @@ public class VerifyStatus {
     public void setContact(String contact) {
         this.contact = contact;
     }
+
     public String getEmail() {
         return email;
     }
@@ -110,6 +111,7 @@ public class VerifyStatus {
     public void setEmail(String email) {
         this.email = email;
     }
+
     public String getDriver() {
         return driver;
     }
@@ -117,6 +119,7 @@ public class VerifyStatus {
     public void setDriver(String driver) {
         this.driver = driver;
     }
+
     public String getCreditcard() {
         return creditcard;
     }
@@ -124,6 +127,7 @@ public class VerifyStatus {
     public void setCreditcard(String creditcard) {
         this.creditcard = creditcard;
     }
+
     public long getCreatetime() {
         return createtime;
     }

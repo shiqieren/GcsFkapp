@@ -16,9 +16,10 @@ import com.gcs.jyfk.R;
  */
 
 public class ErrorActivity extends BaseActivity implements View.OnClickListener {
-   // @BindView(R.id.tv_crash_info)
+    // @BindView(R.id.tv_crash_info)
     private TextView mTextCrashInfo;
     private Button mBtn_restart;
+
     @Override
     protected void initWindow() {
         super.initWindow();
@@ -53,7 +54,7 @@ public class ErrorActivity extends BaseActivity implements View.OnClickListener 
         mTextCrashInfo.setText(getIntent().getStringExtra("message"));
     }
 
-    private void setListener(){
+    private void setListener() {
         mBtn_restart.setOnClickListener(this);
     }
 

@@ -31,8 +31,8 @@ public class AboutGCSFragment extends BaseFragment {
 
     @Override
     public void initView(View view) {
-        ((SimpleBackActivity)getActivity()).setToolBarTitle(R.string.about);
-        mTvVersionName =  view.findViewById(R.id.tv_version_name);
+        ((SimpleBackActivity) getActivity()).setToolBarTitle(R.string.about);
+        mTvVersionName = view.findViewById(R.id.tv_version_name);
         view.findViewById(R.id.tv_oscsite).setOnClickListener(this);
         view.findViewById(R.id.tv_knowmore).setOnClickListener(this);
     }

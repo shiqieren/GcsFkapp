@@ -256,7 +256,7 @@ public class NoticeServer extends Service {
             mRunning = false;
         }
     });*/
-}
+    }
 
     private synchronized void clearNoticeForNet(int flag) {
         log("clearNoticeForNet: flag:" + flag);

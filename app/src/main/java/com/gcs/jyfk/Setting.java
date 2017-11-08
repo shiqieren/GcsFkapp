@@ -52,6 +52,7 @@ public final class Setting {
         SharedPreferences sp = getSettingPreferences(context);
         return sp.getInt(KEY_VERSION_CODE, 0);
     }
+
     //更新版本号
     private static int updateSaveVersionCode(Context context, int version) {
         SharedPreferences sp = getSettingPreferences(context);
@@ -73,7 +74,7 @@ public final class Setting {
             updateServerUrl(context, url);
         }
 
-        MyLog.i("GCS","当前服务器连接url固定地址"+url);
+        MyLog.i("GCS", "当前服务器连接url固定地址" + url);
         return url;
     }
 
@@ -122,8 +123,7 @@ public final class Setting {
      *
      * @return
      */
-    public static boolean needShowGuide(Context context)
-    {
+    public static boolean needShowGuide(Context context) {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         int version = sharedPrefs.getInt(WELCOME_GUIDE, 0);
 
@@ -131,8 +131,7 @@ public final class Setting {
         editor.putInt(WELCOME_GUIDE, GUIDE_VERSION);
         editor.commit();
 
-        if (version != GUIDE_VERSION)
-        {
+        if (version != GUIDE_VERSION) {
             return true;
         }
 

@@ -20,7 +20,6 @@ import java.util.regex.Pattern;
 /**
  * 富文本解析工具
  * lyw
- *
  */
 @SuppressWarnings("unused")
 public abstract class RichTextParser {
@@ -189,6 +188,7 @@ public abstract class RichTextParser {
         }
         return false;
     }
+
     /**
      * 判定输入汉字
      *
@@ -197,8 +197,8 @@ public abstract class RichTextParser {
      */
     public static boolean isChinese(char c) {
         Character.UnicodeBlock ub = Character.UnicodeBlock.of(c);
-        if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS|| ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS|| ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A||
-                ub == Character.UnicodeBlock.GENERAL_PUNCTUATION || ub == Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION|| ub == Character.UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS ) {
+        if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS || ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS || ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A ||
+                ub == Character.UnicodeBlock.GENERAL_PUNCTUATION || ub == Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION || ub == Character.UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS) {
             return true;
         }
         return false;

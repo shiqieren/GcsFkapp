@@ -23,56 +23,46 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 //平台信息
-public class Platform
-{
+public class Platform {
     private static final Platform PLATFORM = findPlatform();
 
-    public static Platform get()
-    {
+    public static Platform get() {
         return PLATFORM;
     }
 
-    private static Platform findPlatform()
-    {
-        try
-        {
+    private static Platform findPlatform() {
+        try {
             Class.forName("android.os.Build");
-            if (Build.VERSION.SDK_INT != 0)
-            {
+            if (Build.VERSION.SDK_INT != 0) {
                 return new Android();
             }
-        } catch (ClassNotFoundException ignored)
-        {
+        } catch (ClassNotFoundException ignored) {
         }
         return new Platform();
     }
-//缓存线程池，在相应时间内未有任务执行回收
-    public Executor defaultCallbackExecutor()
-    {
+
+    //缓存线程池，在相应时间内未有任务执行回收
+    public Executor defaultCallbackExecutor() {
         return Executors.newCachedThreadPool();
     }
-//执行任务
-    public void execute(Runnable runnable)
-    {
+
+    //执行任务
+    public void execute(Runnable runnable) {
         defaultCallbackExecutor().execute(runnable);
     }
 
 
-    static class Android extends Platform
-    {
+    static class Android extends Platform {
         @Override
-        public Executor defaultCallbackExecutor()
-        {
+        public Executor defaultCallbackExecutor() {
             return new MainThreadExecutor();
         }
 
-        static class MainThreadExecutor implements Executor
-        {
+        static class MainThreadExecutor implements Executor {
             private final Handler handler = new Handler(Looper.getMainLooper());
 
             @Override
-            public void execute(Runnable r)
-            {
+            public void execute(Runnable r) {
                 handler.post(r);
             }
         }

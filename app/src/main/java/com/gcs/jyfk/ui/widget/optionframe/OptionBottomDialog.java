@@ -68,16 +68,16 @@ public class OptionBottomDialog extends PopupWindow {
         this.setAnimationStyle(R.style.Animation);
 
         this.showAtLocation(activity.getWindow().getDecorView(), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-        backgroundAlpha(0.65f,activity);
+        backgroundAlpha(0.65f, activity);
         this.setOnDismissListener(new OnDismissListener() {
             @Override
             public void onDismiss() {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        backgroundAlpha(1.0f,activity);
+                        backgroundAlpha(1.0f, activity);
                     }
-                },290);
+                }, 290);
             }
         });
     }
@@ -86,7 +86,7 @@ public class OptionBottomDialog extends PopupWindow {
         listView.setOnItemClickListener(listener);
     }
 
-    public void backgroundAlpha(float bgAlpha,Activity activity) {
+    public void backgroundAlpha(float bgAlpha, Activity activity) {
         WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
         lp.alpha = bgAlpha; //0.0-1.0
         activity.getWindow().setAttributes(lp);

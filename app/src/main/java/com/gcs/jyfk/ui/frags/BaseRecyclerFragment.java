@@ -31,10 +31,10 @@ public abstract class BaseRecyclerFragment<Presenter extends BaseListPresenter, 
     protected BaseRecyclerAdapter<Model> mAdapter;
     protected Presenter mPresenter;
 
-  @Override
-  protected int getLayoutId() {
-      return R.layout.fragment_base_recycler;
-  }
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_base_recycler;
+    }
 
     @Override
     protected void initView(View root) {

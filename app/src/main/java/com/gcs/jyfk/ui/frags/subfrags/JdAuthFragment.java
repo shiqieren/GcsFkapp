@@ -23,7 +23,7 @@ import com.gcs.jyfk.ui.widget.SimplexToast;
  * Created by Administrator on 0029 8-29.
  */
 @SuppressLint("NewApi")
-public class JdAuthFragment extends BaseFragment implements View.OnClickListener, View.OnFocusChangeListener{
+public class JdAuthFragment extends BaseFragment implements View.OnClickListener, View.OnFocusChangeListener {
 
     private CheckBox mCbAgreeAuthbook;
     private LinearLayout mLlAuthUsername;
@@ -33,14 +33,16 @@ public class JdAuthFragment extends BaseFragment implements View.OnClickListener
     private ImageView mIvAuthUsernaneDel;
     private ImageView mIvAuthPasswordDel;
     private Button mBtAuthSubmit;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_jd_auth;
     }
+
     @Override
     protected void initView(View view) {
         super.initView(view);
-        ((SimpleBackActivity)getActivity()).setToolBarTitle(R.string.jd_string);
+        ((SimpleBackActivity) getActivity()).setToolBarTitle(R.string.jd_string);
         view.findViewById(R.id.traceroute_rootview).setOnClickListener(this);
         mCbAgreeAuthbook = view.findViewById(R.id.cb_agree_authbook);
         mLlAuthUsername = view.findViewById(R.id.ll_auth_username);
@@ -78,7 +80,7 @@ public class JdAuthFragment extends BaseFragment implements View.OnClickListener
 
                 String name = mEtAuthUsername.getText().toString().trim();
                 String pwd = mEtAuthPassword.getText().toString().trim();
-                if (!TextUtils.isEmpty(name)&&!TextUtils.isEmpty(pwd)) {
+                if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(pwd)) {
                     mBtAuthSubmit.setEnabled(true);
                    /* mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.white));*/
@@ -117,11 +119,11 @@ public class JdAuthFragment extends BaseFragment implements View.OnClickListener
 
                 String pwd = mEtAuthPassword.getText().toString().trim();
                 String name = mEtAuthUsername.getText().toString().trim();
-                if (!TextUtils.isEmpty(pwd)&&!TextUtils.isEmpty(name)&& mCbAgreeAuthbook.isChecked()) {
+                if (!TextUtils.isEmpty(pwd) && !TextUtils.isEmpty(name) && mCbAgreeAuthbook.isChecked()) {
                     mBtAuthSubmit.setEnabled(true);
                    /* mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.white));*/
-                }else {
+                } else {
                     mBtAuthSubmit.setEnabled(false);
                    /* mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));*/
@@ -175,9 +177,9 @@ public class JdAuthFragment extends BaseFragment implements View.OnClickListener
     }
 
     private void AuthRequest() {
-        if(!mCbAgreeAuthbook.isChecked()){
+        if (!mCbAgreeAuthbook.isChecked()) {
             SimplexToast.showMyToast("尚未勾选授权协议书", GlobalApplication.getContext());
-        }else {
+        } else {
 
         }
     }

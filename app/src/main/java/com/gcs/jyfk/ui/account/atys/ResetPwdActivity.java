@@ -73,6 +73,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
     private int mTopMargin;
     private boolean mKeyBoardIsActive;
     //第三方接入的handler登录接收器callback
+
     /**
      * update keyBord active status
      *
@@ -81,6 +82,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
     protected void updateKeyBoardActiveStatus(boolean isActive) {
         this.mKeyBoardIsActive = isActive;
     }
+
     /**
      * show the retrieve activity
      *
@@ -132,7 +134,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
                 if (mMachPhoneNum) {
                     String smsCode = mEtRetrieveCodeInput.getText().toString().trim();
                     String resetpwd = mEtResetPwd.getText().toString().trim();
-                    if (!TextUtils.isEmpty(smsCode)&&!TextUtils.isEmpty(resetpwd)) {
+                    if (!TextUtils.isEmpty(smsCode) && !TextUtils.isEmpty(resetpwd)) {
                         mBtRetrieveSubmit.setBackgroundResource(R.drawable.bg_login_submit);
                         mBtRetrieveSubmit.setTextColor(getResources().getColor(R.color.white));
                     } else {
@@ -157,7 +159,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
                         }
                     } else {
                         mLlRetrieveTel.setBackgroundResource(R.drawable.bg_login_input_error);
-                        SimplexToast.showToastForKeyBord(R.string.hint_username_ok,GlobalApplication.getContext(),mKeyBoardIsActive);
+                        SimplexToast.showToastForKeyBord(R.string.hint_username_ok, GlobalApplication.getContext(), mKeyBoardIsActive);
                         mTvRetrieveSmsCall.setAlpha(0.4f);
                     }
                 } else if (length > 11) {
@@ -221,14 +223,14 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
                 } else {
                     mIvResetPwdDel.setVisibility(View.INVISIBLE);
                 }
-                if (length < 6||length>18) {
+                if (length < 6 || length > 18) {
                     mLlResetPwd.setBackgroundResource(R.drawable.bg_login_input_error);
                 } else {
                     mLlResetPwd.setBackgroundResource(R.drawable.bg_login_input_ok);
                 }
                 String username = mEtRetrieveTel.getText().toString().trim();
                 String authcode = mEtRetrieveCodeInput.getText().toString().trim();
-                if (!TextUtils.isEmpty(username)&&!TextUtils.isEmpty(authcode)) {
+                if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(authcode)) {
                     mBtRetrieveSubmit.setBackgroundResource(R.drawable.bg_login_submit);
                     mBtRetrieveSubmit.setTextColor(getResources().getColor(R.color.white));
                 } else {
@@ -245,21 +247,21 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
         mLlRetrieveBar = (LinearLayout) findViewById(R.id.ly_retrieve_bar);
         mIb_navigation_back = (ImageButton) findViewById(R.id.ib_navigation_back);
         mLlRetrievecontainer = (LinearLayout) findViewById(R.id.lay_retrieve_container);
-        mLlRetrieveTel= (LinearLayout) findViewById(R.id.ll_retrieve_tel);
+        mLlRetrieveTel = (LinearLayout) findViewById(R.id.ll_retrieve_tel);
         mEtRetrieveTel = (EditText) findViewById(R.id.et_retrieve_tel);
-        mIvRetrieveTelDel= (ImageView) findViewById(R.id.iv_retrieve_tel_del);
-        mLlRetrieveCode= (LinearLayout) findViewById(R.id.ll_retrieve_code);
-        mEtRetrieveCodeInput= (EditText) findViewById(R.id.et_retrieve_code_input);
-        mTvRetrieveSmsCall= (TextView) findViewById(R.id.retrieve_sms_call);
-        mBtRetrieveSubmit= (Button) findViewById(R.id.bt_retrieve_submit);
-        mTvRetrieveLabel= (TextView) findViewById(R.id.tv_retrieve_label);
+        mIvRetrieveTelDel = (ImageView) findViewById(R.id.iv_retrieve_tel_del);
+        mLlRetrieveCode = (LinearLayout) findViewById(R.id.ll_retrieve_code);
+        mEtRetrieveCodeInput = (EditText) findViewById(R.id.et_retrieve_code_input);
+        mTvRetrieveSmsCall = (TextView) findViewById(R.id.retrieve_sms_call);
+        mBtRetrieveSubmit = (Button) findViewById(R.id.bt_retrieve_submit);
+        mTvRetrieveLabel = (TextView) findViewById(R.id.tv_retrieve_label);
 
-        mLlResetPwd= (LinearLayout) findViewById(R.id.ll_reset_pwd);
-        mEtResetPwd= (EditText) findViewById(R.id.et_reset_pwd);
-        mIvResetPwdDel= (ImageView) findViewById(R.id.iv_reset_pwd_del);
+        mLlResetPwd = (LinearLayout) findViewById(R.id.ll_reset_pwd);
+        mEtResetPwd = (EditText) findViewById(R.id.et_reset_pwd);
+        mIvResetPwdDel = (ImageView) findViewById(R.id.iv_reset_pwd_del);
     }
 
-    private void setListener(){
+    private void setListener() {
         mLlRetrieveBar.setOnClickListener(this);
         mIb_navigation_back.setOnClickListener(this);
         mLlRetrievecontainer.setOnClickListener(this);
@@ -331,7 +333,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
                 break;
             case R.id.bt_retrieve_submit:
 
-               requestRetrievePwd();
+                requestRetrievePwd();
                 break;
             case R.id.tv_retrieve_label:
 
@@ -356,20 +358,20 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
     private void requestRetrievePwd() {
         String tempPwd = mEtResetPwd.getText().toString().trim();
         String smsCode = mEtRetrieveCodeInput.getText().toString().trim();
-        if (!mMachPhoneNum || TextUtils.isEmpty(smsCode)||TextUtils.isEmpty(tempPwd) || tempPwd.length() < 6) {
+        if (!mMachPhoneNum || TextUtils.isEmpty(smsCode) || TextUtils.isEmpty(tempPwd) || tempPwd.length() < 6) {
             // showToastForKeyBord(R.string.hint_username_ok);
-            SimplexToast.showToastForKeyBord(R.string.reset_pwd_hint,GlobalApplication.getContext(),mKeyBoardIsActive);
+            SimplexToast.showToastForKeyBord(R.string.reset_pwd_hint, GlobalApplication.getContext(), mKeyBoardIsActive);
             return;
         }
 
         if (!TDevice.hasInternet()) {
-            SimplexToast.showToastForKeyBord(R.string.tip_network_error,GlobalApplication.getContext(),mKeyBoardIsActive);
+            SimplexToast.showToastForKeyBord(R.string.tip_network_error, GlobalApplication.getContext(), mKeyBoardIsActive);
             return;
         }
         mRequestType = 2;
         String phoneNumber = mEtRetrieveTel.getText().toString().trim();
-       //111 OSChinaApi.validateRegisterInfo(phoneNumber, smsCode, mHandler);
-        MyApi.resetPwd(getAES(phoneNumber), smsCode, getAES(tempPwd),Jsessionid, new StringCallback() {
+        //111 OSChinaApi.validateRegisterInfo(phoneNumber, smsCode, mHandler);
+        MyApi.resetPwd(getAES(phoneNumber), smsCode, getAES(tempPwd), Jsessionid, new StringCallback() {
             @Override
             public void onBefore(Request request, int id) {
                 super.onBefore(request, id);
@@ -385,19 +387,19 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
 
             @Override
             public void onError(Call call, Exception e, int id) {
-                MyLog.i("GCS","修改密码返回Exception："+e.toString());
+                MyLog.i("GCS", "修改密码返回Exception：" + e.toString());
                 if (mRequestType == 1) {
                     if (mTimer != null) {
                         mTimer.onFinish();
                         mTimer.cancel();
                     }
                 }
-                SimplexToast.requestFailureHint(e,ResetPwdActivity.this);
+                SimplexToast.requestFailureHint(e, ResetPwdActivity.this);
             }
 
             @Override
             public void onResponse(String response, int id) {
-                MyLog.i("GCS","修改密码返回response："+response);
+                MyLog.i("GCS", "修改密码返回response：" + response);
 
                 Type type = new TypeToken<ResultBean>() {
                 }.getType();
@@ -411,7 +413,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
                         break;
                     case 500://注册失败,手机验证码错误
                         mLlRetrieveCode.setBackgroundResource(R.drawable.bg_login_input_error);
-                        SimplexToast.showToastForKeyBord(resultBean.getMessage(),GlobalApplication.getContext(),mKeyBoardIsActive);
+                        SimplexToast.showToastForKeyBord(resultBean.getMessage(), GlobalApplication.getContext(), mKeyBoardIsActive);
                         break;
                     default:
                         break;
@@ -427,7 +429,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
         }
 
         if (!TDevice.hasInternet()) {
-            SimplexToast.showToastForKeyBord(R.string.tip_network_error,GlobalApplication.getContext(),mKeyBoardIsActive);
+            SimplexToast.showToastForKeyBord(R.string.tip_network_error, GlobalApplication.getContext(), mKeyBoardIsActive);
             return;
         }
 
@@ -452,7 +454,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
                 }
             }.start();
             String phoneNumber = mEtRetrieveTel.getText().toString().trim();
-         //1111   OSChinaApi.sendRegisterSmsCode(phoneNumber, OSChinaApi.RESET_PWD_INTENT, mHandler);
+            //1111   OSChinaApi.sendRegisterSmsCode(phoneNumber, OSChinaApi.RESET_PWD_INTENT, mHandler);
             MyApi.sendSmsCode(getAES(phoneNumber), new StringCallback() {
                 @Override
                 public void onBefore(Request request, int id) {
@@ -469,23 +471,23 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
 
                 @Override
                 public void onError(Call call, Exception e, int id) {
-                    MyLog.i("GCS","发送短信验证码返回Exception："+e.toString());
+                    MyLog.i("GCS", "发送短信验证码返回Exception：" + e.toString());
                     if (mRequestType == 1) {
                         if (mTimer != null) {
                             mTimer.onFinish();
                             mTimer.cancel();
                         }
                     }
-                    SimplexToast.requestFailureHint(e,ResetPwdActivity.this);
+                    SimplexToast.requestFailureHint(e, ResetPwdActivity.this);
                 }
 
                 @Override
                 public void onResponse(String response, int id) {
-                    MyLog.i("GCS","发送短信验证码返回response："+response);
+                    MyLog.i("GCS", "发送短信验证码返回response：" + response);
                     Type type = new TypeToken<ResultBean>() {
                     }.getType();
                     ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
-                    if(resultBean.getResult()!= null){
+                    if (resultBean.getResult() != null) {
                         Jsessionid = resultBean.getResult().toString();
                     }
 
@@ -495,7 +497,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
                             //发送验证码成功,请求进入下一步
                             //意味着我们可以进行第二次请求了,获取phoneToken
                             //mRequestType = 2;
-                            SimplexToast.showToastForKeyBord(R.string.send_sms_code_success_hint,GlobalApplication.getContext(),mKeyBoardIsActive);
+                            SimplexToast.showToastForKeyBord(R.string.send_sms_code_success_hint, GlobalApplication.getContext(), mKeyBoardIsActive);
                             mEtRetrieveCodeInput.setText(null);
                             break;
                         case 400:
@@ -504,7 +506,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
                                 mTimer.onFinish();
                                 mTimer.cancel();
                             }
-                            SimplexToast.showToastForKeyBord(resultBean.getMessage(),GlobalApplication.getContext(),mKeyBoardIsActive);
+                            SimplexToast.showToastForKeyBord(resultBean.getMessage(), GlobalApplication.getContext(), mKeyBoardIsActive);
                             break;
                         case 500:
                             //异常错误，发送验证码失败,回收timer,需重新请求发送验证码
@@ -512,7 +514,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
                                 mTimer.onFinish();
                                 mTimer.cancel();
                             }
-                            SimplexToast.showToastForKeyBord(resultBean.getMessage(),GlobalApplication.getContext(),mKeyBoardIsActive);
+                            SimplexToast.showToastForKeyBord(resultBean.getMessage(), GlobalApplication.getContext(), mKeyBoardIsActive);
                             break;
                         default:
                             break;
@@ -522,7 +524,7 @@ public class ResetPwdActivity extends AccountBaseActivity implements View.OnClic
             });
         } else {
 
-            SimplexToast.showMyToast(R.string.register_sms_wait_hint,GlobalApplication.getContext());
+            SimplexToast.showMyToast(R.string.register_sms_wait_hint, GlobalApplication.getContext());
         }
     }
 

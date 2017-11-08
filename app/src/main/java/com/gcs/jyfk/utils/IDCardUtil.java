@@ -16,14 +16,13 @@ public class IDCardUtil {
     /**
      * 功能：身份证的有效验证
      *
-     * @param IDStr
-     *            身份证号
+     * @param IDStr 身份证号
      * @return true 有效：false 无效
      * @throws ParseException
      */
     public static boolean IDCardValidate(String IDStr) throws ParseException {
-        String[] ValCodeArr = { "1", "0", "X", "9", "8", "7", "6", "5", "4", "3", "2" };
-        String[] Wi = { "7", "9", "10", "5", "8", "4", "2", "1", "6", "3", "7", "9", "10", "5", "8", "4", "2" };
+        String[] ValCodeArr = {"1", "0", "X", "9", "8", "7", "6", "5", "4", "3", "2"};
+        String[] Wi = {"7", "9", "10", "5", "8", "4", "2", "1", "6", "3", "7", "9", "10", "5", "8", "4", "2"};
         String Ai = "";
         // ================ 号码的长度18位 ================
         if (IDStr.length() != 18) {

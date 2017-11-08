@@ -29,7 +29,7 @@ import com.gcs.jyfk.utils.RegexUtils;
  * Created by Administrator on 0026 10-26.
  */
 @SuppressLint("NewApi")
-public class EmailAuthFragment extends BaseFragment implements View.OnClickListener, View.OnFocusChangeListener{
+public class EmailAuthFragment extends BaseFragment implements View.OnClickListener, View.OnFocusChangeListener {
 
     private CheckBox mCbAgreeAuthbook;
     private LinearLayout mLlAuthUsername;
@@ -47,6 +47,7 @@ public class EmailAuthFragment extends BaseFragment implements View.OnClickListe
     protected int getLayoutId() {
         return R.layout.fragment_email_auth;
     }
+
     @Override
     protected void initView(View view) {
         super.initView(view);
@@ -55,7 +56,7 @@ public class EmailAuthFragment extends BaseFragment implements View.OnClickListe
             mDialog = DialogUtil.getProgressDialog(getActivity(), message, false);//DialogHelp.getWaitDialog(this, message);
         }
 
-        ((SimpleBackActivity)getActivity()).setToolBarTitle(R.string.email_string);
+        ((SimpleBackActivity) getActivity()).setToolBarTitle(R.string.email_string);
         view.findViewById(R.id.traceroute_rootview).setOnClickListener(this);
         mLlAuthUsername = view.findViewById(R.id.ll_auth_username);
         mLlAuthPassword = view.findViewById(R.id.ll_auth_password);
@@ -93,7 +94,7 @@ public class EmailAuthFragment extends BaseFragment implements View.OnClickListe
                 }
                 String name = mEtAuthUsername.getText().toString().trim();
                 String pwd = mEtAuthPassword.getText().toString().trim();
-                if (!TextUtils.isEmpty(name)&&!TextUtils.isEmpty(pwd)) {
+                if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(pwd)) {
                    /* mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.white));*/
                 } else {
@@ -129,10 +130,10 @@ public class EmailAuthFragment extends BaseFragment implements View.OnClickListe
                 }
                 String pwd = mEtAuthPassword.getText().toString().trim();
                 String name = mEtAuthUsername.getText().toString().trim();
-                if (!TextUtils.isEmpty(pwd)&&!TextUtils.isEmpty(name)&& mCbAgreeAuthbook.isChecked()) {
+                if (!TextUtils.isEmpty(pwd) && !TextUtils.isEmpty(name) && mCbAgreeAuthbook.isChecked()) {
                    /* mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.white));*/
-                }else {
+                } else {
                    /* mBtLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
                     mBtLoginSubmit.setTextColor(getResources().getColor(R.color.account_lock_font_color));*/
                 }
@@ -182,7 +183,7 @@ public class EmailAuthFragment extends BaseFragment implements View.OnClickListe
                 mEtAuthPassword.setText(null);
                 break;
             case R.id.tv_authbook:
-                ShowUIHelper.openInternalBrowser(getActivity(), Setting.getServerUrl(GlobalApplication.getContext())+"wind-phone/authOperatorAgreement.jsp");
+                ShowUIHelper.openInternalBrowser(getActivity(), Setting.getServerUrl(GlobalApplication.getContext()) + "wind-phone/authOperatorAgreement.jsp");
                 break;
             default:
                 break;
@@ -190,14 +191,14 @@ public class EmailAuthFragment extends BaseFragment implements View.OnClickListe
     }
 
     private void AuthRequest() {
-        String username =  mEtAuthUsername.getText().toString().trim();
+        String username = mEtAuthUsername.getText().toString().trim();
 
-        if (RegexUtils.isEmail(username)){
-            if(!mCbAgreeAuthbook.isChecked()){
-                SimplexToast.showMyToast("需勾选授权协议哦!",GlobalApplication.getContext());
-            }else {
+        if (RegexUtils.isEmail(username)) {
+            if (!mCbAgreeAuthbook.isChecked()) {
+                SimplexToast.showMyToast("需勾选授权协议哦!", GlobalApplication.getContext());
+            } else {
                 String servicePwd = mEtAuthPassword.getText().toString().trim();
-                if (TextUtils.isEmpty(servicePwd) || servicePwd.length() < 6||servicePwd.length() > 18) {
+                if (TextUtils.isEmpty(servicePwd) || servicePwd.length() < 6 || servicePwd.length() > 18) {
 
                     SimplexToast.showMyToast("请输入有效的密码", GlobalApplication.getContext());
                     return;
@@ -207,8 +208,8 @@ public class EmailAuthFragment extends BaseFragment implements View.OnClickListe
 
 
             }
-        }else {
-            SimplexToast.showMyToast("邮箱有误.请重新填写!",GlobalApplication.getContext());
+        } else {
+            SimplexToast.showMyToast("邮箱有误.请重新填写!", GlobalApplication.getContext());
         }
     }
 

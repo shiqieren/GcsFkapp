@@ -18,7 +18,7 @@ public class DoubleJsonDeserializer implements JsonDeserializer<Double> {
         try {
             return json.getAsDouble();
         } catch (Exception e) {
-            MyLog.i("json_info","DoubleJsonDeserializer-deserialize-error:" + (json != null ? json.toString() : ""));
+            MyLog.i("json_info", "DoubleJsonDeserializer-deserialize-error:" + (json != null ? json.toString() : ""));
             return 0D;
         }
     }

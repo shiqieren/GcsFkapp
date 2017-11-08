@@ -29,7 +29,7 @@ import okhttp3.Call;
 
 import static android.content.Context.TELEPHONY_SERVICE;
 
-public class ApiClientHelper{
+public class ApiClientHelper {
 
 
     /**
@@ -44,28 +44,28 @@ public class ApiClientHelper{
         //全局手机管理器
         TelephonyManager tm = (TelephonyManager) UIUtils.getContext().getSystemService(TELEPHONY_SERVICE);
         //// 获取智能设备唯一编号
-        String deviceid  = tm.getDeviceId()+"";
-        MyLog.i("GCS","deviceid:"+deviceid);
+        String deviceid = tm.getDeviceId() + "";
+        MyLog.i("GCS", "deviceid:" + deviceid);
         // 获得SIM卡的序号
-        String imei = tm.getSimSerialNumber()+"";
+        String imei = tm.getSimSerialNumber() + "";
 
-        MyLog.i("GCS","imei:"+imei);
+        MyLog.i("GCS", "imei:" + imei);
         //国际移动用户识别码-用户Id
-        String imsi = tm.getSubscriberId()+"";
+        String imsi = tm.getSubscriberId() + "";
 
-        MyLog.i("GCS","imsi:"+imsi);
+        MyLog.i("GCS", "imsi:" + imsi);
         //MAC
-        String mac = MACgetUtil.getAdresseMAC(UIUtils.getContext())+"";
+        String mac = MACgetUtil.getAdresseMAC(UIUtils.getContext()) + "";
 
-        MyLog.i("GCS","mac:"+mac);
+        MyLog.i("GCS", "mac:" + mac);
         //ip
-        String ip = NetWorkUtils.getIPAddress(GlobalApplication.getContext())+"";
+        String ip = NetWorkUtils.getIPAddress(GlobalApplication.getContext()) + "";
 
-        MyLog.i("GCS","ip:"+ip);
+        MyLog.i("GCS", "ip:" + ip);
         //本机号码
-        String phone = tm.getLine1Number()+"";
+        String phone = tm.getLine1Number() + "";
 
-        MyLog.i("GCS","phone:"+phone);
+        MyLog.i("GCS", "phone:" + phone);
         // WebSettings.getDefaultUserAgent(appContext)
         //版本号
         int vCode = getPackageInfo(appContext).versionCode;
@@ -74,16 +74,16 @@ public class ApiClientHelper{
         String osVer = version.length() > 0 ? version : "1.0";
 
         String model = Build.MODEL;
-        MyLog.i("客户端唯一标识Build.MODEL>>>","getBuild.MODEL:" + model);
+        MyLog.i("客户端唯一标识Build.MODEL>>>", "getBuild.MODEL:" + model);
         String id = Build.ID; // "MASTER" or "M4-rc20"
-        MyLog.i("客户端唯一标识Build.ID>>>","getBuild.ID:" + id);
+        MyLog.i("客户端唯一标识Build.ID>>>", "getBuild.ID:" + id);
         if (id.length() > 0) {
             model += " Build/" + id;
         }
 
         String format = "GCSfk.NET/1.0 (gcsapp; %s; Android %s; %s; %s)";
-       // String ua = String.format(format, vCode, osVer, model, getAppId(appContext));
-        if (AccountHelper.isLogin()){
+        // String ua = String.format(format, vCode, osVer, model, getAppId(appContext));
+        if (AccountHelper.isLogin()) {
             User user = AccountHelper.getUser();
             user.getMore().setImei(imei);
             user.getMore().setImsi(imsi);
@@ -97,31 +97,32 @@ public class ApiClientHelper{
 
 
             //地理位置
-            String myaddress = user.getMore().getAddress()+"";
+            String myaddress = user.getMore().getAddress() + "";
             //token
-            String token = user.getToken().toString()+"";
+            String token = user.getToken().toString() + "";
             AccountHelper.updateUserCache(user);
-            MyApi.sendUserAgent(imei,imsi,ip,mac,myaddress,token,new StringCallback() {
+            MyApi.sendUserAgent(imei, imsi, ip, mac, myaddress, token, new StringCallback() {
                 @Override
                 public void onError(Call call, Exception e, int id) {
-                    MyLog.i("GCS","平台信息上传响应返回Exception"+e.toString());
+                    MyLog.i("GCS", "平台信息上传响应返回Exception" + e.toString());
                 }
 
                 @Override
                 public void onResponse(String response, int id) {
-                    MyLog.i("GCS","平台信息上传响应返回"+response.toString());
+                    MyLog.i("GCS", "平台信息上传响应返回" + response.toString());
                     try {
-                        Type type = new TypeToken<ResultBean>() {}.getType();
+                        Type type = new TypeToken<ResultBean>() {
+                        }.getType();
                         ResultBean resultBean = AppOperator.createGson().fromJson(response, type);
                         int code = resultBean.getCode();
                         if (code == 200) {
-                            MyLog.i("GCS","平台信息上传200状态码");
+                            MyLog.i("GCS", "平台信息上传200状态码");
                         } else {
                             String message = resultBean.getMessage();
                             if (code == 500) {
-                                MyLog.i("GCS","状态码500"+message);
-                            }else if (code == 300){
-                                MyLog.i("GCS","状态码300"+message);
+                                MyLog.i("GCS", "状态码500" + message);
+                            } else if (code == 300) {
+                                MyLog.i("GCS", "状态码300" + message);
                             }
 
                             //更新失败应该是不进行任何的本地操作
@@ -131,7 +132,7 @@ public class ApiClientHelper{
                     }
                 }
             });
-        }else {
+        } else {
 
         }
     }

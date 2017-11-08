@@ -48,7 +48,7 @@ public class OptionCenterDialog {
         dialog_lv.setOnItemClickListener(listener);
     }
 
-    public void dismiss(){
+    public void dismiss() {
         albumDialog.dismiss();
     }
 

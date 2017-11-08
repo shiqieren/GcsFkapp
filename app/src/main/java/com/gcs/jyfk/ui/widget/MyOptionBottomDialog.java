@@ -28,7 +28,7 @@ import java.util.List;
 public class MyOptionBottomDialog<T> extends PopupWindow {
     private final ListView listView;
 
-        public MyOptionBottomDialog(Context context, List<T> listData, String title, MyBaseAdapter<T> adapter) {
+    public MyOptionBottomDialog(Context context, List<T> listData, String title, MyBaseAdapter<T> adapter) {
         super(context);
         final Activity activity = (Activity) context;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -48,7 +48,7 @@ public class MyOptionBottomDialog<T> extends PopupWindow {
         title_bar.setText(title);
 
         listView = (ListView) view.findViewById(R.id.list);
-       // final MyCustomerListPopuAdapter popuSFAdapter = new MyCustomerListPopuAdapter(listData);
+        // final MyCustomerListPopuAdapter popuSFAdapter = new MyCustomerListPopuAdapter(listData);
         listView.setAdapter(adapter);
 
         // 设置外部可点击
@@ -60,16 +60,16 @@ public class MyOptionBottomDialog<T> extends PopupWindow {
         this.setAnimationStyle(R.style.Animation);
 
         this.showAtLocation(activity.getWindow().getDecorView(), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-        backgroundAlpha(0.65f,activity);
+        backgroundAlpha(0.65f, activity);
         this.setOnDismissListener(new OnDismissListener() {
             @Override
             public void onDismiss() {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        backgroundAlpha(1.0f,activity);
+                        backgroundAlpha(1.0f, activity);
                     }
-                },290);
+                }, 290);
             }
         });
     }
@@ -78,7 +78,7 @@ public class MyOptionBottomDialog<T> extends PopupWindow {
         listView.setOnItemClickListener(listener);
     }
 
-    public void backgroundAlpha(float bgAlpha,Activity activity) {
+    public void backgroundAlpha(float bgAlpha, Activity activity) {
         WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
         lp.alpha = bgAlpha; //0.0-1.0
         activity.getWindow().setAttributes(lp);

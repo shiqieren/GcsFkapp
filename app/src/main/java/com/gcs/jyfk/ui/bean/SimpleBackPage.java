@@ -43,7 +43,6 @@ public enum SimpleBackPage {
     ABOUT_GCS(17, R.string.actionbar_title_about_gcs, AboutGCSFragment.class);
 
 
-
     private int title;
     private Class<?> clz;
     private int value;

@@ -32,7 +32,7 @@ public class CheckUpdateManager {
         this.mContext = context;
         mIsShowDialog = showWaitingDialog;
         if (mIsShowDialog) {
-            Toast.makeText(GlobalApplication.getContext(),"正在检查中。。。。",Toast.LENGTH_LONG).show();
+            Toast.makeText(GlobalApplication.getContext(), "正在检查中。。。。", Toast.LENGTH_LONG).show();
 
         }
     }
@@ -40,22 +40,21 @@ public class CheckUpdateManager {
 
     public void checkUpdate() {
         if (mIsShowDialog) {
-            Toast.makeText(GlobalApplication.getContext(),"正在检查中。。。。",Toast.LENGTH_LONG).show();
+            Toast.makeText(GlobalApplication.getContext(), "正在检查中。。。。", Toast.LENGTH_LONG).show();
 
         }
 
         MyApi.checkUpdate(new StringCallback() {
             @Override
             public void onError(Call call, Exception e, int id) {
-                Toast.makeText(GlobalApplication.getContext(),"异常"+e,Toast.LENGTH_LONG).show();
+                Toast.makeText(GlobalApplication.getContext(), "异常" + e, Toast.LENGTH_LONG).show();
 
             }
 
 
-
             @Override
             public void onResponse(String response, int id) {
-               // Toast.makeText(GlobalApplication.getContext(),response,Toast.LENGTH_LONG).show();
+                // Toast.makeText(GlobalApplication.getContext(),response,Toast.LENGTH_LONG).show();
                 try {
                     ResultBean<List<Version>> bean = AppOperator.createGson()
                             .fromJson(response, new TypeToken<ResultBean<List<Version>>>() {
@@ -90,7 +89,7 @@ public class CheckUpdateManager {
                                 dialog.show();*/
                             } else {
                                 if (mIsShowDialog) {
-                                Toast.makeText(GlobalApplication.getContext(),"已经是新版本了",Toast.LENGTH_LONG).show();
+                                    Toast.makeText(GlobalApplication.getContext(), "已经是新版本了", Toast.LENGTH_LONG).show();
                                 }
                             }
                         }

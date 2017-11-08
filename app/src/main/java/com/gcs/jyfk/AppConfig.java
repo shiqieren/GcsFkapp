@@ -17,13 +17,12 @@ import java.util.Properties;
 
 
 /**
- *
  * 应用程序配置类
  * 用于保存用户相关信息及设置
  * 键值对形式
  *
  * @author lyw
- *	获取单例
+ *         获取单例
  */
 public class AppConfig {
     private final static String APP_CONFIG = "config";
@@ -42,7 +41,7 @@ public class AppConfig {
     public static final String KEY_AUTH_OPERATOR = "KEY_AUTH_OPERATOR";
 
     //短信倒计时
-    public static final  int SMSCODE_TIME_OUT = 60;
+    public static final int SMSCODE_TIME_OUT = 60;
 
     // 默认存放图片的路径
     public final static String DEFAULT_SAVE_IMAGE_PATH = Environment
@@ -126,8 +125,6 @@ public class AppConfig {
 
         //BuildConfig.API_SERVER_URL
     }
-
-
 
 
 }

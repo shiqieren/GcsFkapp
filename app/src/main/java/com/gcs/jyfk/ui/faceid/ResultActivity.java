@@ -12,43 +12,43 @@ import com.megvii.idcardquality.bean.IDCardAttr;
 
 
 public class ResultActivity extends Activity {
-	private ImageView mIDCardImageView;
-	private ImageView mPortraitImageView;
-	private TextView mIDCardSize;
-	private TextView mPortraitSize;
-	IDCardAttr.IDCardSide mIDCardSide;
+    private ImageView mIDCardImageView;
+    private ImageView mPortraitImageView;
+    private TextView mIDCardSize;
+    private TextView mPortraitSize;
+    IDCardAttr.IDCardSide mIDCardSide;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_resutl);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_resutl);
 
-		mIDCardSide = getIntent().getIntExtra("side", 0) == 0 ? IDCardAttr.IDCardSide.IDCARD_SIDE_FRONT
-				: IDCardAttr.IDCardSide.IDCARD_SIDE_BACK;
-		init();
-	}
+        mIDCardSide = getIntent().getIntExtra("side", 0) == 0 ? IDCardAttr.IDCardSide.IDCARD_SIDE_FRONT
+                : IDCardAttr.IDCardSide.IDCARD_SIDE_BACK;
+        init();
+    }
 
-	void init() {
-		mIDCardImageView = (ImageView) findViewById(R.id.result_idcard_image);
-		mPortraitImageView = (ImageView) findViewById(R.id.result_portrait_image);
+    void init() {
+        mIDCardImageView = (ImageView) findViewById(R.id.result_idcard_image);
+        mPortraitImageView = (ImageView) findViewById(R.id.result_portrait_image);
 
-		mIDCardSize = (TextView) findViewById(R.id.result_idcard_size);
-		mPortraitSize = (TextView) findViewById(R.id.result_portrait_size);
-		{
-			byte[] idcardImgData = getIntent().getByteArrayExtra("idcardImg");
-			Bitmap idcardBmp = BitmapFactory.decodeByteArray(idcardImgData, 0,
-					idcardImgData.length);
-			mIDCardImageView.setImageBitmap(idcardBmp);
-			mIDCardSize.setText(idcardBmp.getWidth() + "_"
-					+ idcardBmp.getHeight());
-		}
-		if (mIDCardSide == IDCardAttr.IDCardSide.IDCARD_SIDE_FRONT) {
-			byte[] portraitImgData = getIntent().getByteArrayExtra(
-					"portraitImg");
-			Bitmap img = BitmapFactory.decodeByteArray(portraitImgData, 0,
-					portraitImgData.length);
-			mPortraitImageView.setImageBitmap(img);
-			mPortraitSize.setText(img.getWidth() + "_" + img.getHeight());
-		}
-	}
+        mIDCardSize = (TextView) findViewById(R.id.result_idcard_size);
+        mPortraitSize = (TextView) findViewById(R.id.result_portrait_size);
+        {
+            byte[] idcardImgData = getIntent().getByteArrayExtra("idcardImg");
+            Bitmap idcardBmp = BitmapFactory.decodeByteArray(idcardImgData, 0,
+                    idcardImgData.length);
+            mIDCardImageView.setImageBitmap(idcardBmp);
+            mIDCardSize.setText(idcardBmp.getWidth() + "_"
+                    + idcardBmp.getHeight());
+        }
+        if (mIDCardSide == IDCardAttr.IDCardSide.IDCARD_SIDE_FRONT) {
+            byte[] portraitImgData = getIntent().getByteArrayExtra(
+                    "portraitImg");
+            Bitmap img = BitmapFactory.decodeByteArray(portraitImgData, 0,
+                    portraitImgData.length);
+            mPortraitImageView.setImageBitmap(img);
+            mPortraitSize.setText(img.getWidth() + "_" + img.getHeight());
+        }
+    }
 }

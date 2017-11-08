@@ -47,8 +47,9 @@ public final class AccountHelper {
     }
 
     public static boolean isAuth() {
-        return getUser().getCertno()!=null && getUser().getName()!=null;
+        return getUser().getCertno() != null && getUser().getName() != null;
     }
+
     public static String getCookie() {
         String cookie = getUser().getCookie();
         return cookie == null ? "" : cookie;
@@ -60,7 +61,7 @@ public final class AccountHelper {
 
     public synchronized static User getUser() {
         if (instances == null) {
-            MyLog.e(TAG,"AccountHelper instances is null, you need call init() method.");
+            MyLog.e(TAG, "AccountHelper instances is null, you need call init() method.");
             return new User();
         }
         if (instances.user == null)
@@ -86,10 +87,10 @@ public final class AccountHelper {
     }
 
 
-    public static boolean login(final User user,String netcookie) {
+    public static boolean login(final User user, String netcookie) {
         // 从请求头更新Cookie  获取原有cookie
-       // String cookie = ApiHttpClient.getCookie(headers);
-       // String cookie = netcookie;
+        // String cookie = ApiHttpClient.getCookie(headers);
+        // String cookie = netcookie;
         String cookie = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
         if (TextUtils.isEmpty(cookie) || cookie.length() < 6) {
             return false;
@@ -108,10 +109,10 @@ public final class AccountHelper {
 
         if (saveOk) {
             //设置用户的cookie,会话设置
-            MyLog.i("GCS","用户更新文件存储后，每次请求头都要添加该用户cookie，以保持会话匹配");
-           //在该登录用户每次请求添加sp中存储的cookie MyApi.setCookieHeader(getCookie());
+            MyLog.i("GCS", "用户更新文件存储后，每次请求头都要添加该用户cookie，以保持会话匹配");
+            //在该登录用户每次请求添加sp中存储的cookie MyApi.setCookieHeader(getCookie());
             // 登陆成功,重新启动消息服务
-          //  NoticeManager.init(instances.application);
+            //  NoticeManager.init(instances.application);
 
         }
         return saveOk;
@@ -149,7 +150,7 @@ public final class AccountHelper {
         // 清除用户缓存
         clearUserCache();
         // 等待缓存清理完成
-        final Handler handler=new Handler();
+        final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -167,13 +168,14 @@ public final class AccountHelper {
         }, 200);
 
     }
+
     /**
      * 当前用户信息清理完成后调用方法清理服务等信息
      *
      * @param application Application
      */
     private static void clearAndPostBroadcast(Application application) {
-        MyLog.i("GCS","退出登录后清除和发广播处理");
+        MyLog.i("GCS", "退出登录后清除和发广播处理");
         // 清理网络相关,cookie,client
         MyApi.destroyAndRestore(application);
 
@@ -182,7 +184,7 @@ public final class AccountHelper {
         NoticeManager.exitServer(application);
 
         // 清理对应缓存路径数据
-       // CacheManager.deleteObject(application, 相应的缓存路径);
+        // CacheManager.deleteObject(application, 相应的缓存路径);
 
         // Logou  退出的广播
         Intent intent = new Intent(AppConfig.INTENT_ACTION_LOGOUT);

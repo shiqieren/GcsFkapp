@@ -660,14 +660,14 @@ public class OptionMaterialDialog {
 
         public void setBackground(Drawable drawable) {
             LinearLayout linearLayout = (LinearLayout) mAlertDialogWindow.findViewById(
-                   R.id.material_background);
+                    R.id.material_background);
             linearLayout.setBackground(drawable);
         }
 
 
         public void setBackgroundResource(int resId) {
             LinearLayout linearLayout = (LinearLayout) mAlertDialogWindow.findViewById(
-                   R.id.material_background);
+                    R.id.material_background);
             linearLayout.setBackgroundResource(resId);
         }
 

@@ -22,19 +22,19 @@ import java.util.List;
  */
 
 public class MACgetUtil {
-                ///////////////////方法1///////////////
+    ///////////////////方法1///////////////
     private static final String marshmallowMacAddress = "02:00:00:00:00:00";
     private static final String fileAddressMac = "/sys/class/net/wlan0/address";
 
     public static String getAdresseMAC(Context context) {
-        WifiManager wifiMan = (WifiManager)context.getSystemService(Context.WIFI_SERVICE) ;
+        WifiManager wifiMan = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         WifiInfo wifiInf = wifiMan.getConnectionInfo();
 
-        if(wifiInf !=null && marshmallowMacAddress.equals(wifiInf.getMacAddress())){
+        if (wifiInf != null && marshmallowMacAddress.equals(wifiInf.getMacAddress())) {
             String result = null;
             try {
-                result= getAdressMacByInterface();
-                if (result != null){
+                result = getAdressMacByInterface();
+                if (result != null) {
                     return result;
                 } else {
                     result = getAddressMacByFile(wifiMan);
@@ -45,7 +45,7 @@ public class MACgetUtil {
             } catch (Exception e) {
                 MyLog.e("MobileAcces", "Erreur lecture propriete Adresse MAC ");
             }
-        } else{
+        } else {
             if (wifiInf != null && wifiInf.getMacAddress() != null) {
                 return wifiInf.getMacAddress();
             } else {
@@ -55,7 +55,7 @@ public class MACgetUtil {
         return marshmallowMacAddress;
     }
 
-    private static String getAdressMacByInterface(){
+    private static String getAdressMacByInterface() {
         try {
             List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
             for (NetworkInterface nif : all) {
@@ -67,7 +67,7 @@ public class MACgetUtil {
 
                     StringBuilder res1 = new StringBuilder();
                     for (byte b : macBytes) {
-                        res1.append(String.format("%02X:",b));
+                        res1.append(String.format("%02X:", b));
                     }
 
                     if (res1.length() > 0) {
@@ -82,6 +82,7 @@ public class MACgetUtil {
         }
         return null;
     }
+
     private static String getAddressMacByFile(WifiManager wifiMan) throws Exception {
         String ret;
         int wifiState = wifiMan.getWifiState();

@@ -42,7 +42,7 @@ import com.gcs.jyfk.utils.UIUtils;
  */
 @SuppressLint("NewApi")
 public class BrowserFragment extends BaseFragment {
-   private WebView mWebView;
+    private WebView mWebView;
     private ProgressBar mProgress;
 
     public static final String BROWSER_KEY = "browser_url";
@@ -66,7 +66,7 @@ public class BrowserFragment extends BaseFragment {
     @Override
     public void initView(View view) {
         mWebView = view.findViewById(R.id.webview);
-        mProgress= view.findViewById(R.id.progress);
+        mProgress = view.findViewById(R.id.progress);
 
         initWebView();
         initBarAnim();
@@ -83,21 +83,21 @@ public class BrowserFragment extends BaseFragment {
 
     }
 
-    private class JsToJava{
+    private class JsToJava {
         //这里需要加@JavascriptInterface，4.2之后提供给javascript调用的函数必须带有@JavascriptInterface
         @JavascriptInterface
-        public void jsMethod(String paramFromJS){
+        public void jsMethod(String paramFromJS) {
             System.out.println("js返回结果:" + paramFromJS);//处理返回的结果
         }
 
         @JavascriptInterface
         public void auth_success() {
-          //  Toast.makeText(getActivity(), "授权成功", Toast.LENGTH_SHORT).show();
+            //  Toast.makeText(getActivity(), "授权成功", Toast.LENGTH_SHORT).show();
             UIUtils.runOnUIThread(new Runnable() {
 
                 @Override
                 public void run() {
-                    Intent i =new Intent(getActivity(), MainActivity.class);
+                    Intent i = new Intent(getActivity(), MainActivity.class);
                     startActivity(i);
                     ActivityManager.getActivityManager().finishActivity(SimpleBackActivity.class);
 
@@ -107,12 +107,12 @@ public class BrowserFragment extends BaseFragment {
 
         @JavascriptInterface
         public void auth_failure() {
-           // Toast.makeText(getActivity(), "授权失败", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getActivity(), "授权失败", Toast.LENGTH_SHORT).show();
             UIUtils.runOnUIThread(new Runnable() {
 
                 @Override
                 public void run() {
-                   // msgView.setText(msgView.getText() + "\njs调用了java函数");
+                    // msgView.setText(msgView.getText() + "\njs调用了java函数");
                     getActivity().finish();
                 }
             });
@@ -141,8 +141,6 @@ public class BrowserFragment extends BaseFragment {
     }
 
 
-
-
     @Override
     public void initData() {
         Bundle bundle = getActivity().getIntent().getBundleExtra(
@@ -157,29 +155,29 @@ public class BrowserFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-            if (mView != null) {
-                ViewGroup parent = (ViewGroup) mView.getParent();
-                if (parent != null)
-                    parent.removeView(mView);
-            } else {
-                if (TDevice.hasWebView(getContext())) {
-                            mView = inflater.inflate(getLayoutId(), container, false);
-                            mInflater = inflater;
-                            aty = getActivity();
-                            // Do something
-                            onBindViewBefore(mView);
-                            // Get savedInstanceState
-                            if (savedInstanceState != null)
-                                onRestartInstance(savedInstanceState);
-                            // Init
-                            initView(mView);
-                            initData();
+        if (mView != null) {
+            ViewGroup parent = (ViewGroup) mView.getParent();
+            if (parent != null)
+                parent.removeView(mView);
+        } else {
+            if (TDevice.hasWebView(getContext())) {
+                mView = inflater.inflate(getLayoutId(), container, false);
+                mInflater = inflater;
+                aty = getActivity();
+                // Do something
+                onBindViewBefore(mView);
+                // Get savedInstanceState
+                if (savedInstanceState != null)
+                    onRestartInstance(savedInstanceState);
+                // Init
+                initView(mView);
+                initData();
 
-                } else {
-                    getActivity().finish();
-                    mView = super.onCreateView(inflater, container, savedInstanceState);
-                }
+            } else {
+                getActivity().finish();
+                mView = super.onCreateView(inflater, container, savedInstanceState);
             }
+        }
         return mView;
     }
 
@@ -188,7 +186,6 @@ public class BrowserFragment extends BaseFragment {
     protected int getLayoutId() {
         return R.layout.fragment_browser;
     }
-
 
 
     /**
@@ -229,8 +226,6 @@ public class BrowserFragment extends BaseFragment {
     }
 
 
-
-
     /**
      * 载入链接之前会被调用
      *
@@ -244,13 +239,13 @@ public class BrowserFragment extends BaseFragment {
                 //auth_success
                 @Override
                 public void run() {
-                    Intent i =new Intent(getActivity(), MainActivity.class);
+                    Intent i = new Intent(getActivity(), MainActivity.class);
                     startActivity(i);
                     ActivityManager.getActivityManager().finishActivity(SimpleBackActivity.class);
 
                 }
             });
-        }else if (url != null && url.contains("auth_fail")){
+        } else if (url != null && url.contains("auth_fail")) {
             UIUtils.runOnUIThread(new Runnable() {
                 //auth_failure
                 @Override
@@ -364,12 +359,11 @@ public class BrowserFragment extends BaseFragment {
                 //mLayoutBottom.startAnimation(animBottomIn);
             } else {
                 TAG++;
-               // mLayoutBottom.startAnimation(animBottomOut);
+                // mLayoutBottom.startAnimation(animBottomOut);
             }
             return super.onDoubleTap(e);
         }
     }
-
 
 
 }

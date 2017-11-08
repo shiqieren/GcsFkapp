@@ -59,8 +59,8 @@ public class TDevice {
         DisplayMetrics metrics = resources.getDisplayMetrics();
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, metrics);
     }
-    public static int dip2px(Context context, float dipValue)
-    {
+
+    public static int dip2px(Context context, float dipValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
 
         int px = (int) (dipValue * scale + 0.5f);
@@ -68,8 +68,7 @@ public class TDevice {
         return px;
     }
 
-    public static int px2dip(Context context, float pxValue)
-    {
+    public static int px2dip(Context context, float pxValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);
     }
@@ -170,7 +169,7 @@ public class TDevice {
 
     public static void gotoMarket(Context context, String pck) {
         if (!isHaveMarket(context)) {
-            SimplexToast.showMyToast("你手机中没有安装应用市场！",GlobalApplication.getContext());
+            SimplexToast.showMyToast("你手机中没有安装应用市场！", GlobalApplication.getContext());
             return;
         }
         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -263,7 +262,7 @@ public class TDevice {
         ClipboardManager clip = (ClipboardManager) GlobalApplication.getContext()
                 .getSystemService(Context.CLIPBOARD_SERVICE);
         clip.setText(string);
-        SimplexToast.showMyToast(R.string.copy_success,GlobalApplication.getContext());
+        SimplexToast.showMyToast(R.string.copy_success, GlobalApplication.getContext());
 
     }
 
@@ -286,7 +285,8 @@ public class TDevice {
             return resources.getColor(id);
         }
     }
-//是否有webview
+
+    //是否有webview
     private static Boolean mHasWebView;
 
     public static boolean hasWebView(Context context) {

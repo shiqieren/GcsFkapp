@@ -18,7 +18,7 @@ public class StringJsonDeserializer implements JsonDeserializer<String> {
         try {
             return json.getAsString();
         } catch (Exception e) {
-            MyLog.i("json_info","StringJsonDeserializer-deserialize-error:" + (json != null ? json.toString() : ""));
+            MyLog.i("json_info", "StringJsonDeserializer-deserialize-error:" + (json != null ? json.toString() : ""));
             return null;
         }
     }
