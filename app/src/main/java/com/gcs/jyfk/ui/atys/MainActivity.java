@@ -107,7 +107,7 @@ public class MainActivity extends BaseActivity implements EasyPermissions.Permis
 
     private void initTab() {
         Tab tab_mine1 = new Tab(StartPagerFragment.class, R.string.tab1, R.drawable.selector_icon_mine);
-        Tab tab_mine2 = new Tab( UserInfoFragment.class,R.string.tab2,R.drawable.selector_icon_mine);
+        Tab tab_mine2 = new Tab(UserInfoFragment.class,R.string.tab2,R.drawable.selector_icon_mine);
 
         mTabs.add(tab_mine1);
          mTabs.add(tab_mine2);
