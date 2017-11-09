@@ -2,6 +2,7 @@ package com.gcs.jyfk.ui.faceid;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -117,7 +118,7 @@ public class LoadingActivity extends BaseActivity implements View.OnClickListene
     private Boolean mIsIDcardnumber = false;
     private Intent mydata;
     private String idpath;
-
+    private ProgressDialog mDialog;
     @Override
     protected void onResume() {
         super.onResume();
@@ -159,7 +160,10 @@ public class LoadingActivity extends BaseActivity implements View.OnClickListene
     protected void initWindow() {
         super.initWindow();
         StatusBarCompat.setStatusBarColor(this, UIUtils.getColor(R.color.base_app_color));
-
+        String message = getResources().getString(R.string.progress_submit);
+        if (mDialog == null) {
+            mDialog = DialogUtil.getProgressDialog(this, message, false);//DialogHelp.getWaitDialog(this, message);
+        }
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
         textView = (TextView) findViewById(R.id.toolbar_title);
         if (mToolBar != null) {
@@ -697,13 +701,15 @@ public class LoadingActivity extends BaseActivity implements View.OnClickListene
             requestParams.put(entry.getKey(),
                     new ByteArrayInputStream(entry.getValue()));
         }
+
+        mDialog.show();
         AsyncHttpClient asyncHttpClient = new AsyncHttpClient();
         String url = "https://api.megvii.com/faceid/v2/verify";
         asyncHttpClient.post(url, requestParams,
                 new AsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(int i, Header[] headers, byte[] bytes) {
-
+                        hideWaitDialog();
                         String successStr = new String(bytes);
                         MyLog.i("GCS", "verify成功：" + successStr);
                         showAuthbookconfirm("认证成功", "确认");
@@ -768,6 +774,7 @@ public class LoadingActivity extends BaseActivity implements View.OnClickListene
                     @Override
                     public void onFailure(int i, Header[] headers,
                                           byte[] bytes, Throwable throwable) {
+                        hideWaitDialog();
                         // 请求失败
                         showAuthbookconfirm("认证失败", "重新认证");
 
@@ -963,7 +970,21 @@ public class LoadingActivity extends BaseActivity implements View.OnClickListene
         params.height = (int) TDevice.dp2px(122);
         dlgShowBack.getWindow().setAttributes(params);
     }
-
+    /**
+     * hide waitDialog
+     */
+    protected void hideWaitDialog() {
+        ProgressDialog dialog = mDialog;
+        if (dialog != null) {
+            mDialog = null;
+            try {
+                dialog.cancel();
+                // dialog.dismiss();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
